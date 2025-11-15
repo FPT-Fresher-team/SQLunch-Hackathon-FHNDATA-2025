@@ -14,7 +14,10 @@
       </tr>
       <tr>
         <td>Khách Hàng</td>
-        <td><input type="text" id="name" disabled></td>
+        <td style="display: flex; gap: 10px; align-items: center;">
+          <input type="text" id="name" disabled>
+          <a id="customer-link" href="" target="_blank">Xem</a>
+        </td>
       </tr>
       <tr>
         <td>SĐT</td>
@@ -75,7 +78,12 @@
       <tbody></tbody>
     </table>
     
-    <div class="submit-button"><button title="submit" type="submit">Cập nhật</button></div>
+    <div class="submit-button">
+      <button title="submit" type="submit">Cập nhật</button>
+    </div>
+    <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 10px;">
+      <button id="export-js"><b>Xuất file Excel</b></button>
+    </div>
   </div>     
 </div>
 

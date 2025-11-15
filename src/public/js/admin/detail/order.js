@@ -17,9 +17,14 @@ async function getOrder() {
   document.querySelector('input#id').value      = orderInfo._id
   document.querySelector('input#date').value    = formatDate(orderInfo.createdAt) 
   document.querySelector('input#name').value    = orderInfo.customerInfo.name
+  document.querySelector('a#customer-link').href = `/admin/all-customers/customer/${orderInfo.customerInfo.userId}`
   document.querySelector('input#phone').value   = orderInfo.customerInfo.phone
   document.querySelector('input#address').value = orderInfo.customerInfo.address
   document.querySelector('input#note').value    = orderInfo.customerInfo.note
+
+  if (orderInfo.customerInfo.userId === 'guest') {
+    document.querySelector('a#customer-link').style.display = 'none'
+  }
 
   orderStatuses.forEach((element, index) => {
     const option = document.createElement('option')
@@ -118,6 +123,83 @@ async function updateOrder(orderInfo) {
   setTimeout(() => window.location.reload(), 3000)
 }
 
+async function exportOrderExcel(title) {
+  document.getElementById("export-js").addEventListener("click", function () {
+    // Clone tables so we don't affect the DOM
+    const table1 = document.querySelector("#table-1").cloneNode(true);
+    const table2 = document.querySelector("#table-2").cloneNode(true);
+
+    // --- Convert inputs/selects into plain text ---
+    function replaceFormElements(table) {
+      table.querySelectorAll("input, select").forEach(el => {
+        let text = "";
+        if (el.tagName === "INPUT") {
+          text = el.value || el.innerText || "";
+        } else if (el.tagName === "SELECT") {
+          const selected = el.options[el.selectedIndex];
+          text = selected ? selected.text : "";
+        }
+        const span = document.createElement("span");
+        span.textContent = text;
+        el.parentNode.replaceChild(span, el);
+      });
+    }
+    replaceFormElements(table1);
+    replaceFormElements(table2);
+
+    // --- Create a wrapper table to merge both ---
+    const wrapper = document.createElement("table");
+
+    // --- Add header rows ---
+    const row1 = document.createElement("tr");
+    row1.innerHTML = `
+      <td colspan="3" style="font-weight: bold; text-align: center;">
+        Công ty TNHH Cosmetic Garden
+      </td>
+      <td></td>
+      <td colspan="2" style="font-weight: bold; text-align: center;">
+        Cộng hoà xã hội chủ nghĩa Việt Nam
+      </td>`;
+
+    const row2 = document.createElement("tr");
+    row2.innerHTML = `
+      <td></td><td></td><td></td><td></td>
+      <td colspan="2" style="text-align: center;">
+        Độc lập - Tự do - Hạnh phúc
+      </td>`;
+
+    const row3 = document.createElement("tr");
+    row3.innerHTML = `
+      <td></td><td></td>
+      <td colspan="2" style="text-align: center;">
+        ${title}
+      </td>
+      <td></td><td></td>`;
+
+    wrapper.appendChild(row1);
+    wrapper.appendChild(row2);
+    wrapper.appendChild(row3);
+    wrapper.appendChild(document.createElement("tr")); // empty row
+
+    // --- Append table-1 rows ---
+    table1.querySelectorAll("tr").forEach(r => {
+      wrapper.appendChild(r.cloneNode(true));
+    });
+
+    // --- Empty row ---
+    wrapper.appendChild(document.createElement("tr"));
+
+    // --- Append table-2 rows ---
+    table2.querySelectorAll("tr").forEach(r => {
+      wrapper.appendChild(r.cloneNode(true));
+    });
+
+    // --- Export with SheetJS ---
+    const wb = XLSX.utils.table_to_book(wrapper);
+    XLSX.writeFile(wb, "OrderDetail.xlsx");
+  });
+}
+
 window.addEventListener('DOMContentLoaded', async function loadData() {
   try {
     const orderInfo = await getOrder()
@@ -125,6 +207,8 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     document.querySelector('button[type="submit"]').onclick = function() {
       updateOrder(orderInfo)
     }
+    exportOrderExcel("CHI TIẾT ĐƠN HÀNG");
+
   } catch (error) {
     console.error('Có lỗi xảy ra:', error)
     pushNotification('Có lỗi xảy ra')
