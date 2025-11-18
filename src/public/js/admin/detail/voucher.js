@@ -10,7 +10,7 @@ async function getVoucher() {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {error, voucherInfo, memberInfo, orderInfo} = await response.json()
-  if (error) return pushNotification('Có lỗi xảy ra')
+  if (error) return pushNotification('An error occurred')
 
   document.title = voucherInfo.name
 

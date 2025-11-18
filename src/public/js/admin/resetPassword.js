@@ -77,16 +77,16 @@ submitButton.onclick = async function() {
         submitButton.innerText = 'Gửi mã xác nhận'
         submitButton.className = 'submit-code'
 
-        formatMessage('Nhập mã được gửi tới email để tiến hành thay đổi mật khẩu', 'green')
+        formatMessage('Enter the code sent to your email to change your password', 'green')
       }
       else {
         // if not matched, prevent submit, enter again
-        formatMessage('Email chưa đăng ký tài khoản', 'red')
+        formatMessage('Email not registered with an account', 'red')
       }
     }
     else {
       // if not matched, prevent submit, enter again
-      formatMessage('Email nhập chưa đúng', 'red')
+      formatMessage('Email is incorrect', 'red')
     }
     submitButton.classList.remove('loading')
     return
@@ -112,13 +112,13 @@ submitButton.onclick = async function() {
       document.querySelector('div.input').appendChild(inputPassword)
       document.querySelector('div.input').appendChild(inputConfirmPassword)
       
-      submitButton.innerText = 'Xác nhận'
+      submitButton.innerText = 'Confirm'
       submitButton.className = 'submit-password'
-      formatMessage('Nhập mật khẩu mới', 'green')
+      formatMessage('Enter new password', 'green')
     }
     else {
       // if not matched, prevent submit, enter again
-      formatMessage('Mã xác nhận không đúng', 'red')
+      formatMessage('Code is incorrect', 'red')
     }
     submitButton.classList.remove('loading')
     return

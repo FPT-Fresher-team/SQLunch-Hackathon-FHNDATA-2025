@@ -15,19 +15,19 @@ var courseId
 function generateColumns() {
   const columnsGroup = document.querySelector('div.checkbox-group')
   const inputList = `
-    <label><input type="checkbox" value="_id"> Mã sản phẩm</label>
-    <label><input type="checkbox" value="categories" > Loại sản phẩm</label>
-    <label><input type="checkbox" value="skincare" > Dòng skincare</label>
-    <label><input type="checkbox" value="makeup" > Dòng makeup</label>
-    <label><input type="checkbox" value="brand" checked> Hãng</label>
-    <label><input type="checkbox" value="name" checked> Tên sản phẩm</label>
-    <label><input type="checkbox" value="oldPrice" checked> Giá cũ</label>
-    <label><input type="checkbox" value="price" checked> Giá hiện tại</label>
-    <label><input type="checkbox" value="quantity" checked> Tồn kho</label>
-    <label><input type="checkbox" value="status"> Trạng thái</label>
-    <label><input type="checkbox" value="rate"> Đánh giá</label>
-    <label><input type="checkbox" value="saleNumber"> Lượng bán</label>
-    <label><input type="checkbox" value="rateNumber"> Lượng đánh giá</label>
+    <label><input type="checkbox" value="_id"> Product Code</label>
+    <label><input type="checkbox" value="categories" > Category</label>
+    <label><input type="checkbox" value="skincare" > Skincare Line</label>
+    <label><input type="checkbox" value="makeup" > Makeup Line</label>
+    <label><input type="checkbox" value="brand" checked> Brand</label>
+    <label><input type="checkbox" value="name" checked> Product Name</label>
+    <label><input type="checkbox" value="oldPrice" checked> Old Price</label>
+    <label><input type="checkbox" value="price" checked> Current Price</label>
+    <label><input type="checkbox" value="quantity" checked> Stock</label>
+    <label><input type="checkbox" value="status"> Status</label>
+    <label><input type="checkbox" value="rate"> Rating</label>
+    <label><input type="checkbox" value="saleNumber"> Sales Count</label>
+    <label><input type="checkbox" value="rateNumber"> Review Count</label>
   `
   columnsGroup.insertAdjacentHTML('beforeend', inputList)
 } 
@@ -72,7 +72,7 @@ async function getProducts(sortOptions, filterOptions, currentPage, itemsPerPage
 
   dataSize.size = data_size
 
-  document.querySelector('div.board-title').querySelector('p').textContent = 'Sản phẩm: ' + dataSize.size
+  document.querySelector('div.board-title').querySelector('p').textContent = 'Products: ' + dataSize.size
 
   const selected = Array.from(document.querySelectorAll('.checkbox-group input:checked')).map(cb => ({
     value: cb.value,
@@ -98,7 +98,7 @@ async function getProducts(sortOptions, filterOptions, currentPage, itemsPerPage
     })
 
     const headLink = document.createElement('td')
-    headLink.textContent = 'Chi tiết'
+    headLink.textContent = 'Details'
     trHead.appendChild(headLink)
 
     thead.appendChild(trHead)
@@ -129,7 +129,7 @@ async function getProducts(sortOptions, filterOptions, currentPage, itemsPerPage
       })
 
       const link = document.createElement('td')
-      link.innerHTML = `<a target="_blank" rel="noopener noreferrer" href="/admin/all-products/product/${item._id}">Xem</a>`
+      link.innerHTML = `<a target="_blank" rel="noopener noreferrer" href="/admin/all-products/product/${item._id}">View</a>`
       newTr.appendChild(link)
       tbody.appendChild(newTr)
       itemIndex++

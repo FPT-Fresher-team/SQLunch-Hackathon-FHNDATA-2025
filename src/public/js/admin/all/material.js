@@ -11,18 +11,18 @@ const dataSize      = { size: 0 }
 function generateColumns() {
   const columnsGroup = document.querySelector('div.checkbox-group')
   const inputList = `
-    <label><input type="checkbox" value="_id" checked> Mã Khách hàng</label>
-    <label><input type="checkbox" value="name" checked> Tên Khách hàng</label>
-    <label><input type="checkbox" value="address" checked> Địa chỉ</label>
-    <label><input type="checkbox" value="quantity" checked> S/L Đơn</label>
-    <label><input type="checkbox" value="revenue" checked> Tổng doanh thu</label>
+    <label><input type="checkbox" value="_id" checked> Supplier Code</label>
+    <label><input type="checkbox" value="name" checked> Supplier Name</label>
+    <label><input type="checkbox" value="address" checked> Address</label>
+    <label><input type="checkbox" value="quantity" checked> Order Count</label>
+    <label><input type="checkbox" value="revenue" checked> Total Revenue</label>
     <label><input type="checkbox" value="email"> Email</label>
-    <label><input type="checkbox" value="phone"> SDT</label>
-    <label><input type="checkbox" value="gender"> Giới tính</label>
-    <label><input type="checkbox" value="memberCode"> Hạng thành viên</label>
-    <label><input type="checkbox" value="isActive"> Trạng thái</label>
-    <label><input type="checkbox" value="dob"> Ngày sinh</label>
-    <label><input type="checkbox" value="lastLogin"> Lần đăng nhập cuối</label>
+    <label><input type="checkbox" value="phone"> Phone</label>
+    <label><input type="checkbox" value="gender"> Gender</label>
+    <label><input type="checkbox" value="memberCode"> Member Rank</label>
+    <label><input type="checkbox" value="isActive"> Status</label>
+    <label><input type="checkbox" value="dob"> Date of Birth</label>
+    <label><input type="checkbox" value="lastLogin"> Last Login</label>
   `
   columnsGroup.insertAdjacentHTML('beforeend', inputList)
 } 
@@ -49,7 +49,7 @@ async function getMaterials(sortOptions, filterOptions, currentPage, itemsPerPag
 
   dataSize.size = data_size
 
-  document.querySelector('div.board-title').querySelector('p').textContent = 'Nguyên liệu: ' + dataSize.size
+  document.querySelector('div.board-title').querySelector('p').textContent = 'Materials: ' + dataSize.size
 
   window.setTimeout(function() {
     tbody.querySelectorAll('tr').forEach((tr, index) => {
@@ -67,7 +67,7 @@ async function getMaterials(sortOptions, filterOptions, currentPage, itemsPerPag
         <td style="text-align: right;">${formatNumber(item.price)}</td>
         <td style="text-align: right;">${item.quantity}</td>
         <td style="text-align: right;">${formatDate(item.expiry_date)}</td>
-        <td><a target="_blank" rel="noopener noreferrer" href="/admin/all-materials/material/${item._id}" class="update-button">Xem</a></td>
+        <td><a target="_blank" rel="noopener noreferrer" href="/admin/all-materials/material/${item._id}" class="update-button">View</a></td>
       `
       tbody.appendChild(newTr)
       productIndex++

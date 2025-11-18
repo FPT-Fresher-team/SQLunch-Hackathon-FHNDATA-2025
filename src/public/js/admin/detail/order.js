@@ -10,9 +10,9 @@ async function getOrder() {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {error, orderInfo, orderStatuses, paymentMethods, userRole} = await response.json()
-  if (error) return pushNotification('Có lỗi xảy ra')
+  if (error) return pushNotification('An error occurred')
 
-  document.title = 'Đơn hàng ' + orderInfo.customerInfo.name
+  document.title = 'Order ' + orderInfo.customerInfo.name
 
   document.querySelector('input#id').value      = orderInfo._id
   document.querySelector('input#date').value    = formatDate(orderInfo.createdAt) 
@@ -37,7 +37,7 @@ async function getOrder() {
     if (userRole === 'shipper' && element.code === 'delivering') option.disabled = false
     if (userRole === 'shipper' && element.code === 'delivered') option.disabled = false
     if (userRole === 'manager' && element.code === 'cancel') option.disabled = false
-    // if (userRole === 'admin') option.disabled = false
+    if (userRole === 'admin') option.disabled = false
 
     document.querySelector('select#status').appendChild(option)
   })
@@ -54,7 +54,7 @@ async function getOrder() {
 
   document.querySelector('input#total').value = formatNumber(orderInfo.totalOrderPrice)
   document.querySelector('input#new-total').value = formatNumber(orderInfo.totalNewOrderPrice)
-  document.querySelector('input#isRated').value = orderInfo.isRated ? 'Đã đánh giá' : 'Chưa đánh giá'
+  document.querySelector('input#isRated').value = orderInfo.isRated ? 'Rated' : 'Not Rated'
 
   document.querySelector('select#isPaid').value = orderInfo.isPaid
   if (userRole === 'accountant') {
@@ -165,7 +165,7 @@ async function exportOrderExcel(title) {
     row2.innerHTML = `
       <td></td><td></td><td></td><td></td>
       <td colspan="2" style="text-align: center;">
-        Độc lập - Tự do - Hạnh phúc
+        Independence - Freedom - Happiness
       </td>`;
 
     const row3 = document.createElement("tr");
@@ -207,10 +207,10 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     document.querySelector('button[type="submit"]').onclick = function() {
       updateOrder(orderInfo)
     }
-    exportOrderExcel("CHI TIẾT ĐƠN HÀNG");
+    exportOrderExcel("ORDER DETAILS");
 
   } catch (error) {
-    console.error('Có lỗi xảy ra:', error)
-    pushNotification('Có lỗi xảy ra')
+    console.error('An error occurred:', error)
+    pushNotification('An error occurred')
   }
 })

@@ -119,8 +119,8 @@ async function getProduct() {
   productElement.querySelector('h1#name').textContent = data.name
   productElement.querySelector('h4#old-price').textContent = formatNumber(data.oldPrice) 
   productElement.querySelector('h3#price').textContent = formatNumber(data.price)
-  productElement.querySelector('h4#quantity').textContent = 'Số lượng: ' + data.quantity
-  productElement.querySelector('h5#sale-number').textContent = 'Đã bán: ' + data.saleNumber
+  productElement.querySelector('h4#quantity').textContent = 'Quantity: ' + data.quantity
+  productElement.querySelector('h5#sale-number').textContent = 'Sold: ' + data.saleNumber
   productElement.querySelector('p#description').textContent = data.description
   productElement.querySelector('div.loading').remove()
 
@@ -175,7 +175,7 @@ async function getRelatedProducts(productInfo) {
         product.querySelector('p#price').textContent = formatNumber(data[index].price) 
         product.querySelector('p#name').textContent = data[index].name
         product.querySelector('span#rate-score').textContent = Math.round(data[index].rate * 100) / 100
-        product.querySelector('p#sale-number').textContent =  'Đã bán: ' + data[index].saleNumber
+        product.querySelector('p#sale-number').textContent =  'Sold: ' + data[index].saleNumber
         product.querySelector('div.loading').style.display = 'none'
         product.querySelectorAll('i').forEach((star, i) => {
           if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'

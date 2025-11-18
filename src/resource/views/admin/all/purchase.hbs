@@ -1,49 +1,49 @@
 <div class="admin-all-purchases-container">  
   <div class="header">
     <div class="board-title">
-      <p>Đơn nhập: </p>
+      <p>Purchase Order: </p>
     </div>
 
     <div class="date-filter">
       <input type="date" id="start-date">
       <input type="date" id="end-date">
-      <button title="submit" type="submit">Xem</button>
+      <button title="submit" type="submit">View</button>
     </div>
   </div>
 
   <div class="control-bar">
     <div class="search">
       <select id="search-type" class="search-btn">
-        <option value="">Tìm kiếm theo</option>
+        <option value="">Search by</option>
         <option value="_id" selected>ID</option>
-        <option value="supplierId">Mã NCC</option>
+        <option value="supplierId">Supplier Code</option>
       </select>
-      <input type="text" id="search-input" name="name" placeholder="Tìm kiếm đơn nhập" />
+      <input type="text" id="search-input" name="name" placeholder="Search purchase order" />
     </div>
 
     <div class="sort-filter">
       <div class="sort">
-        <label>Sắp xếp:</label>
+        <label>Sort by:</label>
         <select id="purchaseDate" class="filter-btn">
-          <option value="">Ngày đặt hàng</option>
-          <option value="1">Ngày gần nhất</option>
-          <option value="-1">Ngày xa nhất</option>
+          <option value="">Order Date</option>
+          <option value="1">Newest Date</option>
+          <option value="-1">Oldest Date</option>
         </select>
         <select id="totalPurchasePrice" class="filter-btn">
-          <option value="">Giá trị</option>
-          <option value="1">Giá trị cao - thấp</option>
-          <option value="-1">Giá trị thấp - cao</option>
+          <option value="">Value</option>
+          <option value="1">Value High - Low</option>
+          <option value="-1">Value Low - High</option>
         </select>
       </div>
 
       <div class="filter">
-        <button id="clear-sort-filter" style="display: none">Xoá bộ lọc</button>
+        <button id="clear-sort-filter" style="display: none">Clear Filter</button>
       </div>
     </div>
 
     <a href="/admin/all-purchases/purchase/create" target="_blank" rel="noopener noreferrer" class="create-btn" id="create-btn">
       <i class="fi fi-rr-plus"></i>
-      <span>Thêm Đơn Nhập</span>
+      <span>Add Purchase Order</span>
     </a>
   </div>
 
@@ -52,12 +52,12 @@
     <table class="all-items">
       <thead>
         <tr>
-          <td style="width:  5%">STT          </td>
-          <td style="width: 20%">Mã đơn nhập  </td>
-          <td style="width: 25%">Ngày nhập    </td>
-          <td style="width: 15%">Tổng sản phẩm</td>
-          <td style="width: 25%">Tổng chi phí </td>
-          <td style="width: 10%">Chi tiết     </td>
+          <td style="width:  5%">No.          </td>
+          <td style="width: 20%">Purchase Order Code  </td>
+          <td style="width: 25%">Import Date    </td>
+          <td style="width: 15%">Total Items</td>
+          <td style="width: 25%">Total Cost </td>
+          <td style="width: 10%">Details     </td>
           </td>
         </tr>
       </thead>

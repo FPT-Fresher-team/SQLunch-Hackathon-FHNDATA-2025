@@ -7,61 +7,61 @@
     <div class="date-filter">
       <input type="date" id="start-date">
       <input type="date" id="end-date">
-      <button title="submit" type="submit">Xem</button>
+      <button title="submit" type="submit">View</button>
     </div>
   </div>
 
   <div class="control-bar">
     <div class="search">
       <select id="search-type" class="search-btn">
-        <option value="">Tìm kiếm theo</option>
+        <option value="">Search by</option>
         <option value="_id" selected>ID</option>
-        <option value="userId">Mã khách hàng</option>
-        <option value="code">Mã voucher</option>
+        <option value="userId">Customer Code</option>
+        <option value="code">Voucher Code</option>
       </select>
-      <input type="text" id="search-input" name="name" placeholder="Tìm kiếm voucher" />
+      <input type="text" id="search-input" name="name" placeholder="Search voucher" />
     </div>
 
     <div class="sort-filter">
       <div class="sort">
-        <label>Sắp xếp:</label>
+        <label>Sort by:</label>
         <select id="discount" class="filter-btn">
-          <option value="">Mức khuyến mãi</option>
-          <option value="1">Mức khuyến mãi cao - thấp</option>
-          <option value="-1">Mức khuyến mãi thấp - cao</option>
+          <option value="">Discount Level</option>
+          <option value="1">Discount Level High - Low</option>
+          <option value="-1">Discount Level Low - High</option>
         </select>
         <select id="startDate" class="filter-btn">
-          <option value="">Ngày tạo</option>
-          <option value="1">Ngày tạo mới nhất</option>
-          <option value="-1">Ngày tạo xa nhất</option>
+          <option value="">Created Date</option>
+          <option value="1">Newest Created Date</option>
+          <option value="-1">Oldest Created Date</option>
         </select>
         <select id="endDate" class="filter-btn">
-          <option value="">Ngày hết hạn</option>
-          <option value="-1">Ngày hết hạn mới nhất</option>
-          <option value="1">Ngày hết hạn xa nhất</option>
+          <option value="">Expiration Date</option>
+          <option value="-1">Newest Expiration Date</option>
+          <option value="1">Oldest Expiration Date</option>
         </select>
       </div>
 
       <div class="filter">
-        <label>Lọc:</label>
+        <label>Filter:</label>
         <select id="status" class="filter-btn">
-          <option value="">Tình trạng</option>
-          <option value="active">Còn hạn</option>
-          <option value="end">Hết hạn</option>
-          <option value="used">Đã sử dụng</option>
+          <option value="">Status</option>
+          <option value="active">Valid</option>
+          <option value="end">Expired</option>
+          <option value="used">Used</option>
         </select>
         <select id="voucherType" class="filter-btn">
-          <option value="">Loại voucher</option>
-          <option value="birthday">Theo sinh nhật</option>
-          <option value="order">Theo đơn hàng</option>
+          <option value="">Voucher Type</option>
+          <option value="birthday">Birthday Voucher</option>
+          <option value="order">Order Voucher</option>
         </select>
-        <button id="clear-sort-filter" style="display: none">Xoá bộ lọc</button>
+        <button id="clear-sort-filter" style="display: none">Clear Filter</button>
       </div>
     </div>
 
     <a href="/admin/all-u-vouchers/voucher/create" target="_blank" rel="noopener noreferrer" class="create-btn" id="create-btn">
       <i class="fi fi-rr-plus"></i>
-      <span>Thêm Voucher</span>
+      <span>Add Voucher</span>
     </a>
   </div>
 
@@ -70,12 +70,12 @@
     <table class="all-items">
       <thead>
         <tr>
-          <td style="width:  5%">STT           </td>
-          <td style="width: 15%">Mã Voucher    </td>
-          <td style="width: 20%">Loại voucher  </td>
-          <td style="width: 25%">Mức khuyến mãi</td>
-          <td style="width: 25%">Ngày kết thúc </td>
-          <td style="width: 10%">Chi tiết      </td>
+          <td style="width:  5%">No.           </td>
+          <td style="width: 15%">Voucher Code    </td>
+          <td style="width: 20%">Voucher Type  </td>
+          <td style="width: 25%">Discount Level</td>
+          <td style="width: 25%">Expiration Date </td>
+          <td style="width: 10%">Details      </td>
         </tr>
       </thead>
 

@@ -31,7 +31,7 @@ async function createEmployee() {
     const password  = document.querySelector('input#password').value
     const confirmPassword = document.querySelector('input#password-confirm').value
 
-    if (password !== confirmPassword) return pushNotification("Mật khẩu chưa trùng!")
+    if (password !== confirmPassword) return pushNotification("Passwords do not match!")
   
     if (
       !name     || 
@@ -41,7 +41,7 @@ async function createEmployee() {
       !password || 
       !role     
     ) {
-      return pushNotification("Hãy điền đầy đủ các thông tin!")
+      return pushNotification("Please fill in all information!")
     }
   
     const response = await fetch('/admin/all-employees/employee/created', {
@@ -64,7 +64,7 @@ async function createEmployee() {
     setTimeout(() => window.location.reload(), 2000)
   } catch (error) {
     console.error('Error creating customer:', error)
-    pushNotification("Đã có lỗi xảy ra.")
+    pushNotification("An error occurred.")
   }
 }
 

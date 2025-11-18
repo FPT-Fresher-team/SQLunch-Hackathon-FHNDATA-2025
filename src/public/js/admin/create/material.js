@@ -28,7 +28,7 @@ async function createProduct() {
       !description    || 
       !certifications || 
       !expiry_date
-    ) return pushNotification("Hãy điền đầy đủ các thông tin!")
+    ) return pushNotification("Please fill in all information!")
   
     const response = await fetch('/admin/all-materials/material/created', {
       method: 'POST',
@@ -54,7 +54,7 @@ async function createProduct() {
     setTimeout(() => window.location.reload(), 2000)
   } catch (error) {
     console.error('Error creating customer:', error)
-    pushNotification("Đã có lỗi xảy ra.")
+    pushNotification("An error occurred.")
   }
 }
 

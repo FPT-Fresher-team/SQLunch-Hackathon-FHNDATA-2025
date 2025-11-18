@@ -7,57 +7,57 @@
     <div class="date-filter">
       <input type="date" id="start-date">
       <input type="date" id="end-date">
-      <button title="submit" type="submit">Xem</button>
+      <button title="submit" type="submit">View</button>
     </div>
   </div>
 
   <div class="control-bar">
     <div class="search">
       <select id="search-type" class="search-btn">
-        <option value="">Tìm kiếm theo</option>
+        <option value="">Search by</option>
         <option value="_id" selected>ID</option>
-        <option value="name">Tên</option>
+        <option value="name">Name</option>
       </select>
-      <input type="text" id="search-input" name="name" placeholder="Tìm kiếm voucher" />
+      <input type="text" id="search-input" name="name" placeholder="Search voucher" />
     </div>
 
     <div class="sort-filter">
       <div class="sort">
-        <label>Sắp xếp:</label>
+        <label>Sort by:</label>
         <select id="discount" class="filter-btn">
-          <option value="">Chiết khấu</option>
-          <option value="1">Chiết khấu cao - thấp</option>
-          <option value="-1">Chiết khấu thấp - cao</option>
+          <option value="">Discount</option>
+          <option value="1">Discount High - Low</option>
+          <option value="-1">Discount Low - High</option>
         </select>
         <select id="startDate" class="filter-btn">
-          <option value="">Ngày tạo</option>
-          <option value="1">Ngày tạo mới nhất</option>
-          <option value="-1">Ngày tạo xa nhất</option>
+          <option value="">Created Date</option>
+          <option value="1">Newest Created Date</option>
+          <option value="-1">Oldest Created Date</option>
         </select>
         <select id="endDate" class="filter-btn">
-          <option value="">Ngày hết hạn</option>
-          <option value="-1">Ngày hết hạn mới nhất</option>
-          <option value="1">Ngày hết hạn xa nhất</option>
+          <option value="">Expiration Date</option>
+          <option value="-1">Newest Expiration Date</option>
+          <option value="1">Oldest Expiration Date</option>
         </select>
       </div>
 
       <div class="filter">
-        <label>Lọc:</label>
+        <label>Filter:</label>
         <select id="status" class="filter-btn">
-          <option value="">Tình trạng</option>
-          <option value="active">Còn hạn</option>
-          <option value="end">Hết hạn</option>
+          <option value="">Status</option>
+          <option value="active">Valid</option>
+          <option value="end">Expired</option>
         </select>
         <select id="memberCode" class="filter-btn">
-          <option value="">Hạng thành viên</option>
+          <option value="">Member Tier</option>
         </select>
-        <button id="clear-sort-filter" style="display: none">Xoá bộ lọc</button>
+        <button id="clear-sort-filter" style="display: none">Clear Filter</button>
       </div>
     </div>
 
     <a href="/admin/all-vouchers/voucher/create" target="_blank" rel="noopener noreferrer" class="create-btn" id="create-btn">
       <i class="fi fi-rr-plus"></i>
-      <span>Thêm Voucher</span>
+      <span>Add Voucher</span>
     </a>
   </div>
 

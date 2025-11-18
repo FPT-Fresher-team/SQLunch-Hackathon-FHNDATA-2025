@@ -51,7 +51,7 @@ async function submitRate(data) {
       if (error) throw new Error(error)
   
       if (message) {
-        pushNotification('Đánh giá đơn thành công')
+        pushNotification('Rated order successfully')
         setTimeout(() => window.location.reload(), 3000)
       } 
     }
@@ -79,10 +79,10 @@ async function getOrder() {
   document.querySelector('td#note').textContent = data.customerInfo.note
   document.querySelector('td#total-price').textContent = formatNumber(data.totalOrderPrice) 
   document.querySelector('td#status').textContent = status.name
-  document.querySelector('td#isPaid').textContent = data.isPaid ? 'Đã thanh toán' : 'Chưa thanh toán'
+  document.querySelector('td#isPaid').textContent = data.isPaid ? 'Paid' : 'Unpaid'
 
   if (data.isRated) {
-    submitBtn.innerText = 'Đã đánh giá'
+    submitBtn.innerText = 'Rated'
     submitBtn.style.cursor = 'not-allowed'
     submitBtn.style.opacity = '0.5'
     submitBtn.disabled = true

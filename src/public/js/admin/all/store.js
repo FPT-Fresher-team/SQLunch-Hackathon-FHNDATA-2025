@@ -11,11 +11,11 @@ const dataSize      = { size: 0 }
 function generateColumns() {
   const columnsGroup = document.querySelector('div.checkbox-group')
   const inputList = `
-    <label><input type="checkbox" value="_id" checked> Mã đại lý</label>
-    <label><input type="checkbox" value="name" checked> Tên đại lý</label>
-    <label><input type="checkbox" value="address" checked> Địa chỉ</label>
-    <label><input type="checkbox" value="details" > Chi tiết</label>
-    <label><input type="checkbox" value="revenue" checked> Tổng doanh thu</label>
+    <label><input type="checkbox" value="_id" checked> Store Code</label>
+    <label><input type="checkbox" value="name" checked> Store Name</label>
+    <label><input type="checkbox" value="address" checked> Address</label>
+    <label><input type="checkbox" value="details" > Details</label>
+    <label><input type="checkbox" value="revenue" checked> Total Revenue</label>
   `
   columnsGroup.insertAdjacentHTML('beforeend', inputList)
 } 
@@ -52,7 +52,7 @@ async function getStores(sortOptions, filterOptions, currentPage, itemsPerPage) 
 
   dataSize.size = data_size
 
-  document.querySelector('div.board-title').querySelector('p').textContent = 'đại lý: ' + dataSize.size
+  document.querySelector('div.board-title').querySelector('p').textContent = 'Stores: ' + dataSize.size
 
   window.setTimeout(function() {
     tbody.querySelectorAll('tr').forEach((tr, index) => {
@@ -69,7 +69,7 @@ async function getStores(sortOptions, filterOptions, currentPage, itemsPerPage) 
         <td>${item.name}</td>
         <td>${item.address}</td>
         <td style="text-align: right;">${formatNumber(item.revenue)}</td>
-        <td><a target="_blank" rel="noopener noreferrer" href="/admin/all-stores/store/${item._id}">Xem</a></td>
+        <td><a target="_blank" rel="noopener noreferrer" href="/admin/all-stores/store/${item._id}">View</a></td>
       `
       tbody.appendChild(newTr)
       productIndex++
@@ -90,7 +90,7 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     await getFilter()
     await getStores(sortOptions, filterOptions, currentPage.page, 10)
     await sortAndFilter(getStores, sortOptions, filterOptions, currentPage.page)
-    await exportJs('BÁO CÁO DANH SÁCH ĐẠI LÝ')
+    await exportJs('STORE LIST REPORT')
   } catch (error) {
     console.error('Error loading data:', error)
     pushNotification(error)

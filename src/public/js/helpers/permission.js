@@ -16,24 +16,24 @@ export const permissions = {
 }
 
 export const menuConfig = [
-  { id:"all"                , href:"/admin/all"           , icon:"fi fi-rr-home"        , label:"Báo cáo"         , permission:"homePermission"       },
-  { id:"all-customers"      , href:"/admin/all-customers" , icon:"fi fi-rr-users"       , label:"Khách hàng"      , permission:"customerPermission"   },
-  { id:"all-vouchers"       , href:"/admin/all-vouchers"  , icon:"fi fi-rr-ticket"      , label:"Voucher"         , permission:"voucherPermission"    },
-  { id:"all-u-vouchers"     , href:"/admin/all-u-vouchers", icon:"fi fi-rr-ticket"      , label:"Voucher Cá nhân" , permission:"voucherPermission"    },
-  { id:"all-chats"          , href:"/admin/all-chats"     , icon:"fi fi-rr-comment"     , label:"Chat khách hàng" , permission:"chatPermission"       },
-  // { id:"all-chats-emp", href:"/admin/all-chats-emp", icon:"fi fi-rr-comment",     label:"Chat nội bộ",     permission:"chatEmpPermission" },
-  { id:"all-purchases"      , href:"/admin/all-purchases" , icon:"fi fi-rr-file-import" , label:"Nhập hàng"       , permission:"purchasePermission"   },
-  { id:"all-orders"         , href:"/admin/all-orders"    , icon:"fi fi-rr-piggy-bank"  , label:"Đơn Hàng"        , permission:"orderPermission"      },
-  { id:"all-stores"         , href:"/admin/all-stores"    , icon:"fi fi-rr-store-alt"   , label:"Đại lý"          , permission:"storePermission"      },
-  { id:"all-products"       , href:"/admin/all-products"  , icon:"fi fi-rr-box-open"    , label:"Sản Phẩm"        , permission:"productPermission"    },
-  // { id:"all-materials"      , href:"/admin/all-materials" , icon:"fi fi-rr-box-open"    , label:"Nguyên liệu"     , permission:"materialPermission"   },
-  { id:"all-employees"      , href:"/admin/all-employees" , icon:"fi fi-rr-employees"   , label:"Nhân sự"         , permission:"employeePermission"   },
-  { id:"all-suppliers"      , href:"/admin/all-suppliers" , icon:"fi fi-rr-supplier"    , label:"Nhà cung cấp"    , permission:"supplierPermission"   },
-  { id:"all-brands"         , href:"/admin/all-brands"    , icon:"fi fi-rr-brand"       , label:"Thương hiệu"     , permission:"brandPermission"      },
-  { id:"all-attributes"     , href:"/admin/all-attributes", icon:"fi fi-rr-ballot"      , label:"Thuộc tính"      , permission:"attributePermission"  },
+  { id:"all"                , href:"/admin/all"           , icon:"fi fi-rr-home"        , label:"Reports"        , permission:"homePermission"       },
+  { id:"all-customers"      , href:"/admin/all-customers" , icon:"fi fi-rr-users"       , label:"Customers"      , permission:"customerPermission"   },
+  { id:"all-vouchers"       , href:"/admin/all-vouchers"  , icon:"fi fi-rr-ticket"      , label:"Vouchers"       , permission:"voucherPermission"    },
+  { id:"all-u-vouchers"     , href:"/admin/all-u-vouchers", icon:"fi fi-rr-ticket"      , label:"User Vouchers"  , permission:"voucherPermission"    },
+  { id:"all-chats"          , href:"/admin/all-chats"     , icon:"fi fi-rr-comment"     , label:"Customer Chat" , permission:"chatPermission"       },
+  // { id:"all-chats-emp", href:"/admin/all-chats-emp", icon:"fi fi-rr-comment",     label:"Internal Chat",     permission:"chatEmpPermission" },
+  { id:"all-purchases"      , href:"/admin/all-purchases" , icon:"fi fi-rr-file-import" , label:"Purchases"      , permission:"purchasePermission"   },
+  { id:"all-orders"         , href:"/admin/all-orders"    , icon:"fi fi-rr-piggy-bank"  , label:"Orders"         , permission:"orderPermission"      },
+  { id:"all-stores"         , href:"/admin/all-stores"    , icon:"fi fi-rr-store-alt"   , label:"Stores"         , permission:"storePermission"      },
+  { id:"all-products"       , href:"/admin/all-products"  , icon:"fi fi-rr-box-open"    , label:"Products"       , permission:"productPermission"    },
+  // { id:"all-materials"      , href:"/admin/all-materials" , icon:"fi fi-rr-box-open"    , label:"Materials"      , permission:"materialPermission"   },
+  { id:"all-employees"      , href:"/admin/all-employees" , icon:"fi fi-rr-employees"   , label:"Employees"      , permission:"employeePermission"   },
+  { id:"all-suppliers"      , href:"/admin/all-suppliers" , icon:"fi fi-rr-supplier"    , label:"Suppliers"      , permission:"supplierPermission"   },
+  { id:"all-brands"         , href:"/admin/all-brands"    , icon:"fi fi-rr-brand"       , label:"Brands"         , permission:"brandPermission"      },
+  { id:"all-attributes"     , href:"/admin/all-attributes", icon:"fi fi-rr-ballot"      , label:"Attributes"     , permission:"attributePermission"  },
 ]
 
 export const footerMenu = [
-  { id:"all-personal-info", href:"/admin/all-personal-info", icon:"fi fi-rr-circle-user", label:"Thông Tin Cá Nhân" },
-  { id:"log-out",           href:"/admin/log-out",           icon:"fi fi-rr-exit",        label:"Đăng Xuất" }
+  { id:"all-personal-info", href:"/admin/all-personal-info", icon:"fi fi-rr-circle-user", label:"Personal Info" },
+  { id:"log-out",           href:"/admin/log-out",           icon:"fi fi-rr-exit",        label:"Log Out" }
 ]

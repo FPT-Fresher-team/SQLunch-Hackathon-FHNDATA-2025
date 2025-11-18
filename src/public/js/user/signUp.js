@@ -90,7 +90,7 @@ submitButton.onclick = async function() {
   if (submitButton.className.includes('email')) {
     const email = document.querySelector('input#email').value
     if (email.trim() === '') {
-      document.querySelector('p.wrong-info').textContent = 'Email không được để trống'
+      document.querySelector('p.wrong-info').textContent = 'Email cannot be empty'
       document.querySelector('p.wrong-info').style.color = 'red'
       submitButton.classList.remove('loading')
       return
@@ -110,13 +110,13 @@ submitButton.onclick = async function() {
 
     const inputCode = document.createElement('input')
     inputCode.type  = 'text'
-    inputCode.placeholder = 'Nhập mã xác nhận'
+    inputCode.placeholder = 'Enter verification code'
     inputCode.name  = 'code'
 
     document.querySelector('div[class="form-group code"]').style.display = ''
     document.querySelector('div[class="form-group code"]').appendChild(inputCode)
 
-    submitButton.innerText = 'Gửi mã xác nhận'
+    submitButton.innerText = 'Send Verification Code'
     submitButton.className = 'submit-code'
     submitButton.classList.remove('loading')
     return
@@ -126,7 +126,7 @@ submitButton.onclick = async function() {
     const code = document.querySelector('input[name="code"]').value
     const isVerify = await verifyingCode(email, code)
     if (!isVerify) {
-      document.querySelector('p.wrong-info').textContent = 'Mã không chính xác'
+      document.querySelector('p.wrong-info').textContent = 'Code is incorrect'
       document.querySelector('p.wrong-info').style.color = 'red'
       submitButton.classList.remove('loading')
       return
@@ -136,17 +136,17 @@ submitButton.onclick = async function() {
 
     const name = document.createElement('input')
     name.type  = 'text'
-    name.placeholder = 'Nhập tên của bạn'
+    name.placeholder = 'Enter your name'
     name.name  = 'name'
 
     const password = document.createElement('input')
     password.type  = 'password'
-    password.placeholder = 'Nhập mật khẩu mới'
+    password.placeholder = 'Enter new password'
     password.name  = 'password'
 
     const confirmPassword = document.createElement('input')
     confirmPassword.type  = 'password'
-    confirmPassword.placeholder = 'Xác nhận mật khẩu'
+    confirmPassword.placeholder = 'Confirm password'
     confirmPassword.name  = 'confirm-password'
 
     document.querySelector('div[class="form-group name"]').style.display = ''
@@ -158,7 +158,7 @@ submitButton.onclick = async function() {
     document.querySelector('div[class="form-group confirm-password"]').style.display = ''
     document.querySelector('div[class="form-group confirm-password"]').appendChild(confirmPassword)
 
-    submitButton.innerText = 'Xác nhận'
+    submitButton.innerText = 'Confirm'
     submitButton.className = 'submit-password'
     submitButton.classList.remove('loading')
 
@@ -173,11 +173,11 @@ submitButton.onclick = async function() {
 
     if (password.trim() === '') {
       submitButton.classList.remove('loading')
-      return pushNotification('Mật khẩu đang trống')
+      return pushNotification('Password cannot be empty')
     }
     if (password !== confirmPassword) {
       submitButton.classList.remove('loading')
-      return pushNotification('Mật khẩu không khớp')
+      return pushNotification('Passwords do not match')
     }
 
     const {isSuccessful, message} = await creatingAccount(email, name, password)
@@ -202,7 +202,7 @@ window.onload = async () => {
   if (signup === "google") {
     try {
       const user = await account.get()
-      pushNotification("Đang kiểm tra tài khoản")
+      pushNotification("Checking account")
 
       const response = await fetch("/authentication/sign-up/verifying-google-email", {
         method: "POST",
@@ -230,7 +230,7 @@ window.onload = async () => {
 
       const password = document.createElement('input')
       password.type  = 'password'
-      password.placeholder = 'Nhập mật khẩu mới'
+      password.placeholder = 'Enter new password'
       password.name  = 'password'
 
       const confirmPassword = document.createElement('input')

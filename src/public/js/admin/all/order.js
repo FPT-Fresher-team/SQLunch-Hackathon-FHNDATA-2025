@@ -11,16 +11,16 @@ const dataSize      = { size: 0 }
 function generateColumns() {
   const columnsGroup = document.querySelector('div.checkbox-group')
   const inputList = `
-    <label><input type="checkbox" value="_id" checked> Mã đơn hàng</label>
-    <label><input type="checkbox" value="customerInfo" checked> Tên khách hàng</label>
-    <label><input type="checkbox" value="totalOrderPrice" checked> Tổng tiền trước giảm giá</label>
-    <label><input type="checkbox" value="totalNewOrderPrice" checked> Tổng số tiền</label>
-    <label><input type="checkbox" value="paymentMethod" checked> Hình thức thanh toán</label>
-    <label><input type="checkbox" value="status"> Trạng thái đơn</label>
-    <label><input type="checkbox" value="isRated"> Trạng thái đánh giá</label>
-    <label><input type="checkbox" value="isPaid"> Trạng thái thanh toán</label>
-    <label><input type="checkbox" value="voucherCode"> Mã voucher</label>
-    <label><input type="checkbox" value="createdAt"> Ngày đặt hàng</label>
+    <label><input type="checkbox" value="_id" checked> Order Code</label>
+    <label><input type="checkbox" value="customerInfo" checked> Customer Name</label>
+    <label><input type="checkbox" value="totalOrderPrice" checked> Total Before Discount</label>
+    <label><input type="checkbox" value="totalNewOrderPrice" checked> Total Amount</label>
+    <label><input type="checkbox" value="paymentMethod" checked> Payment Method</label>
+    <label><input type="checkbox" value="status"> Order Status</label>
+    <label><input type="checkbox" value="isRated"> Review Status</label>
+    <label><input type="checkbox" value="isPaid"> Payment Status</label>
+    <label><input type="checkbox" value="voucherCode"> Voucher Code</label>
+    <label><input type="checkbox" value="createdAt"> Order Date</label>
   `
   columnsGroup.insertAdjacentHTML('beforeend', inputList)
 } 
@@ -71,7 +71,7 @@ async function getOrders(sortOptions, filterOptions, currentPage, itemsPerPage) 
 
   dataSize.size = data_size
 
-  document.querySelector('div.board-title').querySelector('p').textContent = 'Đơn hàng: ' + dataSize.size
+  document.querySelector('div.board-title').querySelector('p').textContent = 'Orders: ' + dataSize.size
 
   const selected = Array.from(document.querySelectorAll('.checkbox-group input:checked')).map(cb => ({
     value: cb.value,
@@ -97,7 +97,7 @@ async function getOrders(sortOptions, filterOptions, currentPage, itemsPerPage) 
     })
 
     const headLink = document.createElement('td')
-    headLink.textContent = 'Chi tiết'
+    headLink.textContent = 'Details'
     trHead.appendChild(headLink)
 
     thead.appendChild(trHead)
@@ -130,7 +130,7 @@ async function getOrders(sortOptions, filterOptions, currentPage, itemsPerPage) 
       })
 
       const link = document.createElement('td')
-      link.innerHTML = `<a target="_blank" rel="noopener noreferrer" href="/admin/all-orders/order/${item._id}">Xem</a>`
+      link.innerHTML = `<a target="_blank" rel="noopener noreferrer" href="/admin/all-orders/order/${item._id}">View</a>`
       newTr.appendChild(link)
       tbody.appendChild(newTr)
       itemIndex++
