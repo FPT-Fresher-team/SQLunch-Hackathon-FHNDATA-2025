@@ -1,42 +1,42 @@
 <div class="admin-create-order-container">
   <div id="form">
     <div class="form-title">
-      <p>Thêm đơn hàng mới</p>
+      <p>Add New Order</p>
     </div>
     <div class="form-group">
-      <label for="orderDate">Ngày bán *</label>
+      <label for="orderDate">Sale Date *</label>
       <input type="date" id="orderDate" name="orderDate" required>
     </div>
     <div class="form-group">
-      <label for="userId">Chọn khách hàng</label>
+      <label for="userId">Select Customer</label>
       <select name="userId" id="userId" required>
-        <option value="" selected disabled>-- Khách hàng --</option>
+        <option value="" selected disabled>-- Customer --</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="paymentMethod">Chọn phương thức thanh toán</label>
+      <label for="paymentMethod">Select Payment Method</label>
       <select name="paymentMethod" id="paymentMethod" required>
-        <option value="" selected disabled>-- Phương thức thanh toán --</option>
+        <option value="" selected disabled>-- Payment Method --</option>
       </select>
     </div>
     <div class="form-group">
-      <label for="note">Ghi chú</label>
+      <label for="note">Notes</label>
       <input type="text" id="note" name="note">
     </div>
     <div class="form-group">
-      <label>Chọn sản phẩm</label>
-      <input type="text"  id="product-search" placeholder="Nhập tên sản phẩm">
+      <label>Select Product</label>
+      <input type="text"  id="product-search" placeholder="Enter product name">
     </div>
     <div class="products-match"></div>
 
     <table>
       <thead>
         <tr>
-          <td style="width:  5%;">STT</td>
-          <td style="width: 40%;">Sản Phẩm</td>
-          <td style="width: 15%; text-align:right">Đơn Giá</td>
-          <td style="width: 10%;">Số Lượng</td>
-          <td style="width: 15%; text-align:right">Tổng Tiền</td>
+          <td style="width:  5%;">No.</td>
+          <td style="width: 40%;">Product</td>
+          <td style="width: 15%; text-align:right">Unit Price</td>
+          <td style="width: 10%;">Quantity</td>
+          <td style="width: 15%; text-align:right">Total Amount</td>
           <td style="width: 10%;"></td>
         </tr>
       </thead>

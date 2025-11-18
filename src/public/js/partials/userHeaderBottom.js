@@ -20,18 +20,18 @@ async function checkUser() {
 
   if (window.isLoggedIn) {
     const updateProfileButton = document.createElement('a')
-    updateProfileButton.innerText = 'Thông tin cá nhân'
+    updateProfileButton.innerText = 'Personal Information'
     updateProfileButton.setAttribute('href', `/profile/info/${window.uid}`)
     avatarMenuBottom.appendChild(updateProfileButton)
   
     const logOutButton = document.createElement('a')
-    logOutButton.innerText = 'Đăng Xuất'
+    logOutButton.innerText = 'Sign Out'
     logOutButton.setAttribute('href', '/log-out')
     avatarMenuBottom.appendChild(logOutButton)
   } 
   else {
     const logInButton = document.createElement('a')
-    logInButton.innerText = 'Đăng nhập'
+    logInButton.innerText = 'Sign In'
     logInButton.setAttribute('href', '/authentication/sign-in')
     avatarMenuBottom.appendChild(logInButton)
   }

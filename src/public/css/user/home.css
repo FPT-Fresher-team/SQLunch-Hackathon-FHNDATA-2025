@@ -39,7 +39,7 @@
       position: relative;
       background-color: white; 
       min-height: 150px;
-      max-width: 220px;
+      /* max-width: 220px; */
       padding: 10px 12px;
       border-radius: 10px;
       .loading {
@@ -63,7 +63,7 @@
       }
       #description {
         display: flex; 
-        height: 35px;
+        height: 60px;
         text-overflow: ellipsis; 
         overflow: hidden;
         word-wrap: break-word;
@@ -81,13 +81,14 @@
     }
   }
 }
-.flash-deal-board {
-}
 .products-board {
   background-color: transparent;
 }
 .famous-brand-board {
   overflow: hidden;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
   margin: 40px auto;
   max-width: 80%;
   position: relative;
@@ -214,6 +215,5 @@
 /* Align button to left for vouchers and favorite products */
 .vouchers-board .view-all-btn,
 #favorite.products-board .view-all-btn {
-  align-self: flex-start;
   margin-left: 15px;
 }

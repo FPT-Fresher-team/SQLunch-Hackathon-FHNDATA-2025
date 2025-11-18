@@ -134,7 +134,7 @@ class allEmployeesController {
   async employeeCreated(req, res, next) {
     try {
       const empExist = await employee.findOne({ email: req.body.email })
-      if (empExist) throw new Error('Tài khoản đã tồn tại')
+      if (empExist) throw new Error('Account already exists')
   
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(req.body.password, salt)

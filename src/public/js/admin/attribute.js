@@ -66,7 +66,7 @@ async function updateAttribute(id, rowIndex) {
       const wage = deFormatNumber(row.querySelector('input#wage')?.value)
 
       if (code === '' || name === '' || wage === '') {
-        return pushNotification('Vui lòng điền đầy đủ thông tin.')
+        return pushNotification('Please fill in all information.')
       }
 
       const response = await fetch(`/admin/all-attributes/update/${id}`, {
@@ -112,9 +112,9 @@ function addRow(id) {
   const tr = document.createElement('tr')
   if (id === 'position') {
     tr.innerHTML = `
-      <td><input type="text" id="code" placeholder="Nhập mã"></td>
-      <td><input type="text" id="wage" placeholder="Nhập lương"></td>
-      <td><input type="text" id="name" placeholder="Nhập tên"></td>
+      <td><input type="text" id="code" placeholder="Enter code"></td>
+      <td><input type="text" id="wage" placeholder="Enter salary"></td>
+      <td><input type="text" id="name" placeholder="Enter name"></td>
       <td data-id="${id}">
         <button id="create">
           <i class="fi fi-rr-check"></i>
@@ -124,8 +124,8 @@ function addRow(id) {
     `
   } else {
     tr.innerHTML = `
-      <td><input type="text" id="code" placeholder="Nhập mã"></td>
-      <td><input type="text" id="name" placeholder="Nhập tên"></td>
+      <td><input type="text" id="code" placeholder="Enter code"></td>
+      <td><input type="text" id="name" placeholder="Enter name"></td>
       <td data-id="${id}">
         <button id="create">
           <i class="fi fi-rr-check"></i>
@@ -152,13 +152,13 @@ async function getMembership() {
   table.innerHTML = `
     <table>
       <thead>
-        <tr><td colspan="3">HẠNG THÀNH VIÊN</td></tr>
+        <tr><td colspan="3">MEMBER RANK</td></tr>
       </thead>
       <thead>
         <tr>
-          <td>Mã</td>
-          <td>Tên</td>
-          <td>Thao tác</td>
+          <td>Code</td>
+          <td>Name</td>
+          <td>Action</td>
         </tr>
       <tbody>
         ${data.map(item => 
@@ -175,7 +175,7 @@ async function getMembership() {
         ).join("")}
       </tbody>
     </table>
-    <div class="submit-button"><button id="membership" onclick="addRow(this.id)">Thêm</button></div>
+    <div class="submit-button"><button id="membership" onclick="addRow(this.id)">Add</button></div>
   `
 
   document.querySelector('div.membership').appendChild(table)
@@ -192,13 +192,13 @@ async function getOrderStatus() {
   table.innerHTML = `
     <table>
       <thead>
-        <tr><td colspan="3">TRẠNG THÁI ĐƠN HÀNG</td></tr>
+        <tr><td colspan="3">ORDER STATUS</td></tr>
       </thead>
       <thead>
         <tr>
-          <td>Mã</td>
-          <td>Tên</td>
-          <td>Thao tác</td>
+          <td>Code</td>
+          <td>Name</td>
+          <td>Action</td>
         </tr>
       <tbody>
         ${data.map(item => 
@@ -215,7 +215,7 @@ async function getOrderStatus() {
         ).join("")}
       </tbody>
     </table>
-    <div class="submit-button"><button id="order-status" onclick="addRow(this.id)">Thêm</button></div>
+    <div class="submit-button"><button id="order-status" onclick="addRow(this.id)">Add</button></div>
   `
 
   document.querySelector('div.order-status').appendChild(table)
@@ -232,13 +232,13 @@ async function getPaymentMethod() {
   table.innerHTML = `
     <table>
       <thead>
-        <tr><td colspan="3">PHƯƠNG THƯC THANH TOÁN</td></tr>
+        <tr><td colspan="3">PAYMENT METHOD</td></tr>
       </thead>
       <thead>
         <tr>
-          <td>Mã</td>
-          <td>Tên</td>
-          <td>Thao tác</td>
+          <td>Code</td>
+          <td>Name</td>
+          <td>Action</td>
         </tr>
       <tbody>
         ${data.map(item => 
@@ -255,7 +255,7 @@ async function getPaymentMethod() {
         ).join("")}
       </tbody>
     </table>
-    <div class="submit-button"><button id="payment-method" onclick="addRow(this.id)">Thêm</button></div>
+    <div class="submit-button"><button id="payment-method" onclick="addRow(this.id)">Add</button></div>
   `
 
   document.querySelector('div.payment-method').appendChild(table)
@@ -272,14 +272,14 @@ async function getPosition() {
   table.innerHTML = `
     <table>
       <thead>
-        <tr><td colspan="4">VỊ TRÍ CÔNG VIỆC</td></tr>
+        <tr><td colspan="4">JOB POSITION</td></tr>
       </thead>
       <thead>
         <tr>
-          <td style="width: 23%;">Mã</td>
-          <td style="width: 30%;">Lương</td>
-          <td style="width: 30%;">Tên</td>
-          <td style="width: 17%;">Thao tác</td>
+          <td style="width: 23%;">Code</td>
+          <td style="width: 30%;">Salary</td>
+          <td style="width: 30%;">Name</td>
+          <td style="width: 17%;">Action</td>
         </tr>
       <tbody>
         ${data.map(item => 
@@ -297,7 +297,7 @@ async function getPosition() {
         ).join("")}
       </tbody>
     </table>
-    <div class="submit-button"><button id="position" onclick="addRow(this.id)">Thêm</button></div>
+    <div class="submit-button"><button id="position" onclick="addRow(this.id)">Add</button></div>
   `
 
   document.querySelector('div.position').appendChild(table)
@@ -314,13 +314,13 @@ async function getProductStatus() {
   table.innerHTML = `
     <table>
       <thead>
-        <tr><td colspan="3">TRẠNG THÁI SẢN PHẨM</td></tr>
+        <tr><td colspan="3">PRODUCT STATUS</td></tr>
       </thead>
       <thead>
         <tr>
-          <td>Mã</td>
-          <td>Tên</td>
-          <td>Thao tác</td>
+          <td>Code</td>
+          <td>Name</td>
+          <td>Action</td>
         </tr>
       <tbody>
         ${data.map(item => 
@@ -337,7 +337,7 @@ async function getProductStatus() {
         ).join("")}
       </tbody>
     </table>
-    <div class="submit-button"><button id="product-status" onclick="addRow(this.id)">Thêm</button></div>
+    <div class="submit-button"><button id="product-status" onclick="addRow(this.id)">Add</button></div>
   `
 
   document.querySelector('div.product-status').appendChild(table)
@@ -359,7 +359,7 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     
     await getProductStatus()
   } catch (error) {
-    console.error('Có lỗi xảy ra:', error)
-    pushNotification('Có lỗi xảy ra')
+    console.error('An error occurred:', error)
+    pushNotification('An error occurred')
   }
 })

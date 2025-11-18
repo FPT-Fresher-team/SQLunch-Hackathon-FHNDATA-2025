@@ -31,63 +31,63 @@ async function getUser() {
   const {data, member} = await response.json()
 
   const p = document.createElement('p')
-  p.textContent = 'Thông Tin Cá Nhân'
+  p.textContent = 'Personal Information'
 
   const form = document.createElement('form')
   form.innerHTML = `
     <div class="form-group">
-      <label for="name">Tên Khách Hàng</label>
+      <label for="name">Customer Name</label>
       <input type="text" name="name" value="${data.name}">
     </div>
 
     <div class="form-group">
-      <label for="gender">Giới tính</label>
+      <label for="gender">Gender</label>
       <div>
         <input type="radio" name="gender" value="male">
-        <label for="gender">Nam</label>
+        <label for="gender">Male</label>
         
         <input type="radio" name="gender" value="female">
-        <label for="gender">Nữ</label>
+        <label for="gender">Female</label>
       </div>
     </div>
 
     <div class="form-group">
-      <label for="name">Email khách hàng</label>
+      <label for="name">Customer Email</label>
       <input type="text" name="email" value="${data.email}" disabled>
     </div>
 
     <div class="form-group">
-      <label for="phone">Số điện thoại</label>
+      <label for="phone">Phone Number</label>
       <input type="text" name="phone" value="${data.phone}">
     </div>
 
     <div class="form-group">
-      <label for="dob">Ngày sinh</label>
+      <label for="dob">Date of Birth</label>
       <input type="date" name="dob" value="${data.dob?.split('T')[0] || null}">
     </div>
 
     <div class="form-group">
-      <label for="address">Địa chỉ nhận hàng</label>
+      <label for="address">Delivery Address</label>
       <input type="text" name="address" value="${data.address}">
     </div>
     
     <div class="form-group">
-      <label for="address">Số lượng đơn hàng</label>
+      <label for="address">Order Quantity</label>
       <input type="text" name="quantity" value="${data.quantity}" disabled>
     </div>
     
     <div class="form-group">
-      <label for="address">Tổng chi tiêu</label>
+      <label for="address">Total Expenditure</label>
       <input type="text" name="revenue" value="${formatNumber(data.revenue) }" disabled>
     </div>
 
     <div class="form-group">
-      <label for="member">Hạng thành viên</label>
+      <label for="member">Member Rank</label>
       <input type="text" name="member" value="${member.name}" disabled>
     </div>
     
     <div class="form-group">
-      <label for="address">Ngày tạo tài khoản</label>
+      <label for="address">Account Created Date</label>
       <input type="text" name="createdAt" value="${formatDate(data.createdAt)}" disabled>
     </div>
   `
@@ -100,7 +100,7 @@ async function getUser() {
 
   const button = document.createElement('button')
   button.type = 'submit'
-  button.textContent = 'Cập Nhật'
+  button.textContent = 'Update'
   button.onclick = async function updateUser() {
     const name    = document.querySelector('input[name="name"]').value
     const gender  = document.querySelector('input[name="gender"]:checked').value
@@ -114,7 +114,7 @@ async function getUser() {
       address === data.address &&
       gender  === data.gender  &&
       dob     === data.dob.split('T')[0]
-    ) return pushNotification('Hãy cập nhật thông tin')
+    ) return pushNotification('Please update your information')
 
     const response = await fetch('/profile/updated', {
       method: 'POST',
@@ -157,16 +157,16 @@ async function getOrders() {
   const {data} = await response.json()
 
   const p = document.createElement('p')
-  p.textContent = 'Thông Tin Đơn Hàng'
+  p.textContent = 'Order Information'
 
   const thead = document.createElement('thead')
   thead.innerHTML = `
     <tr>
-      <td style="width: 10%">STT</td>
-      <td style="width: 15%">Người Nhận</td>
-      <td style="width: 25%">Tổng Tiền</td>
-      <td style="width: 20%">Ngày</td>
-      <td style="width: 20%">Tình Trạng</td>
+      <td style="width: 10%">No</td>
+      <td style="width: 15%">Recipient</td>
+      <td style="width: 25%">Total Amount</td>
+      <td style="width: 20%">Date</td>
+      <td style="width: 20%">Status</td>
       <td style="width: 10%"></td>
     </tr>
   `
@@ -184,8 +184,8 @@ async function getOrders() {
       <td style="text-align:center">
         ${
           order.orderStatus.code === 'delivered' && order.isPaid === true
-          ? `<button onclick="orderAction('${order._id}')">Chi Tiết</button>`
-          : `<a target="_blank" rel="noopener noreferrer" href="/all-orders/order/${order._id}">Chi Tiết</a>`
+          ? `<button onclick="orderAction('${order._id}')">Details</button>`
+          : `<a target="_blank" rel="noopener noreferrer" href="/all-orders/order/${order._id}">Details</a>`
         }
       </td>
     `
@@ -213,16 +213,16 @@ async function getDoneOrders() {
   const {data} = await response.json()
 
   const p = document.createElement('p')
-  p.textContent = 'Đánh Giá Đơn Hàng'
+  p.textContent = 'Rate Orders'
 
   const thead = document.createElement('thead')
   thead.innerHTML = `
     <tr>
-      <td style="width: 10%">STT</td>
-      <td style="width: 15%">Người Nhận</td>
-      <td style="width: 25%">Tổng Tiền</td>
-      <td style="width: 20%">Ngày</td>
-      <td style="width: 20%">Tình Trạng</td>
+      <td style="width: 10%">No.</td>
+      <td style="width: 15%">Recipient</td>
+      <td style="width: 25%">Total Amount</td>
+      <td style="width: 20%">Date</td>
+      <td style="width: 20%">Status</td>
       <td style="width: 10%"></td>
     </tr>
   `
@@ -237,7 +237,7 @@ async function getDoneOrders() {
       <td style="text-align:right"  >${formatNumber(order.totalNewOrderPrice)}</td>
       <td style="text-align:right"  >${formatDate(order.createdAt)}</td>
       <td style="text-align:left"   >${order.orderStatus.name}</td>
-      <td style="text-align:center" ><a target="_blank" rel="noopener noreferrer" href="/all-orders/order/rate/${order._id}">Chi Tiết</a></td>
+      <td style="text-align:center" ><a target="_blank" rel="noopener noreferrer" href="/all-orders/order/rate/${order._id}">Details</a></td>
     `
     index++
     tbody.appendChild(tr)
@@ -264,16 +264,16 @@ async function getVouchers() {
   if (error) return pushNotification(error)
 
   const p = document.createElement('p')
-  p.textContent = 'Thông Tin Vouchers'
+  p.textContent = 'Voucher Information'
 
   const thead = document.createElement('thead')
   thead.innerHTML = `
     <tr>
-      <td style="width: 10%">STT</td>
-      <td style="width: 15%">Mã Voucher</td>
-      <td style="width: 25%">Giảm giá</td>
-      <td style="width: 20%">Trạng thái</td>
-      <td style="width: 15%">Ngày kết thúc</td>
+      <td style="width: 10%">No</td>
+      <td style="width: 15%">Code</td>
+      <td style="width: 25%">Discount Rate</td>
+      <td style="width: 20%">Status</td>
+      <td style="width: 15%">End Date</td>
       <td style="width: 15%"></td>
     </tr>
   `
@@ -286,7 +286,7 @@ async function getVouchers() {
       <td style="text-align:center" >${index}</td>
       <td style="text-align:left"   >${voucher.code}</td>
       <td style="text-align:right"  >${voucher.discount}%</td>
-      <td style="text-align:right"  >${voucher.status === 'active' ? 'Đang hoạt động' : voucher.status === 'used' ? 'Đã sử dụng' : 'Hết hạn'}</td>
+      <td style="text-align:right"  >${voucher.status === 'active' ? 'Active' : voucher.status === 'used' ? 'Used' : 'Expired'}</td>
       <td style="text-align:left"   >${formatDate(voucher.endDate)}</td>
       <td style="text-align:center" ><a target="_blank" rel="noopener noreferrer" href="/all-vouchers/voucher/${voucher._id}">Chi Tiết</a></td>
     `
@@ -314,16 +314,16 @@ async function getUserVouchers() {
   const {data} = await response.json()
 
   const p = document.createElement('p')
-  p.textContent = 'Vouchers Dành Riêng Cho Bạn'
+  p.textContent = 'My Vouchers'
 
   const thead = document.createElement('thead')
   thead.innerHTML = `
     <tr>
-      <td style="width: 10%">STT</td>
-      <td style="width: 15%">Mã Voucher</td>
-      <td style="width: 25%">Giảm giá</td>
-      <td style="width: 20%">Trạng thái</td>
-      <td style="width: 15%">Ngày kết thúc</td>
+      <td style="width: 10%">No</td>
+      <td style="width: 15%">Code</td>
+      <td style="width: 25%">Discount Amount</td>
+      <td style="width: 20%">Status</td>
+      <td style="width: 15%">End Date</td>
       <td style="width: 15%"></td>
     </tr>
   `
@@ -336,7 +336,7 @@ async function getUserVouchers() {
       <td style="text-align:center" >${index}</td>
       <td style="text-align:left"   >${voucher.code}</td>
       <td style="text-align:right"  >${formatNumber(voucher.discount)}</td>
-      <td style="text-align:right"  >${voucher.status === 'active' ? 'Đang hoạt động' : voucher.status === 'used' ? 'Đã sử dụng' : 'Hết hạn'}</td>
+      <td style="text-align:right"  >${voucher.status === 'active' ? 'Active' : voucher.status === 'used' ? 'Used' : 'Expired'}</td>
       <td style="text-align:left"   >${formatDate(voucher.endDate)}</td>
       <td style="text-align:center" ><a target="_blank" rel="noopener noreferrer" href="/all-vouchers/voucher/user/${voucher._id}">Chi Tiết</a></td>
     `
@@ -358,22 +358,22 @@ async function getUserVouchers() {
 async function resetPassword() {
   try {
     const p = document.createElement('p')
-    p.textContent = 'Đổi mật khẩu'
+    p.textContent = 'Change Password'
   
     const form = document.createElement('form')
     form.innerHTML = `
       <div class="form-group">
-        <label for="oldPassword">Mật khẩu cũ</label>
+        <label for="oldPassword">Old Password</label>
         <input type="password" name="oldPassword">
       </div>
   
       <div class="form-group">
-        <label for="newPassword">Mật khẩu mới</label>
+        <label for="newPassword">New Password</label>
         <input type="password" name="newPassword">
       </div>
   
       <div class="form-group">
-        <label for="confirmPassword">Xác nhận mật khẩu mới</label>
+        <label for="confirmPassword">Confirm New Password</label>
         <input type="password" name="confirmPassword">
       </div>
     `
@@ -383,14 +383,14 @@ async function resetPassword() {
   
     const button = document.createElement('button')
     button.type = 'submit'
-    button.textContent = 'Cập Nhật'
-    button.onclick = async function updateUser() {
+    button.textContent = 'Update'
+    button.onclick = async function updatePassword() {
       const oldPassword = document.querySelector('input[name="oldPassword"]').value
       const newPassword = document.querySelector('input[name="newPassword"]').value
       const confirmPassword = document.querySelector('input[name="confirmPassword"]').value
   
-      if (newPassword !== confirmPassword) return pushNotification('Mật khẩu mới không khớp')
-      if (newPassword.length < 6) return pushNotification('Mật khẩu mới phải có ít nhất 6 ký tự')
+      if (newPassword !== confirmPassword) return pushNotification('New passwords do not match')
+      if (newPassword.length < 6) return pushNotification('New password must be at least 6 characters')
 
       console.log('123')
   
@@ -426,12 +426,12 @@ async function resetPassword() {
 
 async function getFeedback() {
   const p = document.createElement('p')
-  p.textContent = 'Góp ý'
+  p.textContent = 'Feedback'
 
   const form = document.createElement('form')
   form.innerHTML = `
     <div class="form-group">
-      <label for="phone">Bạn có góp ý gì cho mình thì điền vô đây nha</label>
+      <label for="phone">Do you have any suggestions for us? Please share your feedback</label>
       <input 
         type="text" 
         class="form-control" 
@@ -461,7 +461,7 @@ function orderAction(orderId) {
   actionBox.setAttribute('class', 'action-box')
   actionBox.innerHTML = `
     <div class="actions">
-      <button class="confirmation-button">Xác nhận đã nhận đơn hàng</button>
+      <button class="confirmation-button">Confirm Order Received</button>
       <a target="_blank" rel="noopener noreferrer" href="/all-orders/order/${orderId}">Xem Chi Tiết</a>
       <button 
         id="delete-button" 

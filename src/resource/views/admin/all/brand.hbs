@@ -1,58 +1,58 @@
 <div class="admin-all-brands-container">  
   <div class="header">
     <div class="board-title">
-      <p>Thương hiệu: </p>
+      <p>Brand: </p>
     </div>
 
     <div class="date-filter">
       <input type="date" id="start-date">
       <input type="date" id="end-date">
-      <button title="submit" type="submit">Xem</button>
+      <button title="submit" type="submit">View</button>
     </div>
   </div>
 
   <div class="control-bar">
     <div class="search">
       <select id="search-type" class="search-btn">
-        <option value="">Tìm kiếm theo</option>
+        <option value="">Search by</option>
         <option value="_id" selected>ID</option>
-        <option value="name">Tên</option>
+        <option value="name">Name</option>
       </select>
-      <input type="text" id="search-input" name="name" placeholder="Tìm kiếm thương hiệu" />
+      <input type="text" id="search-input" name="name" placeholder="Search brand" />
     </div>
 
     <div class="sort-filter">
       <div class="sort">
-        <label>Sắp xếp:</label>
+        <label>Sort by:</label>
         <select id="price" class="filter-btn">
-          <option value="">Giá</option>
-          <option value="1">Giá tăng dần</option>
-          <option value="-1">Giá giảm dần</option>
+          <option value="">Price</option>
+          <option value="1">Price Ascending</option>
+          <option value="-1">Price Descending</option>
         </select>
         <select id="rate" class="filter-btn">
-          <option value="">Đánh giá</option>
-          <option value="1">Đánh giá tăng dần</option>
-          <option value="-1">Đánh giá giảm dần</option>
+          <option value="">Rating</option>
+          <option value="1">Rating Ascending</option>
+          <option value="-1">Rating Descending</option>
         </select>
         <select id="saleNumber" class="filter-btn">
-          <option value="">Lượng bán</option>
-          <option value="1">Lượng bán tăng dần</option>
-          <option value="-1">Lượng bán giảm dần</option>
+          <option value="">Sales Volume</option>
+          <option value="1">Sales Volume Ascending</option>
+          <option value="-1">Sales Volume Descending</option>
         </select>
       </div>
 
       <div class="filter">
-        <label>Lọc:</label>
+        <label>Filter:</label>
         <select id="price" class="filter-btn">
-          <option value="">Giá</option>
+          <option value="">Price</option>
         </select>
-        <button id="clear-sort-filter" style="display: none">Xoá bộ lọc</button>
+        <button id="clear-sort-filter" style="display: none">Clear Filter</button>
       </div>
     </div>
 
     <a href="/admin/all-orders/order/create" target="_blank" rel="noopener noreferrer" class="create-btn" id="create-btn">
       <i class="fi fi-rr-plus"></i>
-      <span>Thêm Thương Hiệu</span>
+      <span>Add Brand</span>
     </a>
   </div>
 
@@ -61,12 +61,12 @@
     <table class="all-items">
       <thead>
         <tr>
-          <td style="width:  5%">STT            </td>
-          <td style="width: 15%">Tên Thương Hiệu</td>
-          <td style="width: 15%">Tổng Sản Phẩm  </td>
-          <td style="width: 15%">Tổng Lượng Bán </td>
-          <td style="width: 20%">Tổng Doanh Thu </td>
-          <td style="width: 10%">Chi tiết       </td>
+          <td style="width:  5%">No.            </td>
+          <td style="width: 15%">Brand Name</td>
+          <td style="width: 15%">Total Products  </td>
+          <td style="width: 15%">Total Sales </td>
+          <td style="width: 20%">Total Revenue </td>
+          <td style="width: 10%">Details       </td>
         </tr>
       </thead>
 

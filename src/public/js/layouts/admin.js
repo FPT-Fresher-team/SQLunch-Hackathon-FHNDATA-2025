@@ -41,11 +41,11 @@ function updateNotification(message) {
 
 function initSocketEvents(role, adminId) {
   socket.on('order', () => {
-    if (role === 'employee' || role === 'admin') updateNotification('Bạn có đơn hàng mới')
+    if (role === 'employee' || role === 'admin') updateNotification('You have a new order')
   })
 
   socket.on('account', () => {
-    if (role === 'employee') updateNotification('Bạn có khách hàng mới')
+    if (role === 'employee') updateNotification('You have a new customer')
   })
 
   socket.on('chat-message', (id) => {

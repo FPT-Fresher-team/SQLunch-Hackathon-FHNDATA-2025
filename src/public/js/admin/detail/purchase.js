@@ -12,7 +12,7 @@ async function getPurchase() {
   const {error, purchaseInfo, supplierInfo} = await response.json()
   if (error) return pushNotification('Có lỗi xảy ra')
 
-  document.title = 'Đơn nhập: ' + supplierInfo.name
+  document.title = 'Purchase Order: ' + supplierInfo.name
 
   document.querySelector('input#id').value       = purchaseInfo._id
   document.querySelector('input#date').value     = formatDate(purchaseInfo.purchaseDate) 

@@ -18,18 +18,18 @@ var productId;
 function generateColumns() {
   const columnsGroup = document.querySelector('div.checkbox-group')
   const inputList = `
-    <label><input type="checkbox" value="_id" checked> Mã Khách hàng</label>
-    <label><input type="checkbox" value="name" checked> Tên Khách hàng</label>
-    <label><input type="checkbox" value="address" checked> Địa chỉ</label>
-    <label><input type="checkbox" value="quantity" checked> S/L Đơn</label>
-    <label><input type="checkbox" value="revenue" checked> Tổng doanh thu</label>
+    <label><input type="checkbox" value="_id" checked> Customer Code</label>
+    <label><input type="checkbox" value="name" checked> Customer Name</label>
+    <label><input type="checkbox" value="address" checked> Address</label>
+    <label><input type="checkbox" value="quantity" checked> Order Count</label>
+    <label><input type="checkbox" value="revenue" checked> Total Revenue</label>
     <label><input type="checkbox" value="email"> Email</label>
-    <label><input type="checkbox" value="phone"> SDT</label>
-    <label><input type="checkbox" value="gender"> Giới tính</label>
-    <label><input type="checkbox" value="memberCode"> Hạng thành viên</label>
-    <label><input type="checkbox" value="isActive"> Trạng thái</label>
-    <label><input type="checkbox" value="dob"> Ngày sinh</label>
-    <label><input type="checkbox" value="lastLogin"> Lần đăng nhập cuối</label>
+    <label><input type="checkbox" value="phone"> Phone</label>
+    <label><input type="checkbox" value="gender"> Gender</label>
+    <label><input type="checkbox" value="memberCode"> Member Rank</label>
+    <label><input type="checkbox" value="isActive"> Status</label>
+    <label><input type="checkbox" value="dob"> Date of Birth</label>
+    <label><input type="checkbox" value="lastLogin"> Last Login</label>
   `
   columnsGroup.insertAdjacentHTML('beforeend', inputList)
 } 
@@ -51,7 +51,7 @@ async function getDeletedProducts(sortOptions, filterOptions, currentPage) {
 
   dataSize.size = data_size
 
-  document.querySelector('div.board-title').querySelector('p').textContent = 'Đã xoá: ' + dataSize.size
+  document.querySelector('div.board-title').querySelector('p').textContent = 'Deleted: ' + dataSize.size
 
   window.setTimeout(function() {
     tbody.querySelectorAll('tr').forEach((tr, index) => {
@@ -72,8 +72,8 @@ async function getDeletedProducts(sortOptions, filterOptions, currentPage) {
         <td>${item.categories}</td>
         <td style="text-align: right;">${formatNumber(item.price)}</td>
         <td>
-          <button id="${item._id}" onclick="clickToRestore(this.id)">Khôi Phục</button>
-          <button id="${item._id}" onclick="clickToDelete(this.id)">Xoá</button>
+          <button id="${item._id}" onclick="clickToRestore(this.id)">Restore</button>
+          <button id="${item._id}" onclick="clickToDelete(this.id)">Delete</button>
         </td>
       `
       tbody.appendChild(newTr)

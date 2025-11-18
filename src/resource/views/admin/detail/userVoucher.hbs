@@ -2,77 +2,77 @@
   <div id="form">
     <table id="table-1">
       <thead>
-        <tr><td colspan="2">THÔNG TIN VOUCHER</td></tr>
+        <tr><td colspan="2">VOUCHER INFORMATION</td></tr>
       </thead>
       <tr>
-        <td>Mã người dùng</td>
+        <td>User Code</td>
         <td><input type="text" id="userId" disabled></td>
       </tr>
       <tr>
-        <td>Mã đơn hàng</td>
+        <td>Order Code</td>
         <td><input type="text" id="orderId"></td>
       </tr>
       <tr>
-        <td>Mã voucher</td>
+        <td>Voucher Code</td>
         <td><input type="text" id="code" disabled></td>
       </tr>
       <tr>
-        <td>Mô tả</td>
+        <td>Description</td>
         <td><input type="text" id="description" disabled></td>
       </tr>
       <tr>
-        <td>Loại voucher</td>
+        <td>Voucher Type</td>
         <td>
           <select name="voucherType" id="voucherType">
-            <option value="order" disabled>Đặt đơn</option>
-            <option value="birthday" disabled>Sinh nhật</option>
+            <option value="order" disabled>Order Voucher</option>
+            <option value="birthday" disabled>Birthday Voucher</option>
           </select>
         </td>
       </tr>
       <tr>
-        <td>Mức giảm giá</td>
+        <td>Discount Level</td>
         <td><input type="text" id="discount" disabled></td>
       </tr>
       <tr>
-        <td>Giá trị đơn hàng</td>
+        <td>Order Value</td>
         <td><input type="text" id="minOrder" disabled></td>
       </tr>
       <tr>
-        <td>Trạng thái</td>
+        <td>Status</td>
         <td>
           <select name="status" id="status">
-            <option value="active">Còn hạn</option>
-            <option value="end">Hết hạn</option>
+            <option value="active">Valid</option>
+            <option value="end">Expired</option>
           </select>
         </td>
       </tr>
       <tr>
-        <td>Ngày bắt đầu</td>
+        <td>Start Date</td>
         <td><input type="date" id="startDate"></td>
       </tr>
       <tr>
-        <td>Ngày kết thúc</td>
+        <td>End Date</td>
         <td><input type="date" id="endDate"></td>
       </tr>
       <tr>
-        <td>Ngày sử dụng</td>
+        <td>Date Used</td>
         <td><input type="date" id="usedAt" disabled></td>
       </tr>
     </table>
 
-    <div class="submit-button"><button title="submit" type="submit">Cập nhật</button></div>
+    <div class="submit-button"><button title="submit" type="submit">Update</button></div>
 
     <table id="table-2">
       <thead>
-        <tr><td colspan="5">DANH SÁCH ĐƠN HÀNG ÁP DỤNG</td></tr>
+        <tr><td colspan="5">APPLICABLE ORDERS</td></tr>
       </thead>
       <thead>
         <tr>
-          <td style="width:  5%">STT                   </td>
-          <td style="width: 35%">Tổng tiền             </td>
-          <td style="width: 25%">Phương thức thanh toán</td>
-          <td style="width: 25%">Tình trạng            </td>
-          <td style="width: 10%">Chi tiết              </td>
+          <td style="width:  5%">No.                   </td>
+          <td style="width: 35%">Total Price             </td>
+          <td style="width: 25%">Payment Method</td>
+          <td style="width: 25%">Status            </td>
+          <td style="width: 10%">Details              </td>
         </tr>
       </thead>
       <tbody></tbody>

@@ -1,56 +1,56 @@
 <div class="admin-all-employees-container">  
   <div class="header">
     <div class="board-title">
-      <p>Nhân sự: </p>
+      <p>Employee: </p>
     </div>
 
     <div class="date-filter">
       <input type="date" id="start-date">
       <input type="date" id="end-date">
-      <button title="submit" type="submit">Xem</button>
+      <button title="submit" type="submit">View</button>
     </div>
   </div>
 
   <div class="control-bar">
     <div class="search">
       <select id="search-type" class="search-btn">
-        <option value="">Tìm kiếm theo</option>
+        <option value="">Search by</option>
         <option value="_id" selected>ID</option>
-        <option value="name">Tên</option>
+        <option value="name">Name</option>
         <option value="email">Email</option>
-        <option value="phone">Số điện thoại</option>
-        <option value="address">Địa chỉ</option>
+        <option value="phone">Phone Number</option>
+        <option value="address">Address</option>
       </select>
-      <input type="text" id="search-input" name="name" placeholder="Tìm kiếm nhân sự" />
+      <input type="text" id="search-input" name="name" placeholder="Search employee" />
     </div>
 
     <div class="sort-filter">
       <div class="sort">
-        <label for="createdAt">Sắp xếp:</label>
+        <label for="createdAt">Sort by:</label>
         <select id="createdAt" class="filter-btn">
-          <option value="">Thâm niên</option>
-          <option value="-1">Thâm niên cao - thấp</option>
-          <option value="1">Thâm niên thấp - cao</option>
+          <option value="">Seniority</option>
+          <option value="-1">Seniority High - Low</option>
+          <option value="1">Seniority Low - High</option>
         </select>
       </div>
 
       <div class="filter">
-        <label>Lọc:</label>
+        <label>Filter:</label>
         <select id="role" class="filter-btn">
-          <option value="">Vị trí</option>
+          <option value="">Position</option>
         </select>
         <select id="isActive" class="filter-btn">
-          <option value="">Hoạt động</option>
+          <option value="">Status</option>
           <option value="true">Online</option>
           <option value="false">Offline</option>
         </select>
-        <button id="clear-sort-filter" style="display: none">Xoá bộ lọc</button>
+        <button id="clear-sort-filter" style="display: none">Clear Filter</button>
       </div>
     </div>
 
     <a href="/admin/all-employees/employee/create" target="_blank" rel="noopener noreferrer" class="create-btn" id="create-btn">
       <i class="fi fi-rr-plus"></i>
-      <span>Thêm Nhân Sự</span>
+      <span>Add Employee</span>
     </a>
   </div>
 
@@ -59,12 +59,12 @@
     <table class="all-items">
       <thead>
         <tr>
-          <td style="width:  5%">STT          </td>
-          <td style="width: 20%">Mã nhân viên </td>
-          <td style="width: 25%">Tên nhân viên</td>
+          <td style="width:  5%">No.          </td>
+          <td style="width: 20%">Employee Code </td>
+          <td style="width: 25%">Employee Name</td>
           <td style="width: 10%">Email        </td>
-          <td style="width: 30%">Địa chỉ      </td>
-          <td style="width: 10%">Chi tiết     </td>
+          <td style="width: 30%">Address      </td>
+          <td style="width: 10%">Details     </td>
         </tr>
       </thead>
 
