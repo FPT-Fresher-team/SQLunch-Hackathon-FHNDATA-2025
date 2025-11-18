@@ -7,8 +7,10 @@ async function getVouchers() {
     await new Promise(resolve => setTimeout(resolve, 50));
   }
 
+  
   if (!window.isLoggedIn) return
-  document.querySelector('div[class="vouchers-board"][id="voucher"]').style.display = 'block'
+  console.log(window.isLoggedIn)
+  document.querySelector('div[class="vouchers-board"][id="voucher"]').style.display = 'flex'
 
   try {
     const response = await fetch('/data/vouchers', {
@@ -33,7 +35,7 @@ async function getVouchers() {
             e.stopPropagation()
             const codeText = data[index].code
             navigator.clipboard.writeText(codeText)
-            alert("Sao chép mã thành công: " + codeText)
+            alert("Code copied successfully: " + codeText)
           })
         } else {
           voucher.style.display = 'none'
@@ -53,7 +55,7 @@ async function getFavProducts() {
   }
 
   if (!window.isLoggedIn) return
-  document.querySelector('div[class="products-board"][id="favorite"]').style.display = 'block'
+  document.querySelector('div[class="products-board"][id="favorite"]').style.display = 'flex'
 
   try {
     const response = await fetch(`${window.recommend_url}/return_data`, {
@@ -73,7 +75,7 @@ async function getFavProducts() {
         product.querySelector('p#price').textContent = formatNumber(data[index].price) 
         product.querySelector('p#name').textContent = data[index].name
         product.querySelector('span#rate-score').textContent = formatRate(data[index].rate) 
-        product.querySelector('p#sale-number').textContent =  'Đã bán: ' + data[index].saleNumber
+        product.querySelector('p#sale-number').textContent =  'Sold: ' + data[index].saleNumber
         product.querySelector('div.loading').style.display = 'none'
         product.querySelectorAll('i').forEach((star, i) => {
           if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'
@@ -118,7 +120,7 @@ async function getProducts() {
           product.querySelector('p#price').textContent = formatNumber(data[index].price) 
           product.querySelector('p#name').textContent = data[index].name
           product.querySelector('span#rate-score').textContent = formatRate(data[index].rate) 
-          product.querySelector('p#sale-number').textContent =  'Đã bán: ' + data[index].saleNumber
+          product.querySelector('p#sale-number').textContent =  'Sold: ' + data[index].saleNumber
           product.querySelector('div.loading').style.display = 'none'
           product.querySelectorAll('i').forEach((star, i) => {
             if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'

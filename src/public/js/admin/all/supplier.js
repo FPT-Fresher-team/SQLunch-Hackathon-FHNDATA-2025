@@ -11,13 +11,13 @@ const dataSize      = { size: 0 }
 function generateColumns() {
   const columnsGroup = document.querySelector('div.checkbox-group')
   const inputList = `
-    <label><input type="checkbox" value="_id" checked> Mã nhà cung cấp</label>
-    <label><input type="checkbox" value="name" checked> Tên nhà cung cấp</label>
-    <label><input type="checkbox" value="phone" > Số điện thoại</label>
+    <label><input type="checkbox" value="_id" checked> Supplier Code</label>
+    <label><input type="checkbox" value="name" checked> Supplier Name</label>
+    <label><input type="checkbox" value="phone" > Phone</label>
     <label><input type="checkbox" value="email" > Email</label>
-    <label><input type="checkbox" value="address" checked> Địa chỉ</label>
-    <label><input type="checkbox" value="quantity" checked> Số lượng</label>
-    <label><input type="checkbox" value="totalCost" checked> Tổng doanh thu</label>
+    <label><input type="checkbox" value="address" checked> Address</label>
+    <label><input type="checkbox" value="quantity" checked> Quantity</label>
+    <label><input type="checkbox" value="totalCost" checked> Total Revenue</label>
   `
   columnsGroup.insertAdjacentHTML('beforeend', inputList)
 } 
@@ -61,7 +61,7 @@ async function getSuppliers(sortOptions, filterOptions, currentPage, itemsPerPag
 
   dataSize.size = data_size
 
-  document.querySelector('div.board-title').querySelector('p').textContent = 'Nhà cung cấp: ' + dataSize.size
+  document.querySelector('div.board-title').querySelector('p').textContent = 'Suppliers: ' + dataSize.size
 
   const selected = Array.from(document.querySelectorAll('.checkbox-group input:checked')).map(cb => ({
     value: cb.value,
@@ -87,7 +87,7 @@ async function getSuppliers(sortOptions, filterOptions, currentPage, itemsPerPag
     })
 
     const headLink = document.createElement('td')
-    headLink.textContent = 'Chi tiết'
+    headLink.textContent = 'Details'
     trHead.appendChild(headLink)
 
     thead.appendChild(trHead)
@@ -120,7 +120,7 @@ async function getSuppliers(sortOptions, filterOptions, currentPage, itemsPerPag
       })
 
       const link = document.createElement('td')
-      link.innerHTML = `<a target="_blank" rel="noopener noreferrer" href="/admin/all-suppliers/supplier/${item._id}">Xem</a>`
+      link.innerHTML = `<a target="_blank" rel="noopener noreferrer" href="/admin/all-suppliers/supplier/${item._id}">View</a>`
       newTr.appendChild(link)
       tbody.appendChild(newTr)
       itemIndex++

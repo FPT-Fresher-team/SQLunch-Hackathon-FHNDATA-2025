@@ -26,9 +26,9 @@ function appendOrder(data, status) {
     <table>
       <thead>
         <tr>
-          <td style="width: 40%">Ngày đặt</td>
-          <td style="width: 40%">Mã đơn hàng</td>
-          <td style="width: 20%">Chi tiết</td>
+          <td style="width: 40%">Order Date</td>
+          <td style="width: 40%">Order Code</td>
+          <td style="width: 20%">Details</td>
         </tr>
       </thead>
       <tbody>
@@ -52,14 +52,14 @@ submitButton.onclick = async function () {
   if (regex.test(orderCode)) {
     const {data, status}  = await getOrder(orderCode)
     if (data) return appendOrder(data, status)
-    errorMessage.innerText = 'Không Tìm Thấy Đơn Hàng'
+    errorMessage.innerText = 'Order Not Found'
     errorMessage.style.color = 'red'
     const table = document.querySelector('table')
     if (table) table.remove()
   }
   else {
     // if not matched, prevent submit, enter again
-    errorMessage.innerText = 'Mã đơn hàng Không Đúng'
+    errorMessage.innerText = 'Order Code Is Incorrect'
     errorMessage.style.color = 'red'
     const table = document.querySelector('table')
     if (table) table.remove()

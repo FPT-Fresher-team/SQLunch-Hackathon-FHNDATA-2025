@@ -85,7 +85,7 @@ window.onload = async () => {
   if (signin === "google") {
     try {
       const user = await account.get()
-      pushNotification("Đang kiểm tra tài khoản")
+      pushNotification("Checking account")
 
       const response = await fetch("/authentication/checking-google-account", {
         method: "POST",

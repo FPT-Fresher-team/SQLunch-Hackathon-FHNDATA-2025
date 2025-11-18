@@ -47,7 +47,7 @@ async function getRelatedProducts(brandInfo) {
         product.querySelector('p#price').textContent = formatNumber(data[index].price) 
         product.querySelector('p#name').textContent = data[index].name
         product.querySelector('span#rate-score').textContent = data[index].rateNumber
-        product.querySelector('p#sale-number').textContent =  'Đã bán: ' + data[index].saleNumber
+        product.querySelector('p#sale-number').textContent =  'Sold: ' + data[index].saleNumber
         product.querySelector('div.loading').style.display = 'none'
         product.querySelectorAll('i').forEach((star, i) => {
           if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'

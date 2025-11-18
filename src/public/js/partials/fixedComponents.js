@@ -107,36 +107,30 @@ async function getAIChatData() {
 }
 
 // icon 
-var isUsed = false
 chat.onclick = function() {
+  const isAIOpen = AIchatBox.style.display === 'block'
+
   if (chatBox.style.display === 'none') {
     chatBox.style.display = 'block'
-    if (isUsed) {
-      chatBox.style.right = '370px'
-    } else {
-      chatBox.style.right = '60px'
-      isUsed = true
-    }
+    chatBox.style.right = isAIOpen ? '425px' : '80px'
+
     if (window.isLoggedIn) getChatData()
   } else {
     chatBox.style.display = 'none'
-    chatBox.style.right === '60px' ? isUsed = false : ''
-  } 
+  }
 }
+
 AIchat.onclick = function() {
+  const isChatOpen = chatBox.style.display === 'block'
+
   if (AIchatBox.style.display === 'none') {
     AIchatBox.style.display = 'block'
-    if (isUsed) {
-      AIchatBox.style.right = '370px'
-    } else {
-      AIchatBox.style.right = '60px'
-      isUsed = true
-    }
+    AIchatBox.style.right = isChatOpen ? '425px' : '80px'
+
     if (window.isLoggedIn) getAIChatData()
   } else {
     AIchatBox.style.display = 'none'
-    AIchatBox.style.right === '60px' ? isUsed = false : ''
-  } 
+  }
 }
 
 // minimize button

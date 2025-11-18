@@ -10,7 +10,7 @@
   height: 50px;
   background-color: white;
   border-radius: 50%;
-  border: 1px solid #5ab868;
+  border: 1px solid #2B6377;
   padding: 10px;
   .unread-quantity {
     position: absolute;
@@ -24,7 +24,7 @@
   }
   i {
     position: absolute;
-    color: #5ab868;
+    color: #2B6377;
     top: 3px;
     right: 3px;
     font-size: 40px;
@@ -45,12 +45,12 @@
   background-color: white;
   border-radius: 10px;
   padding: 10px;
-  border: 1px solid #5ab868;
+  border: 1px solid #2B6377;
   .box-header {
     border-radius: 10px;
     top: 0;
     height: 50px;
-    background-color: #5ab868;
+    background-color: #2B6377;
     display: flex;
     align-items: center;
     justify-content: space-between;

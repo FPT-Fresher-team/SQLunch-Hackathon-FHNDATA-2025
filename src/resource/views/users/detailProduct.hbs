@@ -45,45 +45,45 @@
       </div>
 
       <div class="button">
-        <div class="add-to-cart"><p>Thêm Vào Giỏ</p></div>
+        <div class="add-to-cart"><p>Add to Cart</p></div>
         <div class="buy-now"><a href="/all-orders">Mua Ngay</a></div>
-        <div class="out-of-order"><p>Hết Hàng</p></div>
+        <div class="out-of-order"><p>Out of Stock</p></div>
       </div>
     </div>
   </div>
 
   <div class="more-details">
     <div class="loading"></div>
-    <h3>THÔNG TIN SẢN PHẨM</h3>
+    <h3>PRODUCT INFORMATION</h3>
     <p id="details">{{productInfo.details}}</p>
   </div>
   
   <div class="more-details">
     <div class="loading"></div>
-    <h3>HƯỚNG DẪN SỬ DỤNG</h3>
+    <h3>USAGE GUIDE</h3>
     <p id="guide">{{productInfo.guide}}</p>
   </div>
 
   <div class="more-details">
     <div class="loading"></div>
-    <h3>ĐÁNH GIÁ SẢN PHẨM</h3>
+    <h3>PRODUCT REVIEWS</h3>
     <div class="rating-box">
       <div class="rating-score">
         <i class="fi fi-ss-star"></i><h1>{{productInfo.rate}}</h1>
       </div>
       <div class="rating-detail-score">
-        <div>1<i class="fi fi-ss-star"></i><span id="rating-border"><span id="rating-progress"></span></span><span id="rating-percent">0</span>% | <span id="rating-num">0</span> đánh giá</div>
-        <div>2<i class="fi fi-ss-star"></i><span id="rating-border"><span id="rating-progress"></span></span><span id="rating-percent">0</span>% | <span id="rating-num">0</span> đánh giá</div>
-        <div>3<i class="fi fi-ss-star"></i><span id="rating-border"><span id="rating-progress"></span></span><span id="rating-percent">0</span>% | <span id="rating-num">0</span> đánh giá</div>
-        <div>4<i class="fi fi-ss-star"></i><span id="rating-border"><span id="rating-progress"></span></span><span id="rating-percent">0</span>% | <span id="rating-num">0</span> đánh giá</div>
-        <div>5<i class="fi fi-ss-star"></i><span id="rating-border"><span id="rating-progress"></span></span><span id="rating-percent">0</span>% | <span id="rating-num">0</span> đánh giá</div>
+        <div>1<i class="fi fi-ss-star"></i><span id="rating-border"><span id="rating-progress"></span></span><span id="rating-percent">0</span>% | <span id="rating-num">0</span> reviews</div>
+        <div>2<i class="fi fi-ss-star"></i><span id="rating-border"><span id="rating-progress"></span></span><span id="rating-percent">0</span>% | <span id="rating-num">0</span> reviews</div>
+        <div>3<i class="fi fi-ss-star"></i><span id="rating-border"><span id="rating-progress"></span></span><span id="rating-percent">0</span>% | <span id="rating-num">0</span> reviews</div>
+        <div>4<i class="fi fi-ss-star"></i><span id="rating-border"><span id="rating-progress"></span></span><span id="rating-percent">0</span>% | <span id="rating-num">0</span> reviews</div>
+        <div>5<i class="fi fi-ss-star"></i><span id="rating-border"><span id="rating-progress"></span></span><span id="rating-percent">0</span>% | <span id="rating-num">0</span> reviews</div>
       </div>
     </div>
   </div>
   
   <div class="more-details">
     <div class="loading"></div>
-    <h3>BÌNH LUẬN SẢN PHẨM</h3>
+    <h3>PRODUCT COMMENTS</h3>
     <div class="comment-box">
       {{#each holderComments}}
         <div class="comment">
@@ -96,7 +96,7 @@
   </div>
 
   <div class="related-products">
-    <div class="title"><span class="main-title"><b>SẢN PHẨM TƯƠNG ỨNG</b></span></div>
+    <div class="title"><span class="main-title"><b>RELATED PRODUCTS</b></span></div>
 
     <div class="products">
     {{#each holderRelatedProducts}}

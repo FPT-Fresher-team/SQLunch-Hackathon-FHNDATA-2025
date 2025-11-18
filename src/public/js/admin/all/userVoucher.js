@@ -11,17 +11,17 @@ const dataSize      = { size: 0 }
 function generateColumns() {
   const columnsGroup = document.querySelector('div.checkbox-group')
   const inputList = `
-    <label><input type="checkbox" value="userId" checked> Mã khách hàng</label>
-    <label><input type="checkbox" value="orderId"> Mã đơn hàng</label>
-    <label><input type="checkbox" value="code"> Mã giảm giá</label>
-    <label><input type="checkbox" value="description" checked> Mô tả</label>
-    <label><input type="checkbox" value="voucherType" checked> Loại voucher</label>
-    <label><input type="checkbox" value="discount"> Mức giảm giá</label>
-    <label><input type="checkbox" value="minOrder"> Đơn tối thiểu</label>
-    <label><input type="checkbox" value="status"> Tình trạng</label>
-    <label><input type="checkbox" value="startDate" checked> Ngày bắt đầu</label>
-    <label><input type="checkbox" value="endDate"> Ngày kết thúc</label>
-    <label><input type="checkbox" value="usedAt"> Ngày sử dụng</label>
+    <label><input type="checkbox" value="userId" checked> Customer Code</label>
+    <label><input type="checkbox" value="orderId"> Order Code</label>
+    <label><input type="checkbox" value="code"> Discount Code</label>
+    <label><input type="checkbox" value="description" checked> Description</label>
+    <label><input type="checkbox" value="voucherType" checked> Voucher Type</label>
+    <label><input type="checkbox" value="discount"> Discount Amount</label>
+    <label><input type="checkbox" value="minOrder"> Minimum Order</label>
+    <label><input type="checkbox" value="status"> Status</label>
+    <label><input type="checkbox" value="startDate" checked> Start Date</label>
+    <label><input type="checkbox" value="endDate"> End Date</label>
+    <label><input type="checkbox" value="usedAt"> Used Date</label>
   `
   columnsGroup.insertAdjacentHTML('beforeend', inputList)
 } 
@@ -91,7 +91,7 @@ async function getVouchers(sortOptions, filterOptions, currentPage, itemsPerPage
     })
 
     const headLink = document.createElement('td')
-    headLink.textContent = 'Chi tiết'
+    headLink.textContent = 'Details'
     trHead.appendChild(headLink)
 
     thead.appendChild(trHead)
@@ -130,7 +130,7 @@ async function getVouchers(sortOptions, filterOptions, currentPage, itemsPerPage
       })
 
       const link = document.createElement('td')
-      link.innerHTML = `<a target="_blank" rel="noopener noreferrer" href="/admin/all-u-vouchers/voucher/${item._id}">Xem</a>`
+      link.innerHTML = `<a target="_blank" rel="noopener noreferrer" href="/admin/all-u-vouchers/voucher/${item._id}">View</a>`
       newTr.appendChild(link)
       tbody.appendChild(newTr)
       itemIndex++
@@ -151,7 +151,7 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     await getFilter()
     await getVouchers(sortOptions, filterOptions, currentPage.page, 10)
     await sortAndFilter(getVouchers, sortOptions, filterOptions, currentPage.page)
-    await exportJs('BÁO CÁO DANH SÁCH VOUCHER')
+    await exportJs('VOUCHER LIST REPORT')
   } catch (error) {
     console.error('Error loading data:', error)
     pushNotification(error)

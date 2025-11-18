@@ -8,6 +8,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(135deg, rgba(43, 99, 119, 0.02), rgba(148, 204, 223, 0.02));
 }
 
 .sign-up-form, 
@@ -16,36 +17,48 @@
   align-items: center;
   justify-content: center;
   position: relative;
-  border-radius: 20px;
+  border-radius: 16px;
   background: white;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-  width: 80%;
-  max-width: 900px;
+  box-shadow: 0 8px 32px rgba(43, 99, 119, 0.15);
+  width: 90%;
+  /* max-width: 1000px; */
   overflow: hidden;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sign-up-form:hover, 
+.sign-in-form:hover {
+  box-shadow: 0 12px 48px rgba(43, 99, 119, 0.25);
+  transform: translateY(-2px);
 }
 
 .sign-up-form img, 
 .sign-in-form img {
-  width: 50%;
+  width: 60%;
+  /* height: 600px; */
   object-fit: cover;
 }
 
 .form {
-  width: 100%;
-  padding: 30px;
+  width: 40%;
+  padding: 50px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .form-title {
   text-align: center;
-  font-size: 26px;
+  font-family: 'Playfair Display', serif;
+  font-size: 32px;
   font-weight: 700;
-  margin-bottom: 20px;
-  color: #2d6a4f;
+  margin-bottom: 32px;
+  color: #2B6377;
+  letter-spacing: 0.5px;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 18px;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -53,135 +66,247 @@
 
 .form-group input {
   width: 100%;
-  height: 42px;
+  height: 50px;
   border-radius: 8px;
-  border: 1px solid #d1d5db;
-  padding: 0 12px;
-  font-size: 14px;
-  transition: all 0.2s ease;
-  background: #fafafa; /* light input background */
+  border: 2px solid #CCDFE3;
+  padding: 0 16px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #FAFBFC;
+  color: #555;
+}
+
+.form-group input::placeholder {
+  color: #999;
+  font-size: 15px;
 }
 
 .form-group input:focus {
   border-color: #2B6377;
-  box-shadow: 0 0 0 3px rgba(56,152,69,0.2);
+  box-shadow: 0 0 0 4px rgba(43, 99, 119, 0.1);
   outline: none;
   background: white;
 }
 
 .form-group a {
+  font-family: 'Montserrat', sans-serif;
   font-size: 13px;
   color: #2B6377;
   text-decoration: none;
-  font-style: italic;
+  font-weight: 500;
   align-self: flex-end;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .form-group a:hover {
+  color: #94CCDF;
   text-decoration: underline;
 }
 
 .form-action {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 28px;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 5px;
+  gap: 12px;
 }
 
 .form-action button {
   width: 100%;
-  height: 45px;
-  background: #2B6377;
+  height: 50px;
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
   color: white;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(43, 99, 119, 0.15);
 }
 
 .form-action button:hover {
-  background: #2d6a4f;
+  background: linear-gradient(135deg, #1e4557, #7ab5cd);
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(43, 99, 119, 0.25);
+}
+
+.form-action button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(43, 99, 119, 0.15);
 }
 
 .sign-in, .sign-up {
-  margin-top: 15px;
+  margin-top: 24px;
   display: flex;
   justify-content: center;
-  gap: 5px;
+  gap: 6px;
+  font-family: 'Montserrat', sans-serif;
   font-size: 13px;
+  flex-wrap: wrap;
 }
 .sign-in p, .sign-up p {
   margin: 0;
-  font-style: italic;
   cursor: pointer;
+  color: #555;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.sign-in p:hover, .sign-up p:hover {
+.sign-in a p, .sign-up a p {
+  color: #d4183d;
   text-decoration: underline;
+  font-weight: 600;
+}
+.sign-in a p:hover, .sign-up a p:hover {
+  color: #2B6377;
+  text-decoration: none;
 }
 
 .google-sign-in, .google-sign-up {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-
-  background: #fff !important;
-  color: #3c4043 !important;
+  gap: 12px;
+  width: 100%;
+  height: 50px;
+  background: white;
+  color: #555;
+  font-family: 'Montserrat', sans-serif;
   font-size: 14px;
-  font-weight: 500 !important;
-  border: 1px solid #dadce0;
-  border-radius: 4px;
-  padding: 10px 16px;
-
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border: 2px solid #CCDFE3;
+  border-radius: 8px;
+  padding: 0;
   cursor: pointer;
-  transition: box-shadow 0.2s ease, background 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .google-sign-in:hover, .google-sign-up:hover {
-  background: #f7f8f8;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  background: #FAFBFC;
+  border-color: #94CCDF;
+  box-shadow: 0 4px 12px rgba(43, 99, 119, 0.1);
+  transform: translateY(-2px);
 }
 
 .google-sign-in:active, .google-sign-up:active {
-  background: #eee;
+  background: #CCDFE3;
+  transform: translateY(0);
 }
 
 .google-sign-in img, .google-sign-up img {
-  width: 18px;
-  height: 18px;
+  width: 20px;
+  height: 20px;
 }
 
 .emp-sign-in {
   position: absolute;
   bottom: 0;
   right: 0;
-  width: 30px;
-  height: 30px;
-  border-bottom-right-radius: 15px;
-  background: linear-gradient(to bottom right, #e5e5e5 0%, #e5e5e5 50%, #2B6377 50%, #2B6377 100%);
+  width: 35px;
+  height: 35px;
+  border-bottom-right-radius: 18px;
+  background: linear-gradient(to bottom right, transparent 0%, transparent 50%, #2B6377 50%, #2B6377 100%);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
 }
 
-@media screen and (max-width: 800px) {
+.emp-sign-in:hover {
+  width: 40px;
+  height: 40px;
+  border-bottom-right-radius: 20px;
+}
+
+@media screen and (max-width: 900px) {
   .sign-up-form, .sign-in-form {
     flex-direction: column;
     width: 95%;
-    border-radius: 15px;
+    border-radius: 16px;
+    max-width: 600px;
   }
+
   .sign-up-form img, 
   .sign-in-form img {
-    height: 200px;
+    width: 100%;
+    height: 250px;
     object-fit: cover;
   }
+
   .form {
-    padding: 20px;
-    box-sizing: border-box;
+    padding: 40px 28px;
+  }
+
+  .form-title {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group input {
+    height: 48px;
+    font-size: 14px;
+  }
+
+  .form-action {
+    margin-top: 24px;
+    gap: 10px;
+  }
+
+  .form-action button {
+    height: 48px;
+    font-size: 13px;
   }
 
   .google-sign-in img, .google-sign-up img {
-    width: 40px;
-    height: 40px
+    width: 18px;
+    height: 18px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .sign-up-form, .sign-in-form {
+    width: 98%;
+    border-radius: 12px;
+  }
+
+  .form {
+    padding: 32px 20px;
+  }
+
+  .form-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  .form-group {
+    margin-bottom: 14px;
+  }
+
+  .form-group input {
+    height: 44px;
+    font-size: 13px;
+    padding: 0 12px;
+  }
+
+  .form-action {
+    margin-top: 20px;
+  }
+
+  .form-action button {
+    height: 44px;
+    font-size: 12px;
+  }
+
+  .sign-in, .sign-up {
+    margin-top: 18px;
+    font-size: 12px;
   }
 }

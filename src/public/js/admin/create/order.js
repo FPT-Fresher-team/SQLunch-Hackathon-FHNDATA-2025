@@ -203,7 +203,7 @@ async function createOrder() {
       !productQuantity  || 
       !totalOrderPrice
     ) {
-      pushNotification("Hãy điền đầy đủ các thông tin!")
+      pushNotification("Please fill in all information!")
       return
     }
   

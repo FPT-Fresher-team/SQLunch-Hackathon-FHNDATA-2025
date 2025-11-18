@@ -18,7 +18,7 @@ async function exportJs(title) {
     const row1 = document.createElement("tr")
     row1.innerHTML = `
       <td colspan="3" style="font-weight: bold; text-align: center;">
-        Công ty TNHH Cosmetic Garden
+        Công ty TNHH Beauté
       </td>
       <td></td>
       <td colspan="2" style="font-weight: bold; text-align: center;">

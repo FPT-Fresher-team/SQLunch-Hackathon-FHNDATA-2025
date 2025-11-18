@@ -1,11 +1,11 @@
 <div class="admin-all-chats-container">  
   <div class="chat-sidebar">
     <div class="chat-header">Chats ({{totalChat}})</div>
-    <input class="chat-search" placeholder="Tìm kiếm đoạn chat"></input>
+    <input class="chat-search" placeholder="Search chat"></input>
     <div class="chat-list">
       {{#each chats}}
         <div class="item" id="{{this.userInfo._id}}">
-          <img src="https://cosmeticgarden.vn/wp-content/uploads/2024/12/logo-xanh-gradient.png" alt="loading">
+          <img src="https://res.cloudinary.com/bunny-store/image/upload/v1763438302/web-img/Thi%E1%BA%BFt_k%E1%BA%BF_ch%C6%B0a_c%C3%B3_t%C3%AAn_zd0z3o.svg" alt="loading">
           <div>
             <div class="name">{{this.userInfo.name}}</div>
             <div class="last-message">{{this.lastMessage}}</div>
@@ -17,7 +17,7 @@
 
   <div class="chat-body">
     <div class="chat-header" style="opacity: 0;">
-      <img src="https://cosmeticgarden.vn/wp-content/uploads/2024/12/logo-xanh-gradient.png" alt="loading">
+      <img src="https://res.cloudinary.com/bunny-store/image/upload/v1763438302/web-img/Thi%E1%BA%BFt_k%E1%BA%BF_ch%C6%B0a_c%C3%B3_t%C3%AAn_zd0z3o.svg" alt="loading">
       <div>
         <div class="name"></div>
         <div class="last-active"></div>
@@ -28,7 +28,7 @@
     
     <form class="input-form">
       <textarea name="input" class="input" placeholder="Aa"></textarea>
-      <div class="send-btn not-allowed">Gửi</div>
+      <div class="send-btn not-allowed">Send</div>
     </form>
   </div>
 </div>

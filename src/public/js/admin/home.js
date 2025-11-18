@@ -8,23 +8,23 @@ async function getFinance(fetchBody) {
   const table = document.createElement('table')
   table.innerHTML = `
     <thead>
-      <tr><td colspan="3">QUẢN LÝ TÀI CHÍNH</td></tr>
+      <tr><td colspan="3">FINANCIAL MANAGEMENT</td></tr>
     </thead>
     <tbody>
       <tr>
-        <td>Doanh thu</td>
+        <td>Revenue</td>
         <td>${formatNumber(revenue)}</td>
       </tr>
       <tr>
-        <td>Chi phí hàng hoá</td>
+        <td>Cost of Goods</td>
         <td>${formatNumber(cost)}</td>
       </tr>
       <tr>
-        <td>Chi phí lương</td>
+        <td>Wage Expense</td>
         <td>${formatNumber(wage)}</td>
       </tr>
       <tr>
-        <td>Lợi nhuận</td>
+        <td>Profit</td>
         <td>${formatNumber(revenue-cost-wage)}</td>
       </tr>
     </tbody>
@@ -45,13 +45,13 @@ async function getOrders(fetchBody) {
   const table = document.createElement('table')
   table.innerHTML = `
     <thead>
-      <tr><td colspan="3">QUẢN LÝ ĐƠN HÀNG</td></tr>
+      <tr><td colspan="3">ORDER MANAGEMENT</td></tr>
     </thead>
     <tbody>
       <tr>
-        <td>Số lượng đơn hàng</td>
+        <td>Order Quantity</td>
         <td>${data.length}</td>
-        <td><a href="/admin/all-orders">Chi tiết</a></td>
+        <td><a href="/admin/all-orders">Details</a></td>
       </tr>
     </tbody>
   `
@@ -73,7 +73,7 @@ async function getOrders(fetchBody) {
         },
         title: {
           display: true,
-          text: 'TRẠNG THÁI ĐƠN HÀNG'
+          text: 'ORDER STATUS'
         }
       }
     },
@@ -99,7 +99,7 @@ async function getOrders(fetchBody) {
         },
         title: {
           display: true,
-          text: 'ĐƠN HÀNG THEO THỜI GIAN'
+          text: 'ORDERS OVER TIME'
         }
       }
     },
@@ -126,13 +126,13 @@ async function getCustomers(fetchBody) {
   const table = document.createElement('table')
   table.innerHTML = `
     <thead>
-      <tr><td colspan="3">QUẢN LÝ KHÁCH HÀNG</td></tr>
+      <tr><td colspan="3">CUSTOMER MANAGEMENT</td></tr>
     </thead>
     <tbody>
       <tr>
         <td>Số lượng khách hàng</td>
         <td>${data.length}</td>
-        <td><a href="/admin/all-customers">Chi tiết</a></td>
+        <td><a href="/admin/all-customers">Details</a></td>
       </tr>
     </tbody>
   `
@@ -207,13 +207,13 @@ async function getEmployees(fetchBody) {
   const table = document.createElement('table')
   table.innerHTML = `
     <thead>
-      <tr><td colspan="3">QUẢN LÝ NHÂN SỰ</td></tr>
+      <tr><td colspan="3">EMPLOYEE MANAGEMENT</td></tr>
     </thead>
     <tbody>
       <tr>
         <td>Số lượng nhân sự</td>
         <td>${data.length}</td>
-        <td><a href="/admin/all-employees">Chi tiết</a></td>
+        <td><a href="/admin/all-employees">Details</a></td>
       </tr>
     </tbody>
   `
@@ -288,13 +288,13 @@ async function getProducts() {
   const table = document.createElement('table')
   table.innerHTML = `
     <thead>
-      <tr><td colspan="3">QUẢN LÝ SẢN PHẨM</td></tr>
+      <tr><td colspan="3">PRODUCT MANAGEMENT</td></tr>
     </thead>
     <tbody>
       <tr>
         <td>Số lượng sản phẩm</td>
         <td>${data.length}</td>
-        <td><a href="/admin/all-products/?page=&type=">Chi tiết</a></td>
+        <td><a href="/admin/all-products/?page=&type=">Details</a></td>
       </tr>
     </tbody>
   `
@@ -369,13 +369,13 @@ async function getSuppliers() {
   const table = document.createElement('table')
   table.innerHTML = `
     <thead>
-      <tr><td colspan="3">QUẢN LÝ NHÀ CUNG CẤP</td></tr>
+      <tr><td colspan="3">SUPPLIER MANAGEMENT</td></tr>
     </thead>
     <tbody>
       <tr>
         <td>Số lượng nhà cung cấp</td>
         <td>${data.length}</td>
-        <td><a href="/admin/all-suppliers">Chi tiết</a></td>
+        <td><a href="/admin/all-suppliers">Details</a></td>
       </tr>
     </tbody>
   `
@@ -418,13 +418,13 @@ async function getBrands() {
   const table = document.createElement('table')
   table.innerHTML = `
     <thead>
-      <tr><td colspan="3">QUẢN LÝ THƯƠNG HIỆU</td></tr>
+      <tr><td colspan="3">BRAND MANAGEMENT</td></tr>
     </thead>
     <tbody>
       <tr>
-        <td>Số lượng thương hiệu</td>
+        <td>Number of Brands</td>
         <td>${data.length}</td>
-        <td><a href="/admin/all-brands">Chi tiết</a></td>
+        <td><a href="/admin/all-brands">Details</a></td>
       </tr>
     </tbody>
   `
@@ -440,13 +440,13 @@ async function getPurchases(fetchBody) {
   const table = document.createElement('table')
   table.innerHTML = `
     <thead>
-      <tr><td colspan="3">QUẢN LÝ NHẬP HÀNG</td></tr>
+      <tr><td colspan="3">PURCHASE ORDER MANAGEMENT</td></tr>
     </thead>
     <tbody>
       <tr>
-        <td>Số lượng đơn nhập</td>
+        <td>Import Order Quantity</td>
         <td>${data.length}</td>
-        <td><a href="/admin/all-purchases">Chi tiết</a></td>
+        <td><a href="/admin/all-purchases">Details</a></td>
       </tr>
     </tbody>
   `
@@ -464,7 +464,7 @@ async function getPurchases(fetchBody) {
     data: {
       labels: Array.from(new Set(data.map(purchase => formatDate(purchase.createdAt)))),
       datasets: [{
-        label: 'ĐƠN NHẬP THEO THỜI GIAN',
+        label: 'IMPORTS OVER TIME',
         data: data.map(purchase => purchase.createdAt).reduce((acc, date) => {
           const formattedDate = formatDate(date)
           acc[formattedDate] = (acc[formattedDate] || 0) + 1
@@ -485,13 +485,13 @@ async function getStores() {
   const table = document.createElement('table')
   table.innerHTML = `
     <thead>
-      <tr><td colspan="3">QUẢN LÝ ĐẠI LÝ</td></tr>
+      <tr><td colspan="3">DISTRIBUTOR MANAGEMENT</td></tr>
     </thead>
     <tbody>
       <tr>
         <td>Số lượng đại lý</td>
         <td>${data.length}</td>
-        <td><a href="/admin/all-stores">Chi tiết</a></td>
+        <td><a href="/admin/all-stores">Details</a></td>
       </tr>
     </tbody>
   `
@@ -548,9 +548,9 @@ document.querySelector('button[type="submit"]').addEventListener('click', async 
   const startDate = document.querySelector('input#start-date').value
   const endDate = document.querySelector('input#end-date').value
 
-  if (startDate === '' || endDate === '') return pushNotification('Vui lòng chọn ngày bắt đầu và kết thúc')
+  if (startDate === '' || endDate === '') return pushNotification('Please select start and end dates')
 
-  if (new Date(startDate) > new Date(endDate)) return pushNotification('Ngày bắt đầu đang lớn hơn ngày kết thúc')
+  if (new Date(startDate) > new Date(endDate)) return pushNotification('Start date cannot be greater than end date')
 
   const fetchBody = {
     method: 'POST',

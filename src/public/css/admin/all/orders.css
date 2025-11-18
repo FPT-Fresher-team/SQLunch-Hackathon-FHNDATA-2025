@@ -1,0 +1,69 @@
+/* ==================== ORDERS LIST PAGE ==================== */
+
+.orders-all-table {
+  width: 100%;
+}
+
+.orders-all-table thead tr {
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+}
+
+.orders-all-table tbody tr {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.orders-all-table tbody tr:hover {
+  background: rgba(148, 204, 223, 0.05);
+}
+
+.orders-all-table td {
+  color: #555;
+  padding: 14px 12px;
+  font-size: 14px;
+}
+
+.orders-all-table a {
+  background: #94CCDF;
+  color: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.orders-all-table a:hover {
+  background: #2B6377;
+  transform: scale(1.05);
+}
+
+.order-status {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.order-status.pending {
+  background: rgba(255, 193, 7, 0.15);
+  color: #ff9800;
+}
+
+.order-status.processing {
+  background: rgba(63, 81, 181, 0.15);
+  color: #3f51b5;
+}
+
+.order-status.completed {
+  background: rgba(40, 167, 69, 0.15);
+  color: #28a745;
+}
+
+.order-status.cancelled {
+  background: rgba(212, 24, 61, 0.15);
+  color: #d4183d;
+}
+
+.order-total {
+  font-weight: 600;
+  color: #2B6377;
+}

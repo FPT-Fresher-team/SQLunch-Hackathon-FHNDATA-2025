@@ -1,17 +1,17 @@
 <div class="admin-trash-products-container">
   <div class="board-title">
-    <p>đã xoá</p>
+    <p>Deleted</p>
   </div>
 
   <div class="table">
     <table class="all-items">
       <thead>
         <tr>
-          <td style="width:  5%">STT     </td>
-          <td style="width: 15%">Hãng    </td>
-          <td style="width: 30%">Tên     </td>
-          <td style="width: 15%">Loại    </td>
-          <td style="width: 15%">Giá     </td>
+          <td style="width:  5%">No.     </td>
+          <td style="width: 15%">Brand    </td>
+          <td style="width: 30%">Name     </td>
+          <td style="width: 15%">Type    </td>
+          <td style="width: 15%">Price     </td>
           <td style="width: 20%"></td>
         </tr>
       </thead>
@@ -33,10 +33,10 @@
     <div id="id00" class="modal">
       <form class="modal-content">
         <div class="container">
-          <p>Bạn có muốn khôi phục sản phẩm {{this.name}} không</p>
+          <p>Do you want to restore product {{this.name}}</p>
           <div class="clearfix">
-            <button type="button" onclick="document.getElementById('id00').style.display='none'" class="cancelbtn">Huỷ</button>
-            <button id="restore-button" type="button" class="deletebtn">Khôi phục</button>
+            <button type="button" onclick="document.getElementById('id00').style.display='none'" class="cancelbtn">Cancel</button>
+            <button id="restore-button" type="button" class="deletebtn">Restore</button>
           </div>
         </div>
       </form>
@@ -45,10 +45,10 @@
     <div id="id01" class="modal">
       <form class="modal-content">
         <div class="container">
-          <p>Bạn có muốn xoá sản phẩm {{this.name}} vĩnh viễn không</p>
+          <p>Do you want to permanently delete product {{this.name}}</p>
           <div class="clearfix">
-            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Huỷ</button>
-            <button id="delete-button" type="button" class="deletebtn">Xoá vĩnh viễn</button>
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+            <button id="delete-button" type="button" class="deletebtn">Delete Permanently</button>
           </div>
         </div>
       </form>

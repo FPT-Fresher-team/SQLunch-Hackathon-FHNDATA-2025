@@ -46,7 +46,7 @@ async function getBrands(sortOptions, filterOptions, currentPage, itemsPerPage) 
 
   dataSize.size = data_size
 
-  document.querySelector('div.board-title').querySelector('p').textContent = 'Thương hiệu: ' + dataSize.size
+  document.querySelector('div.board-title').querySelector('p').textContent = 'Brands: ' + dataSize.size
 
   window.setTimeout(function() {
     tbody.querySelectorAll('tr').forEach((tr, index) => {
@@ -66,7 +66,7 @@ async function getBrands(sortOptions, filterOptions, currentPage, itemsPerPage) 
         <td style="text-align: right;">${item.totalProduct}</td>
         <td style="text-align: right;">${item.totalProduct}</td>
         <td style="text-align: right;">${formatNumber(item.totalRevenue)}</td>
-        <td><a target="_blank" rel="noopener noreferrer" href="/admin/all-brands/brand/${item._id}">Xem</a></td>
+        <td><a target="_blank" rel="noopener noreferrer" href="/admin/all-brands/brand/${item._id}">View</a></td>
       `
       tbody.appendChild(newTr)
       productIndex++

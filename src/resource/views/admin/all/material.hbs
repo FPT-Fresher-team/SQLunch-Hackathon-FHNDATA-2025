@@ -1,27 +1,27 @@
 <div class="admin-all-products-container">  
   <div class="board-title">
-    <p>Nguyên liệu:</p>
+    <p>Material:</p>
   </div>
 
   <div class="control-bar">
     <div class="filter-and-create">
       <div class="sort">
-        <label>Sắp xếp:</label>
+        <label>Sort by:</label>
         <select id="price" class="filter-btn">
-          <option value="">Giá</option>
-          <option value="-1">Giá cao - thấp</option>
-          <option value="1">Giá thấp - cao</option>
+          <option value="">Price</option>
+          <option value="-1">Price High - Low</option>
+          <option value="1">Price Low - High</option>
         </select>
       </div>
 
-      <button id="clear-sort-filter" style="display: none">Xoá bộ lọc</button>
+      <button id="clear-sort-filter" style="display: none">Clear Filter</button>
 
       <a target="_blank" rel="noopener noreferrer" href="/admin/all-materials/material/create" class="create-btn" id="create-btn">
         <i class="fi fi-rr-plus"></i>
-        <p>Thêm Nguyên Liệu</p>
+        <p>Add Material</p>
       </a>
     </div>
-    <input type="text" id="search-input" name="name" placeholder="Tìm kiếm nguyên liệu">
+  <input type="text" id="search-input" name="name" placeholder="Search material">
   </div>
 
   <div class="table">
@@ -29,13 +29,13 @@
     <table class="all-items">
       <thead>
         <tr>
-          <td style="width:  5%">STT          </td>
-          <td style="width: 10%">Mã           </td>
-          <td style="width: 30%">Tên          </td>
-          <td style="width: 15%">Giá nhập     </td>
-          <td style="width: 15%">Tồn kho      </td>
-          <td style="width: 10%">Ngày hết hạn </td>
-          <td style="width: 15%">Thao tác     </td>
+          <td style="width:  5%">No.          </td>
+          <td style="width: 10%">Code           </td>
+          <td style="width: 30%">Name          </td>
+          <td style="width: 15%">Purchase Price     </td>
+          <td style="width: 15%">Stock      </td>
+          <td style="width: 10%">Expiration Date </td>
+          <td style="width: 15%">Action     </td>
         </tr>
       </thead>
 

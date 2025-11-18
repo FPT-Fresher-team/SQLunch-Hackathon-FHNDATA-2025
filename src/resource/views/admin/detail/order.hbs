@@ -2,61 +2,61 @@
   <div id="form">
     <table id="table-1">
       <thead>
-        <tr><td colspan="2">THÔNG TIN ĐƠN HÀNG</td></tr>
+        <tr><td colspan="2">ORDER INFORMATION</td></tr>
       </thead>
       <tr>
-        <td>Mã Đơn</td>
+        <td>Order Code</td>
         <td><input type="text" id="id" disabled></td>
       </tr>
       <tr>
-        <td>Ngày Đặt</td>
+        <td>Order Date</td>
         <td><input type="text" id="date" disabled></td>
       </tr>
       <tr>
-        <td>Khách Hàng</td>
+        <td>Customer</td>
         <td style="display: flex; gap: 10px; align-items: center;">
           <input type="text" id="name" disabled>
-          <a id="customer-link" href="" target="_blank">Xem</a>
+          <a id="customer-link" href="" target="_blank">View</a>
         </td>
       </tr>
       <tr>
-        <td>SĐT</td>
+        <td>Phone</td>
         <td><input type="text" id="phone" disabled></td>
       </tr>
       <tr>
-        <td>Địa Chỉ</td>
+        <td>Address</td>
         <td><input type="text" id="address" disabled></td>
       </tr>
       <tr>
-        <td>Ghi Chú</td>
+        <td>Notes</td>
         <td><input type="text" id="note" disabled></td>
       </tr>
       <tr>
-        <td>Phương thức thanh toán</td>
+        <td>Payment Method</td>
         <td><select name="paymentMethod" id="paymentMethod"></select></td>
       </tr>
       <tr>
-        <td>Tổng Tiền</td>
+        <td>Total Price</td>
         <td><input type="text" id="total" disabled></td>
       </tr>
       <tr>
-        <td>Tổng Tiền Sau Giảm Giá</td>
+        <td>Total After Discount</td>
         <td><input type="text" id="new-total" disabled></td>
       </tr>
       <tr>
-        <td>Trạng thái đơn</td>
+        <td>Order Status</td>
         <td><select name="status" id="status"></select></td>
       </tr>
       <tr>
-        <td>Trạng thái đánh giá</td>
+        <td>Rating Status</td>
         <td><input name="status" id="isRated" disabled></input></td>
       </tr>
       <tr>
-        <td>Trạng thái thanh toán</td>
+        <td>Payment Status</td>
         <td>
           <select name="status" id="isPaid">
-            <option value="false" disabled>Chưa thanh toán</option>
-            <option value="true" disabled>Đã thanh toán</option>
+            <option value="false" disabled>Not Paid</option>
+            <option value="true" disabled>Paid</option>
           </select>
         </td>
       </tr>
@@ -64,15 +64,15 @@
 
     <table id="table-2">
       <thead>
-        <tr><td colspan="5">CHI TIẾT ĐƠN HÀNG</td></tr>
+        <tr><td colspan="5">ORDER DETAILS</td></tr>
       </thead>
       <thead>
         <tr>
           <td>STT</td>
-          <td>Tên Sản Phẩm</td>
+          <td>Product Name</td>
           <td>Số Lượng</td>
           <td>Giá</td>
-          <td>Chi tiết</td>
+          <td>Details</td>
         </tr>
       </thead>
       <tbody></tbody>

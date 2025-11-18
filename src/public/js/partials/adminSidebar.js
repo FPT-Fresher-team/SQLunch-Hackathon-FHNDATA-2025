@@ -15,11 +15,11 @@ async function getProfile() {
   const data = json.data
 
   const currentTime = new Date().getHours()
-  if      (currentTime <= 9) checkDay.message  = 'buổi sáng'
-  else if (currentTime <= 14) checkDay.message = 'buổi trưa'
-  else if (currentTime <= 18) checkDay.message = 'buổi chiều'
-  else    checkDay.message = 'buổi tối'
-  document.getElementById('welcome-text').innerHTML = `Xin chào ${data.name}, Chúc bạn một ${checkDay.message} vui vẻ !!!`
+  if      (currentTime <= 9) checkDay.message  = 'Good morning'
+  else if (currentTime <= 14) checkDay.message = 'Good afternoon'
+  else if (currentTime <= 18) checkDay.message = 'Good evening'
+  else    checkDay.message = 'Good night'
+  document.getElementById('welcome-text').innerHTML = `Hello ${data.name}, Have a ${checkDay.message}!!!`
 
   const sidebar = document.querySelector('div.admin-button')
   menuConfig.forEach(item => {

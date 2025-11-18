@@ -13,24 +13,24 @@ async function getOrder() {
 
   if (error) return pushNotification(error)
 
-  document.querySelector('span#id').textContent = data._id || ''
-  document.querySelector('span#date').textContent = formatDate(data.createdAt) || ''
-  document.querySelector('span#name').textContent = data.customerInfo.name || ''
-  document.querySelector('span#phone').textContent = data.customerInfo.phone || ''
-  document.querySelector('span#address').textContent = data.customerInfo.address || ''
-  document.querySelector('span#note').textContent = data.customerInfo.note || ''
-  document.querySelector('span#total-price').textContent = formatNumber(data.totalOrderPrice) || ''
-  document.querySelector('span#total-new-price').textContent = formatNumber(data.totalNewOrderPrice) || ''
-  document.querySelector('span#payment-method').textContent = method.name || ''
-  document.querySelector('span#status').textContent = status.name || ''
-  document.querySelector('span#isPaid').textContent = data.isPaid ? 'Đã thanh toán' : 'Chưa thanh toán'
+  document.querySelector('td#id').textContent = data._id || ''
+  document.querySelector('td#date').textContent = formatDate(data.createdAt) || ''
+  document.querySelector('td#name').textContent = data.customerInfo.name || ''
+  document.querySelector('td#phone').textContent = data.customerInfo.phone || ''
+  document.querySelector('td#address').textContent = data.customerInfo.address || ''
+  document.querySelector('td#note').textContent = data.customerInfo.note || ''
+  document.querySelector('td#total-price').textContent = formatNumber(data.totalOrderPrice) || ''
+  document.querySelector('td#total-new-price').textContent = formatNumber(data.totalNewOrderPrice) || ''
+  document.querySelector('td#payment-method').textContent = method.name || ''
+  document.querySelector('td#status').textContent = status.name || ''
+  document.querySelector('td#isPaid').textContent = data.isPaid ? 'Paid' : 'Not Paid'
   if (data.status === 'delivered' && data.isPaid) {
     const div = document.createElement("div")
     div.className = "button"
 
     const button = document.createElement("button")
     button.className = "submit-button"
-    button.textContent = "Đã nhận hàng thành công"
+    button.textContent = "Order Received Successfully"
 
     div.appendChild(button)
 
@@ -39,15 +39,15 @@ async function getOrder() {
       const confirmMessage = document.createElement('div')
       confirmMessage.setAttribute('class', 'update-order-message')
       confirmMessage.innerHTML = `
-        <h2>Bạn xác nhận đã nhận hàng rồi chứ ?</h2>
+        <h2>Do you confirm that you have received the order?</h2>
         <div class="actions">
           <button 
             id="delete-button" 
             type="button" 
             class="deletebtn"
             onclick="document.querySelector('div.update-order-message').remove()"
-          ">Huỷ</button>
-          <button type="button" class="confirmbtn" onclick="updateOrder()">Đồng ý</button>
+          ">Cancel</button>
+          <button type="button" class="confirmbtn" onclick="updateOrder()">Confirm</button>
         </div>
       `
       document.body.appendChild(confirmMessage)

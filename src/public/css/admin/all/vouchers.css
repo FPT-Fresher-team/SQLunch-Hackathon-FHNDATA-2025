@@ -1,0 +1,100 @@
+/* ==================== VOUCHERS LIST PAGE ==================== */
+
+.vouchers-all-table {
+  width: 100%;
+}
+
+.vouchers-all-table thead tr {
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+}
+
+.vouchers-all-table tbody tr {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vouchers-all-table tbody tr:hover {
+  background: rgba(148, 204, 223, 0.05);
+}
+
+.vouchers-all-table td {
+  color: #555;
+  padding: 14px 12px;
+  font-size: 14px;
+}
+
+.vouchers-all-table a {
+  background: #94CCDF;
+  color: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vouchers-all-table a:hover {
+  background: #2B6377;
+  transform: scale(1.05);
+}
+
+.voucher-code-display {
+  font-family: 'Courier New', monospace;
+  background: rgba(43, 99, 119, 0.05);
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #2B6377;
+  letter-spacing: 1px;
+}
+
+.voucher-discount-amount {
+  font-weight: 600;
+  color: #28a745;
+  font-size: 15px;
+}
+
+.voucher-type {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.voucher-type.percentage {
+  background: rgba(148, 204, 223, 0.2);
+  color: #2B6377;
+}
+
+.voucher-type.fixed {
+  background: rgba(40, 167, 69, 0.15);
+  color: #28a745;
+}
+
+.voucher-validity {
+  color: #999;
+  font-size: 12px;
+}
+
+.voucher-stock {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.voucher-stock.available {
+  background: rgba(40, 167, 69, 0.15);
+  color: #28a745;
+}
+
+.voucher-stock.low {
+  background: rgba(255, 193, 7, 0.15);
+  color: #ff9800;
+}
+
+.voucher-stock.out {
+  background: rgba(212, 24, 61, 0.15);
+  color: #d4183d;
+}

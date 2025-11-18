@@ -11,12 +11,12 @@ const dataSize      = { size: 0 }
 function generateColumns() {
   const columnsGroup = document.querySelector('div.checkbox-group')
   const inputList = `
-    <label><input type="checkbox" value="_id" checked> Mã đơn hàng</label>
-    <label><input type="checkbox" value="supplierId" > Tên Khách hàng</label>
-    <label><input type="checkbox" value="purchaseDate" checked> Ngày nhập</label>
-    <label><input type="checkbox" value="note" > Ghi chú</label>
-    <label><input type="checkbox" value="totalProducts" checked> Tổng sản phẩm</label>
-    <label><input type="checkbox" value="totalPurchasePrice"> Tổng giá trị</label>
+    <label><input type="checkbox" value="_id" checked> Order Code</label>
+    <label><input type="checkbox" value="supplierId" > Supplier Name</label>
+    <label><input type="checkbox" value="purchaseDate" checked> Import Date</label>
+    <label><input type="checkbox" value="note" > Notes</label>
+    <label><input type="checkbox" value="totalProducts" checked> Total Products</label>
+    <label><input type="checkbox" value="totalPurchasePrice"> Total Cost</label>
   `
   columnsGroup.insertAdjacentHTML('beforeend', inputList)
 } 
@@ -43,7 +43,7 @@ async function getPurchases(sortOptions, filterOptions, currentPage, itemsPerPag
 
   dataSize.size = data_size
 
-  document.querySelector('div.board-title').querySelector('p').textContent = 'Đơn nhập: ' + dataSize.size
+  document.querySelector('div.board-title').querySelector('p').textContent = 'Purchase Orders: ' + dataSize.size
 
   window.setTimeout(function() {
     tbody.querySelectorAll('tr').forEach((tr, index) => {
@@ -60,7 +60,7 @@ async function getPurchases(sortOptions, filterOptions, currentPage, itemsPerPag
         <td style="text-align: right;">${formatDate(item.purchaseDate)}</td>
         <td style="text-align: right;">${item.totalProducts}</td>
         <td style="text-align: right;">${formatNumber(item.totalPurchasePrice)}</td>
-        <td><a target="_blank" rel="noopener noreferrer" href="/admin/all-purchases/purchase/${item._id}">Xem</a></td>
+        <td><a target="_blank" rel="noopener noreferrer" href="/admin/all-purchases/purchase/${item._id}">View</a></td>
       `
       tbody.appendChild(newTr)
       productIndex++
@@ -80,7 +80,7 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     generateColumns()
     await getPurchases(sortOptions, filterOptions, currentPage.page, 10)
     await sortAndFilter(getPurchases, sortOptions, filterOptions, currentPage.page)
-    await exportJs('BÁO CÁO DANH SÁCH ĐƠN NHẬP')
+    await exportJs('PURCHASE ORDER LIST REPORT')
   } catch (error) {
     console.error('Error loading data:', error)
     pushNotification(error)

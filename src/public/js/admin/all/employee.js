@@ -11,15 +11,15 @@ const dataSize      = { size: 0 }
 function generateColumns() {
   const columnsGroup = document.querySelector('div.checkbox-group')
   const inputList = `
-    <label><input type="checkbox" value="_id" checked> Mã nhân viên</label>
+    <label><input type="checkbox" value="_id" checked> Employee Code</label>
     <label><input type="checkbox" value="email" checked> Email</label>
-    <label><input type="checkbox" value="role" > Vị trí</label>
-    <label><input type="checkbox" value="name" checked> Tên nhân viên</label>
-    <label><input type="checkbox" value="phone"> Số điện thoại</label>
-    <label><input type="checkbox" value="dob"> Ngày sinh</label>
-    <label><input type="checkbox" value="gender"> Giới tính</label>
-    <label><input type="checkbox" value="address" checked> Địa chỉ</label>
-    <label><input type="checkbox" value="isActive"> Trạng thái</label>
+    <label><input type="checkbox" value="role" > Position</label>
+    <label><input type="checkbox" value="name" checked> Employee Name</label>
+    <label><input type="checkbox" value="phone"> Phone</label>
+    <label><input type="checkbox" value="dob"> Date of Birth</label>
+    <label><input type="checkbox" value="gender"> Gender</label>
+    <label><input type="checkbox" value="address" checked> Address</label>
+    <label><input type="checkbox" value="isActive"> Status</label>
   `
   columnsGroup.insertAdjacentHTML('beforeend', inputList)
 } 
@@ -63,7 +63,7 @@ async function getEmployees(sortOptions, filterOptions, currentPage, itemsPerPag
 
   dataSize.size = data_size
 
-  document.querySelector('div.board-title').querySelector('p').textContent = 'Nhân sự: ' + dataSize.size
+  document.querySelector('div.board-title').querySelector('p').textContent = 'Employees: ' + dataSize.size
 
   const selected = Array.from(document.querySelectorAll('.checkbox-group input:checked')).map(cb => ({
     value: cb.value,
@@ -89,7 +89,7 @@ async function getEmployees(sortOptions, filterOptions, currentPage, itemsPerPag
     })
 
     const headLink = document.createElement('td')
-    headLink.textContent = 'Chi tiết'
+    headLink.textContent = 'Details'
     trHead.appendChild(headLink)
 
     thead.appendChild(trHead)
@@ -121,7 +121,7 @@ async function getEmployees(sortOptions, filterOptions, currentPage, itemsPerPag
       })
 
       const link = document.createElement('td')
-      link.innerHTML = `<a target="_blank" rel="noopener noreferrer" href="/admin/all-employees/employee/${item._id}">Xem</a>`
+      link.innerHTML = `<a target="_blank" rel="noopener noreferrer" href="/admin/all-employees/employee/${item._id}">View</a>`
       newTr.appendChild(link)
       tbody.appendChild(newTr)
       itemIndex++
