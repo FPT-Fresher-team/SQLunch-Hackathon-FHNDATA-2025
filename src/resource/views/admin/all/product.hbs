@@ -1,65 +1,65 @@
 <div class="admin-all-products-container">  
   <div class="header">
     <div class="board-title">
-      <p>Sản phẩm:</p>
-      <p class="trash"><a href="/admin/all-products/trash">Đã xoá</a></p>
+      <p>Product:</p>
+      <p class="trash"><a href="/admin/all-products/trash">Deleted</a></p>
     </div>
 
     <div class="date-filter">
       <input type="date" id="start-date">
       <input type="date" id="end-date">
-      <button title="submit" type="submit">Xem</button>
+      <button title="submit" type="submit">View</button>
     </div>
   </div>
 
   <div class="control-bar">
     <div class="search">
       <select id="search-type" class="search-btn">
-        <option value="">Tìm kiếm theo</option>
+        <option value="">Search by</option>
         <option value="_id" selected>ID</option>
-        <option value="name">Tên</option>
-        <option value="brand">Thương hiệu</option>
+        <option value="name">Name</option>
+        <option value="brand">Brand</option>
       </select>
-      <input type="text" id="search-input" name="name" placeholder="Tìm kiếm sản phẩm" />
+      <input type="text" id="search-input" name="name" placeholder="Search product" />
     </div>
 
     <div class="sort-filter">
       <div class="sort">
-        <label>Sắp xếp:</label>
+        <label>Sort by:</label>
         <select id="price" class="filter-btn">
-          <option value="">Giá</option>
-          <option value="1">Giá cao - thấp</option>
-          <option value="-1">Giá thấp - cao</option>
+          <option value="">Price</option>
+          <option value="1">Price High - Low</option>
+          <option value="-1">Price Low - High</option>
         </select>
         <select id="rate" class="filter-btn">
-          <option value="">Đánh giá</option>
-          <option value="1">Đánh giá cao - thấp</option>
-          <option value="-1">Đánh giá thấp - cao</option>
+          <option value="">Rating</option>
+          <option value="1">Rating High - Low</option>
+          <option value="-1">Rating Low - High</option>
         </select>
         <select id="saleNumber" class="filter-btn">
-          <option value="">Lượng bán</option>
-          <option value="1">Lượng bán cao - thấp</option>
-          <option value="-1">Lượng bán thấp - cao</option>
+          <option value="">Sales Volume</option>
+          <option value="1">Sales Volume High - Low</option>
+          <option value="-1">Sales Volume Low - High</option>
         </select>
       </div>
 
       <div class="filter">
-        <label>Lọc:</label>
+        <label>Filter:</label>
         <select id="categories" class="filter-btn">
-          <option value="">Loại sản phẩm</option>
+          <option value="">Product Type</option>
           <option value="skincare">Skincare</option>
           <option value="makeup">Makeup</option>
         </select>
         <select id="brand" class="filter-btn">
-          <option value="">Thương hiệu</option>
+          <option value="">Brand</option>
         </select>
-        <button id="clear-sort-filter" style="display: none">Xoá bộ lọc</button>
+        <button id="clear-sort-filter" style="display: none">Clear Filter</button>
       </div>
     </div>
 
     <a href="/admin/all-products/product/create" target="_blank" rel="noopener noreferrer" class="create-btn" id="create-btn">
       <i class="fi fi-rr-plus"></i>
-      <span>Thêm Sản Phẩm</span>
+      <span>Add Product</span>
     </a>
   </div>
 
@@ -68,13 +68,13 @@
     <table class="all-items">
       <thead>
         <tr>
-          <td style="width:  5%">STT     </td>
-          <td style="width: 10%">Hãng    </td>
-          <td style="width: 30%">Tên     </td>
-          <td style="width: 15%">Giá cũ  </td>
-          <td style="width: 15%">Giá hiện tại </td>
-          <td style="width: 10%">Tồn kho </td>
-          <td style="width: 15%">Thao tác</td>
+          <td style="width:  5%">No.     </td>
+          <td style="width: 10%">Brand    </td>
+          <td style="width: 30%">Name     </td>
+          <td style="width: 15%">Old Price  </td>
+          <td style="width: 15%">Current Price </td>
+          <td style="width: 10%">Stock </td>
+          <td style="width: 15%">Action</td>
         </tr>
       </thead>
 

@@ -100,11 +100,11 @@ class allSuppliersController {
   async supplierCreated(req, res, next) {
     try {
       const userExist = await supplier.findOne({ phone: req.body.phone })
-      if (userExist) throw new Error('Nhà cung cấp đã tồn tại')
+      if (userExist) throw new Error('Supplier already exists')
   
       const newSupplier = new supplier(req.body)
       await newSupplier.save()
-      return res.json({isValid: true, message: 'Tạo tài khoản thành công'})
+      return res.json({isValid: true, message: 'Supplier created successfully'})
       
     } catch (error) {
       console.log(error)

@@ -1,62 +1,62 @@
 <div class="admin-all-customers-container">
   <div class="header">
     <div class="board-title">
-      <p>Khách Hàng: </p>
+      <p>Customer: </p>
     </div>
 
     <div class="date-filter">
       <input type="date" id="start-date">
       <input type="date" id="end-date">
-      <button title="submit" type="submit">Xem</button>
+      <button title="submit" type="submit">View</button>
     </div>
   </div>
 
   <div class="control-bar">
     <div class="search">
       <select id="search-type" class="search-btn">
-        <option value="">Tìm kiếm theo</option>
+        <option value="">Search by</option>
         <option value="_id" selected>ID</option>
-        <option value="name">Tên</option>
+        <option value="name">Name</option>
         <option value="email">Email</option>
-        <option value="phone">Số điện thoại</option>
-        <option value="address">Địa chỉ</option>
+        <option value="phone">Phone Number</option>
+        <option value="address">Address</option>
       </select>
-      <input type="text" id="search-input" placeholder="Tìm kiếm khách hàng">
+      <input type="text" id="search-input" placeholder="Search customer">
     </div>
 
     <div class="sort-filter">
       <div class="sort">
-        <label>Sắp xếp:</label>
+        <label>Sort by:</label>
         <select id="revenue" class="filter-btn">
-          <option value="">Doanh thu</option>
-          <option value="-1">Doanh thu cao - thấp</option>
-          <option value="1">Doanh thu thấp - cao</option>
+          <option value="">Revenue</option>
+          <option value="-1">Revenue High - Low</option>
+          <option value="1">Revenue Low - High</option>
         </select>
         <select id="quantity" class="filter-btn">
-          <option value="">Đơn hàng</option>
-          <option value="-1">Đơn hàng cao - thấp</option>
-          <option value="1">Đơn hàng thấp - cao</option>
+          <option value="">Orders</option>
+          <option value="-1">Orders High - Low</option>
+          <option value="1">Orders Low - High</option>
         </select>
       </div>
 
       <div class="filter">
-        <label>Lọc:</label>
+        <label>Filter:</label>
         <select id="gender" class="filter-btn">
-          <option value="">Giới tính</option>
-          <option value="male">Nam</option>
-          <option value="female">Nữ</option>
+          <option value="">Gender</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
         </select>
         <select id="memberCode" class="filter-btn">
-          <option value="">Hạng thành viên</option>
+          <option value="">Member Tier</option>
         </select>
         
-        <button id="clear-sort-filter" style="display: none">Xoá</button>
+        <button id="clear-sort-filter" style="display: none">Clear</button>
       </div>
     </div>
 
     <a href="/admin/all-customers/customer/create" target="_blank" class="create-btn" id="create-btn">
       <i class="fi fi-rr-plus"></i>
-      <span>Thêm Khách Hàng</span>
+      <span>Add Customer</span>
     </a>
   </div>
 

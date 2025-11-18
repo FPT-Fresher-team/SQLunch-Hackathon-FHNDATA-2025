@@ -2,26 +2,26 @@
   {{!-- <div class="progress-steps">
     <div class="step active" data-step="1">
       <div class="step-number">1</div>
-      <div class="step-label">Giỏ hàng</div>
+      <div class="step-label">Shopping Cart</div>
     </div>
     <div class="step" data-step="2">
       <div class="step-number">2</div>
-      <div class="step-label">Thông tin</div>
+      <div class="step-label">Customer Information</div>
     </div>
     <div class="step" data-step="3">
       <div class="step-number">3</div>
-      <div class="step-label">Thanh toán</div>
+      <div class="step-label">Payment</div>
     </div>
     <div class="step" data-step="4">
       <div class="step-number">4</div>
-      <div class="step-label">Hoàn tất</div>
+      <div class="step-label">Completed</div>
     </div>
   </div> --}}
 
   <div class="cart">
     <div class="section-header">
       <i class="fi fi-rs-shopping-cart-check"></i>
-      <p>Giỏ Hàng</p>
+      <p>Shopping Cart</p>
     </div>
 
     <div style="overflow-x: auto;">
@@ -30,16 +30,16 @@
           <tr>
             <td style="width: 5%;"></td>
             <td style="width: 10%;"></td>
-            <td style="width: 40%;">Sản Phẩm</td>
-            <td style="width: 15%;">Đơn Giá</td>
-            <td style="width: 10%;">Số Lượng</td>
-            <td style="width: 15%;">Tổng Tiền</td>
+            <td style="width: 40%;">Product</td>
+            <td style="width: 15%;">Unit Price</td>
+            <td style="width: 10%;">Quantity</td>
+            <td style="width: 15%;">Total Amount</td>
             <td style="width: 5%;"></td>
           </tr>
         </thead>
         <tbody></tbody>
         <tfoot>
-          <td colspan="5">Tổng</td>
+          <td colspan="5">Total</td>
           <td class="total" style="text-align: right;"></td>
           <td></td>
         </tfoot>
@@ -50,22 +50,22 @@
   <div class="voucher">
     <div class="section-header">
       <i class="fi fi-rs-ticket"></i>
-      <p>Mã giảm giá</p>
+      <p>Discount Code</p>
     </div>
 
     <div class="voucher-input">
-      <button style="width: fit-content;" class="voucher-list-button"><i class="fi fi-rr-list"></i>Danh sách</button>
-      <input type="text" placeholder="Nhập mã giảm giá..." id="voucher-code" name="voucher-code">
-      <button style="width: fit-content;" class="voucher-submit-button"><i class="fi fi-rr-check"></i>Áp dụng</button>
+      <button style="width: fit-content;" class="voucher-list-button"><i class="fi fi-rr-list"></i>List</button>
+      <input type="text" placeholder="Enter discount code..." id="voucher-code" name="voucher-code">
+      <button style="width: fit-content;" class="voucher-submit-button"><i class="fi fi-rr-check"></i>Apply</button>
     </div>
 
     <div class="price">
       <div class="old-price">
-        <span class="old-price-text">Giá cũ: </span>
+        <span class="old-price-text">Old Price: </span>
         <span class="old-price-value"></span>
       </div>
       <div class="new-price">
-        <span class="new-price-text">Giá mới: </span>
+        <span class="new-price-text">New Price: </span>
         <span class="new-price-value"></span>
       </div>
     </div>
@@ -76,31 +76,31 @@
   <div class="contact-info">
     <div class="section-header">
       <i class="fi fi-rs-user-check"></i>
-      <p>Thông Tin Khách Hàng</p>
+      <p>Customer Information</p>
     </div>
 
     <div class="info">
       <div class="form-group">
-        <label for="name"><i class="fi fi-rr-user"></i>Tên Khách Hàng *</label>
-        <input type="text" id="name" name="name" placeholder="Nhập tên của bạn">
+        <label for="name"><i class="fi fi-rr-user"></i>Customer Name *</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name">
         <span class="form-message"></span>
       </div>
 
       <div class="form-group">
-        <label for="phone"><i class="fi fi-rr-phone-call"></i>Số Điện Thoại *</label>
-        <input type="text" id="phone" name="phone" placeholder="Nhập số điện thoại">
+        <label for="phone"><i class="fi fi-rr-phone-call"></i>Phone Number *</label>
+        <input type="text" id="phone" name="phone" placeholder="Enter phone number">
         <span class="form-message"></span>
       </div>
 
       <div class="form-group full">
-        <label for="address"><i class="fi fi-rr-map-marker"></i>Địa Chỉ Nhận Hàng *</label>
-        <input type="text" id="address" name="address" placeholder="Nhập địa chỉ nhận hàng">
+        <label for="address"><i class="fi fi-rr-map-marker"></i>Delivery Address *</label>
+        <input type="text" id="address" name="address" placeholder="Enter delivery address">
         <span class="form-message"></span>
       </div>
 
       <div class="form-group full">
-        <label for="note"><i class="fi fi-rr-document"></i>Ghi Chú</label>
-        <textarea id="note" name="note" placeholder="Ghi chú thêm (tuỳ chọn)"></textarea>
+        <label for="note"><i class="fi fi-rr-document"></i>Notes</label>
+        <textarea id="note" name="note" placeholder="Additional notes (optional)"></textarea>
       </div>
     </div> 
   </div>
@@ -108,32 +108,32 @@
   <div class="payment-method">
     <div class="section-header">
       <i class="fi fi-rr-credit-card"></i>
-      <p>Hình Thức Thanh Toán</p>
+      <p>Payment Method</p>
     </div>
 
     <div class="form-group">
       <label class="payment-option">
         <input type="radio" id="cash" name="paymentMethod" value="cash" checked>
         <span class="radio-custom"></span>
-        <span class="payment-label"><i class="fi fi-rr-money"></i>Thanh toán khi nhận hàng</span>
+        <span class="payment-label"><i class="fi fi-rr-money"></i>Pay on Delivery</span>
       </label>
 
       <label class="payment-option">
         <input type="radio" id="e-wallet" name="paymentMethod" value="e-wallet">
         <span class="radio-custom"></span>
-        <span class="payment-label"><i class="fi fi-rr-wallet"></i>Ví điện tử Momo</span>
+        <span class="payment-label"><i class="fi fi-rr-wallet"></i>Momo E-Wallet</span>
       </label>
 
       <label class="payment-option">
         <input type="radio" id="transfer" name="paymentMethod" value="transfer">
         <span class="radio-custom"></span>
-        <span class="payment-label"><i class="fi fi-rr-bank"></i>Chuyển Khoản</span>
+        <span class="payment-label"><i class="fi fi-rr-bank"></i>Bank Transfer</span>
       </label>
 
-      <div class="bank-account">
+      <div class="bank-account" style="display: none;">
         <img src="https://res.cloudinary.com/bunny-store/image/upload/v1711070720/web-img/fc4c4fd10517a949f006_ndjvt6.png" alt="Bank QR Code" loading="lazy">
         <div class="form-group">
-          <label><i class="fi fi-rr-info"></i>Sau khi chuyển khoản xong, vui lòng gửi hình ảnh bill</label>
+          <label><i class="fi fi-rr-info"></i>After completing the bank transfer, please send the bill image</label>
           <input type="file" name="img" id="img" accept="image/*"/>
         </div>
       </div>
@@ -141,8 +141,8 @@
   </div>
 
   <div class="button-group">
-    <button class="submit-button" style="display: none;"><i class="fi fi-rr-check"></i>Hoàn tất đặt hàng</button>
-    <button class="next-button"><i class="fi fi-rr-arrow-right"></i>Tiếp tục</button>
+    <button class="submit-button" style="display: none;"><i class="fi fi-rr-check"></i>Complete Order</button>
+    <button class="next-button"><i class="fi fi-rr-arrow-right"></i>Continue</button>
   </div>
 </div>
 

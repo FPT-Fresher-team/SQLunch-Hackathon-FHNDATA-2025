@@ -1,0 +1,50 @@
+/* ==================== EMPLOYEES LIST PAGE ==================== */
+
+.employee-all-table {
+  width: 100%;
+}
+
+.employee-all-table thead tr {
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+}
+
+.employee-all-table tbody tr {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.employee-all-table tbody tr:hover {
+  background: rgba(148, 204, 223, 0.05);
+}
+
+.employee-all-table td {
+  color: #555;
+  padding: 14px 12px;
+  font-size: 14px;
+}
+
+.employee-all-table a {
+  background: #94CCDF;
+  color: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.employee-all-table a:hover {
+  background: #2B6377;
+  transform: scale(1.05);
+}
+
+.employee-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 2px 8px rgba(43, 99, 119, 0.15);
+}
+
+.employee-role {
+  color: #94CCDF;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+}

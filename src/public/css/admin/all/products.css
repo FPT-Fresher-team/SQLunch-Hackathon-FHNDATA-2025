@@ -1,9 +1,59 @@
+/* ==================== PRODUCT LIST PAGE ==================== */
+
 p.trash {
   font-size: 15px !important;
   padding: 10px !important;
   border: none;
-  a {
-    text-decoration: none;
-    color: black;
-  }
+}
+
+p.trash a {
+  text-decoration: none;
+  color: #2B6377;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+p.trash a:hover {
+  color: #94CCDF;
+  text-decoration: underline;
+}
+
+/* Product table styling */
+.product-all-table {
+  width: 100%;
+}
+
+.product-all-table thead tr {
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+}
+
+.product-all-table tbody tr {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-all-table tbody tr:hover {
+  background: rgba(148, 204, 223, 0.05);
+}
+
+.product-all-table td {
+  color: #555;
+  padding: 14px 12px;
+}
+
+.product-all-table img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(43, 99, 119, 0.1);
+}
+
+.product-all-table a {
+  background: #94CCDF;
+  color: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.product-all-table a:hover {
+  background: #2B6377;
+  transform: scale(1.05);
 }

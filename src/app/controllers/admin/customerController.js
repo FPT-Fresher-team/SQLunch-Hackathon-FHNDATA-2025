@@ -165,7 +165,7 @@ class allCustomersController {
   async customerCreated(req, res, next) {
     try {
       const userExist = await user.findOne({ email: req.body.email })
-      if (userExist) throw new Error('Email đã tồn tại')
+      if (userExist) throw new Error('Email already exists')
 
       const salt = await bcrypt.genSalt(10)
       const hashedPassword = await bcrypt.hash(req.body.password, salt)

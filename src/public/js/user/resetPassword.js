@@ -77,24 +77,24 @@ submitButton.onclick = async function() {
 
         const inputCode = document.createElement('input')
         inputCode.type  = 'text'
-        inputCode.placeholder = 'Nhập mã xác nhận'
+        inputCode.placeholder = 'Enter verification code'
         inputCode.name  = 'code'
 
         document.querySelector('div.input').appendChild(inputCode)
 
-        submitButton.innerText = 'Gửi mã xác nhận'
+        submitButton.innerText = 'Send Verification Code'
         submitButton.className = 'submit-code'
 
-        formatMessage('Nhập mã được gửi tới email để tiến hành thay đổi mật khẩu', 'green')
+        formatMessage('Enter the code sent to your email to change your password', 'green')
       }
       else {
         // if not matched, prevent submit, enter again
-        formatMessage('Email chưa đăng ký tài khoản', 'red')
+        formatMessage('Email not registered with an account', 'red')
       }
     }
     else {
       // if not matched, prevent submit, enter again
-      formatMessage('Email nhập chưa đúng', 'red')
+      formatMessage('Email is incorrect', 'red')
     }
     submitButton.classList.remove('loading')
     return
@@ -109,7 +109,7 @@ submitButton.onclick = async function() {
 
       const inputPassword = document.createElement('input')
       inputPassword.type  = 'password'
-      inputPassword.placeholder = 'Nhập mật khẩu mới'
+      inputPassword.placeholder = 'Enter new password'
       inputPassword.name  = 'password'
 
       const inputConfirmPassword = document.createElement('input')
@@ -122,11 +122,11 @@ submitButton.onclick = async function() {
       
       submitButton.innerText = 'Xác nhận'
       submitButton.className = 'submit-password'
-      formatMessage('Nhập mật khẩu mới', 'green')
+      formatMessage('Enter new password', 'green')
     }
     else {
       // if not matched, prevent submit, enter again
-      formatMessage('Mã xác nhận không đúng', 'red')
+      formatMessage('Code is incorrect', 'red')
     }
     submitButton.classList.remove('loading')
     return
@@ -137,8 +137,8 @@ submitButton.onclick = async function() {
     const password  = document.querySelector('input[name="password"]').value
     const confirmPassword = document.querySelector('input[name="confirm-password"]').value
 
-    if (password.trim() === '') return pushNotification('Mật khẩu đang trống')
-    if (confirmPassword != password) return pushNotification('Mật khẩu không trùng khớp')
+    if (password.trim() === '') return pushNotification('Password cannot be empty')
+    if (confirmPassword != password) return pushNotification('Passwords do not match')
 
     const isSuccessful = await resettingPassword(email, password)
     if (isSuccessful) {

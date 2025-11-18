@@ -1,13 +1,13 @@
 <div class="admin-create-product-container">
   <div id="form">
     <div class="form-title">
-      <p>Thêm nguyên liệu mới</p>
+      <p>Add New Material</p>
     </div>
 
     <div class="form-group">
       <label></label>
       <select name="supplier">
-        <option value="">-- Chọn NCC --</option>
+        <option value="">-- Select Supplier --</option>
         {{#each suppliers}}
         <option value="{{this._id}}">{{this.name}}</option>
         {{/each}}
@@ -15,47 +15,47 @@
     </div>
 
     <div class="form-group">
-      <label for="code">Mã nguyên liệu</label>
+      <label for="code">Material Code</label>
       <input type="text" class="form-control" id="code" name="code" placeholder="VD: NL01">
     </div>
     
     <div class="form-group">
-      <label for="name">Tên nguyên liệu</label>
+      <label for="name">Material Name</label>
       <input type="text" class="form-control" id="name" name="name" placeholder="VD: Nước cất">
     </div>
 
     <div class="form-group">
-      <label for="category">Phân loại</label>
+      <label for="category">Category</label>
       <input type="text" class="form-control" id="category" name="category" placeholder="VD: Dung môi">
     </div>
 
     <div class="form-group">
-      <label for="unit">Đvt</label>
+      <label for="unit">Unit</label>
       <input type="text" class="form-control" id="unit" name="unit" placeholder="VD: Lít">
     </div>
 
     <div class="form-group">
-      <label for="quantity">Số lượng</label>
+      <label for="quantity">Quantity</label>
       <input type="text" class="form-control" id="quantity" name="quantity" placeholder="VD: 100">
     </div>
 
     <div class="form-group">
-      <label for="price">Giá nguyên liệu</label>
+      <label for="price">Material Price</label>
       <input type="text" class="form-control" id="price" name="price" placeholder="VD: 250.000">
     </div>
     
     <div class="form-group">
-      <label for="description">Mô tả chi tiết</label>
+      <label for="description">Detailed Description</label>
       <input type="text" class="form-control" id="description" name="description" placeholder="VD: Dùng làm dung môi pha chế mỹ phẩm">
     </div>
     
     <div class="form-group">
-      <label for="certifications">Chứng nhận</label>
+      <label for="certifications">Certifications</label>
       <input type="text" class="form-control" id="certifications" name="certifications" placeholder="VD: ISO 9001">
     </div>
     
     <div class="form-group">
-      <label for="expiry_date">Ngày hết hạn</label>
+      <label for="expiry_date">Expiration Date</label>
       <input type="date" class="form-control" id="expiry_date" name="expiry_date">
     </div>
 
