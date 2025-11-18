@@ -50,7 +50,7 @@
   }
 
   .brand:hover {
-    border: 1px solid #389845;
+    border: 1px solid #2B6377;
     box-shadow: 0 4px 8px rgba(0,0,0,0.15);
     transform: translateY(-3px);
   }

@@ -20,18 +20,18 @@
       justify-content: start;
       font-weight: bold;
       font-size: 32px;
-      color: #389845;
+      color: #2B6377;
     }
     .chat-search {
       height: 5%;
       width: 100%;
       box-sizing: border-box;
       border-radius: 10px;
-      border: 1px solid #389845;
+      border: 1px solid #2B6377;
       text-indent: 5px;
     }
     .chat-search:focus {
-      outline: 1.5px solid #389845;
+      outline: 1.5px solid #2B6377;
     }
     .chat-list {
       margin-top: 5px;
@@ -75,8 +75,8 @@
         .time { margin-top: 5px; font-size: smaller; color: #9FACBC;}
       }
       .item.active {
-        background-color: #e5e5e5;
-        color: #389845;
+        background-color: #F0F8FA;
+        color: #2B6377;
       }
       .item:hover {
         filter: brightness(80%)
@@ -167,7 +167,7 @@
         height: 40px;
         padding: 0 5px;
         border-radius: 10px;
-        border: 1px solid #389845;
+        border: 1px solid #2B6377;
         word-wrap: break-word;
         resize: none;
         box-sizing: border-box;
@@ -175,7 +175,7 @@
         font-family: 'Roboto', sans-serif;
       }
       textarea:focus {
-        outline: 1px solid #389845;
+        outline: 1px solid #2B6377;
       }
       .send-btn {
         width: 10%;
@@ -183,9 +183,9 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background-color: #389845;
+        background-color: #2B6377;
         border-radius: 10px;
-        color: white;
+        color: #FAF6F1;
         cursor: pointer;
       }
       .send-btn.not-allowed {

@@ -32,6 +32,48 @@ localStorage.setItem('product_cart_count', JSON.stringify(myObj))
 // set default quantity value to 0 on first load and hidden the quantity div
 getQuantityValue.innerText = 0
 
+// ==================== IMAGE SLIDESHOW ==================== 
+let currentImageIndex = 0
+const mainImage = document.querySelector('#main-image')
+const thumbnails = document.querySelectorAll('.thumbnail')
+const prevBtn = document.querySelector('.slide-prev')
+const nextBtn = document.querySelector('.slide-next')
+const imageArray = []
+
+function updateMainImage(index) {
+  if (imageArray.length === 0) return
+  
+  currentImageIndex = (index + imageArray.length) % imageArray.length
+  mainImage.src = imageArray[currentImageIndex]
+  
+  thumbnails.forEach((thumb, i) => {
+    if (i === currentImageIndex) {
+      thumb.classList.add('active')
+    } else {
+      thumb.classList.remove('active')
+    }
+  })
+}
+
+function nextImage() {
+  updateMainImage(currentImageIndex + 1)
+}
+
+function prevImage() {
+  updateMainImage(currentImageIndex - 1)
+}
+
+if (prevBtn && nextBtn) {
+  prevBtn.addEventListener('click', prevImage)
+  nextBtn.addEventListener('click', nextImage)
+}
+
+thumbnails.forEach((thumb, index) => {
+  thumb.addEventListener('click', () => {
+    updateMainImage(index)
+  })
+})
+
 async function getProduct() {
   const response = await fetch('/all-products/data/product', {
     method: 'POST',
@@ -44,8 +86,29 @@ async function getProduct() {
   metaDescription.setAttribute("content", data.description)
   document.title = data.name
 
-  productElement.querySelector('img').setAttribute('src', data.img.path)
-  productElement.querySelector('img').setAttribute('alt', data.name)
+  // Update main image and populate slideshow
+  if (data.img && data.img.path) {
+    imageArray.push(data.img.path)
+    mainImage.setAttribute('src', data.img.path)
+    mainImage.setAttribute('alt', data.name)
+  }
+  
+  // Populate additional images if available (use same image up to 5 times or different images if available)
+  if (data.img && data.img.path) {
+    for (let i = 1; i < 5; i++) {
+      imageArray.push(data.img.path)
+    }
+  }
+  
+  // Update thumbnails with images
+  thumbnails.forEach((thumb, index) => {
+    if (index < imageArray.length) {
+      thumb.querySelector('img').src = imageArray[index]
+      thumb.querySelector('img').alt = `${data.name} - image ${index + 1}`
+    }
+  })
+  
+  // Update rating stars
   productElement.querySelector('span#rate-score').textContent = formatRate(data.rate)
   productElement.querySelector('p#product-rate').querySelectorAll('i').forEach((star, i) => {
     star.style.color = 'black'
@@ -166,6 +229,9 @@ function increaseQuantity(productInfo) {
 function decreaseQuantity(productInfo) {
   getDecreaseQuantity.onclick = function () {
     getQuantityValue.innerText--
+    if (getQuantityValue.innerText < 1) {
+      getQuantityValue.innerText = 1
+    }
     listProductLength.length = myObj.productInfo.length
     for (let i = 0; i < listProductLength.length; ++i) {
       if (myObj.productInfo[i].id === productInfo._id) {
@@ -186,7 +252,7 @@ function addToCart(productInfo) {
     // the item has not yet been added, click to add
     if (getAddToCart.style.backgroundColor === '') {
       // change button color to 'added button'
-      getAddToCart.style.backgroundColor = '#389845'
+      getAddToCart.style.backgroundColor = '#2B6377'
       getAddToCart.querySelector('p').style.color = 'white'
   
       // add 1 to the cartCounting and set the quantity value min = 1
@@ -218,7 +284,7 @@ function addToCart(productInfo) {
       // the item has already been added, click to remove
       // change button color to 'default button'
       getAddToCart.style.backgroundColor = ''
-      getAddToCart.querySelector('p').style.color = '#389845'
+      getAddToCart.querySelector('p').style.color = '#2B6377'
   
       // minus 1 from the cartCounting and reset the productQuantity to 0
       myObj.localCounting--
@@ -281,7 +347,7 @@ function checkExistedProduct(productInfo) {
   for (let i = 0; i < listProductLength.length; ++i) {
     if (myObj.productInfo[i].id === productInfo._id) {
       // change button color to 'added button'
-      getAddToCart.style.backgroundColor = '#389845'
+      getAddToCart.style.backgroundColor = '#2B6377'
       getAddToCart.querySelector('p').style.color = 'white'
   
       // visible the quantity div
@@ -320,7 +386,7 @@ function rateProduct() {
     rate.innerText = value
     ratingNums[index].innerText = rateList[index]
     ratingBars[index].style.width = `${value}%`
-    ratingBars[index].style.backgroundColor = '#389845'
+    ratingBars[index].style.backgroundColor = '#2B6377'
   })
 }
 

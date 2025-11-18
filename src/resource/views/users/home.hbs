@@ -3,9 +3,9 @@
 </div>
 
 <div class="vouchers-board" id="voucher" style="display: none;">
-  <div class="title" data-tippy-content="Voucher dành riêng cho bạn">
-    <i class="fi fi-sr-bolt"></i>
+  <div class="title">
     <div><a href="/" class="main-title"><b>VOUCHER DÀNH RIÊNG CHO BẠN</b></a></div>
+    <p class="subtitle">Khám phá những ưu đãi đặc biệt chỉ dành riêng cho bạn</p>
   </div>
   
   <div class="vouchers">
@@ -13,12 +13,14 @@
       {{> voucher}}
     {{/each}}
   </div>
+  
+  <a href="/" class="view-all-btn">View All Vouchers</a>
 </div>
 
 <div class="products-board" id="favorite" style="display: none;">
-  <div class="title" data-tippy-content="Xem toàn bộ sản phẩm">
-    <i class="fi fi-sr-flame"></i>
+  <div class="title">
     <div><a href="/all-products" class="main-title"><b>SẢN PHẨM CÓ THỂ BẠN SẼ THÍCH</b></a></div>
+    <p class="subtitle">Những lựa chọn tuyệt vời dành riêng cho phong cách của bạn</p>
   </div>
 
   <div class="products">
@@ -26,12 +28,14 @@
       {{> product}}
     {{/each}}
   </div>
+  
+  <a href="/all-products" class="view-all-btn">View All Products</a>
 </div>
 
 <div class="flash-deal-board" id="flash-deal">
-  <div class="title" data-tippy-content="Xem toàn bộ sản phẩm đang sale">
-    <i class="fi fi-sr-bolt"></i>
+  <div class="title">
     <div><a href="/all-products/status/flash-sale" class="main-title"><b>SẢN PHẨM FLASH DEAL</b></a></div>
+    <p class="subtitle">Những deal sốc giá hạn thời - Đừng bỏ lỡ!</p>
   </div>
   
   <div class="products">
@@ -39,12 +43,14 @@
       {{> product}}
     {{/each}}
   </div>
+  
+  <a href="/all-products/status/flash-sale" class="view-all-btn">View All Flash Deals</a>
 </div>
 
 <div class="products-board" id="top-sale">
-  <div class="title" data-tippy-content="Xem toàn bộ sản phẩm bán chạy">
-    <i class="fi fi-sr-trophy-star"></i>
+  <div class="title">
     <div><a href="/all-products?saleNumber=-1" class="main-title"><b>SẢN PHẨM BÁN CHẠY</b></a></div>
+    <p class="subtitle">Được yêu thích bởi hàng ngàn khách hàng</p>
   </div>
   
   <div class="products">
@@ -52,12 +58,14 @@
       {{> product}}
     {{/each}}
   </div>
+  
+  <a href="/all-products?saleNumber=-1" class="view-all-btn">View All Top Sales</a>
 </div>
 
 <div class="products-board" id="hot-sale">
-  <div class="title" data-tippy-content="Xem toàn bộ sản phẩm đang hot">
-    <i class="fi fi-sr-flame"></i>
+  <div class="title">
     <div><a href="/all-products/status/hot" class="main-title"><b>SẢN PHẨM HOT</b></a></div>
+    <p class="subtitle">Những sản phẩm đang thịnh hành nhất</p>
   </div>
   
   <div class="products">
@@ -65,12 +73,14 @@
       {{> product}}
     {{/each}}
   </div>
+  
+  <a href="/all-products/status/hot" class="view-all-btn">View All Hot Products</a>
 </div>
 
 <div class="products-board" id="skincare">
-  <div class="title" data-tippy-content="Xem toàn bộ sản phẩm skincare">
-    <i class="fi fi-sr-spray-can"></i>
+  <div class="title">
     <div><a href="/all-products/categories/skincare" class="main-title"><b>SẢN PHẨM SKINCARE</b></a></div>
+    <p class="subtitle">Chăm sóc da đúng cách cho làn da khỏe mạnh</p>
   </div>
   
   <div class="products">
@@ -78,12 +88,14 @@
       {{> product}}
     {{/each}}
   </div>
+  
+  <a href="/all-products/categories/skincare" class="view-all-btn">View All Skincare</a>
 </div>
 
 <div class="products-board" id="makeup">
-  <div class="title" data-tippy-content="Xem toàn bộ sản phẩm makeup">
-    <i class="fi fi-sr-lipstick"></i>
+  <div class="title">
     <div><a href="/all-products/categories/makeup" class="main-title"><b>SẢN PHẨM MAKEUP</b></a></div>
+    <p class="subtitle">Tô màu cuộc sống với những sản phẩm makeup chất lượng</p>
   </div>
   
   <div class="products">
@@ -91,12 +103,14 @@
       {{> product}}
     {{/each}}
   </div>
+  
+  <a href="/all-products/categories/makeup" class="view-all-btn">View All Makeup</a>
 </div>
 
 <div class="products-board" id="all">
-  <div class="title" data-tippy-content="Xem toàn bộ sản phẩm">
-    <i class="fi fi-sr-flame"></i>
+  <div class="title">
     <div><a href="/all-products" class="main-title"><b>TOÀN BỘ SẢN PHẨM</b></a></div>
+    <p class="subtitle">Khám phá bộ sưu tập hoàn chỉnh của chúng tôi</p>
   </div>
 
   <div class="products">
@@ -104,12 +118,14 @@
       {{> product}}
     {{/each}}
   </div>
+  
+  <a href="/all-products" class="view-all-btn">View All Products</a>
 </div>
 
 <div class="famous-brand-board" id="brand">
-  <div class="title" data-tippy-content="Xem toàn bộ thương hiệu">
-    <i class="fi fi-rr-brand"></i>
+  <div class="title">
     <div><a href="/all-brands" class="main-title"><b>THƯƠNG HIỆU NỔI BẬT</b></a></div>
+    <p class="subtitle">Những thương hiệu mà chúng tôi tự hào giới thiệu</p>
   </div>
 
   <div class="brands">
@@ -122,6 +138,8 @@
     </div>
     <div class="fade"></div>
   </div>
+  
+  <a href="/all-brands" class="view-all-btn">View All Brands</a>
 </div>
 
 <script src="/js/user/home.js"></script>

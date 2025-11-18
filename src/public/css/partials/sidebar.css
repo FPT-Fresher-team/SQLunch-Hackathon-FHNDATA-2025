@@ -8,7 +8,7 @@
   background: linear-gradient(180deg, #ffffff 0%, #f9fdf9 100%);
   overflow-y: auto;
   border-radius: 12px;
-  border: 1px solid #38984533;
+  border: 1px solid rgba(43, 99, 119, 0.2);
   box-shadow: 0 4px 12px rgba(56, 152, 69, 0.15);
   transition: width 0.3s ease-in-out;
 
@@ -30,7 +30,7 @@
 }
 .admin-sidebar-container .resize-button i {
   font-size: 28px;
-  color: #389845;
+  color: #2B6377;
   transition: transform 0.3s ease;
 }
 .admin-sidebar-container .resize-button:hover i {
@@ -41,8 +41,8 @@
 .admin-sidebar-container .admin-account {
   margin: 0 10px;
   border-radius: 8px;
-  background-color: #e9f7ec;
-  color: #389845;
+  background-color: #F0F8FA;
+  color: #2B6377;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -50,13 +50,13 @@
   transition: background 0.3s ease;
 }
 .admin-sidebar-container .admin-account:hover {
-  background-color: #d9f2de;
+  background-color: #E8F4F7;
 }
 .admin-sidebar-container .admin-account img {
   width: 50px;
   aspect-ratio: 1/1;
   border-radius: 50%;
-  border: 2px solid #389845;
+  border: 2px solid #2B6377;
 }
 .admin-sidebar-container .admin-account p {
   margin: 0;
@@ -85,21 +85,21 @@
 }
 .admin-sidebar-container .admin-button .sidebar-button i {
   font-size: 20px;
-  color: #389845;
+  color: #2B6377;
   transition: color 0.25s ease;
 }
 
 /* hover/active states */
 .admin-sidebar-container .admin-button .sidebar-button:hover {
-  background-color: #5ab868;
-  color: white;
+  background-color: #94CCDF;
+  color: #2B6377;
   transform: translateX(5px);
 }
 .admin-sidebar-container .admin-button .sidebar-button:hover i {
   color: white;
 }
 .admin-sidebar-container .admin-button .sidebar-button.active {
-  background-color: #389845;
+  background-color: #2B6377;
   color: white;
 }
 .admin-sidebar-container .admin-button .sidebar-button.active i {

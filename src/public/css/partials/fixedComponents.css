@@ -11,7 +11,7 @@
   height: 50px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   animation: ring 1.5s infinite;
-  i { font-size: 50px; color: #389845 };
+  i { font-size: 50px; color: #2B6377 };
 }
 .scroll-to-top-icon {bottom: 130px}
 .chatbot-icon {bottom: 70px}
@@ -38,7 +38,7 @@
     justify-content: space-between;
     padding: 0 10px;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 3px 5px 0 rgba(0, 0, 0, 0.19);
-    i { color: #389845;}
+    i { color: #2B6377;}
     .icon {
       display: flex;
       align-items: center;
@@ -92,8 +92,8 @@
     }
     .right-content {
       float: right;
-      background-color: #389845;
-      color: white;
+      background-color: #2B6377;
+      color: #FAF6F1;
     }
     .left-content {
       float: left;
@@ -134,7 +134,7 @@
       height: 40px;
       padding: 0 5px;
       border-radius: 10px;
-      border: 1px solid #389845;
+      border: 1px solid #2B6377;
       word-wrap: break-word;
       resize: none;
       box-sizing: border-box;
@@ -142,7 +142,7 @@
       font-family: 'Roboto', sans-serif;
     }
     textarea:focus {
-      outline: 1px solid #389845;
+      outline: 1px solid #2B6377;
     }
     .send-btn {
       width: 20%;
@@ -150,9 +150,9 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #389845;
+      background-color: #2B6377;
       border-radius: 10px;
-      color: white;
+      color: #FAF6F1;
       cursor: pointer;
     }
     .send-btn.not-allowed {

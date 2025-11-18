@@ -33,13 +33,13 @@
         }
         td:first-child {
           width: 50%;
-          border: 1px solid #389845;
+          border: 1px solid #2B6377;
           border-radius: 10px;
         }
         td:nth-child(2) {
           font-size: x-large;
           width: 30%;
-          color: #389845;
+          color: #2B6377;
           font-weight: bolder;
         }
       }

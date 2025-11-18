@@ -1,6 +1,28 @@
 <div class="all-orders-container">
+  {{!-- <div class="progress-steps">
+    <div class="step active" data-step="1">
+      <div class="step-number">1</div>
+      <div class="step-label">Giỏ hàng</div>
+    </div>
+    <div class="step" data-step="2">
+      <div class="step-number">2</div>
+      <div class="step-label">Thông tin</div>
+    </div>
+    <div class="step" data-step="3">
+      <div class="step-number">3</div>
+      <div class="step-label">Thanh toán</div>
+    </div>
+    <div class="step" data-step="4">
+      <div class="step-number">4</div>
+      <div class="step-label">Hoàn tất</div>
+    </div>
+  </div> --}}
+
   <div class="cart">
-    <p><i class="fi fi-rs-shopping-cart-check"></i>Giỏ Hàng</p>
+    <div class="section-header">
+      <i class="fi fi-rs-shopping-cart-check"></i>
+      <p>Giỏ Hàng</p>
+    </div>
 
     <div style="overflow-x: auto;">
       <table>
@@ -26,12 +48,15 @@
   </div>
 
   <div class="voucher">
-    <p>Mã giảm giá</p>
+    <div class="section-header">
+      <i class="fi fi-rs-ticket"></i>
+      <p>Mã giảm giá</p>
+    </div>
 
     <div class="voucher-input">
-      <button style="width: fit-content;" class="voucher-list-button">Danh sách mã giảm giá</button>
-      <input type="text" placeholder="Nhâp mã giảm giá" id="voucher-code" name="voucher-code">
-      <button style="width: fit-content;" class="voucher-submit-button">Áp dụng</button>
+      <button style="width: fit-content;" class="voucher-list-button"><i class="fi fi-rr-list"></i>Danh sách</button>
+      <input type="text" placeholder="Nhập mã giảm giá..." id="voucher-code" name="voucher-code">
+      <button style="width: fit-content;" class="voucher-submit-button"><i class="fi fi-rr-check"></i>Áp dụng</button>
     </div>
 
     <div class="price">
@@ -49,59 +74,76 @@
   </div>
 
   <div class="contact-info">
-    <p><i class="fi fi-rs-user-check"></i>Thông Tin Khách Hàng</p>
+    <div class="section-header">
+      <i class="fi fi-rs-user-check"></i>
+      <p>Thông Tin Khách Hàng</p>
+    </div>
 
     <div class="info">
       <div class="form-group">
-        <label for="name">Tên Khách Hàng *</label>
-        <input type="text" id="name" name="name">
+        <label for="name"><i class="fi fi-rr-user"></i>Tên Khách Hàng *</label>
+        <input type="text" id="name" name="name" placeholder="Nhập tên của bạn">
         <span class="form-message"></span>
       </div>
 
       <div class="form-group">
-        <label for="phone">Số Điện Thoại *</label>
-        <input type="text" id="phone" name="phone">
+        <label for="phone"><i class="fi fi-rr-phone-call"></i>Số Điện Thoại *</label>
+        <input type="text" id="phone" name="phone" placeholder="Nhập số điện thoại">
         <span class="form-message"></span>
       </div>
 
-      <div class="form-group">
-        <label for="address">Địa Chỉ Nhận Hàng *</label>
-        <input type="text" id="address" name="address">
+      <div class="form-group full">
+        <label for="address"><i class="fi fi-rr-map-marker"></i>Địa Chỉ Nhận Hàng *</label>
+        <input type="text" id="address" name="address" placeholder="Nhập địa chỉ nhận hàng">
         <span class="form-message"></span>
       </div>
 
-      <div class="form-group">
-        <label for="note">Ghi Chú</label>
-        <input type="text" id="note" name="note">
+      <div class="form-group full">
+        <label for="note"><i class="fi fi-rr-document"></i>Ghi Chú</label>
+        <textarea id="note" name="note" placeholder="Ghi chú thêm (tuỳ chọn)"></textarea>
       </div>
     </div> 
   </div>
 
   <div class="payment-method">
-    <p><i class="fi fi-rr-credit-card"></i>Hình Thức Thanh Toán</p>
+    <div class="section-header">
+      <i class="fi fi-rr-credit-card"></i>
+      <p>Hình Thức Thanh Toán</p>
+    </div>
 
     <div class="form-group">
-      <input type="radio" id="cash" name="paymentMethod" value="cash" checked>
-      <label for="cash">Thanh toán khi nhận hàng</label><br>
+      <label class="payment-option">
+        <input type="radio" id="cash" name="paymentMethod" value="cash" checked>
+        <span class="radio-custom"></span>
+        <span class="payment-label"><i class="fi fi-rr-money"></i>Thanh toán khi nhận hàng</span>
+      </label>
 
-      <input type="radio" id="e-wallet" name="paymentMethod" value="e-wallet">
-      <label for="e-wallet">Ví điện tử Momo</label><br>
+      <label class="payment-option">
+        <input type="radio" id="e-wallet" name="paymentMethod" value="e-wallet">
+        <span class="radio-custom"></span>
+        <span class="payment-label"><i class="fi fi-rr-wallet"></i>Ví điện tử Momo</span>
+      </label>
 
-      <input type="radio" id="transfer" name="paymentMethod" value="transfer">
-      <label for="transfer">Chuyển Khoản</label>
+      <label class="payment-option">
+        <input type="radio" id="transfer" name="paymentMethod" value="transfer">
+        <span class="radio-custom"></span>
+        <span class="payment-label"><i class="fi fi-rr-bank"></i>Chuyển Khoản</span>
+      </label>
 
       <div class="bank-account">
-        <img src="https://res.cloudinary.com/bunny-store/image/upload/v1711070720/web-img/fc4c4fd10517a949f006_ndjvt6.png" alt="loading" loading="lazy">
+        <img src="https://res.cloudinary.com/bunny-store/image/upload/v1711070720/web-img/fc4c4fd10517a949f006_ndjvt6.png" alt="Bank QR Code" loading="lazy">
         <div class="form-group">
-          <label>Sau khi chuyển khoản xong mọi người chụp bill gửi cho mình nha</label>
-          <input type="file" name="img" id="img"/>
+          <label><i class="fi fi-rr-info"></i>Sau khi chuyển khoản xong, vui lòng gửi hình ảnh bill</label>
+          <input type="file" name="img" id="img" accept="image/*"/>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="button"><button class="submit-button" style="display: none;">Hoàn tất đặt hàng</button></div>
-  <div class="button"><button class="next-button">Tiếp tục</button></div>
+  <div class="button-group">
+    <button class="submit-button" style="display: none;"><i class="fi fi-rr-check"></i>Hoàn tất đặt hàng</button>
+    <button class="next-button"><i class="fi fi-rr-arrow-right"></i>Tiếp tục</button>
+  </div>
 </div>
 
 <script src="/js/user/allOrders.js"></script>

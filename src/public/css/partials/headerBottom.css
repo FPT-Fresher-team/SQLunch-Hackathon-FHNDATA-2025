@@ -49,7 +49,7 @@ headerBottom {
     border-radius: 10px;
     overflow-y: scroll;
     box-sizing: border-box;
-    border: 1px solid #389845;
+    border: 1px solid #2B6377;
     .product {
       width: 100%;
       box-sizing: border-box;
@@ -86,8 +86,8 @@ headerBottom {
         right: 5px;
         padding: 5px 10px;
         border-radius: 50%;
-        background-color: #389845;
-        color: white;
+        background-color: #2B6377;
+        color: #FAF6F1;
       }
     }
     a {
@@ -157,8 +157,8 @@ headerBottom {
   }
   .header-title:hover, .dropdown-title:hover {
     a, p {
-      color: white;
-      background-color: #389845;
+      color: #FAF6F1;
+      background-color: #2B6377;
     } 
   }
   .dropdown {
@@ -198,9 +198,9 @@ headerBottom {
       height: 40px;
     }
     span:hover {
-      color: white;
-      background-color: #389845;
-      i, a { color: white } 
+      color: #FAF6F1;
+      background-color: #2B6377;
+      i, a { color: #FAF6F1 } 
     }
     ul > li > ul {
       position: absolute;

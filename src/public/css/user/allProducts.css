@@ -1,159 +1,396 @@
 .user-all-products-container {
-  width: 100%;
+  width: 90%;
+  margin: 40px auto;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+}
+
+.user-all-products-container > .title {
+  width: 100%;
+  display: flex;
   align-items: center;
-  .sort, .filter {
-    width: 100%;
-    max-width: 1300px;
-    display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 0 30px 0;
+}
+
+.user-all-products-container > .title i {
+  color: #2B6377;
+  font-size: 28px;
+}
+
+.user-all-products-container > .title .main-title {
+  color: #2B6377;
+  font-size: 32px;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+}
+
+.user-all-products-container .all-category-skincare,
+.user-all-products-container .all-category-makeup {
+  display: none;
+}
+
+/* Main content layout - Sidebar + Products */
+.products-wrapper {
+  display: flex;
+  width: 100%;
+  gap: 25px;
+}
+
+.sidebar {
+  width: 25%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.user-all-products-container .categories {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.user-all-products-container .category-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+.user-all-products-container .category-header:hover {
+  background-color: #f0f0f0;
+}
+
+.user-all-products-container .category-header label {
+  font-weight: 600;
+  color: #2B6377;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+  cursor: pointer;
+  flex: 1;
+}
+
+.user-all-products-container .category-header .toggle-icon {
+  font-size: 16px;
+  color: #2B6377;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.user-all-products-container .category-header.collapsed .toggle-icon {
+  transform: rotate(-90deg);
+}
+
+.user-all-products-container .category-content {
+  max-height: 400px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-all-products-container .category-content.collapsed {
+  max-height: 0;
+  overflow: hidden;
+}
+
+/* Category sections inside dropdown */
+.user-all-products-container .all-category-skincare,
+.user-all-products-container .all-category-makeup {
+  display: block;
+  width: 100%;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.user-all-products-container .all-category-skincare:last-child,
+.user-all-products-container .all-category-makeup:last-child {
+  border-bottom: none;
+}
+
+.user-all-products-container .category-section-title {
+  display: block;
+  padding: 12px 18px;
+  font-weight: 700;
+  color: #2B6377;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background-color: #f0f7f8;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.user-all-products-container .category-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.user-all-products-container .category-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.user-all-products-container .category-content::-webkit-scrollbar-thumb {
+  background: #2B6377;
+  border-radius: 3px;
+  opacity: 0.6;
+}
+
+.user-all-products-container .category-content::-webkit-scrollbar-thumb:hover {
+  background: #1a3f52;
+  opacity: 1;
+}
+
+.products-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-all-products-container .sort,
+.user-all-products-container .filter {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 18px;
+  box-sizing: border-box;
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+}
+
+.user-all-products-container .sort select,
+.user-all-products-container .filter select,
+.user-all-products-container .sort option {
+  width: 100%;
+}
+
+.user-all-products-container .sort label {
+  font-weight: 600;
+  color: #2B6377;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.user-all-products-container .sort select,
+.user-all-products-container .filter button,
+.user-all-products-container .filter input[type="range"] {
+  padding: 10px 12px;
+  border: 1px solid #2B6377;
+  border-radius: 6px;
+  background-color: white;
+  color: #2B6377;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.user-all-products-container .sort select:hover,
+.user-all-products-container .filter button:hover {
+  background-color: #2B6377;
+  color: #FAF6F1;
+}
+
+.user-all-products-container .filter {
+  gap: 16px;
+}
+
+.user-all-products-container .filter label {
+  font-weight: 600;
+  color: #2B6377;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.user-all-products-container .range-slide {
+  position: relative;
+  height: 4px;
+  width: 100%;
+}
+
+.user-all-products-container .slide {
+  position: absolute;
+  top: 0;
+  height: 4px;
+  background: #CCDFE3;
+  left: 9px;
+  right: 9px;
+}
+
+.user-all-products-container .line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 4px;
+  background-color: #2B6377;
+  border-radius: 99px;
+  transition: all 0.2s ease;
+}
+
+.user-all-products-container .thumb {
+  position: absolute;
+  z-index: 2;
+  background-color: #2B6377;
+  border: 2px solid white;
+  border-radius: 50%;
+  outline: none;
+  top: -7px;
+  height: 18px;
+  width: 18px;
+  margin-left: -9px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  box-shadow: 0 2px 4px rgba(43, 99, 119, 0.2);
+}
+
+.user-all-products-container .thumb:hover {
+  transform: scale(1.2);
+}
+
+.user-all-products-container .thumb:active {
+  transform: scale(1.3);
+}
+
+.user-all-products-container input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+  height: 3px;
+  top: 0;
+  width: 100%;
+  opacity: 0;
+  margin: 0;
+}
+
+.user-all-products-container input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: all;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.user-all-products-container .display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.user-all-products-container .display #min,
+.user-all-products-container .display #max {
+  border: 1px solid #2B6377;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #2B6377;
+  background-color: #F0F8FA;
+  width: 90px;
+  box-shadow: 0 1px 2px rgba(43, 99, 119, 0.1);
+}
+
+.user-all-products-container .display #m-m {
+  flex-shrink: 0;
+  width: 20px;
+  height: 3px;
+  background-color: #2B6377;
+  border-radius: 99px;
+}
+
+.user-all-products-container #submit-filter,
+.user-all-products-container #clear-filter,
+.user-all-products-container #clear-sort {
+  padding: 10px 12px;
+  border: 1px solid #2B6377;
+  border-radius: 6px;
+  background-color: white;
+  color: #2B6377;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+}
+
+.user-all-products-container #submit-filter:hover,
+.user-all-products-container #clear-filter:hover,
+.user-all-products-container #clear-sort:hover {
+  background-color: #2B6377;
+  color: #FAF6F1;
+  transform: translateY(-2px);
+}
+
+.user-all-products-container .products {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.user-all-products-container .pagination {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.user-all-products-container .all-category-skincare,
+.user-all-products-container .all-category-makeup {
+  padding: 10px;
+  box-sizing: border-box;
+  width: 100%;
+  ul {
+    margin-block-start: 0;
+    padding-inline-start: 0;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+    overflow-x: scroll;
+    scroll-behavior: smooth;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    padding: 10px;
-    box-sizing: border-box;
-    background-color: #f9f9f9;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
   }
-  .sort select, option {
-    width: fit-content;
+  li {
+    border: 1px solid #2B6377;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: white;
+    margin-top: 5px;
   }
-  .sort label {
-    font-weight: 500;
-    margin-right: 5px;
-    white-space: nowrap;
-  }
-  .filter {
-    .range-slide {
-      position: relative;
-      height: 4px;
-      width: 240px;
-    }
-    .slide {
-      position: absolute;
-      top: 0;
-      height: 4px;
-      background: #ccc;
-      left: 9px;
-      right: 9px;
-    }
-    .line {
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
-      height: 4px;
-      background-color: #389845;
-      border-radius: 99px;
-      transition: all 0.2s ease;
-    }
-    .thumb {
-      position: absolute;
-      z-index: 2;
-      background-color: #389845;
-      border: 2px solid white;
-      border-radius: 50%;
-      outline: none;
-      top: -7px;
-      height: 18px;
-      width: 18px;
-      margin-left: -9px;
-      cursor: pointer;
-      transition: transform 0.15s ease;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-    }
-    .thumb:hover {
-      transform: scale(1.2);
-    }
-    .thumb:active {
-      transform: scale(1.3);
-    }
-    input {
-      -webkit-appearance: none;
-      appearance: none;
-      position: absolute;
-      pointer-events: none;
-      z-index: 3;
-      height: 3px;
-      top: 0;
-      width: 100%;
-      opacity: 0;
-      margin: 0;
-    }
-    input::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      pointer-events: all;
-      border-radius: 50%;
-      cursor: pointer;
-      width: 18px;
-      height: 18px;
-    }
-    .display {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      #min, #max {
-        border: 1px solid #389845;
-        border-radius: 10px;
-        padding: 4px 10px;
-        font-size: 15px;
-        font-weight: 500;
-        color: #389845;
-        background-color: #fff;
-        box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-      }
-      #m-m {
-        flex-shrink: 0;
-        width: 30px;
-        height: 3px;
-        background-color: #389845;
-        border-radius: 99px;
-      }
-    }
-  }
-  .all-category-skincare, .all-category-makeup {
-    padding: 10px;
-    width: 100%;
-    max-width: 1300px;
-    ul {
-      padding-inline-start: 0;
-      list-style: none;
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
-      overflow-x: scroll;
-      box-sizing: content-box;
-      scroll-behavior: smooth;
-      align-items: center;
-      display: grid;
-      grid-template-columns: repeat(6, minmax(min(175px, 100%), 1fr));
-      scroll-snap-type: x mandatory;
-    }
-    li {
-      border: 1px solid #389845;
-      border-radius: 5px;
-      padding: 5px;
-      background-color: white;
-      scroll-snap-align: none start;
-    }
-    li:hover {
-      img { transform: scale(1.1); }
-    }
-    a {
-      display: flex; 
-      justify-content: space-between;
-      align-items: center;
-      text-decoration: none;
-      color: black;
-      padding: 5px;
-      height: 100%;
-    }
-    img {
-      width: 40px;
-      aspect-ratio: 1/1;
-      border-radius: 10px;
-    }
+  a {
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    padding: 5px;
+    height: 100%;
   }
 }

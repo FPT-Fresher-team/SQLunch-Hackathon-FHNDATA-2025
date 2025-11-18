@@ -14,7 +14,7 @@
 
 .intro-hero h2 {
   font-size: 40px;
-  color: #389845;
+  color: #2B6377;
   margin-bottom: 20px;
   font-weight: 700;
 }
@@ -45,7 +45,7 @@
 
 .intro-section .text h3 {
   font-size: 28px;
-  color: #389845;
+  color: #2B6377;
   margin-bottom: 15px;
   font-weight: 600;
 }
@@ -89,8 +89,8 @@
 .btn {
   display: inline-block;
   padding: 12px 28px;
-  background: #389845;
-  color: #fff;
+  background: #2B6377;
+  color: #FAF6F1;
   font-size: 16px;
   border-radius: 50px;
   text-decoration: none;

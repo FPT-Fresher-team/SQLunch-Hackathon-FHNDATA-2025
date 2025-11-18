@@ -33,14 +33,14 @@ main {
   border-radius: 12px;
   padding: 18px 28px;
   margin: 0;
-  background: linear-gradient(135deg, #389845, #56c47b);
-  color: white;
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+  color: #FAF6F1;
   letter-spacing: 1px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .board-title p:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 18px rgba(56, 152, 69, 0.35);
+  box-shadow: 0 10px 18px rgba(43, 99, 119, 0.35);
 }
 .control-bar {
   display: flex;
@@ -108,8 +108,8 @@ main {
   gap: 6px;
   padding: 8px 14px;
   border-radius: 8px;
-  background-color: #389845;
-  color: #fff;
+  background-color: #2B6377;
+  color: #FAF6F1;
   font-weight: 500;
   text-decoration: none;
   transition: background-color 0.2s ease, transform 0.1s ease;
@@ -145,20 +145,20 @@ div.table .table-button {
 }
 div.table .table-button a {
   padding: 8px 14px;
-  background: #389845;
-  color: white;
+  background: #2B6377;
+  color: #FAF6F1;
   font-weight: 500;
   border-radius: 6px;
   text-decoration: none;
   transition: background 0.3s ease, transform 0.2s ease;
 }
 div.table .table-button a:hover {
-  background: #2f7a38;
+  background: #1a3f52;
   transform: translateY(-2px);
 }
 div.table .table-button i {
   font-size: 20px;
-  color: #389845;
+  color: #2B6377;
   cursor: pointer;
   padding: 5px;
 }
@@ -251,9 +251,9 @@ table a {
   display: inline-block;
   min-width: 70px;
   height: 40px;
-  background: #fff;
-  color: #389845;
-  border: 1px solid #389845;
+  background: #FAF6F1;
+  color: #2B6377;
+  border: 1px solid #2B6377;
   border-radius: 6px;
   font-size: 13px;
   font-weight: 500;
@@ -265,8 +265,8 @@ table a {
 }
 
 table a:hover {
-  background: #389845;
-  color: #fff;
+  background: #2B6377;
+  color: #FAF6F1;
   transform: translateY(-2px);
 }
 
@@ -319,7 +319,7 @@ table img {
     border-radius: 8px;
     padding: 10px 20px;
     margin: 0;
-    color: #389845;
+    color: #2B6377;
     letter-spacing: 1px;
   }
 
@@ -353,8 +353,8 @@ table img {
   }
 
   .form-group input:focus {
-    border-color: #389845;
-    box-shadow: 0 0 5px rgba(56, 152, 69, 0.3);
+    border-color: #2B6377;
+    box-shadow: 0 0 5px rgba(43, 99, 119, 0.3);
     outline: none;
   }
 
@@ -398,8 +398,8 @@ table img {
   }
 
   div#form table thead tr td {
-    background-color: #389845;
-    color: white;
+    background-color: #2B6377;
+    color: #FAF6F1;
     font-weight: bold;
     text-align: center;
     padding: 12px;

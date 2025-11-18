@@ -1,15 +1,15 @@
 .flash-deal-board, .products-board, .vouchers-board  {
-  /* width: 100%; */
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 20px;
+  margin: 40px auto;
+  max-width: 80%;
+  box-shadow: none;
+  border-radius: 0;
+  background: transparent !important;
 }
 .vouchers-board {
-  background: linear-gradient(168.12deg, #ffe0b2 0%, #ffcc80 100%); 
   div.vouchers {
     scroll-behavior: smooth;
     align-items: center;
@@ -54,8 +54,8 @@
         animation: flicker 1s infinite;
       }
       #name {
-        background-color: #389845;
-        color: white;
+        background-color: #2B6377;
+        color: #FAF6F1;
         padding: 5px;
         width: fit-content;
         border-radius: 5px;
@@ -82,26 +82,20 @@
   }
 }
 .flash-deal-board {
-  background: linear-gradient(168.12deg, #a8e6cf 0%, #56ab2f 100%);
-  .title {
-    i.fi-sr-bolt, a {
-      animation: bling 1s infinite
-    }
-  }
 }
 .products-board {
-  background-color: white;
+  background-color: transparent;
 }
 .famous-brand-board {
   overflow: hidden;
-  margin-top: 20px;
+  margin: 40px auto;
+  max-width: 80%;
   position: relative;
-  /* margin: auto; */
   justify-content: center;
-  background: linear-gradient(145deg, #e0fdfa 0%, #b2ebf2 100%);
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  border-radius: 20px;
-  padding: 15px;
+  background: transparent !important;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
   .brands {
     width: 100%;
     position: relative;
@@ -145,4 +139,81 @@
 @keyframes loop {
   0% { transform: translateX(0) }
   100% { transform: translateX(-50%) }
+}
+
+/* Title and Subtitle Styling */
+.flash-deal-board .title,
+.products-board .title,
+.vouchers-board .title,
+.famous-brand-board .title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.flash-deal-board .title i,
+.products-board .title i,
+.vouchers-board .title i,
+.famous-brand-board .title i {
+  display: none;
+}
+
+.flash-deal-board .title .main-title,
+.products-board .title .main-title,
+.vouchers-board .title .main-title,
+.famous-brand-board .title .main-title {
+  color: #2B6377;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 0 0 12px 0;
+  font-family: 'Playfair Display', serif;
+  text-decoration: none;
+}
+
+.flash-deal-board .title .subtitle,
+.products-board .title .subtitle,
+.vouchers-board .title .subtitle,
+.famous-brand-board .title .subtitle {
+  color: #2B6377;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  opacity: 0.85;
+  font-style: italic;
+}
+
+/* View All Button */
+.view-all-btn {
+  margin-top: 20px;
+  padding: 10px 30px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2B6377;
+  background: transparent;
+  border: 2px solid #2B6377;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-block;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.view-all-btn:hover {
+  background: #2B6377;
+  color: #FAF6F1;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(43, 99, 119, 0.25);
+}
+
+/* Align button to left for vouchers and favorite products */
+.vouchers-board .view-all-btn,
+#favorite.products-board .view-all-btn {
+  align-self: flex-start;
+  margin-left: 15px;
 }

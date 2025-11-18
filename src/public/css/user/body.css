@@ -8,17 +8,15 @@
 @import url('https://cdn-uicons.flaticon.com/3.0.0/uicons-brands/css/uicons-brands.css');
 
 body {
-  max-width: 1300px;
+  /* max-width: 1300px; */
   margin: auto;
 }
 header {
-  max-width: 1300px;
   margin: auto;
 }
 main {
-  margin-top: 80px; 
+  margin-top: 110px; 
   margin-bottom: 50px;
-  padding: 0 10px;
 }
 div.title {
   display: flex; 
@@ -29,20 +27,20 @@ div.title {
 }
 
 div.title i {
-  color: #389845; 
+  color: #2B6377; 
   font-size: 28px; 
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
 div.title i:hover {
   transform: scale(1.2);
-  color: #2d6a4f;
+  color: #1a3f52;
 }
 
 div.title .main-title {
   display: inline-block;
   position: relative;
-  color: #389845;
+  color: #2B6377;
   text-decoration: none;
   font-size: 28px;
   text-transform: uppercase;
@@ -57,7 +55,7 @@ div.title .main-title::after {
   height: 3px;
   bottom: -3px;
   left: 0;
-  background-color: #389845;
+  background-color: #2B6377;
   transform-origin: bottom right;
   transition: transform 0.3s ease-out;
 }
@@ -75,7 +73,8 @@ div.products {
   padding: 15px;
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: repeat(5, minmax(min(11.25rem, 100%), 1fr));
+  grid-template-columns: repeat(5, 1fr);
+  width: 100%;
   scroll-snap-type: x mandatory;
   overflow-x: auto;
   max-width: 100%;
@@ -89,58 +88,110 @@ div.products a, p {
 }
 div.products .product {
   position: relative;
-  background-color: white; 
-  min-height: 350px;
-  padding: 15px;
-  border-radius: 12px;
+  background-color: #ffffff; 
+  min-height: 360px;
+  padding: 12px;
+  border-radius: 16px;
   border: 1px solid #f0f0f0;
   box-sizing: border-box;
-  transition: all 0.3s ease-in-out;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 div.products .product img {
   max-width: 100%; 
   aspect-ratio: 1 / 1; 
-  border-radius: 8px;
-  transition: transform 0.3s ease-in-out;
+  border-radius: 12px;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  object-fit: cover;
+  background: #f5f5f5;
 }
 
 div.products .product #name {
-  display: flex; 
-  align-items: center;
-  margin: 10px 0 5px;
-  font-size: 15px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin: 12px 0 8px;
+  font-size: 14px;
   font-weight: 600;
+  color: #2B6377;
+  line-height: 1.4;
+  font-family: 'Montserrat', sans-serif;
   text-overflow: ellipsis; 
   overflow: hidden;
-  white-space: nowrap;
+  height: 40px;
+}
+
+div.products .product del #old-price {
+  font-size: 12px;
+  color: #999;
+  margin: 4px 0;
 }
 
 div.products .product #price {
   display: inline-block;
-  padding: 5px 10px;
+  padding: 6px 12px;
   border-radius: 6px;
-  border: 1px solid #5ab868;
-  color: #5ab868;
+  border: none;
+  background: #F0F8FA;
+  color: #2B6377;
   font-weight: 700;
-  font-size: 14px;
-  transition: all 0.3s ease;
+  font-size: 13px;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: 'Montserrat', sans-serif;
+  margin: 6px 0;
+}
+
+div.products .product #rate {
+  font-size: 12px;
+  color: #666;
+  margin: 6px 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+div.products .product #rate-score {
+  font-weight: 700;
+  color: #2B6377;
+}
+
+div.products .product #rate i {
+  font-size: 11px;
+  color: #FFB84D;
+  transition: all 0.2s ease;
+}
+
+div.products .product #sale-number {
+  font-size: 12px;
+  color: #d4183d;
+  font-weight: 600;
+  margin: 4px 0 0 0;
+  font-family: 'Montserrat', sans-serif;
 }
 
 div.products .product:hover {
-  transform: translateY(-5px);
-  border-color: #389845;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+  transform: translateY(-8px);
+  border-color: #2B6377;
+  box-shadow: 0 12px 28px rgba(43, 99, 119, 0.18);
 }
 
 div.products .product:hover #price {
-  background-color: #5ab868;
-  color: white;
+  background: #2B6377;
+  color: #FAF6F1;
+  transform: scale(1.05);
+}
+
+div.products .product:hover #name {
+  color: #1a3f52;
 }
 
 div.products .product:hover img {
-  transform: scale(1.08);
+  transform: scale(1.12);
 }
 
 /* subtle loading shimmer effect */
@@ -171,18 +222,18 @@ table {
   padding: 0px 5px;
   border-radius: 10px;
   thead {
-    background: linear-gradient(135deg, #389845, #56c47b);
+    background: linear-gradient(135deg, #2B6377, #94CCDF);
     height: 50px;
     font-weight: bolder;
     text-align: center;
     text-transform:capitalize;
-    color: white;
+    color: #FAF6F1;
   }
   tfoot {
-    background: linear-gradient(135deg, #389845, #56c47b);
+    background: linear-gradient(135deg, #2B6377, #94CCDF);
     height: 50px;
     font-weight: bolder;
-    color: white;
+    color: #FAF6F1;
   }
   tbody {
     tr:nth-child(odd) {
@@ -198,17 +249,17 @@ table {
     a {
       width: fit-content; 
       height: 30px;
-      background-color: white;
-      color: #389845;
-      border: 1px solid #389845;
+      background-color: #FAF6F1;
+      color: #2B6377;
+      border: 1px solid #2B6377;
       border-radius: 5px;
       cursor: pointer;
       text-decoration: none;
       padding: 5px;
     }
     a:hover {
-      background-color: #389845;
-      color: white;
+      background-color: #2B6377;
+      color: #FAF6F1;
     }
     img {
       border-radius: 10px;

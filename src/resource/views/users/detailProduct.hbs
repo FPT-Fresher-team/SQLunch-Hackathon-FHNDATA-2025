@@ -2,7 +2,18 @@
   <div class="table">
     <div class="loading"></div>
     <div class="image-box">
-      <div class="image"><img loading="lazy"/></div>
+      <div class="image-main">
+        <img id="main-image" loading="lazy"/>
+        <button class="slide-prev"><i class="fi fi-rr-angle-small-left"></i></button>
+        <button class="slide-next"><i class="fi fi-rr-angle-small-right"></i></button>
+      </div>
+      <div class="image-thumbnails">
+        <div class="thumbnail active"><img loading="lazy" alt="thumbnail"/></div>
+        <div class="thumbnail"><img loading="lazy" alt="thumbnail"/></div>
+        <div class="thumbnail"><img loading="lazy" alt="thumbnail"/></div>
+        <div class="thumbnail"><img loading="lazy" alt="thumbnail"/></div>
+        <div class="thumbnail"><img loading="lazy" alt="thumbnail"/></div>
+      </div>
     </div>
     
     <div class="details-box">
