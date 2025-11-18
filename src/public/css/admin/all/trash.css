@@ -1,19 +1,88 @@
+/* ==================== TRASH/DELETED ITEMS PAGE ==================== */
+
+.trash-all-table {
+  width: 100%;
+}
+
+.trash-all-table thead tr {
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+}
+
+.trash-all-table tbody tr {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0.8;
+}
+
+.trash-all-table tbody tr:hover {
+  background: rgba(148, 204, 223, 0.05);
+  opacity: 1;
+}
+
+.trash-all-table td {
+  color: #999;
+  padding: 14px 12px;
+  font-size: 14px;
+}
+
+.trash-item-name {
+  color: #555;
+  text-decoration: line-through;
+}
+
+.trash-actions a {
+  background: #94CCDF;
+  color: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-right: 8px;
+}
+
+.trash-actions a:hover {
+  background: #2B6377;
+  transform: scale(1.05);
+}
+
+.trash-restore {
+  background: rgba(40, 167, 69, 0.2) !important;
+  color: #28a745 !important;
+}
+
+.trash-restore:hover {
+  background: #28a745 !important;
+  color: white !important;
+}
+
+.trash-permanent {
+  background: rgba(212, 24, 61, 0.2) !important;
+  color: #d4183d !important;
+}
+
+.trash-permanent:hover {
+  background: #d4183d !important;
+  color: white !important;
+}
+
+.trash-deleted-date {
+  color: #999;
+  font-size: 12px;
+}
+
+/* Mobile Responsive */
 @media screen and (max-width: 700px) {
-  .admin-trash-products-container { 
-    .board-title {
-      p { font-size: 25px;}
-    }
-    tbody, thead {
-      td:nth-child(1) { display: none;}
-      td:nth-child(2) {
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
-      }
-      td:nth-child(4) { display: none;}
-      td:nth-child(5) { display: none;}
-    }
-    .modal-content {
-      width: 80% !important;
-    }
-  } 
+  .trash-all-table tbody td:nth-child(1) { 
+    display: none;
+  }
+
+  .trash-all-table tbody td:nth-child(2) {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+
+  .trash-all-table tbody td:nth-child(4),
+  .trash-all-table tbody td:nth-child(5) { 
+    display: none;
+  }
+
+  .trash-all-table {
+    font-size: 12px;
+  }
 }

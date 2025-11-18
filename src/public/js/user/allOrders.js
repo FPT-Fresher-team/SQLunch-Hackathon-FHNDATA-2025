@@ -13,6 +13,7 @@ const tableFooter       = document.querySelector('tfoot')
 const userId            = {id: null}
 const totalOrderPrice   = {total: 0}
 const imgPath           = {path: ''}
+const paymentOptions    = paymentMethod.querySelectorAll('input[type="radio"]')
 
 async function checkUser() {
   try {
@@ -264,7 +265,7 @@ async function submitOrder() {
     const name          = document.querySelector('input[name="name"]').value
     const phone         = document.querySelector('input[name="phone"]').value
     const address       = document.querySelector('input[name="address"]').value
-    const note          = document.querySelector('input[name="note"]').value
+    const note          = document.querySelector('textarea[name="note"]').value || ''
     if (
       !name     || 
       !phone    || 
@@ -332,6 +333,7 @@ async function submitOrder() {
   }
   catch (error) {
     preloader.classList.add('inactive')
+    console.log(error)
     return pushNotification(error.message)
   }
 }
@@ -501,6 +503,17 @@ submitButton.onclick = async function() {
     return pushNotification(error.message)
   }
 }
+
+paymentOptions.forEach((option) => {
+  option.onchange = function() {
+    const bankAccountDiv = document.querySelector('div.bank-account')
+    if (option.value === 'transfer') {
+      bankAccountDiv.style.display = 'block'
+    } else {
+      bankAccountDiv.style.display = 'none'
+    } 
+  }
+})
 
 preCheckAllProducts()
 

@@ -16,7 +16,7 @@ export const permissions = {
 }
 
 export const menuConfig = [
-  { id:"all"                , href:"/admin/all"           , icon:"fi fi-rr-home"        , label:"Trang chủ"       , permission:"homePermission"       },
+  { id:"all"                , href:"/admin/all"           , icon:"fi fi-rr-home"        , label:"Báo cáo"         , permission:"homePermission"       },
   { id:"all-customers"      , href:"/admin/all-customers" , icon:"fi fi-rr-users"       , label:"Khách hàng"      , permission:"customerPermission"   },
   { id:"all-vouchers"       , href:"/admin/all-vouchers"  , icon:"fi fi-rr-ticket"      , label:"Voucher"         , permission:"voucherPermission"    },
   { id:"all-u-vouchers"     , href:"/admin/all-u-vouchers", icon:"fi fi-rr-ticket"      , label:"Voucher Cá nhân" , permission:"voucherPermission"    },

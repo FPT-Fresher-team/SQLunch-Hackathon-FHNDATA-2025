@@ -1,0 +1,205 @@
+/* ==================== DETAIL STORE PAGE ==================== */
+
+.store-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.store-detail-header {
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+  color: white;
+  padding: 24px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 12px rgba(43, 99, 119, 0.15);
+}
+
+.store-detail-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  letter-spacing: 0.5px;
+}
+
+.store-detail-header p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.95;
+}
+
+.store-detail-body {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.store-logo-box {
+  background: white;
+  border: 1px solid #CCDFE3;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(43, 99, 119, 0.05);
+  text-align: center;
+}
+
+.store-logo {
+  width: 150px;
+  height: 150px;
+  border-radius: 8px;
+  object-fit: cover;
+  margin: 0 auto 16px;
+  border: 2px solid #94CCDF;
+  box-shadow: 0 4px 12px rgba(43, 99, 119, 0.15);
+}
+
+.store-rating-badge {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #ff9800;
+  background: rgba(255, 152, 0, 0.1);
+  margin-bottom: 16px;
+}
+
+.store-detail-info {
+  background: white;
+  border: 1px solid #CCDFE3;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(43, 99, 119, 0.05);
+}
+
+.detail-info-section {
+  margin-bottom: 20px;
+}
+
+.detail-info-section:last-child {
+  margin-bottom: 0;
+}
+
+.detail-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #2B6377;
+  margin: 0 0 12px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #CCDFE3;
+  letter-spacing: 0.5px;
+}
+
+.detail-info-row {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.detail-info-label {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #2B6377;
+  min-width: 140px;
+}
+
+.detail-info-value {
+  color: #555;
+  flex: 1;
+}
+
+.detail-info-value a {
+  color: #94CCDF;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.detail-info-value a:hover {
+  color: #2B6377;
+  text-decoration: underline;
+}
+
+.store-status {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.store-status.active {
+  background: rgba(40, 167, 69, 0.15);
+  color: #28a745;
+}
+
+.store-status.inactive {
+  background: rgba(212, 24, 61, 0.15);
+  color: #d4183d;
+}
+
+.store-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #CCDFE3;
+}
+
+.store-actions button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.store-actions .edit-btn {
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+  color: white;
+}
+
+.store-actions .edit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(43, 99, 119, 0.25);
+}
+
+.store-actions .delete-btn {
+  background: linear-gradient(135deg, #d4183d, #ff5a5a);
+  color: white;
+}
+
+.store-actions .delete-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(212, 24, 61, 0.25);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .store-detail-body {
+    grid-template-columns: 1fr;
+  }
+
+  .store-detail-header h1 {
+    font-size: 22px;
+  }
+
+  .detail-info-row {
+    flex-direction: column;
+  }
+
+  .detail-info-label {
+    margin-bottom: 4px;
+  }
+}

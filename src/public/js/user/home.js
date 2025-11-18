@@ -7,8 +7,10 @@ async function getVouchers() {
     await new Promise(resolve => setTimeout(resolve, 50));
   }
 
+  
   if (!window.isLoggedIn) return
-  document.querySelector('div[class="vouchers-board"][id="voucher"]').style.display = 'block'
+  console.log(window.isLoggedIn)
+  document.querySelector('div[class="vouchers-board"][id="voucher"]').style.display = 'flex'
 
   try {
     const response = await fetch('/data/vouchers', {
@@ -53,7 +55,7 @@ async function getFavProducts() {
   }
 
   if (!window.isLoggedIn) return
-  document.querySelector('div[class="products-board"][id="favorite"]').style.display = 'block'
+  document.querySelector('div[class="products-board"][id="favorite"]').style.display = 'flex'
 
   try {
     const response = await fetch(`${window.recommend_url}/return_data`, {

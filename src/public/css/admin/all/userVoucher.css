@@ -1,0 +1,73 @@
+/* ==================== USER VOUCHERS LIST PAGE ==================== */
+
+.user-voucher-all-table {
+  width: 100%;
+}
+
+.user-voucher-all-table thead tr {
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+}
+
+.user-voucher-all-table tbody tr {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-voucher-all-table tbody tr:hover {
+  background: rgba(148, 204, 223, 0.05);
+}
+
+.user-voucher-all-table td {
+  color: #555;
+  padding: 14px 12px;
+  font-size: 14px;
+}
+
+.user-voucher-all-table a {
+  background: #94CCDF;
+  color: white;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.user-voucher-all-table a:hover {
+  background: #2B6377;
+  transform: scale(1.05);
+}
+
+.voucher-code {
+  font-family: 'Courier New', monospace;
+  background: rgba(43, 99, 119, 0.05);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-weight: 600;
+  color: #2B6377;
+}
+
+.voucher-discount {
+  font-weight: 600;
+  color: #28a745;
+}
+
+.user-voucher-status {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.user-voucher-status.used {
+  background: rgba(40, 167, 69, 0.15);
+  color: #28a745;
+}
+
+.user-voucher-status.unused {
+  background: rgba(63, 81, 181, 0.15);
+  color: #3f51b5;
+}
+
+.user-voucher-status.expired {
+  background: rgba(212, 24, 61, 0.15);
+  color: #d4183d;
+}

@@ -1,9 +1,4 @@
-/* ============================================= */
-/*  MODERN COSMETIC THEME – Full replacement CSS */
-/* ============================================= */
-
 @custom-variant dark (&:is(.dark *));
-
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Montserrat:wght@400;500;600;700&display=swap');
 
 /* ---------- Color & Typography Variables ---------- */
@@ -167,6 +162,13 @@ button:hover {
 
 button:active {
   transform: translateY(0);
+}
+
+div.submit-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
 }
 
 /* Primary / Submit button */

@@ -87,7 +87,7 @@ class homeController {
   }
 
   async show(req, res, next) {
-    return res.render('users/home', { title: 'Cosmetic Garden - Inspired by nature' })
+    return res.render('users/home', { title: 'BEAUTÉ - Inspired by nature' })
   }
 
   async searchInfo(req, res, next) {

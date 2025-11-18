@@ -13,17 +13,17 @@ async function getOrder() {
 
   if (error) return pushNotification(error)
 
-  document.querySelector('span#id').textContent = data._id || ''
-  document.querySelector('span#date').textContent = formatDate(data.createdAt) || ''
-  document.querySelector('span#name').textContent = data.customerInfo.name || ''
-  document.querySelector('span#phone').textContent = data.customerInfo.phone || ''
-  document.querySelector('span#address').textContent = data.customerInfo.address || ''
-  document.querySelector('span#note').textContent = data.customerInfo.note || ''
-  document.querySelector('span#total-price').textContent = formatNumber(data.totalOrderPrice) || ''
-  document.querySelector('span#total-new-price').textContent = formatNumber(data.totalNewOrderPrice) || ''
-  document.querySelector('span#payment-method').textContent = method.name || ''
-  document.querySelector('span#status').textContent = status.name || ''
-  document.querySelector('span#isPaid').textContent = data.isPaid ? 'Đã thanh toán' : 'Chưa thanh toán'
+  document.querySelector('td#id').textContent = data._id || ''
+  document.querySelector('td#date').textContent = formatDate(data.createdAt) || ''
+  document.querySelector('td#name').textContent = data.customerInfo.name || ''
+  document.querySelector('td#phone').textContent = data.customerInfo.phone || ''
+  document.querySelector('td#address').textContent = data.customerInfo.address || ''
+  document.querySelector('td#note').textContent = data.customerInfo.note || ''
+  document.querySelector('td#total-price').textContent = formatNumber(data.totalOrderPrice) || ''
+  document.querySelector('td#total-new-price').textContent = formatNumber(data.totalNewOrderPrice) || ''
+  document.querySelector('td#payment-method').textContent = method.name || ''
+  document.querySelector('td#status').textContent = status.name || ''
+  document.querySelector('td#isPaid').textContent = data.isPaid ? 'Đã thanh toán' : 'Chưa thanh toán'
   if (data.status === 'delivered' && data.isPaid) {
     const div = document.createElement("div")
     div.className = "button"

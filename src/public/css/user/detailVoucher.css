@@ -3,38 +3,159 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  gap: 20px;
-  .title {
-    width: 90%;
-    background-color: white;
-    padding: 10px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: larger;
-    font-weight: bolder;
-    height: 50px;
+  gap: 24px;
+  padding: 30px 20px;
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(135deg, rgba(43, 99, 119, 0.02), rgba(148, 204, 223, 0.02));
+  min-height: 60vh;
+}
+
+.detail-voucher-container .title {
+  width: 100%;
+  max-width: 900px;
+  background: white;
+  padding: 20px 24px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  height: auto;
+  color: #2B6377;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(43, 99, 119, 0.1);
+  border-left: 4px solid #94CCDF;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.detail-voucher-container .title:hover {
+  box-shadow: 0 8px 24px rgba(43, 99, 119, 0.15);
+  transform: translateY(-2px);
+}
+
+.detail-voucher-container table {
+  background-color: white;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(43, 99, 119, 0.1);
+  width: 100%;
+  max-width: 900px;
+  border-radius: 12px;
+  border-collapse: collapse;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.detail-voucher-container table:hover {
+  box-shadow: 0 8px 32px rgba(43, 99, 119, 0.15);
+}
+
+.detail-voucher-container table thead {
+  background: linear-gradient(135deg, #2B6377, #1e4557);
+  color: white;
+}
+
+.detail-voucher-container table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #94CCDF;
+}
+
+.detail-voucher-container table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #CCDFE3;
+  font-size: 13px;
+  color: #333;
+}
+
+.detail-voucher-container table tbody tr {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.detail-voucher-container table tbody tr:hover {
+  background-color: rgba(148, 204, 223, 0.05);
+}
+
+.detail-voucher-container td.name-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.detail-voucher-container table a {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  color: #2B6377;
+  padding: 6px 12px;
+  border: none;
+  background-color: transparent;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 6px;
+}
+
+.detail-voucher-container table a:hover {
+  color: white;
+  background-color: #2B6377;
+  box-shadow: 0 4px 12px rgba(43, 99, 119, 0.2);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .detail-voucher-container {
+    gap: 16px;
+    padding: 20px 12px;
   }
-  table {
-    background-color: white;
-    padding: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    td.name-group {
-      display: flex;
-      gap: 5px;
-    }
-    a { 
-      display: flex;
-      align-items: center;
-      text-decoration: none; 
-      color: black;
-      padding-left: 0 !important;
-      border: none;
-      background-color: transparent !important
-    }
-    a:hover {
-      color: black;
-    }
+
+  .detail-voucher-container .title {
+    font-size: 22px;
+    padding: 16px 20px;
+  }
+
+  .detail-voucher-container table {
+    padding: 16px;
+    font-size: 12px;
+  }
+
+  .detail-voucher-container table th {
+    padding: 12px 10px;
+    font-size: 11px;
+  }
+
+  .detail-voucher-container table td {
+    padding: 12px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .detail-voucher-container {
+    gap: 12px;
+    padding: 16px 10px;
+  }
+
+  .detail-voucher-container .title {
+    font-size: 18px;
+    padding: 12px 16px;
+  }
+
+  .detail-voucher-container table {
+    padding: 12px;
+    font-size: 11px;
+  }
+
+  .detail-voucher-container table th {
+    padding: 10px 8px;
+    font-size: 10px;
+  }
+
+  .detail-voucher-container table td {
+    padding: 10px 8px;
   }
 }
