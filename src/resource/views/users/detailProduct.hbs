@@ -3,6 +3,7 @@
     <div class="loading"></div>
     <div class="image-box">
       <div class="image-main">
+        <span class="discount-badge" id="discount-badge"></span>
         <img id="main-image" loading="lazy"/>
         <button class="slide-prev"><i class="fi fi-rr-angle-small-left"></i></button>
         <button class="slide-next"><i class="fi fi-rr-angle-small-right"></i></button>
@@ -98,11 +99,41 @@
   <div class="related-products">
     <div class="title"><span class="main-title"><b>RELATED PRODUCTS</b></span></div>
 
-    <div class="products">
-    {{#each holderRelatedProducts}}
-      {{> product}}
-    {{/each}}
-  </div>
+    <div class="related-tabs">
+      <button class="tab-btn active" data-tab="category">
+        <i class="fi fi-rr-list"></i> By Category
+      </button>
+      <button class="tab-btn" data-tab="type">
+        <i class="fi fi-rr-list"></i> By Type
+      </button>
+      <button class="tab-btn" data-tab="brand">
+        <i class="fi fi-rr-tag"></i> By Brand
+      </button>
+      <button class="tab-btn" data-tab="viewed">
+        <i class="fi fi-rr-eye"></i> Recently Viewed
+      </button>
+      <button class="tab-btn" data-tab="recommended">
+        <i class="fi fi-rr-star"></i> Recommended
+      </button>
+    </div>
+
+    <div class="products" id="related-category">
+      {{#each holderRelatedProducts}}
+        {{> product}}
+      {{/each}}
+    </div>
+
+    <div class="products" id="related-brand" style="display:none;">
+      <div class="loading-placeholder"></div>
+    </div>
+
+    <div class="products" id="related-viewed" style="display:none;">
+      <div class="loading-placeholder"></div>
+    </div>
+
+    <div class="products" id="related-recommended" style="display:none;">
+      <div class="loading-placeholder"></div>
+    </div>
   </div>
 </div>
 

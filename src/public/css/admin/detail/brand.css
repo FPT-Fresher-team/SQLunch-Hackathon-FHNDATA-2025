@@ -6,6 +6,200 @@
   padding: 20px;
 }
 
+/* ==================== MODAL STYLES ==================== */
+
+.admin-brand-details-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.admin-brand-details-container.show {
+  display: flex;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.admin-brand-details-container #form {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 32px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideUp 0.3s ease-in-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.admin-brand-details-container .close-modal-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+  color: white;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1001;
+}
+
+.admin-brand-details-container .close-modal-btn:hover {
+  background: linear-gradient(135deg, #1e4a5f, #7ab5d4);
+  transform: rotate(90deg);
+  box-shadow: 0 4px 12px rgba(43, 99, 119, 0.3);
+}
+
+.admin-brand-details-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+.admin-brand-details-container table thead {
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+  color: white;
+}
+
+.admin-brand-details-container table thead tr td {
+  padding: 12px;
+  font-weight: 600;
+  text-align: left;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+.admin-brand-details-container table tr td {
+  padding: 12px;
+  border-bottom: 1px solid #CCDFE3;
+}
+
+.admin-brand-details-container table tr:hover {
+  background-color: rgba(148, 204, 223, 0.05);
+}
+
+.admin-brand-details-container input[type="text"],
+.admin-brand-details-container input[type="date"],
+.admin-brand-details-container input[type="email"],
+.admin-brand-details-container input[type="tel"] {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #CCDFE3;
+  border-radius: 6px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 13px;
+  transition: all 0.3s ease;
+}
+
+.admin-brand-details-container input:disabled {
+  background-color: #f5f5f5;
+  color: #888;
+  cursor: not-allowed;
+}
+
+.admin-brand-details-container input:focus {
+  outline: none;
+  border-color: #94CCDF;
+  box-shadow: 0 0 0 3px rgba(148, 204, 223, 0.1);
+}
+
+.admin-brand-details-container .submit-button {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #CCDFE3;
+  text-align: right;
+}
+
+.admin-brand-details-container .submit-button button {
+  padding: 10px 24px;
+  margin-left: 12px;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.admin-brand-details-container .submit-button button[type="submit"] {
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+  color: white;
+}
+
+.admin-brand-details-container .submit-button button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(43, 99, 119, 0.25);
+}
+
+/* Responsive Modal */
+@media (max-width: 768px) {
+  .admin-brand-details-container #form {
+    padding: 20px;
+    max-height: 90vh;
+  }
+
+  .admin-brand-details-container .close-modal-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 20px;
+  }
+
+  .admin-brand-details-container table tr td {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .admin-brand-details-container input[type="text"],
+  .admin-brand-details-container input[type="date"],
+  .admin-brand-details-container input[type="email"],
+  .admin-brand-details-container input[type="tel"] {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
+
 .brand-detail-header {
   background: linear-gradient(135deg, #2B6377, #94CCDF);
   color: white;

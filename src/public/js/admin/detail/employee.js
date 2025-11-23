@@ -10,7 +10,7 @@ async function getEmployee() {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {error, employeeInfo, storesInfo, positionsInfo} = await response.json()
-  if (error) return pushNotification('Có lỗi xảy ra')
+  if (error) return pushNotification('An error occurred')
 
   document.title = employeeInfo.name
 
@@ -60,7 +60,7 @@ async function updateEmployee(employeeInfo) {
     address === employeeInfo.address &&
     gender  === employeeInfo.gender  &&
     dob     === initialDob
-  ) return pushNotification('Hãy cập nhật thông tin')
+  ) return pushNotification('Please update the information')
 
   const response = await fetch('/admin/all-employees/employee/updated', {
     method: 'PUT',
@@ -91,7 +91,7 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
       updateEmployee(employeeInfo)
     }
   } catch (error) {
-    console.error('Có lỗi xảy ra:', error)
-    pushNotification('Có lỗi xảy ra')
+    console.error('An error occurred:', error)
+    pushNotification('An error occurred')
   }
 })

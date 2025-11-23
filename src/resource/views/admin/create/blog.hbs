@@ -1,0 +1,94 @@
+<div class="admin-create-blog-container">
+  <div id="form">
+    
+    <div class="form-title">
+      <p>Create New Blog</p>
+    </div>
+
+    <!-- Title -->
+    <div class="form-group">
+      <label for="title">Title *</label>
+      <input 
+        type="text" 
+        id="title" 
+        name="title" 
+        class="form-control" 
+        placeholder="Enter blog title"
+      >
+    </div>
+
+    <!-- Summary -->
+    <div class="form-group">
+      <label for="summary">Summary *</label>
+      <textarea 
+        id="summary" 
+        name="summary" 
+        rows="3" 
+        class="form-control"
+        placeholder="Write a brief summary"
+      ></textarea>
+    </div>
+
+    <!-- Content -->
+    <div class="form-group">
+      <label for="content">Content *</label>
+      <textarea 
+        id="content" 
+        name="content" 
+        rows="10" 
+        class="form-control form-control-large"
+        placeholder="Write your blog content here..."
+      ></textarea>
+    </div>
+
+    <!-- Category -->
+    <div class="form-group">
+      <label for="category">Category *</label>
+      <select id="category" name="category" class="form-control">
+        <option value="">Select category</option>
+        <option value='{"name":"Beauty Tips","slug":"beauty-tips"}'>Beauty Tips</option>
+        <option value='{"name":"Product Reviews","slug":"product-reviews"}'>Product Reviews</option>
+        <option value='{"name":"Skincare","slug":"skincare"}'>Skincare</option>
+        <option value='{"name":"Makeup","slug":"makeup"}'>Makeup</option>
+        <option value='{"name":"Wellness","slug":"wellness"}'>Wellness</option>
+        <option value='{"name":"General","slug":"general"}'>General</option>
+      </select>
+    </div>
+
+    <!-- Tags -->
+    <div class="form-group">
+      <label for="tags">Tags</label>
+      <input 
+        type="text" 
+        id="tags" 
+        name="tags" 
+        class="form-control" 
+        placeholder="Example: skincare, tips, natural"
+      >
+    </div>
+
+    <!-- Status -->
+    <div class="form-group">
+      <label for="status">Status *</label>
+      <select id="status" name="status" class="form-control">
+        <option value="draft">Draft</option>
+        <option value="published">Published</option>
+      </select>
+    </div>
+
+    <!-- Featured Image -->
+    <div class="form-group">
+      <label for="img">Featured Image</label>
+      <input type="file" name="img" id="img"/>
+    </div>
+
+    <!-- Buttons -->
+    <div class="submit-button">
+      <button type="button" onclick="window.history.back()">Cancel</button>
+      <button type="submit">Create Blog</button>
+    </div>
+
+  </div>
+</div>
+
+<script src="/js/admin/create/blog.js"></script>

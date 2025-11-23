@@ -1,5 +1,6 @@
 importLinkCss('/css/admin/all/orders.css')
 
+// ALL
 const thead         = document.querySelector('table').querySelector('thead')
 const tbody         = document.querySelector('table').querySelector('tbody')
 const changeColumns = document.querySelector('i.fi.fi-rr-objects-column')
@@ -11,140 +12,321 @@ const dataSize      = { size: 0 }
 function generateColumns() {
   const columnsGroup = document.querySelector('div.checkbox-group')
   const inputList = `
-    <label><input type="checkbox" value="_id" checked> Order Code</label>
+    <label><input type="checkbox" value="_id" checked> Order ID</label>
     <label><input type="checkbox" value="customerInfo" checked> Customer Name</label>
     <label><input type="checkbox" value="totalOrderPrice" checked> Total Before Discount</label>
     <label><input type="checkbox" value="totalNewOrderPrice" checked> Total Amount</label>
     <label><input type="checkbox" value="paymentMethod" checked> Payment Method</label>
-    <label><input type="checkbox" value="status"> Order Status</label>
+    <label><input type="checkbox" value="status" checked> Order Status</label>
     <label><input type="checkbox" value="isRated"> Review Status</label>
     <label><input type="checkbox" value="isPaid"> Payment Status</label>
     <label><input type="checkbox" value="voucherCode"> Voucher Code</label>
-    <label><input type="checkbox" value="createdAt"> Order Date</label>
+    <label><input type="checkbox" value="createdAt" checked> Order Date</label>
   `
   columnsGroup.insertAdjacentHTML('beforeend', inputList)
-} 
+}
 
 async function getFilter() {
   const response = await fetch('/admin/all-orders/data/filter', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    headers: { 'Content-Type': 'application/json' }
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {orderStatus, paymentMethod, error} = await response.json()
+  const { orderStatus, paymentMethod, error } = await response.json()
   if (error) return pushNotification(error)
 
-  orderStatus.forEach((element, index) => {
-    const option = document.createElement('option')
-    option.value = element.code
-    option.textContent = element.name
-    document.querySelector('select#status').appendChild(option)
+  orderStatus.forEach(s => {
+    const opt = document.createElement('option')
+    opt.value = s.code
+    opt.textContent = s.name
+    document.querySelector('select#status')?.appendChild(opt)
   })
 
-  paymentMethod.forEach((element, index) => {
-    const option = document.createElement('option')
-    option.value = element.code
-    option.textContent = element.name
-    document.querySelector('select#paymentMethod').appendChild(option)
+  paymentMethod.forEach(p => {
+    const opt = document.createElement('option')
+    opt.value = p.code
+    opt.textContent = p.name
+    document.querySelector('select#paymentMethod')?.appendChild(opt)
   })
 }
 
 async function getOrders(sortOptions, filterOptions, currentPage, itemsPerPage) {
-  tbody.querySelectorAll('tr').forEach((tr, index) => {
-    tr.querySelector('td:nth-child(1)').textContent = ''
-    tr.querySelector('td:nth-child(1)').classList.add('loading')
+  tbody.querySelectorAll('tr').forEach(tr => {
+    const firstTd = tr.querySelector('td:nth-child(1)')
+    if (firstTd) {
+      firstTd.textContent = ''
+      firstTd.classList.add('loading')
+    }
   })
 
   const response = await fetch('/admin/all-orders/data/orders', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      sort  : sortOptions, 
-      filter: filterOptions, 
-      page  : currentPage,
-      itemsPerPage: itemsPerPage
-    })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ sort: sortOptions, filter: filterOptions, page: currentPage, itemsPerPage })
   })
+
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data, data_size, error} = await response.json()
+  const { data, data_size, error } = await response.json()
   if (error) return pushNotification(error)
 
   dataSize.size = data_size
+  document.querySelector('div.board-title p').textContent = 'Đơn hàng: ' + dataSize.size
 
-  document.querySelector('div.board-title').querySelector('p').textContent = 'Orders: ' + dataSize.size
+  const selected = Array.from(document.querySelectorAll('.checkbox-group input:checked'))
+    .map(cb => ({ value: cb.value, name: cb.closest('label').innerText.trim() }))
 
-  const selected = Array.from(document.querySelectorAll('.checkbox-group input:checked')).map(cb => ({
-    value: cb.value,
-    name: cb.closest("label").innerText.trim()
-  }))
+  // Rebuild THEAD
+  thead.querySelectorAll('tr').forEach(tr => tr.remove())
+  const trHead = document.createElement('tr')
+  const thNo = document.createElement('td')
+  thNo.textContent = 'No'
+  trHead.appendChild(thNo)
+  selected.forEach(col => {
+    const th = document.createElement('td')
+    th.textContent = col.name
+    trHead.appendChild(th)
+  })
+  const thAction = document.createElement('td')
+  thAction.textContent = 'Details'
+  trHead.appendChild(thAction)
+  thead.appendChild(trHead)
 
-  window.setTimeout(function() {
-    thead.querySelectorAll('tr').forEach((tr, index) => {
-      tr.remove()
-    })
+  // Rebuild TBODY
+  tbody.querySelectorAll('tr').forEach(tr => tr.remove())
 
-    // header
-    const trHead = document.createElement("tr")
+  data.forEach((item, index) => {
+    const rowIndex = index + (currentPage.page - 1) * itemsPerPage + 1
+    const tr = document.createElement('tr')
 
-    const headData = document.createElement('td')
-    headData.textContent = 'STT'
-    trHead.appendChild(headData)
+    const tdNo = document.createElement('td')
+    tdNo.textContent = rowIndex
+    tr.appendChild(tdNo)
 
     selected.forEach(col => {
-      const td = document.createElement("td")
-      td.textContent = col.name
-      trHead.appendChild(td)
+      const td = document.createElement('td')
+      let value = item[col.value]
+
+      if (col.value === 'customerInfo') td.textContent = item.customerInfo?.name || 'Khách lẻ'
+      else if (['totalOrderPrice', 'totalNewOrderPrice'].includes(col.value)) {
+        td.textContent = formatNumber(value)
+        td.style.textAlign = 'right'
+      }
+      else if (col.value === 'createdAt') {
+        td.textContent = formatDate(value)
+        td.style.textAlign = 'right'
+      }
+      else if (['isRated', 'isPaid'].includes(col.value)) {
+        td.textContent = value ? 'Rồi' : 'Chưa'
+      }
+      else if (col.value === 'paymentMethod') {
+        td.textContent = item.paymentMethod?.name || value
+      }
+      else if (col.value === 'status') {
+        td.textContent = item.orderStatus?.name || value
+      }
+      else td.textContent = value ?? ''
+
+      tr.appendChild(td)
     })
 
-    const headLink = document.createElement('td')
-    headLink.textContent = 'Details'
-    trHead.appendChild(headLink)
+    const tdAction = document.createElement('td')
+    tdAction.style.textAlign = 'center'
+    tdAction.innerHTML = `<button id="${item._id}">View</button>`
+    tdAction.onclick = () => openOrderDetail(item._id)
+    tr.appendChild(tdAction)
 
-    thead.appendChild(trHead)
+    tbody.appendChild(tr)
+  })
 
-    // body
-    tbody.querySelectorAll('tr').forEach((tr, index) => {
-      tr.remove()
-    })
-
-    let itemIndex = (currentPage - 1) * itemsPerPage + 1
-
-    data.forEach((item, index) => {
-      const newTr = document.createElement('tr')
-
-      const itemData = document.createElement('td')
-      itemData.textContent = itemIndex
-      newTr.appendChild(itemData)
-
-      selected.forEach(col => {
-        const td = document.createElement("td")
-        td.textContent = item[col.value]
-
-        if (['totalOrderPrice', 'totalNewOrderPrice', 'createdAt'].includes(col.value) ) td.style.textAlign = 'right'
-        if (['totalOrderPrice', 'totalNewOrderPrice'].includes(col.value)) td.textContent = formatNumber(item[col.value])
-        if (['createdAt'].includes(col.value)) td.textContent = formatDate(item[col.value])
-        if (['isRated', 'isPaid'].includes(col.value)) td.textContent = item[col.value] === 'true' ? 'Rồi' : 'Chưa'
-        if (['customerInfo'].includes(col.value)) td.textContent = item.customerInfo.name
-
-        newTr.appendChild(td)
-      })
-
-      const link = document.createElement('td')
-      link.innerHTML = `<a target="_blank" rel="noopener noreferrer" href="/admin/all-orders/order/${item._id}">View</a>`
-      newTr.appendChild(link)
-      tbody.appendChild(newTr)
-      itemIndex++
-    })
-  }, 1000)
-  
   pagination(getOrders, sortOptions, filterOptions, currentPage, dataSize.size)
 }
 
-changeColumns.onclick = function() {
+changeColumns.onclick = function () {
   const columnLists = document.querySelector('div.checkbox-group')
-  columnLists.style.display === 'none' ? columnLists.style.display = 'block' : columnLists.style.display = 'none'
+  columnLists.style.display = columnLists.style.display === 'none' ? 'block' : 'none'
 }
 
+// DETAIL MODAL
+const detailModal       = document.querySelector('#detail-modal')
+const detailCloseBtn    = detailModal.querySelector('.close-modal')
+const detailUpdateBtn   = detailModal.querySelector('button[type="submit"]')
+let currentOrderInfo    = null
+
+detailCloseBtn.onclick = () => detailModal.classList.remove('show')
+detailModal.onclick = e => { if (e.target === detailModal) detailModal.classList.remove('show') }
+
+async function openOrderDetail(orderId) {
+  try {
+    detailModal.classList.add('show')
+
+    const response = await fetch('/admin/all-orders/data/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: orderId })
+    })
+
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+    const { error, orderInfo, orderStatuses, paymentMethods, userRole } = await response.json()
+    if (error) {
+      pushNotification('An error occurred')
+      detailModal.classList.remove('show')
+      return
+    }
+
+    document.title = 'Order ' + (orderInfo.customerInfo?.name || 'Guest')
+
+    // Fill thông tin cơ bản
+    detailModal.querySelector('input#id').value           = orderInfo._id
+    detailModal.querySelector('input#date').value         = formatDate(orderInfo.createdAt)
+    detailModal.querySelector('input#name').value         = orderInfo.customerInfo?.name || 'Guest'
+    detailModal.querySelector('a#customer-link').href     = orderInfo.customerInfo?.userId && orderInfo.customerInfo.userId !== 'guest'
+      ? `/admin/all-customers/customer/${orderInfo.customerInfo.userId}` : '#'
+    detailModal.querySelector('input#phone').value        = orderInfo.customerInfo?.phone || ''
+    detailModal.querySelector('input#address').value      = orderInfo.customerInfo?.address || ''
+    detailModal.querySelector('input#note').value         = orderInfo.customerInfo?.note || ''
+
+    if (orderInfo.customerInfo?.userId === 'guest') {
+      detailModal.querySelector('a#customer-link').style.display = 'none'
+    }
+
+    // Trạng thái đơn hàng
+    const statusSelect = detailModal.querySelector('select#status')
+    statusSelect.innerHTML = ''
+    orderStatuses.forEach(s => {
+      const opt = document.createElement('option')
+      opt.value = s.code
+      opt.textContent = s.name
+      opt.disabled = true
+      if (s.code === orderInfo.status) opt.selected = true
+
+      // Phân quyền chỉnh sửa
+      if (userRole === 'employee' && s.code === 'preparing') opt.disabled = false
+      if (userRole === 'merchandise' && s.code === 'out_for_delivery') opt.disabled = false
+      if (['shipper'].includes(userRole) && ['delivering', 'delivered'].includes(s.code)) opt.disabled = false
+      if (userRole === 'manager' && s.code === 'cancel') opt.disabled = false
+      if (userRole === 'admin') opt.disabled = false
+
+      statusSelect.appendChild(opt)
+    })
+
+    // Phương thức thanh toán
+    const paymentSelect = detailModal.querySelector('select#paymentMethod')
+    paymentSelect.innerHTML = ''
+    paymentMethods.forEach(p => {
+      const opt = document.createElement('option')
+      opt.value = p.code
+      opt.textContent = p.name
+      opt.disabled = true
+      if (p.code === orderInfo.paymentMethod) opt.selected = true
+      paymentSelect.appendChild(opt)
+    })
+
+    // Tổng tiền
+    detailModal.querySelector('input#total').value      = formatNumber(orderInfo.totalOrderPrice)
+    detailModal.querySelector('input#new-total').value  = formatNumber(orderInfo.totalNewOrderPrice)
+    detailModal.querySelector('input#isRated').value    = orderInfo.isRated ? 'Yes' : 'No'
+
+    // Thanh toán
+    const isPaidSelect = detailModal.querySelector('select#isPaid')
+    isPaidSelect.value = orderInfo.isPaid ? 'true' : 'false'
+    isPaidSelect.querySelectorAll('option').forEach(opt => opt.disabled = userRole !== 'accountant')
+
+    // Ẩn nút cập nhật nếu đã hoàn tất hoặc hủy
+    if (['done', 'cancel'].includes(orderInfo.status)) {
+      statusSelect.disabled = paymentSelect.disabled = true
+      detailUpdateBtn.style.display = 'none'
+    } else {
+      detailUpdateBtn.style.display = 'block'
+    }
+
+    // Danh sách sản phẩm
+    const productTbody = detailModal.querySelector('table#table-2 tbody')
+    productTbody.innerHTML = ''
+    let i = 1
+    orderInfo.products?.forEach(p => {
+      const tr = document.createElement('tr')
+      tr.innerHTML = `
+        <td>${i++}</td>
+        <td style="display: flex; align-items: center; gap: 8px;">
+          <img src="${p.image}" alt="${p.name}" loading="lazy" style="width: 40px; height: 40px; object-fit: cover;">
+          ${p.name}
+        </td>
+        <td style="text-align: center;">${p.quantity}</td>
+        <td style="text-align: right;">${formatNumber(p.price)}</td>
+        <td><a href="/admin/all-products/product/${p.id}">Xem</a></td>
+      `
+      productTbody.appendChild(tr)
+    })
+
+    // Lưu để so sánh khi cập nhật
+    currentOrderInfo = {
+      _id: orderInfo._id,
+      status: orderInfo.status,
+      paymentMethod: orderInfo.paymentMethod,
+      isPaid: orderInfo.isPaid
+    }
+
+  } catch (err) {
+    console.error('Error opening order detail:', err)
+    pushNotification('An error occurred')
+    detailModal.classList.remove('show')
+  }
+}
+
+async function updateOrder() {
+  const status        = detailModal.querySelector('select#status').value
+  const paymentMethod = detailModal.querySelector('select#paymentMethod').value
+  const isPaid        = detailModal.querySelector('select#isPaid').value === 'true'
+
+  if (
+    status        === currentOrderInfo.status &&
+    paymentMethod === currentOrderInfo.paymentMethod &&
+    isPaid        === currentOrderInfo.isPaid
+  ) {
+    return pushNotification('Please update the information')
+  }
+
+  detailUpdateBtn.classList.add('loading')
+
+  const response = await fetch('/admin/all-orders/order/updated', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      id: currentOrderInfo._id,
+      status,
+      paymentMethod,
+      isPaid
+    })
+  })
+
+  detailUpdateBtn.classList.remove('loading')
+
+  if (!response.ok) {
+    pushNotification('Update failed')
+    return
+  }
+
+  const { error, message } = await response.json()
+  if (error) return pushNotification(error)
+
+  pushNotification(message)
+  detailModal.classList.remove('show')
+  await getOrders(sortOptions, filterOptions, currentPage.page, 10)
+}
+
+detailUpdateBtn.onclick = () => updateOrder()
+
+// CREATE MODAL (có thể mở rộng sau)
+const createModal     = document.querySelector('#create-modal')
+const createBtn       = document.querySelector('.create-btn')
+const createCloseBtn  = createModal?.querySelector('.close-modal')
+const createSubmitBtn = createModal?.querySelector('button[type="submit"]')
+
+if (createBtn) createBtn.onclick = () => createModal.classList.add('show')
+if (createCloseBtn) createCloseBtn.onclick = () => createModal.classList.remove('show')
+createModal?.addEventListener('click', e => { if (e.target === createModal) createModal.classList.remove('show') })
+
+// DOM Loaded
 window.addEventListener('DOMContentLoaded', async function loadData() {
   try {
     generateColumns()
@@ -152,8 +334,8 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     await getOrders(sortOptions, filterOptions, currentPage.page, 10)
     await sortAndFilter(getOrders, sortOptions, filterOptions, currentPage.page)
     await exportJs('BÁO CÁO DANH SÁCH ĐƠN HÀNG')
-  } catch (error) {
-    console.error('Error loading data:', error)
-    pushNotification(error)
+  } catch (err) {
+    console.error('Error loading data:', err)
+    pushNotification('An error occurred while loading data')
   }
 })

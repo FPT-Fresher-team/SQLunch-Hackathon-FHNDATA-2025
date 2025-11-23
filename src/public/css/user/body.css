@@ -82,6 +82,18 @@ div.products {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+div.products .discount-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #e53935;
+  color: #fff;
+  padding: 4px 8px;
+  font-size: 15px;
+  font-weight: bold;
+  border-radius: 10px;
+  z-index: 2;
+}
 div.products a, p {
   text-decoration: none; 
   color: black
@@ -202,6 +214,7 @@ div.products .product .loading {
   background: linear-gradient(90deg, #f0f0f0 25%, #e5e5e5 50%, #f0f0f0 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
+  z-index: 3;
 }
 
 @keyframes shimmer {

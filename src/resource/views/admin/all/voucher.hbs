@@ -4,11 +4,7 @@
       <p>Voucher: </p>
     </div>
 
-    <div class="date-filter">
-      <input type="date" id="start-date">
-      <input type="date" id="end-date">
-      <button title="submit" type="submit">View</button>
-    </div>
+    {{> dateFilter}}
   </div>
 
   <div class="control-bar">
@@ -55,10 +51,10 @@
       </div>
     </div>
 
-    <a href="/admin/all-vouchers/voucher/create" target="_blank" rel="noopener noreferrer" class="create-btn" id="create-btn">
+    <button class="create-btn" id="create-btn">
       <i class="fi fi-rr-plus"></i>
       <span>Add Voucher</span>
-    </a>
+    </button>
   </div>
 
   <div class="table">
@@ -66,12 +62,12 @@
     <table class="all-items">
       <thead>
         <tr>
-          <td style="width:  5%">STT           </td>
-          <td style="width: 15%">Mã Voucher    </td>
-          <td style="width: 20%">Tên Voucher   </td>
-          <td style="width: 25%">Mức chiết khấu</td>
-          <td style="width: 25%">Ngày kết thúc </td>
-          <td style="width: 10%">Chi tiết      </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
         </tr>
       </thead>
 
@@ -91,6 +87,130 @@
   </div>
 
   <span class="pagination"></span>
+</div>
+
+<div class="admin-create-voucher-container" id="create-modal">
+  <div id="form">
+    <div class="form-title">
+      <p>Add New Voucher</p>
+    </div>
+
+    <div class="form-group">
+      <label for="code">Voucher Code</label>
+      <input type="text" class="form-control" id="code" name="code" placeholder="Enter voucher code">
+    </div>
+
+    <div class="form-group">
+      <label for="name">Voucher Name</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="Enter voucher name">
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <input type="text" class="form-control" id="description" name="description" placeholder="Enter description">
+    </div>
+
+    <div class="form-group">
+      <label for="discount">Discount</label>
+      <input type="number" class="form-control" id="discount" name="discount" placeholder="Enter discount">
+    </div>
+
+    <div class="form-group">
+      <label for="maxDiscount">Max Discount</label>
+      <input type="number" class="form-control" id="maxDiscount" name="maxDiscount" placeholder="Enter max discount">
+    </div>
+
+    <div class="form-group">
+      <label for="minOrder">Min Order</label>
+      <input type="number" class="form-control" id="minOrder" name="minOrder" placeholder="Enter min order">
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select class="form-control" id="status" name="status">
+        <option value="">Select status</option>
+        <option value="active">Active</option>
+        <option value="end">End</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="memberCode">Member Code</label>
+      <select id="memberCode" class="filter-btn">
+        <option value="">Member Tier</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="startDate">Start Date</label>
+      <input type="date" class="form-control" id="startDate" name="startDate">
+    </div>
+
+    <div class="form-group">
+      <label for="endDate">End Date</label>
+      <input type="date" class="form-control" id="endDate" name="endDate">
+    </div>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Complete</button>
+    </div>
+  </div>
+</div>
+
+<div class="voucher-details-container" id="detail-modal">
+  <div id="form">
+    <table id="table-1">
+      <thead>
+        <tr><td colspan="2">VOUCHER INFORMATION</td></tr>
+      </thead>
+      <tr>
+        <td>Voucher Code</td>
+        <td><input type="text" name="id" disabled></td>
+      </tr>
+      <tr>
+        <td>Voucher Name</td>
+        <td><input type="text" name="name"></td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td><input type="text" name="description"></td>
+      </tr>
+      <tr>
+        <td>Discount</td>
+        <td><input type="text" name="discount"></td>
+      </tr>
+      <tr>
+        <td>Max Discount</td>
+        <td><input type="text" name="maxDiscount"></td>
+      </tr>
+      <tr>
+        <td>Min Order</td>
+        <td><input type="text" name="minOrder"></td>
+      </tr>
+      <tr>
+        <td>Status</td>
+        <td><input type="text" name="status" disabled></td>
+      </tr>
+      <tr>
+        <td>Member Code</td>
+        <td><input type="text" name="memberCode" disabled></td>
+      </tr>
+      <tr>
+        <td>Start Date</td>
+        <td><input type="text" name="startDate" disabled></td>
+      </tr>
+      <tr>
+        <td>End Date</td>
+        <td><input type="text" name="endDate" disabled></td>
+      </tr>
+    </table>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Update</button>
+    </div>
+  </div>
 </div>
 
 <script type="module" src="/js/admin/all/voucher.js"></script>
