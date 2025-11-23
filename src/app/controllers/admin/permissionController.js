@@ -10,6 +10,12 @@ const brandPermission = {
   UPDATE: ['admin', 'manager'],
   DELETE: ['admin', 'manager']
 }
+const blogPermission = {
+  CREATE: ['admin', 'manager'],
+  READ  : ['admin', 'manager'],
+  UPDATE: ['admin', 'manager'],
+  DELETE: ['admin', 'manager']
+}
 const chatPermission = {
   CREATE: ['chat', 'admin'], 
   READ  : ['chat', 'admin'],
@@ -86,6 +92,7 @@ const voucherPermission = {
 module.exports = { 
   attributePermission ,
   brandPermission     ,
+  blogPermission      ,
   chatPermission      ,
   chatEmpPermission   ,
   customerPermission  ,

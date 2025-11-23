@@ -539,8 +539,8 @@ async function getAll() {
     // await getPurchases(fetchBody)
     // await getBrands()
   } catch (error) {
-    console.error('Có lỗi xảy ra:', error)
-    pushNotification('Có lỗi xảy ra')
+    console.error('An error occurred:', error)
+    pushNotification('An error occurred')
   }
 }
 

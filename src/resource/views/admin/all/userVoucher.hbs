@@ -4,11 +4,7 @@
       <p>Voucher: </p>
     </div>
 
-    <div class="date-filter">
-      <input type="date" id="start-date">
-      <input type="date" id="end-date">
-      <button title="submit" type="submit">View</button>
-    </div>
+    {{> dateFilter}}
   </div>
 
   <div class="control-bar">
@@ -59,10 +55,10 @@
       </div>
     </div>
 
-    <a href="/admin/all-u-vouchers/voucher/create" target="_blank" rel="noopener noreferrer" class="create-btn" id="create-btn">
+    <button class="create-btn" id="create-btn">
       <i class="fi fi-rr-plus"></i>
       <span>Add Voucher</span>
-    </a>
+    </button>
   </div>
 
   <div class="table">
@@ -95,6 +91,125 @@
   </div>
 
   <span class="pagination"></span>
+</div>
+
+<div class="admin-create-voucher-container" id="create-modal">
+  <div id="form">
+    <div class="form-title">
+      <p>Add New Voucher</p>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Voucher Name *</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="VD: Giảm giá 20%">
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description *</label>
+      <input type="text" class="form-control" id="description" name="description" placeholder="VD: Giảm giá 20% cho đơn hàng từ 1.000.000">
+    </div>
+
+    <div class="form-group">
+      <label for="discount">Discount Percentage (%) *</label>
+      <input type="text" class="form-control" id="discount" name="discount" placeholder="VD: 1.000.000">
+    </div>
+
+    <div class="form-group">
+      <label for="maxDiscount">Maximum Discount Value *</label>
+      <input type="text" class="form-control" id="maxDiscount" name="maxDiscount" placeholder="VD: 1.000.000">
+    </div>
+
+    <div class="form-group">
+      <label for="minOrder">Applicable Order Value *</label>
+      <input type="text" class="form-control" id="minOrder" name="minOrder" placeholder="VD: 1.000.000">
+    </div>
+
+    <div class="form-group">
+      <label for="start-date">Start Date*</label>
+      <input type="date" id="start-date">
+    </div>
+
+    <div class="form-group">
+      <label for="end-date">End Date*</label>
+      <input type="date" id="end-date">
+    </div>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Complete</button>
+    </div>
+  </div>
+</div>
+
+<div class="voucher-details-container" id="detail-modal">
+  <div id="form">
+    
+    <table id="table-1">
+      <thead>
+        <tr><td colspan="2">VOUCHER INFORMATION</td></tr>
+      </thead>
+      <tr>
+        <td>User Code</td>
+        <td><input type="text" name="userId" disabled></td>
+      </tr>
+      <tr>
+        <td>Order Code</td>
+        <td><input type="text" name="orderId" disabled></td>
+      </tr>
+      <tr>
+        <td>Voucher Code</td>
+        <td><input type="text" name="code" disabled></td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td><input type="text" name="description" disabled></td>
+      </tr>
+      <tr>
+        <td>Voucher Type</td>
+        <td>
+          <select name="voucherType" name="voucherType" disabled>
+            <option value="order">Order Voucher</option>
+            <option value="birthday">Birthday Voucher</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Discount Level</td>
+        <td><input type="text" name="discount" disabled></td>
+      </tr>
+      <tr>
+        <td>Order Value</td>
+        <td><input type="text" name="minOrder" disabled></td>
+      </tr>
+      <tr>
+        <td>Status</td>
+        <td>
+          <select name="status" name="status">
+            <option value="active">Valid</option>
+            <option value="used">Used</option>
+            <option value="end">Expired</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Start Date</td>
+        <td><input type="date" name="startDate"></td>
+      </tr>
+      <tr>
+        <td>End Date</td>
+        <td><input type="date" name="endDate"></td>
+      </tr>
+      <tr>
+        <td>Date Used</td>
+        <td><input type="date" name="usedAt" disabled></td>
+      </tr>
+    </table>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Update</button>
+    </div>
+  </div>
 </div>
 
 <script type="module" src="/js/admin/all/userVoucher.js"></script>

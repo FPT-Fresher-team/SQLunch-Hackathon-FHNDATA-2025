@@ -4,11 +4,7 @@
       <p>Customer: </p>
     </div>
 
-    <div class="date-filter">
-      <input type="date" id="start-date">
-      <input type="date" id="end-date">
-      <button title="submit" type="submit">View</button>
-    </div>
+    {{> dateFilter}}
   </div>
 
   <div class="control-bar">
@@ -54,10 +50,10 @@
       </div>
     </div>
 
-    <a href="/admin/all-customers/customer/create" target="_blank" class="create-btn" id="create-btn">
+    <button class="create-btn" id="create-btn">
       <i class="fi fi-rr-plus"></i>
       <span>Add Customer</span>
-    </a>
+    </button>
   </div>
 
   <div class="table">
@@ -92,6 +88,124 @@
   </div>
 
   <span class="pagination"></span>
+</div>
+
+<div class="admin-create-customer-container" id="create-modal">
+  <div id="form">
+    <div class="form-title">
+      <p>Add New Customer</p>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Full Name</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="VD: Mai Hồng Vũ">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="text" class="form-control" id="email" name="email" placeholder="VD: mhv@gmail.com">
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="text" class="form-control" id="phone" name="phone" placeholder="VD: 0987654321">
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input type="text" class="form-control" id="address" name="address" placeholder="VD: Hà Nội">
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" id="password" name="password" placeholder="Aa"> 
+    </div>
+
+    <div class="form-group">
+      <label for="password-confirm">Confirm Password</label>
+      <input type="password" class="form-control" id="password-confirm" name="password-confirm" placeholder="Aa">
+    </div>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Complete</button>
+    </div>
+
+  </div>
+</div>
+
+<div class="customer-details-container" id="detail-modal">
+  <div id="form">
+    <table id="table-1">
+      <thead>
+        <tr><td colspan="2">CUSTOMER INFORMATION</td></tr>
+      </thead>
+      <tr>
+        <td>Customer Code</td>
+        <td><input type="text" name="id" disabled></td>
+      </tr>
+      <tr>
+        <td>Customer Name</td>
+        <td><input type="text" name="name"></td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td><input type="text" name="email" disabled></td>
+      </tr>
+      <tr>
+        <td>Phone</td>
+        <td><input type="text" name="phone"></td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td><input type="text" name="address"></td>
+      </tr>
+      <tr>
+        <td>Date of Birth</td>
+        <td><input type="date" name="dob"></td>
+      </tr>
+      <tr>
+        <td>Gender</td>
+        <td>
+          <input type="radio" name="gender" value="male">Male
+          <input type="radio" name="gender" value="female">Female
+        </td>
+      </tr>
+      <tr>
+        <td>Total Orders</td>
+        <td><input type="text" name="quantity" disabled></td>
+      </tr>
+      <tr>
+        <td>Total Spending</td>
+        <td><input type="text" name="revenue" disabled></td>
+      </tr>
+      <tr>
+        <td>Member Rank</td>
+        <td><input type="text" name="member" disabled></td>
+      </tr>
+    </table>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Update</button>
+    </div>
+
+    <table id="table-2">
+      <thead>
+        <tr><td colspan="5">ORDER LIST</td></tr>
+      </thead>
+      <thead>
+        <tr>
+          <td style="width:  5%">STT                   </td>
+          <td style="width: 35%">Total Amount             </td>
+          <td style="width: 25%">Payment Method</td>
+          <td style="width: 25%">Status            </td>
+          <td style="width: 10%">Details              </td>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 </div>
 
 <script type="module" src="/js/admin/all/customer.js"></script>

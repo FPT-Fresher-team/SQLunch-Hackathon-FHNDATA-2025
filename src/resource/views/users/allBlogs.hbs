@@ -1,0 +1,67 @@
+<div class="user-all-blogs-container">
+  <div class="blogs-header">
+    <div class="header-content">
+      <i class="fi fi-sr-book-open"></i>
+      <div class="header-title"><b>All Blog Posts</b></div>
+    </div>
+    <div class="blogs-filter">
+      <input type="text" id="blogSearch" class="search-input" placeholder="Search blogs...">
+      <select id="categoryFilter" class="category-filter">
+        <option value="">All Categories</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="blogs-container">
+    <div class="blogs-list">
+      {{#each (holderData 6)}}
+        <article class="blog-card loading">
+          <div class="blog-image">
+            <img loading="lazy" alt="Blog post">
+          </div>
+          <div class="blog-content">
+            <div class="blog-meta">
+              <span class="blog-category"></span>
+              <span class="blog-date"></span>
+              <span class="blog-views"></span>
+            </div>
+            <h3 class="blog-title"></h3>
+            <p class="blog-summary"></p>
+            <div class="blog-tags">
+              <span class="tag"></span>
+            </div>
+            <a href="" class="read-more">Read More →</a>
+          </div>
+        </article>
+      {{/each}}
+    </div>
+
+    <div class="blogs-sidebar">
+      <div class="sidebar-widget recent-posts">
+        <h4>Recent Posts</h4>
+        <ul id="recentPostsList">
+          {{#each (holderData 3)}}
+            <li class="post-item loading"><a></a></li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <div class="sidebar-widget popular-tags">
+        <h4>Popular Tags</h4>
+        <div id="tagsCloud" class="tags-cloud">
+          {{#each (holderData 12)}}
+            <span class="tag-item loading"></span>
+          {{/each}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pagination">
+    <button id="prevBtn" class="pagination-btn" disabled>← Previous</button>
+    <span id="pageInfo" class="page-info">Page 1</span>
+    <button id="nextBtn" class="pagination-btn">Next →</button>
+  </div>
+</div>
+
+<script src="/js/user/allBlogs.js"></script>

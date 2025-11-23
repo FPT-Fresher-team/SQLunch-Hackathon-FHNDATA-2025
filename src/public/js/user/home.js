@@ -69,6 +69,7 @@ async function getFavProducts() {
     const favProductsDiv = document.querySelector('div[class="products-board"][id="favorite"]').querySelectorAll('div.product')
     window.setTimeout(function() {
       favProductsDiv.forEach((product, index) => {
+        product.querySelector('span.discount-badge').textContent = formatPercentage((data[index].oldPrice - data[index].price) / data[index].oldPrice * 100) 
         product.querySelector('img').setAttribute('src', data[index].img.path)
         product.querySelector('img').setAttribute('alt', data[index].img.name)
         product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
@@ -98,22 +99,24 @@ async function getProducts() {
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
     const {
       flashSale,
-      hotSale,
+      // hotSale,
+      newArrival,
       topSale,
-      skincare,
-      makeup,
+      // skincare,
+      // makeup,
       all
     } = await response.json()
     const flashSaleProductsDiv  = document.querySelector('div[class="flash-deal-board"][id="flash-deal"]').querySelectorAll('div.product')
     const topSaleProductsDiv    = document.querySelector('div[class="products-board"][id="top-sale"]').querySelectorAll('div.product')
-    const hotSaleProductsDiv    = document.querySelector('div[class="products-board"][id="hot-sale"]').querySelectorAll('div.product')
-    const skincareProductsDiv   = document.querySelector('div[class="products-board"][id="skincare"]').querySelectorAll('div.product')
-    const makeupProductsDiv     = document.querySelector('div[class="products-board"][id="makeup"]').querySelectorAll('div.product')
+    const newArrivalProductsDiv = document.querySelector('div[class="products-board"][id="new-arrival"]').querySelectorAll('div.product')
+    // const skincareProductsDiv   = document.querySelector('div[class="products-board"][id="skincare"]').querySelectorAll('div.product')
+    // const makeupProductsDiv     = document.querySelector('div[class="products-board"][id="makeup"]').querySelectorAll('div.product')
     const allProductsDiv        = document.querySelector('div[class="products-board"][id="all"]').querySelectorAll('div.product')
 
     function setProductData(products, data) {
       window.setTimeout(function() {
         products.forEach((product, index) => {
+          product.querySelector('span.discount-badge').textContent = formatPercentage((data[index].oldPrice - data[index].price) / data[index].oldPrice * 100) 
           product.querySelector('img').setAttribute('src', data[index].img.path)
           product.querySelector('img').setAttribute('alt', data[index].img.name)
           product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
@@ -131,10 +134,10 @@ async function getProducts() {
     }
 
     setProductData(flashSaleProductsDiv, flashSale)
-    setProductData(topSaleProductsDiv  , hotSale  )
-    setProductData(hotSaleProductsDiv  , topSale  )
-    setProductData(skincareProductsDiv , skincare )
-    setProductData(makeupProductsDiv   , makeup   )
+    setProductData(topSaleProductsDiv  , topSale  )
+    setProductData(newArrivalProductsDiv, newArrival  )
+    // setProductData(skincareProductsDiv , skincare )
+    // setProductData(makeupProductsDiv   , makeup   )
     setProductData(allProductsDiv      , all      )
 
   } catch (error) {

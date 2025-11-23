@@ -108,6 +108,7 @@ async function getProduct() {
   })
   
   // Update rating stars
+  productElement.querySelector('span.discount-badge').textContent = formatPercentage((data.oldPrice - data.price) / data.oldPrice * 100) 
   productElement.querySelector('span#rate-score').textContent = formatRate(data.rate)
   productElement.querySelector('p#product-rate').querySelectorAll('i').forEach((star, i) => {
     star.style.color = 'black'
@@ -402,8 +403,9 @@ async function loadData(retriesLeft) {
     increaseQuantity(productInfo)
     decreaseQuantity(productInfo)
     getComment()
-    getRelatedProducts(productInfo)
+    // getRelatedProducts(productInfo)
     pushDataToRecommendationSystem(data)
+    await loadRelatedProducts('category', selectedSection)
   } catch (err) {
     if (retriesLeft > 1) {
       console.error(`Retrying... Attempts left: ${retriesLeft - 1}`)
@@ -419,6 +421,110 @@ async function loadData(retriesLeft) {
 }
 
 loadData(5)
+
+// ==================== RELATED PRODUCTS TABS ==================== 
+const tabButtons = document.querySelectorAll('.tab-btn')
+const relatedSections = {
+  category: document.getElementById('related-category'),
+  type: document.getElementById('related-type'),
+  brand: document.getElementById('related-brand'),
+  viewed: document.getElementById('related-viewed'),
+  recommended: document.getElementById('related-recommended')
+}
+
+tabButtons.forEach(button => {
+  button.addEventListener('click', async (e) => {
+    const tabType = e.currentTarget.dataset.tab
+    
+    // Update active button
+    tabButtons.forEach(btn => btn.classList.remove('active'))
+    e.currentTarget.classList.add('active')
+    
+    // Hide all sections
+    Object.values(relatedSections).forEach(section => {
+      section.style.display = 'none'
+    })
+    
+    // Load and show selected section
+    const selectedSection = relatedSections[tabType]
+    selectedSection.style.display = 'grid'
+    
+    // Load data if not already loaded
+    if (selectedSection.querySelector('.loading-placeholder')) {
+      await loadRelatedProducts(tabType, selectedSection)
+    }
+  })
+})
+
+// Load related products based on type
+async function loadRelatedProducts(type, container) {
+  try {
+    let endpoint = ''
+    let filter = {}
+
+    if (type === 'category') {
+      // Get category from current product (already loaded)
+      endpoint = '/all-products/data/related-category'
+      filter = { category: productInfo.category }
+    } else if (type === 'type') {
+      endpoint = '/all-products/data/related-type'
+      filter = { type: productInfo.skincare ? 'skincare' : productInfo.makeup ? 'makeup' : '' }
+    } else if (type === 'brand') {
+      endpoint = '/all-products/data/related-brand'
+      filter = { brand: productInfo.brand }
+    } else if (type === 'viewed') {
+      endpoint = '/all-products/data/related-viewed'
+      filter = {}
+    } else if (type === 'recommended') {
+      endpoint = '/all-products/data/related-recommended'
+      filter = {}
+    }
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(filter)
+    })
+
+    const data = await response.json()
+    
+    if (data.products && data.products.length > 0) {
+      // Clear loading placeholder
+      container.innerHTML = ''
+      
+      // Add products
+      data.products.forEach(product => {
+        const productHTML = createProductCard(product)
+        container.innerHTML += productHTML
+      })
+    } else {
+      container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 20px;">No products found</p>'
+    }
+  } catch (error) {
+    console.error('Error loading related products:', error)
+    container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 20px; color: red;">Error loading products</p>'
+  }
+}
+
+// Helper function to create product card HTML
+function createProductCard(product) {
+  return `
+    <div class="product">
+      <div class="product-img">
+        <img src="${product.image || '/public/images/placeholder.jpg'}" alt="${product.name}" loading="lazy">
+        <div class="product-overlay">
+          <a href="/all-products/${product._id}" class="view-btn">View Details</a>
+        </div>
+      </div>
+      <div class="product-info">
+        <h4>${product.name}</h4>
+        <p class="brand">${product.brand || 'N/A'}</p>
+        <p class="price">$${product.price}</p>
+        <p class="rating">★ ${product.rate || 0}/5</p>
+      </div>
+    </div>
+  `
+}
 
 // setTimeout(() => {
 //   getLog(

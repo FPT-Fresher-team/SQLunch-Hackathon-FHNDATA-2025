@@ -53,7 +53,7 @@ async function updateProfile(userInfo) {
       phone   === userInfo.phone   &&
       address === userInfo.address &&
       gender  === userInfo.gender
-    ) return pushNotification('Hãy cập nhật thông tin')
+    ) return pushNotification('Please update the information')
   
     const response = await fetch('/admin/all-personal-info/updated', {
       method: 'PUT',
@@ -85,7 +85,7 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
       updateProfile(userInfo)
     }
   } catch (error) {
-    console.error('Có lỗi xảy ra:', error)
-    pushNotification('Có lỗi xảy ra')
+    console.error('An error occurred:', error)
+    pushNotification('An error occurred')
   }
 })

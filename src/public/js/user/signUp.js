@@ -66,7 +66,7 @@ async function verifyingCode(email, code) {
   }
 }
 
-async function creatingAccount(email, name, password) {
+async function creatingAccount(email, name, password, gender, dob) {
   try {
     const response = await fetch('/authentication/creating-account', {
       method: 'POST',
@@ -74,7 +74,9 @@ async function creatingAccount(email, name, password) {
       body: JSON.stringify({
         email    : email,
         name     : name,
-        password : password
+        password : password,
+        gender   : gender,
+        dob      : dob
       })
     })
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
@@ -144,6 +146,26 @@ submitButton.onclick = async function() {
     password.placeholder = 'Enter new password'
     password.name  = 'password'
 
+    const genderMale = document.createElement('input')
+    genderMale.type = 'radio'
+    genderMale.name = 'gender'
+    genderMale.value = 'male'
+
+    const labelMale = document.createElement('label')
+    labelMale.textContent = 'Male'
+
+    const genderFemale = document.createElement('input')
+    genderFemale.type = 'radio'
+    genderFemale.name = 'gender'
+    genderFemale.value = 'female'
+
+    const labelFemale = document.createElement('label')
+    labelFemale.textContent = 'Female'
+
+    const dob = document.createElement('input')
+    dob.type = 'date'
+    dob.name = 'dob'
+
     const confirmPassword = document.createElement('input')
     confirmPassword.type  = 'password'
     confirmPassword.placeholder = 'Confirm password'
@@ -151,6 +173,19 @@ submitButton.onclick = async function() {
 
     document.querySelector('div[class="form-group name"]').style.display = ''
     document.querySelector('div[class="form-group name"]').appendChild(name)
+
+    const genderContainer = document.querySelector('div.form-group.gender')
+    genderContainer.style.display = 'flex'
+    genderContainer.style.alignItems = 'center'
+    genderContainer.style.gap = '10px'
+    genderContainer.style.justifyContent = 'space-between'
+    genderContainer.appendChild(genderMale)
+    genderContainer.appendChild(labelMale)
+    genderContainer.appendChild(genderFemale)
+    genderContainer.appendChild(labelFemale)
+
+    document.querySelector('div.form-group.dob').style.display = ''
+    document.querySelector('div.form-group.dob').appendChild(dob)
 
     document.querySelector('div[class="form-group password"]').style.display = ''
     document.querySelector('div[class="form-group password"]').appendChild(password)
@@ -168,8 +203,15 @@ submitButton.onclick = async function() {
   if (submitButton.className.includes('password')) {
     const email    = document.querySelector('input[name="email"]').value
     const name     = document.querySelector('input[name="name"]').value
+    const gender   = document.querySelector('input[name="gender"]:checked').value
+    const dob      = document.querySelector('input[name="dob"]').value
     const password = document.querySelector('input[name="password"]').value
     const confirmPassword = document.querySelector('input[name="confirm-password"]').value
+
+    if (name.trim() === '' || gender.trim() === '' || dob.trim() === '') {
+      submitButton.classList.remove('loading')
+      return pushNotification('Please fill in all required fields')
+    }
 
     if (password.trim() === '') {
       submitButton.classList.remove('loading')
@@ -180,7 +222,7 @@ submitButton.onclick = async function() {
       return pushNotification('Passwords do not match')
     }
 
-    const {isSuccessful, message} = await creatingAccount(email, name, password)
+    const {isSuccessful, message} = await creatingAccount(email, name, password, gender, dob)
     if (isSuccessful) {
       document.querySelector('p.wrong-info').textContent = ''
       pushNotification(message)
@@ -235,7 +277,7 @@ window.onload = async () => {
 
       const confirmPassword = document.createElement('input')
       confirmPassword.type  = 'password'
-      confirmPassword.placeholder = 'Xác nhận mật khẩu'
+      confirmPassword.placeholder = 'Confirm new password'
       confirmPassword.name  = 'confirm-password'
 
       document.querySelector('div[class="form-group name"]').style.display = ''

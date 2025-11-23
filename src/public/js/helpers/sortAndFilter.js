@@ -7,6 +7,7 @@ async function sortAndFilter(getDataFunction, sortOptions, filterOptions, curren
   const endDate       = document.querySelector('input#end-date')
   const dateFilterBtn = document.querySelector('div.date-filter button')
   const submitChange  = document.querySelector('button.generate-columns')
+  const selectAll     = document.querySelector('input.select-all')
   const paginationBtn = document.querySelector('select[name="pagination"]')
 
   sortButton.forEach((button) => {
@@ -66,7 +67,25 @@ async function sortAndFilter(getDataFunction, sortOptions, filterOptions, curren
     getDataFunction(sortOptions, filterOptions, currentPage, itemsPerPage)
   })
 
+  selectAll.onclick = function() {
+    if (!this.checked) {
+      document.querySelectorAll('div.checkbox-group input[type="checkbox"]').forEach((checkbox) => {
+        checkbox.checked = false
+        document.querySelector('span.select-all').innerHTML = '<b>Select All</b>'
+      })
+    } else {
+      document.querySelectorAll('div.checkbox-group input[type="checkbox"]').forEach((checkbox) => {
+        checkbox.checked = true
+        document.querySelector('span.select-all').innerHTML = '<b>Remove All</b>'
+      })
+    }
+  }
+
   submitChange.onclick = function() {
+    if (document.querySelectorAll('div.checkbox-group input[type="checkbox"]:checked').length === 0) {
+      pushNotification('Please select at least one column to display')
+      return
+    }
     const itemsPerPage = document.querySelector('select#pagination').value
     getDataFunction(sortOptions, filterOptions, currentPage, itemsPerPage)
   }

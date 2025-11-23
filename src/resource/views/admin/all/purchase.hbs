@@ -4,11 +4,7 @@
       <p>Purchase Order: </p>
     </div>
 
-    <div class="date-filter">
-      <input type="date" id="start-date">
-      <input type="date" id="end-date">
-      <button title="submit" type="submit">View</button>
-    </div>
+    {{> dateFilter}}
   </div>
 
   <div class="control-bar">
@@ -41,10 +37,10 @@
       </div>
     </div>
 
-    <a href="/admin/all-purchases/purchase/create" target="_blank" rel="noopener noreferrer" class="create-btn" id="create-btn">
+    <button class="create-btn" id="create-btn">
       <i class="fi fi-rr-plus"></i>
       <span>Add Purchase Order</span>
-    </a>
+    </button>
   </div>
 
   <div class="table">
@@ -52,13 +48,9 @@
     <table class="all-items">
       <thead>
         <tr>
-          <td style="width:  5%">No.          </td>
-          <td style="width: 20%">Purchase Order Code  </td>
-          <td style="width: 25%">Import Date    </td>
-          <td style="width: 15%">Total Items</td>
-          <td style="width: 25%">Total Cost </td>
-          <td style="width: 10%">Details     </td>
-          </td>
+          <td></td>
+          <td></td>
+          <td></td>
         </tr>
       </thead>
 
@@ -78,6 +70,77 @@
   </div>
 
   <span class="pagination"></span>
+</div>
+
+<div class="admin-create-purchase-container" id="create-modal">
+  <div id="form">
+    <div class="form-title">
+      <p>Add New Purchase Order</p>
+    </div>
+
+    <div class="form-group">
+      <label for="supplierId">Supplier Code</label>
+      <select class="form-control" id="supplierId" name="supplierId">
+        <option value="">Select supplier</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="purchaseDate">Purchase Date</label>
+      <input type="date" class="form-control" id="purchaseDate" name="purchaseDate">
+    </div>
+
+    <div class="form-group">
+      <label for="totalPurchasePrice">Total Cost</label>
+      <input type="number" class="form-control" id="totalPurchasePrice" name="totalPurchasePrice" placeholder="Enter total cost">
+    </div>
+
+    <div class="form-group">
+      <label for="items">Total Items</label>
+      <input type="number" class="form-control" id="items" name="items" placeholder="Enter number of items">
+    </div>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Complete</button>
+    </div>
+  </div>
+</div>
+
+<div class="purchase-details-container" id="detail-modal">
+  <div id="form">
+    
+    <table id="table-1">
+      <thead>
+        <tr><td colspan="2">PURCHASE ORDER INFORMATION</td></tr>
+      </thead>
+      <tr>
+        <td>Purchase Order Code</td>
+        <td><input type="text" name="id" disabled></td>
+      </tr>
+      <tr>
+        <td>Supplier Code</td>
+        <td><input type="text" name="supplierId" disabled></td>
+      </tr>
+      <tr>
+        <td>Purchase Date</td>
+        <td><input type="text" name="purchaseDate" disabled></td>
+      </tr>
+      <tr>
+        <td>Total Items</td>
+        <td><input type="text" name="items" disabled></td>
+      </tr>
+      <tr>
+        <td>Total Cost</td>
+        <td><input type="text" id="totalPurchasePrice" name="totalPurchasePrice" disabled></td>
+      </tr>
+    </table>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Update</button>
+    </div>
+  </div>
 </div>
 
 <script type="module" src="/js/admin/all/purchase.js"></script>

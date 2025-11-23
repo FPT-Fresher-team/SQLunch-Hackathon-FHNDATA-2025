@@ -47,7 +47,63 @@ class allProductsController {
     }
   }
 
-  async getRelatedProducts(req, res, next) {
+  async getRelatedCategory(req, res, next) {
+    try {
+      const productId = req.body.productId
+      const categories = req.body.categories
+      const productInfo = await product.find({ _id: { $ne: productId }, categories: categories }).sort({rate: -1}).lean().limit(5)
+      if (!productInfo) return res.status(404).json({ error: "No products found" })
+      
+      return res.json({data: productInfo})
+      
+    } catch (error) {
+      return res.json({error: error})
+    }
+  }
+  
+  async getRelatedType(req, res, next) {
+    try {
+      const productId = req.body.productId
+      const categories = req.body.categories
+      const type = req.body.type
+      const productInfo = await product.find({ _id: { $ne: productId }, [categories]: type }).sort({rate: -1}).lean().limit(5)
+      if (!productInfo) return res.status(404).json({ error: "No products found" })
+      
+      return res.json({data: productInfo})
+      
+    } catch (error) {
+      return res.json({error: error})
+    }
+  }
+
+  async getRelatedBrand(req, res, next) {
+    try {
+      const productId = req.body.productId
+      const brand = req.body.brand
+      const productInfo = await product.find({ _id: { $ne: productId }, brand: brand }).sort({rate: -1}).lean().limit(5)
+      if (!productInfo) return res.status(404).json({ error: "No products found" })
+      
+      return res.json({data: productInfo})
+      
+    } catch (error) {
+      return res.json({error: error})
+    }
+  }
+  
+  async getRelatedViewed(req, res, next) {
+    try {
+      const productId = req.body.productId
+      const productInfo = await product.find({ _id: { $ne: productId }, [categories]: type }).lean().limit(5)
+      if (!productInfo) return res.status(404).json({ error: "No products found" })
+      
+      return res.json({data: productInfo})
+      
+    } catch (error) {
+      return res.json({error: error})
+    }
+  }
+  
+  async getRelatedRecommend(req, res, next) {
     try {
       const productId = req.body.productId
       const categories = req.body.categories

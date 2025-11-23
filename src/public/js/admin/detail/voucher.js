@@ -57,7 +57,7 @@ async function updateVoucher(voucherInfo) {
     status      === voucherInfo.status      &&
     startDate   === voucherInfo.startDate.split('T')[0]   &&  
     endDate     === voucherInfo.endDate.split('T')[0]   
-  ) return pushNotification('Hãy cập nhật thông tin')
+  ) return pushNotification('Please update the information')
 
   const response = await fetch('/admin/all-vouchers/voucher/updated', {
     method: 'PUT',
@@ -87,7 +87,7 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
       updateVoucher(voucherInfo)
     }
   } catch (error) {
-    console.error('Có lỗi xảy ra:', error)
-    pushNotification('Có lỗi xảy ra')
+    console.error('An error occurred:', error)
+    pushNotification('An error occurred')
   }  
 })

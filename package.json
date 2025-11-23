@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Nam-Vu-Duc/bunnyStore.git"
+    "url": "git+https://github.com/trinhnam1537/SQLunch-Hackathon-FHNDATA-2025"
   },
   "author": "NAM-VU",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Nam-Vu-Duc/bunnyStore/issues"
+    "url": "https://github.com/trinhnam1537/SQLunch-Hackathon-FHNDATA-2025issues"
   },
-  "homepage": "https://github.com/Nam-Vu-Duc/bunnyStore#readme",
+  "homepage": "https://github.com/trinhnam1537/SQLunch-Hackathon-FHNDATA-2025#readme",
   "dependencies": {
     "appwrite": "^18.2.0",
     "bcryptjs": "^2.4.3",

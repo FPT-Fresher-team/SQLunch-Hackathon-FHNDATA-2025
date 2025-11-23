@@ -10,7 +10,7 @@ async function getMaterial() {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {error, materialInfo} = await response.json()
-  if (error) return pushNotification('Có lỗi xảy ra')
+  if (error) return pushNotification('An error occurred')
 
   document.title = materialInfo.name
 
@@ -54,7 +54,7 @@ async function updateMaterial(materialInfo) {
     supplierId      === materialInfo.supplierId           &&
     expiry_date     === initialExpiryDate                 &&
     certifications  === materialInfo.certifications      
-  ) return pushNotification('Hãy cập nhật thông tin')
+  ) return pushNotification('Please update the information')
 
   const response = await fetch('/admin/all-materials/material/updated', {
     method: 'PUT',
@@ -91,7 +91,7 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
       updateMaterial(materialInfo)
     }
   } catch (error) {
-    console.error('Có lỗi xảy ra:', error)
-    pushNotification('Có lỗi xảy ra')
+    console.error('An error occurred:', error)
+    pushNotification('An error occurred')
   }
 })

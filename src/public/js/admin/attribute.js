@@ -5,15 +5,16 @@ async function createAttribute(id, rowIndex) {
   const code = row.querySelector('input#code').value
   const name = row.querySelector('input#name').value
   const wage = deFormatNumber(row.querySelector('input#wage')?.value)
+  const order = row.querySelector('input#order')?.value
 
-  if (code === '' || name === '' || wage === '') {
-    return pushNotification('Vui lòng điền đầy đủ thông tin.')
+  if (code === '' || name === '' || wage === '' || order === '') {
+    return pushNotification('Please fill in all information.')
   }
   
   const response = await fetch(`/admin/all-attributes/create/${id}`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({code: code, name: name, wage: wage})
+    body: JSON.stringify({code: code, name: name, wage: wage, order: order})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {error, message} = await response.json()
@@ -25,6 +26,8 @@ async function createAttribute(id, rowIndex) {
   row.querySelector('input#name').disabled = true
   const wageInput = row.querySelector('input#wage')
   if (wageInput) wageInput.disabled = true
+  const orderInput = row.querySelector('input#order')
+  if (orderInput) orderInput.disabled = true
 
   row.querySelector('td:last-child').innerHTML = `
     <button id="${id}" onclick="updateAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-refresh"></i></button>
@@ -35,7 +38,7 @@ async function createAttribute(id, rowIndex) {
 
 async function deleteAttribute(id, rowIndex) {
   const row = document.querySelector(`div.${id}`).querySelector('table').rows[rowIndex]
-  if (confirm('Bạn có chắc chắn muốn xóa?')) {
+  if (confirm('Are you sure you want to delete?')) {
     const code = row.querySelector('input#code').value
     const name = row.querySelector('input#name').value
     const response = await fetch(`/admin/all-attributes/delete/${id}`, {
@@ -64,15 +67,16 @@ async function updateAttribute(id, rowIndex) {
       const code = row.querySelector('input#code').value
       const name = row.querySelector('input#name').value
       const wage = deFormatNumber(row.querySelector('input#wage')?.value)
+      const order = deFormatNumber(row.querySelector('input#order')?.value)
 
-      if (code === '' || name === '' || wage === '') {
+      if (code === '' || name === '' || wage === '' || order === '') {
         return pushNotification('Please fill in all information.')
       }
 
       const response = await fetch(`/admin/all-attributes/update/${id}`, {
         method: 'PUT',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({code: code, name: name, wage: wage})
+        body: JSON.stringify({code: code, name: name, wage: wage, order: order})
       })
 
       if (!response.ok) throw new Error(`Response status: ${response.status}`)
@@ -85,6 +89,9 @@ async function updateAttribute(id, rowIndex) {
       const wageInput = row.querySelector('input#wage')
       if (wageInput) wageInput.disabled = true
 
+      const orderInput = row.querySelector('input#order')
+      if (orderInput) orderInput.disabled = true
+
       row.querySelector('input#name').parentElement.querySelector('button').remove()
     })
     
@@ -92,12 +99,18 @@ async function updateAttribute(id, rowIndex) {
     const wageInput = row.querySelector('input#wage')
     if (wageInput) wageInput.disabled = false
 
+    const orderInput = row.querySelector('input#order')
+    if (orderInput) orderInput.disabled = false
+
     row.querySelector('input#name').parentElement.appendChild(button)
 
   } else {
-    row.querySelector('input#name').disabled = true
-    const wageInput = row.querySelector('input#wage')
-    if (wageInput) wageInput.disabled = true
+      row.querySelector('input#name').disabled = true
+      const wageInput = row.querySelector('input#wage')
+      if (wageInput) wageInput.disabled = true
+
+      const orderInput = row.querySelector('input#order')
+      if (orderInput) orderInput.disabled = true
 
     row.querySelector('input#name').parentElement.querySelector('button').remove()
   }
@@ -114,6 +127,18 @@ function addRow(id) {
     tr.innerHTML = `
       <td><input type="text" id="code" placeholder="Enter code"></td>
       <td><input type="text" id="wage" placeholder="Enter salary"></td>
+      <td><input type="text" id="name" placeholder="Enter name"></td>
+      <td data-id="${id}">
+        <button id="create">
+          <i class="fi fi-rr-check"></i>
+        </button>
+        <button id="delete" onclick="deleteRow(this.parentElement.dataset.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-cross-small"></i></button>
+      </td>
+    `
+  } else if (id === 'order-status') {
+    tr.innerHTML = `
+      <td><input type="text" id="order" placeholder="Enter order"></td>
+      <td><input type="text" id="code" placeholder="Enter code"></td>
       <td><input type="text" id="name" placeholder="Enter name"></td>
       <td data-id="${id}">
         <button id="create">
@@ -192,10 +217,11 @@ async function getOrderStatus() {
   table.innerHTML = `
     <table>
       <thead>
-        <tr><td colspan="3">ORDER STATUS</td></tr>
+        <tr><td colspan="4">ORDER STATUS</td></tr>
       </thead>
       <thead>
         <tr>
+          <td>Order</td>
           <td>Code</td>
           <td>Name</td>
           <td>Action</td>
@@ -204,6 +230,7 @@ async function getOrderStatus() {
         ${data.map(item => 
           `
             <tr>
+              <td><input type="text" id="order" value="${item.order}" disabled></td>
               <td><input type="text" id="code" value="${item.code}" disabled></td>
               <td><input type="text" id="name" value="${item.name}" disabled></td>
               <td>
