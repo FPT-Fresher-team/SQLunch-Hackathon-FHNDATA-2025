@@ -90,29 +90,55 @@ async function getOrders(fetchBody) {
   
   const orderCtx = document.getElementById("order")
   Chart.getChart(orderCtx)?.destroy()
+  
+  // Prepare data for line chart
+  const orderDates = Array.from(new Set(data.map(order => formatDate(order.createdAt))))
+  const orderCounts = orderDates.map(date => 
+    data.filter(order => formatDate(order.createdAt) === date).length
+  )
+  
   new Chart(orderCtx, {
-    type: 'bar',
+    type: 'line',
     options: {
+      responsive: true,
+      maintainAspectRatio: true,
       plugins: {
         legend: {
           display: false
         },
         title: {
           display: true,
-          text: 'ORDERS OVER TIME'
+          text: 'ORDERS OVER TIME',
+          font: {
+            size: 14,
+            weight: 'bold'
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1
+          }
         }
       }
     },
     data: {
-      labels: Array.from(new Set(data.map(order => formatDate(order.createdAt)))),
+      labels: orderDates,
       datasets: [{
-        data: data.map(order => order.createdAt).reduce((acc, date) => {
-          const formattedDate = formatDate(date)
-          acc[formattedDate] = (acc[formattedDate] || 0) + 1
-          return acc
-        }, {}),
-        borderWidth: 1,
-        backgroundColor: '#4E79A7'
+        label: 'Number of Orders',
+        data: orderCounts,
+        borderColor: '#4E79A7',
+        backgroundColor: 'rgba(78, 121, 167, 0.1)',
+        borderWidth: 3,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 5,
+        pointBackgroundColor: '#4E79A7',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointHoverRadius: 7
       }]
     }
   })
@@ -171,29 +197,55 @@ async function getCustomers(fetchBody) {
 
   const customerCtx = document.getElementById("customer")
   Chart.getChart(customerCtx)?.destroy()
+  
+  // Prepare data for line chart
+  const customerDates = Array.from(new Set(data.map(user => formatDate(user.createdAt))))
+  const customerCounts = customerDates.map(date => 
+    data.filter(user => formatDate(user.createdAt) === date).length
+  )
+  
   new Chart(customerCtx, {
-    type: 'bar',
+    type: 'line',
     options: {
+      responsive: true,
+      maintainAspectRatio: true,
       plugins: {
         legend: {
           display: false
         },
         title: {
           display: true,
-          text: 'KHÁCH HÀNG THEO THỜI GIAN'
+          text: 'KHÁCH HÀNG THEO THỜI GIAN',
+          font: {
+            size: 14,
+            weight: 'bold'
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1
+          }
         }
       }
     },
     data: {
-      labels: Array.from(new Set(data.map(user => formatDate(user.createdAt)))),
+      labels: customerDates,
       datasets: [{
-        data: data.map(user => user.createdAt).reduce((acc, date) => {
-          const formattedDate = formatDate(date)
-          acc[formattedDate] = (acc[formattedDate] || 0) + 1
-          return acc
-        }, {}),
-        borderWidth: 1,
-        backgroundColor: '#F28E2B'
+        label: 'Number of Customers',
+        data: customerCounts,
+        borderColor: '#F28E2B',
+        backgroundColor: 'rgba(242, 142, 43, 0.1)',
+        borderWidth: 3,
+        fill: true,
+        tension: 0.4,
+        pointRadius: 5,
+        pointBackgroundColor: '#F28E2B',
+        pointBorderColor: '#fff',
+        pointBorderWidth: 2,
+        pointHoverRadius: 7
       }]
     }
   })

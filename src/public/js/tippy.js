@@ -1,4 +1,4 @@
 tippy('[data-tippy-content]', {
   arrow: true,
-  theme: 'bunny'
+  theme: 'beauté'
 })

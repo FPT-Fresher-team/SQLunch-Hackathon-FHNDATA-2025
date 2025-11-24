@@ -37,6 +37,7 @@ const logOutRoute         = require('./user/logOutRoute')
 const chatRoute           = require('./user/chatRoute')
 const refreshRoute        = require('./user/refreshToken')
 const trackRoute          = require('./user/trackRoute')
+const cartTrackingRoute   = require('./user/cartTrackingRoute')
 
 // login
 const authenticationRoute    = require('./auth/authenticationRoute')
@@ -80,6 +81,7 @@ function route(app) {
   app.use('/log-out'        , checkUser, logOutRoute)
   app.use('/api/chat'       , checkUser, chatRoute)
   app.use('/api'            , trackRoute)
+  app.use('/api'            , cartTrackingRoute)
   app.use('/refresh-token'  , refreshRoute)
 
   // login

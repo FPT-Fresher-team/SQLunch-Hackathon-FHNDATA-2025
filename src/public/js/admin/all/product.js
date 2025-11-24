@@ -26,6 +26,7 @@ function generateColumns() {
     <label><input type="checkbox" value="quantity" checked> Stock</label>
     <label><input type="checkbox" value="status"> Status</label>
     <label><input type="checkbox" value="rate"> Rating</label>
+    <label><input type="checkbox" value="viewCount"> View Count</label>
     <label><input type="checkbox" value="saleNumber"> Sales Count</label>
     <label><input type="checkbox" value="rateNumber"> Review Count</label>
   `
@@ -121,7 +122,7 @@ async function getProducts(sortOptions, filterOptions, currentPage, itemsPerPage
         const td = document.createElement("td")
         td.textContent = item[col.value]
 
-        if (['oldPrice', 'price', 'quantity', 'rate', 'saleNumber', 'rateNumber'].includes(col.value) ) td.style.textAlign = 'right'
+        if (['oldPrice', 'price', 'quantity', 'rate', 'viewCount', 'saleNumber', 'rateNumber'].includes(col.value) ) td.style.textAlign = 'right'
         if (['oldPrice', 'price'].includes(col.value)) td.textContent = formatNumber(item[col.value])
         if (['rate'].includes(col.value)) td.textContent = formatRate(item[col.value])
 

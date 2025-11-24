@@ -38,4 +38,11 @@ router.get('/top-combined', analyticsController.getTopCombined)
 // GET product metrics (JSON)
 router.get('/product/:productId', analyticsController.getProductAnalytics)
 
+// GET getConversionMetrics (JSON)
+router.get('/conversion-metrics/all', analyticsController.getConversionMetrics)
+
+// GET getConversionMetrics (JSON)
+router.get('/payment-success-rate-by-method', analyticsController.getPaymentSuccessRate)
+
+router.get('/add-to-cart-rate-by-product', analyticsController.getAddToCartRate)
 module.exports = router

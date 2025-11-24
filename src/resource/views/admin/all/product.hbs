@@ -63,6 +63,332 @@
     </a>
   </div>
 
+  <!-- ANALYTICS SECTION -->
+  <div class="analytics-section" style="margin-bottom: 40px;">
+    <h3 style="margin-bottom: 20px;">📊 Product Analytics</h3>
+    
+    <!-- Summary Cards -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px;">
+      <div style="padding: 20px; background: #f0f4ff; border-left: 4px solid #4e73df; border-radius: 4px;">
+        <h6 style="color: #4e73df; margin: 0 0 10px 0;">Total Products</h6>
+        <h3 id="total-products" style="margin: 0;">-</h3>
+      </div>
+      <div style="padding: 20px; background: #e2f0ff; border-left: 4px solid #17a2b8; border-radius: 4px;">
+        <h6 style="color: #17a2b8; margin: 0 0 10px 0;">Total Orders</h6>
+        <h3 id="total-orders" style="margin: 0;">-</h3>
+      </div>
+      <div style="padding: 20px; background: #e8f8f5; border-left: 4px solid #1cc88a; border-radius: 4px;">
+        <h6 style="color: #1cc88a; margin: 0 0 10px 0;">Total Views (≥5s)</h6>
+        <h3 id="total-views" style="margin: 0;">-</h3>
+      </div>
+      <div style="padding: 20px; background: #fff8e8; border-left: 4px solid #f6c23e; border-radius: 4px;">
+        <h6 style="color: #f6c23e; margin: 0 0 10px 0;">Total Sales</h6>
+        <h3 id="total-sales" style="margin: 0;">-</h3>
+      </div>
+    </div>
+
+    <!-- Top Products Tables -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 30px;">
+      <!-- Top Viewed -->
+      <div style="padding: 20px; background: white; border-radius: 4px; border: 1px solid #ddd;">
+        <h5 style="color: #1cc88a; margin-top: 0;">👁️ Top Viewed Products (≥5s)</h5>
+        <div id="top-viewed" style="font-size: 13px;">
+          <p style="color: #999;">Loading...</p>
+        </div>
+      </div>
+
+      <!-- Top Purchased -->
+      <div style="padding: 20px; background: white; border-radius: 4px; border: 1px solid #ddd;">
+        <h5 style="color: #17a2b8; margin-top: 0;">🛍️ Top Purchased Products</h5>
+        <div id="top-purchased" style="font-size: 13px;">
+          <p style="color: #999;">Loading...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Combined -->
+    <div style="padding: 20px; background: white; border-radius: 4px; border: 1px solid #ddd;">
+      <h5 style="color: #4e73df; margin-top: 0;">⭐ Hottest Products (Views + Sales)</h5>
+      <div id="top-combined" style="font-size: 13px;">
+        <p style="color: #999;">Loading...</p>
+      </div>
+    </div>
+
+    <!-- CONVERSION METRICS SECTION -->
+    <div style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #ddd;">
+      <h3 style="margin-bottom: 20px;">🔄 Conversion Metrics</h3>
+
+      <!-- Conversion Cards -->
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-bottom: 30px;">
+        <div style="padding: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 4px; color: white;">
+          <h6 style="color: white; margin: 0 0 10px 0; opacity: 0.9;">Payment Success Rate</h6>
+          <h3 id="payment-success-rate" style="margin: 0; font-size: 36px;">-</h3>
+          <small style="opacity: 0.8;">Overall payment completion</small>
+        </div>
+
+        <div style="padding: 20px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); border-radius: 4px; color: white;">
+          <h6 style="color: white; margin: 0 0 10px 0; opacity: 0.9;">Add to Cart Rate</h6>
+          <h3 id="add-to-cart-rate" style="margin: 0; font-size: 36px;">-</h3>
+          <small style="opacity: 0.8;">Users adding to cart</small>
+        </div>
+      </div>
+
+      <!-- Payment Success by Method -->
+      <div style="padding: 20px; background: white; border-radius: 4px; border: 1px solid #ddd; margin-bottom: 20px;">
+        <h5 style="color: #667eea; margin-top: 0;">💳 Payment Success Rate by Method</h5>
+        <div id="payment-by-method" style="font-size: 13px;">
+          <p style="color: #999;">Loading...</p>
+        </div>
+      </div>
+
+      <!-- Top Products by Add to Cart Rate -->
+      <div style="padding: 20px; background: white; border-radius: 4px; border: 1px solid #ddd;">
+        <h5 style="color: #f5576c; margin-top: 0;">🛒 Top Products by Add to Cart Rate</h5>
+        <div id="top-add-to-cart" style="font-size: 13px;">
+          <p style="color: #999;">Loading...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .rank-badge {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      text-align: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-weight: bold;
+      font-size: 12px;
+      margin-right: 8px;
+    }
+
+    .stat-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-weight: 500;
+      font-size: 11px;
+      margin: 2px;
+    }
+
+    .stat-badge.view {
+      background-color: #d1ecf1;
+      color: #0c5460;
+    }
+
+    .stat-badge.purchase {
+      background-color: #d4edda;
+      color: #155724;
+    }
+
+    .stat-badge.interaction {
+      background-color: #fff3cd;
+      color: #856404;
+    }
+
+    #top-viewed table,
+    #top-purchased table,
+    #top-combined table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    #top-viewed tr,
+    #top-purchased tr,
+    #top-combined tr {
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    #top-viewed tr:hover,
+    #top-purchased tr:hover,
+    #top-combined tr:hover {
+      background-color: #f9f9f9;
+    }
+
+    #top-viewed td,
+    #top-purchased td,
+    #top-combined td {
+      padding: 8px 0;
+    }
+
+    #top-combined thead th {
+      padding: 8px 0;
+      font-weight: 600;
+      border-bottom: 2px solid #ddd;
+      text-align: left;
+    }
+  </style>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      try {
+        // Load summary
+        const summaryRes = await fetch('/admin/analytics/summary')
+        const summaryData = await summaryRes.json()
+        if (summaryData.success) {
+          document.getElementById('total-products').textContent = summaryData.data.totalProducts
+          document.getElementById('total-orders').textContent = summaryData.data.totalOrders
+          document.getElementById('total-views').textContent = summaryData.data.totalViews.toLocaleString('vi-VN')
+          document.getElementById('total-sales').textContent = summaryData.data.totalSales.toLocaleString('vi-VN')
+        }
+
+        // Load top viewed
+        const viewedRes = await fetch('/admin/analytics/top-viewed?limit=5')
+        const viewedData = await viewedRes.json()
+        if (viewedData.success) {
+          renderTable('top-viewed', viewedData.data, 'viewed')
+        }
+
+        // Load top purchased
+        const purchasedRes = await fetch('/admin/analytics/top-purchased?limit=5')
+        const purchasedData = await purchasedRes.json()
+        if (purchasedData.success) {
+          renderTable('top-purchased', purchasedData.data, 'purchased')
+        }
+
+        // Load top combined
+        const combinedRes = await fetch('/admin/analytics/top-combined?limit=10')
+        const combinedData = await combinedRes.json()
+        if (combinedData.success) {
+          renderCombinedTable('top-combined', combinedData.data)
+        }
+
+
+        // Load conversion metrics
+        const conversionRes = await fetch('/admin/analytics/conversion-metrics/all')
+        const conversionData = await conversionRes.json()
+        if (conversionData.success) {
+          document.getElementById('payment-success-rate').textContent = conversionData.data.paymentSuccessRate.toFixed(2) + '%'
+          document.getElementById('add-to-cart-rate').textContent = conversionData.data.addToCartRate.toFixed(2) + '%'
+        }
+
+        // Load payment success by method
+        const paymentMethodRes = await fetch('/admin/analytics/payment-success-rate-by-method')
+        const paymentMethodData = await paymentMethodRes.json()
+        console.log(paymentMethodRes)
+        if (paymentMethodData.success) {
+          renderPaymentByMethod('payment-by-method', paymentMethodData.data.rateByMethod)
+        }
+
+       
+
+        // Load top products by add to cart rate
+        const cartRateRes = await fetch('/admin/analytics/add-to-cart-rate-by-product')
+        const cartRateData = await cartRateRes.json()
+        if (cartRateData.success) {
+          renderAddToCartTable('top-add-to-cart', cartRateData.data.rateByProduct)
+        }
+      } catch (error) {
+        console.error('Error loading analytics:', error)
+      }
+    })
+
+    function renderTable(elementId, items, type) {
+      const container = document.getElementById(elementId)
+      if (items.length === 0) {
+        container.innerHTML = '<p style="color: #999;">No data available</p>'
+        return
+      }
+
+      let html = '<table><tbody>'
+      items.forEach(item => {
+        const count = type === 'viewed' ? item.viewCount : item.purchaseCount
+        const badgeClass = type === 'viewed' ? 'view' : 'purchase'
+        html += `
+          <tr>
+            <td><span class="rank-badge">#${item.rank}</span></td>
+            <td>
+              <div><strong>${item.name}</strong></div>
+              <small style="color: #999;">${item.category || 'N/A'} - ${item.brand || 'N/A'}</small>
+            </td>
+            <td style="text-align: right;">
+              <span class="stat-badge ${badgeClass}">${count} ${type === 'viewed' ? 'views' : 'sold'}</span>
+            </td>
+          </tr>
+        `
+      })
+      html += '</tbody></table>'
+      container.innerHTML = html
+    }
+
+    function renderCombinedTable(elementId, items) {
+      const container = document.getElementById(elementId)
+      if (items.length === 0) {
+        container.innerHTML = '<p style="color: #999;">No data available</p>'
+        return
+      }
+
+      let html = '<table><thead><tr><th>Rank</th><th>Product</th><th>Views</th><th>Sold</th><th>Total</th></tr></thead><tbody>'
+      items.forEach(item => {
+        html += `
+          <tr>
+            <td><span class="rank-badge" style="font-size: 11px;">#${item.rank}</span></td>
+            <td>
+              <div><strong>${item.name}</strong></div>
+              <small style="color: #999;">${item.category || 'N/A'} - ${item.brand || 'N/A'}</small>
+            </td>
+            <td><span class="stat-badge view">${item.viewCount}</span></td>
+            <td><span class="stat-badge purchase">${item.purchaseCount}</span></td>
+            <td><span class="stat-badge interaction">${item.totalInteraction}</span></td>
+          </tr>
+        `
+      })
+      html += '</tbody></table>'
+      container.innerHTML = html
+    }
+
+    function renderPaymentByMethod(elementId, items) {
+      const container = document.getElementById(elementId)
+      if (items.length === 0) {
+        container.innerHTML = '<p style="color: #999;">No data available</p>'
+        return
+      }
+
+      let html = '<table><thead><tr><th>Payment Method</th><th>Total Orders</th><th>Successful</th><th>Success Rate</th></tr></thead><tbody>'
+      items.forEach(item => {
+        const rateColor = item.rate >= 80 ? '#1cc88a' : item.rate >= 50 ? '#f6c23e' : '#e74c3c'
+        html += `
+          <tr>
+            <td><strong>${item.paymentMethod}</strong></td>
+            <td>${item.total}</td>
+            <td>${item.successful}</td>
+            <td><span style="color: ${rateColor}; font-weight: bold;">${item.rate.toFixed(2)}%</span></td>
+          </tr>
+        `
+      })
+      html += '</tbody></table>'
+      container.innerHTML = html
+    }
+
+    function renderAddToCartTable(elementId, items) {
+      const container = document.getElementById(elementId)
+      if (items.length === 0) {
+        container.innerHTML = '<p style="color: #999;">No data available</p>'
+        return
+      }
+
+      let html = '<table><thead><tr><th>Rank</th><th>Product</th><th>Views</th><th>Add to Cart</th><th>Rate</th></tr></thead><tbody>'
+      items.forEach(item => {
+        const rateColor = item.rate >= 50 ? '#1cc88a' : item.rate >= 20 ? '#f6c23e' : '#e74c3c'
+        html += `
+          <tr>
+            <td><span class="rank-badge" style="font-size: 11px;">#${item.rank}</span></td>
+            <td><strong>${item.productName}</strong></td>
+            <td>${item.views}</td>
+            <td>${item.addToCart}</td>
+            <td><span style="color: ${rateColor}; font-weight: bold;">${item.rate.toFixed(2)}%</span></td>
+          </tr>
+        `
+      })
+      html += '</tbody></table>'
+      container.innerHTML = html
+    }
+  </script>
+
   <div class="table">
     {{> exportFileButton}}
     <table class="all-items">
