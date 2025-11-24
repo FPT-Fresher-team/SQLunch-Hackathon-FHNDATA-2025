@@ -123,6 +123,8 @@
   color: #999;
   margin-bottom: 10px;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: start;
 }
 
 .blog-category {
@@ -133,14 +135,6 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-}
-
-.blog-date::before {
-  content: "📅 ";
-}
-
-.blog-views::before {
-  content: "👁️ ";
 }
 
 .blog-title {

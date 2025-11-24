@@ -318,9 +318,9 @@ async function openProductDetail(productId) {
     }
 
     // Format số khi nhập
+    formatInputNumber(detailModal.querySelector('input#purchasePrice'))
     formatInputNumber(detailModal.querySelector('input#oldPrice'))
     formatInputNumber(detailModal.querySelector('input#price'))
-    formatInputNumber(detailModal.querySelector('input#purchasePrice'))
 
     // Lưu để so sánh khi update
     currentProductInfo = { ...productInfo }
@@ -388,7 +388,7 @@ async function updateProduct() {
   detailUpdateBtn.classList.remove('loading')
 
   if (!response.ok) {
-    pushNotification('Cập nhật thất bại')
+    pushNotification('Update failed')
     return
   }
 
@@ -426,6 +426,7 @@ selectBox.onchange = function() {
   }
 }
 
+formatInputNumber(createModal.querySelector('input[name="purchasePrice"]'))
 formatInputNumber(createModal.querySelector('input[name="oldPrice"]'))
 formatInputNumber(createModal.querySelector('input[name="price"]'))
 
@@ -444,19 +445,21 @@ createModal?.querySelector('input#img')?.addEventListener('change', function () 
 })
 
 async function createProduct() {
-  const categories  = createModal.querySelector('select[name="categories"]')?.value
-  const skincare    = createModal.querySelector('select[name="skincare"]')?.value || ''
-  const makeup      = createModal.querySelector('select[name="makeup"]')?.value || ''
-  const brand       = createModal.querySelector('select[name="brand"]')?.value
-  const name        = createModal.querySelector('input#name')?.value.trim()
-  const oldPrice    = deFormatNumber(createModal.querySelector('input#oldPrice')?.value || '0')
-  const price       = deFormatNumber(createModal.querySelector('input#price')?.value || '0')
-  const description = createModal.querySelector('input#description')?.value
-  const details     = createModal.querySelector('input#details')?.value
-  const guide       = createModal.querySelector('input#guide')?.value
-  const status      = createModal.querySelector('select[name="status"]')?.value
+  const categories    = createModal.querySelector('select[name="categories"]')?.value
+  const skincare      = createModal.querySelector('select[name="skincare"]')?.value || ''
+  const makeup        = createModal.querySelector('select[name="makeup"]')?.value || ''
+  const brand         = createModal.querySelector('select[name="brand"]')?.value
+  const name          = createModal.querySelector('input#name')?.value.trim()
+  const purchasePrice = deFormatNumber(createModal.querySelector('input#purchasePrice')?.value || '0')
+  const oldPrice      = deFormatNumber(createModal.querySelector('input#oldPrice')?.value || '0')
+  const price         = deFormatNumber(createModal.querySelector('input#price')?.value || '0')
+  const description   = createModal.querySelector('input#description')?.value
+  const details       = createModal.querySelector('input#details')?.value
+  const guide         = createModal.querySelector('input#guide')?.value
+  const quantity      = createModal.querySelector('input#quantity')?.value
+  const status        = createModal.querySelector('select[name="status"]')?.value
 
-  if (!categories || !brand || !name || !oldPrice || !price || !description || !details || !guide || !status || !createImgPath.path) {
+  if (!categories || !brand || !name || !purchasePrice || !oldPrice || !price || !description || !details || !guide || !quantity || !status || !createImgPath.path) {
     return pushNotification('Please fill in all information!')
   }
 
@@ -464,8 +467,8 @@ async function createProduct() {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      categories, skincare, makeup, brand, name,
-      oldPrice, price, description, details, guide, status,
+      categories, skincare, makeup, brand, name, purchasePrice,
+      oldPrice, price, description, details, guide, quantity, status,
       img: createImgPath.path
     })
   })

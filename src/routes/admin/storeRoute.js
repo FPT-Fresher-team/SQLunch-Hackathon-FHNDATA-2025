@@ -4,8 +4,6 @@ const storeController = require('../../app/controllers/admin/storeController')
 const storePermission = require('../../app/middleware/checkPermission').storeClass
 
 router.get('/'               , storePermission.read   , storeController.allStores)
-router.get('/store/create'   , storePermission.create , storeController.storeCreate)
-router.get('/store/:id'      , storePermission.update , storeController.storeInfo)
 
 router.post('/store/created' , storeController.storeCreated)
 router.put('/store/updated'  , storeController.storeUpdate)

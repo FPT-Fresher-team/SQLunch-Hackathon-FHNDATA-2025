@@ -145,7 +145,13 @@ async function getUser() {
 
   content.appendChild(div)
 
+  console.log(member)
+
   document.querySelector('span.user-name').textContent = data.name
+  document.querySelector('span.user-badge').textContent = member.name + ' Member'
+  document.querySelector('span.user-badge').style.color = `${member.textColor} !important`
+  document.querySelector('span.user-badge').style.background = member.bgColor
+
 }
 
 async function getOrders() {

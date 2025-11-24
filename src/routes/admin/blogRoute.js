@@ -4,8 +4,6 @@ const blogController = require('../../app/controllers/admin/blogController')
 const blogPermission = require('../../app/middleware/checkPermission').blogClass
 
 router.get('/'              , blogPermission.read   , blogController.allBlogs)
-router.get('/blog/create'   , blogPermission.create , blogController.blogCreate)
-router.get('/blog/:id'      , blogPermission.update , blogController.blogInfo)
 
 router.post('/blog/created' , blogPermission.create , blogController.blogCreated)
 router.put('/blog/updated'  , blogPermission.update , blogController.blogUpdate)

@@ -175,4 +175,40 @@
   </div>
 </div>
 
+<div class="purchase-details-container" id="detail-modal">
+  <div id="form">
+    
+    <table id="table-1">
+      <thead>
+        <tr><td colspan="2">PURCHASE ORDER INFORMATION</td></tr>
+      </thead>
+      <tr>
+        <td>Purchase Order Code</td>
+        <td><input type="text" name="id" disabled></td>
+      </tr>
+      <tr>
+        <td>Supplier Code</td>
+        <td><input type="text" name="supplierId" disabled></td>
+      </tr>
+      <tr>
+        <td>Purchase Date</td>
+        <td><input type="text" name="purchaseDate" disabled></td>
+      </tr>
+      <tr>
+        <td>Total Items</td>
+        <td><input type="text" name="items" disabled></td>
+      </tr>
+      <tr>
+        <td>Total Cost</td>
+        <td><input type="text" id="totalPurchasePrice" name="totalPurchasePrice" disabled></td>
+      </tr>
+    </table>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Update</button>
+    </div>
+  </div>
+</div>
+
 <script type="module" src="/js/admin/all/supplier.js"></script>

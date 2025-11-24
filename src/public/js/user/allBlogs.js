@@ -97,13 +97,13 @@ function renderBlogs() {
 
       const date = document.createElement('span')
       date.classList.add('blog-date')
-      date.textContent = formatDate(blog.publishedAt)
+      date.innerHTML = `<i class="fi fi-rr-calendar"></i> ${formatDate(blog.publishedAt)}`
       metaDiv.appendChild(date)
 
       const views = document.createElement('span')
       views.classList.add('blog-views')
-      views.textContent = `${blog.views || 0} views`
-      metaDiv.appendChild(views)
+      views.innerHTML = `<i class="fi fi-rr-eye"></i> ${blog.views || 0} views`
+      metaDiv.appendChild(views) 
 
       contentDiv.appendChild(metaDiv)
 

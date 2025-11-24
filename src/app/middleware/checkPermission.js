@@ -10,7 +10,6 @@ const employeePermission  = permission.employeePermission
 const homePermission      = permission.homePermission
 const orderPermission     = permission.orderPermission
 const productPermission   = permission.productPermission
-const materialPermission  = permission.materialPermission
 const purchasePermission  = permission.purchasePermission
 const storePermission     = permission.storePermission
 const supplierPermission  = permission.supplierPermission
@@ -169,20 +168,6 @@ class productClass {
     if (await checkPermission(req, res, productPermission, 'DELETE')) next();
   }
 }
-class materialClass {
-  async create(req, res, next) {
-    if (await checkPermission(req, res, materialPermission, 'CREATE')) next();
-  }
-  async read(req, res, next) {
-    if (await checkPermission(req, res, materialPermission, 'READ')) next();
-  }
-  async update(req, res, next) {
-    if (await checkPermission(req, res, materialPermission, 'UPDATE')) next();
-  }
-  async delete(req, res, next) {
-    if (await checkPermission(req, res, materialPermission, 'DELETE')) next();
-  }
-}
 class purchaseClass {
   async create(req, res, next) {
     if (await checkPermission(req, res, purchasePermission, 'CREATE')) next();
@@ -251,7 +236,6 @@ module.exports = {
   homeClass     : new homeClass,
   orderClass    : new orderClass,
   productClass  : new productClass,
-  materialClass : new materialClass,
   purchaseClass : new purchaseClass,
   storeClass    : new storeClass,
   supplierClass : new supplierClass,

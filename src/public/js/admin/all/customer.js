@@ -118,7 +118,6 @@ async function getCustomers(sortOptions, filterOptions, currentPage, itemsPerPag
       if (['quantity', 'revenue', 'dob', 'lastLogin'].includes(col.value) ) td.style.textAlign = 'right'
       if (['revenue'].includes(col.value)) td.textContent = formatNumber(item[col.value])
       if (['dob', 'lastLogin'].includes(col.value)) td.textContent = formatDate(item[col.value])
-      if (['gender'].includes(col.value)) td.textContent = item[col.value] === 'male' ? 'Nam' : 'Nữ'
       if (['isActive'].includes(col.value)) td.textContent = item[col.value] === 'true' ? 'Online' : 'Offline'
 
       newTr.appendChild(td)
@@ -200,7 +199,9 @@ async function openCustomerDetail(customerId) {
         <td>${formatNumber(order.totalOrderPrice)}</td>
         <td>${order.paymentMethod.name}</td>
         <td>${order.orderStatus.name}</td>
-        <td><a href="/admin/all-orders/order/${order._id}">View</a></td>
+        <td style="text-align:center">
+          <button class="view-order-btn" data-id="${order._id}">View</button>
+        </td>
       `
       tbody.appendChild(tr)
     })
@@ -229,8 +230,8 @@ async function updateCustomer() {
   const name    = detailModal.querySelector('input[name="name"]').value
   const phone   = detailModal.querySelector('input[name="phone"]').value
   const address = detailModal.querySelector('input[name="address"]').value
-  const dob     = detailModal.querySelector('input[name="dob"]').value
-  const gender  = detailModal.querySelector('input[name="gender"]:checked').value
+  const dob     = detailModal.querySelector('input[name="dob"]')?.value || null
+  const gender  = detailModal.querySelector('input[name="gender"]:checked')?.value || ''
 
   // Check if any field has changed
   if (
@@ -291,6 +292,11 @@ async function createCustomer() {
     const phone    = createModal.querySelector('input#phone').value
     const address  = createModal.querySelector('input#address').value
     const password = createModal.querySelector('input#password').value
+    const confirmPassword = createModal.querySelector('input#password-confirm').value
+
+    if (password !== confirmPassword) {
+      return pushNotification("Password and Confirm Password do not match!")
+    }
 
     if (
       !name     || 
@@ -302,6 +308,7 @@ async function createCustomer() {
       return pushNotification("Please fill in all information!")
     }
 
+    createSubmitBtn.classList.add('loading')
     const response = await fetch('/admin/all-customers/customer/created', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -315,13 +322,16 @@ async function createCustomer() {
     })
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
     const {error, message} = await response.json()
-    if (error) return pushNotification(error)
+    if (error) throw new Error(error)
+
     pushNotification(message)
     createModal.classList.remove('show')
+    createSubmitBtn.classList.remove('loading')
     await getCustomers(sortOptions, filterOptions, currentPage.page, 10)
   } catch (error) {
     console.error('Error creating customer:', error)
     pushNotification("An error occurred.")
+    createSubmitBtn.classList.remove('loading')
   }
 }
 
@@ -329,13 +339,135 @@ createSubmitBtn.onclick = async function() {
   await createCustomer()
 }
 
+const orderDetailModal = document.querySelector('div.order-details-container')
+
+// Đóng modal khi nhấn nút đóng hoặc nền
+orderDetailModal.addEventListener('click', e => {
+  if (e.target === orderDetailModal || e.target.classList.contains('close-modal')) {
+    orderDetailModal.classList.remove('show')
+  }
+})
+
+// Hàm mở chi tiết đơn hàng
+async function openOrderDetail(orderId) {
+  try {
+    orderDetailModal.classList.add('show')
+
+    const response = await fetch('/admin/all-orders/data/order', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: orderId })
+    })
+
+    if (!response.ok) throw new Error(`Response status: ${response.status}`)
+    const { error, orderInfo, orderStatuses, paymentMethods, userRole } = await response.json()
+    if (error) {
+      pushNotification('An error occurred')
+      orderDetailModal.classList.remove('show')
+      return
+    }
+
+    document.title = 'Order ' + (orderInfo.customerInfo?.name || 'Guest')
+
+    // Fill thông tin cơ bản
+    orderDetailModal.querySelector('input#id').value      = orderInfo._id
+    orderDetailModal.querySelector('input#date').value    = formatDate(orderInfo.createdAt)
+    orderDetailModal.querySelector('input#name').value    = orderInfo.customerInfo?.name || 'Guest'
+    orderDetailModal.querySelector('input#phone').value   = orderInfo.customerInfo?.phone || ''
+    orderDetailModal.querySelector('input#address').value = orderInfo.customerInfo?.address || ''
+    orderDetailModal.querySelector('input#note').value    = orderInfo.customerInfo?.note || ''
+
+    // Trạng thái đơn hàng
+    const statusSelect = orderDetailModal.querySelector('select#status')
+    statusSelect.innerHTML = ''
+    orderStatuses.forEach(s => {
+      const opt = document.createElement('option')
+      opt.value = s.code
+      opt.textContent = s.name
+      opt.disabled = true
+      if (s.code === orderInfo.status) opt.selected = true
+
+      // Phân quyền chỉnh sửa
+      if (userRole === 'employee' && s.code === 'preparing') opt.disabled = false
+      if (userRole === 'merchandise' && s.code === 'out_for_delivery') opt.disabled = false
+      if (['shipper'].includes(userRole) && ['delivering', 'delivered'].includes(s.code)) opt.disabled = false
+      if (userRole === 'manager' && s.code === 'cancel') opt.disabled = false
+      if (userRole === 'admin') opt.disabled = false
+
+      statusSelect.appendChild(opt)
+    })
+
+    // Phương thức thanh toán
+    const paymentSelect = orderDetailModal.querySelector('select#paymentMethod')
+    paymentSelect.innerHTML = ''
+    paymentMethods.forEach(p => {
+      const opt = document.createElement('option')
+      opt.value = p.code
+      opt.textContent = p.name
+      opt.disabled = true
+      if (p.code === orderInfo.paymentMethod) opt.selected = true
+      paymentSelect.appendChild(opt)
+    })
+
+    // Tổng tiền
+    orderDetailModal.querySelector('input#total').value      = formatNumber(orderInfo.totalOrderPrice)
+    orderDetailModal.querySelector('input#new-total').value  = formatNumber(orderInfo.totalNewOrderPrice)
+    orderDetailModal.querySelector('input#isRated').value    = orderInfo.isRated ? 'Yes' : 'No'
+
+    // Thanh toán
+    const isPaidSelect = orderDetailModal.querySelector('select#isPaid')
+    isPaidSelect.value = orderInfo.isPaid ? 'true' : 'false'
+    isPaidSelect.querySelectorAll('option').forEach(opt => opt.disabled = userRole !== 'accountant')
+
+    // Ẩn nút cập nhật nếu đã hoàn tất hoặc hủy
+    if (['done', 'cancel'].includes(orderInfo.status)) {
+      statusSelect.disabled = paymentSelect.disabled = true
+      orderDetailModal.querySelector('button[type="submit"]').style.display = 'none'
+    } else {
+      orderDetailModal.querySelector('button[type="submit"]').style.display = 'block'
+    }
+
+    // Danh sách sản phẩm
+    const productTbody = orderDetailModal.querySelector('table#table-2 tbody')
+    productTbody.innerHTML = ''
+    let i = 1
+    orderInfo.products?.forEach(p => {
+      const tr = document.createElement('tr')
+      tr.innerHTML = `
+        <td>${i++}</td>
+        <td style="display: flex; align-items: center; gap: 8px;">
+          <img src="${p.image}" alt="${p.name}" loading="lazy" style="width: 40px; height: 40px; object-fit: cover;">
+          ${p.name}
+        </td>
+        <td style="text-align: center;">${p.quantity}</td>
+        <td style="text-align: right;">${formatNumber(p.price)}</td>
+        <td><button class="view-order-btn" data-id="${p.id}">View</button></td>
+      `
+      productTbody.appendChild(tr)
+    })
+
+  } catch (err) {
+    console.error(err)
+    pushNotification('An error occurred while fetching order details.')
+    orderDetailModal.classList.remove('show')
+  }
+}
+
+// === HOẶC TỐT HƠN: Dùng event delegation (chỉ cần thêm 1 lần) ===
+detailModal.querySelector('table#table-2 tbody').addEventListener('click', e => {
+  if (e.target.classList.contains('view-order-btn')) {
+    const orderId = e.target.dataset.id
+    openOrderDetail(orderId)
+  }
+})
+
 window.addEventListener('DOMContentLoaded', async function loadData() {
   try {
     generateColumns()
     await getFilter()
     await getCustomers(sortOptions, filterOptions, currentPage.page, 10)
     await sortAndFilter(getCustomers, sortOptions, filterOptions, currentPage.page)
-    await exportJs('BÁO CÁO DANH SÁCH KHÁCH HÀNG')
+    await exportJs('CUSTOMERS REPORT')
   } catch (error) {
     console.error('Error loading data:', error)
     pushNotification(error)

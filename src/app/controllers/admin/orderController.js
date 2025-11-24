@@ -13,16 +13,19 @@ const producer = kafkaClient.producer()
 const nodemailer = require("nodemailer")
 
 class allOrdersController {
-  // all
   async getOrders(req, res, next) {
     try {
       const currentPage  = req.body.page
-      const sort         = req.body.sort
-      const filter       = req.body.filter
+      let sort           = req.body.sort
+      let filter         = req.body.filter
       const itemsPerPage = req.body.itemsPerPage
       const skip         = (currentPage - 1) * itemsPerPage
       const userInfo     = await employee.findOne({ _id: req.cookies.uid }).lean()
       if (!userInfo) throw new Error('User not found')
+
+      if (Object.keys(sort).length === 0) {
+        sort = { updatedAt: -1 }
+      }
 
       if (filter['_id']) {
         filter['_id'] = ObjectId.createFromHexString(filter['_id'])
@@ -48,12 +51,13 @@ class allOrdersController {
 
   async getFilter(req, res, next) {
     try {
-      const [orderStatuses, paymentMethods, stores] = await Promise.all([
+      const [customers, orderStatuses, paymentMethods] = await Promise.all([
+        user.find().lean(),
         orderStatus.find().sort({name: 1}).lean(),
         paymentMethod.find().lean(),
       ]) 
   
-      return res.json({ orderStatus: orderStatuses, paymentMethod: paymentMethods})
+      return res.json({ customers: customers, orderStatus: orderStatuses, paymentMethod: paymentMethods})
     } catch (error) {
       return res.json({error: error.message})
     }
@@ -67,7 +71,6 @@ class allOrdersController {
     }
   }
 
-  // update
   async getOrder(req, res, next) {
     try {
       const [orderInfo, orderStatuses, paymentMethods, userInfo] = await Promise.all([
@@ -82,18 +85,6 @@ class allOrdersController {
     } catch (error) {
       console.log(error)
       return res.json({error: error.message})
-    }
-  }
-
-  async orderInfo(req, res, next) {
-    try {
-      if (!checkForHexRegExp(req.params.id)) throw new Error('error')
-      if (!(await order.findOne({ _id: req.params.id }).lean())) throw new Error('error')
-
-      return res.render('admin/detail/order', { layout: 'admin' })
-
-    } catch (error) {
-      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
     }
   }
 
@@ -249,25 +240,6 @@ class allOrdersController {
       return res.json({error: error.message})
     }
   }
-
-  // create
-  async getCustomers(req, res, next) {
-    try {
-      const customers = await user.find().lean()
-      return res.json({data: customers})
-    } catch (error) {
-      return res.json({error: error.message})
-    }
-  }
-
-  async getPaymentMethod(req, res, next) {
-    try {
-      const paymentMethods = await paymentMethod.find().lean()
-      return res.json({data: paymentMethods})
-    } catch (error) {
-      return res.json({error: error.message})
-    }
-  }
   
   async getProducts(req, res, next) {
     try {
@@ -280,14 +252,6 @@ class allOrdersController {
       return res.json({data: products})
     } catch (error) {
       return res.json({error: error.message})
-    }
-  }
-
-  async orderCreate(req, res, next) {  
-    try {
-      return res.render('admin/create/order', { title: 'Thêm đơn hàng mới', layout: 'admin' })
-    } catch (error) {
-      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
     }
   }
 

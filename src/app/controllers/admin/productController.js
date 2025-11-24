@@ -16,14 +16,17 @@ cloudinary.config({
 })
 
 class allProductsController {
-  // all
   async getProducts(req, res, next) {
     try {
       const currentPage  = req.body.page
-      const sort         = req.body.sort
-      const filter       = req.body.filter
+      let sort           = req.body.sort
+      let filter         = req.body.filter
       const itemsPerPage = req.body.itemsPerPage
       const skip         = (currentPage - 1) * itemsPerPage
+
+      if (Object.keys(sort).length === 0) {
+        sort = { updatedAt: -1 }
+      }
 
       if (filter['_id']) {
         filter['_id'] = ObjectId.createFromHexString(filter['_id'])
@@ -93,7 +96,6 @@ class allProductsController {
     }
   }
 
-  // update
   async getProduct(req, res, next) {
     try {
       const [productInfo, brands, productStatuses] = await Promise.all([
@@ -109,24 +111,11 @@ class allProductsController {
     }
   }
 
-  async productInfo(req, res, next) {
-    try {
-      if (!checkForHexRegExp(req.params.id)) throw new Error('error')
-      if (!(await product.findOne({ _id: req.params.id }).lean())) throw new Error('error')
-
-      return res.render('admin/detail/product', { layout: 'admin' })
-    } catch (error) {
-      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
-    }
-  }
-
   async productUpdated(req, res, next) {  
     try {
       function deFormatNumber(number) {
         return parseInt(number.toString().replace(/\./g, ''))
       }
-
-      console.log(req.body.purchasePrice, req.body.oldPrice, req.body.price);
   
       const updatedProduct = await product.findOneAndUpdate(
         { _id: req.body.id },
@@ -202,16 +191,6 @@ class allProductsController {
     }
   }
 
-  // create
-  async createProduct(req, res, next) {
-    try {
-      const brands = await brand.find().lean()
-      return res.render('admin/create/product', { title: 'Thêm sản phẩm mới', layout: 'admin', brands })
-    } catch (error) {
-      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
-    }
-  }
-
   async productCreated(req, res, next) {
     try {
       const result = await cloudinary.uploader.upload(req.body.img, {
@@ -226,10 +205,12 @@ class allProductsController {
         brand       : req.body.brand,
         name        : req.body.name,
         oldPrice    : req.body.oldPrice,
+        purchasePrice : req.body.purchasePrice,
         price       : req.body.price,
         description : req.body.description,
         details     : req.body.details,
         guide       : req.body.guide,
+        quantity    : req.body.quantity,
         status      : req.body.status,
         'img.path'  : result.secure_url,
         'img.filename' : result.public_id
