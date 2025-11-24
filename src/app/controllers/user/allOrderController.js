@@ -73,7 +73,7 @@ class allOrderController {
 
       const voucherInfo = await voucher.findOne({ code: req.body.voucherCode, status: 'active', memberCode: userInfo.memberCode }).lean()
       const userVoucherInfo = await userVoucher.findOne({ code: req.body.voucherCode, status: 'active', userId: req.cookies.uid }).lean()
-      if (!voucherInfo && !userVoucherInfo) throw new Error('Không tìm thấy voucher')
+      if (!voucherInfo && !userVoucherInfo) throw new Error('Voucher not found')
 
       if (voucherInfo) return res.json({voucherInfo: voucherInfo, discountType: 'percentage'})
       if (userVoucherInfo) return res.json({voucherInfo: userVoucherInfo, discountType: 'value'})
@@ -516,7 +516,7 @@ class allOrderController {
     try {
       const { id } = req.body
       await order.updateOne({ _id: id }, { status: 'done' })
-      return res.json({message: 'Xác nhận đơn hàng thành công'})
+      return res.json({message: 'Confirm order successfully'})
     
     } catch (error) {
       return res.json({error: error})
@@ -562,7 +562,7 @@ class allOrderController {
         }
       })
 
-      return res.json({message: 'Cập nhật thông tin thành công'})
+      return res.json({message: 'Update information successfully'})
     } catch (error) {
       return res.json({error: error.message})
     }

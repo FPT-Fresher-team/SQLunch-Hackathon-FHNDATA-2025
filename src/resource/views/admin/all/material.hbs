@@ -16,10 +16,10 @@
 
       <button id="clear-sort-filter" style="display: none">Clear Filter</button>
 
-      <a target="_blank" rel="noopener noreferrer" href="/admin/all-materials/material/create" class="create-btn" id="create-btn">
+      <button class="create-btn" id="create-btn">
         <i class="fi fi-rr-plus"></i>
         <p>Add Material</p>
-      </a>
+      </button>
     </div>
   <input type="text" id="search-input" name="name" placeholder="Search material">
   </div>
@@ -56,6 +56,79 @@
   </div>
 
   <span class="pagination"></span>
+</div>
+
+<div class="admin-create-material-container" id="create-modal">
+  <div id="form">
+    <div class="form-title">
+      <p>Add New Material</p>
+    </div>
+
+    <div class="form-group">
+      <label for="code">Material Code</label>
+      <input type="text" class="form-control" id="code" name="code" placeholder="Enter material code">
+    </div>
+
+    <div class="form-group">
+      <label for="name">Material Name</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="Enter material name">
+    </div>
+
+    <div class="form-group">
+      <label for="price">Purchase Price</label>
+      <input type="number" class="form-control" id="price" name="price" placeholder="Enter price">
+    </div>
+
+    <div class="form-group">
+      <label for="quantity">Stock</label>
+      <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter quantity">
+    </div>
+
+    <div class="form-group">
+      <label for="expiry_date">Expiration Date</label>
+      <input type="date" class="form-control" id="expiry_date" name="expiry_date">
+    </div>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Complete</button>
+    </div>
+  </div>
+</div>
+
+<div class="material-details-container" id="detail-modal">
+  <div id="form">
+    <table id="table-1">
+      <thead>
+        <tr><td colspan="2">MATERIAL INFORMATION</td></tr>
+      </thead>
+      <tr>
+        <td>Material Code</td>
+        <td><input type="text" name="id" disabled></td>
+      </tr>
+      <tr>
+        <td>Material Name</td>
+        <td><input type="text" name="name"></td>
+      </tr>
+      <tr>
+        <td>Purchase Price</td>
+        <td><input type="number" name="price"></td>
+      </tr>
+      <tr>
+        <td>Stock</td>
+        <td><input type="number" name="quantity"></td>
+      </tr>
+      <tr>
+        <td>Expiration Date</td>
+        <td><input type="date" name="expiry_date"></td>
+      </tr>
+    </table>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Update</button>
+    </div>
+  </div>
 </div>
 
 <script type="module" src="/js/admin/all/material.js"></script>

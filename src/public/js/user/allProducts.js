@@ -110,6 +110,7 @@ async function getProducts(products, sortOptions, filterOptions, currentPage) {
   window.setTimeout(function() {
     products.forEach((product, index) => {
       if (index < data.length) {
+        product.querySelector('span.discount-badge').textContent = formatPercentage((data[index].oldPrice - data[index].price) / data[index].oldPrice * 100) 
         product.querySelector('img').setAttribute('src', data[index].img.path)
         product.querySelector('img').setAttribute('alt', data[index].img.name)
         product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 

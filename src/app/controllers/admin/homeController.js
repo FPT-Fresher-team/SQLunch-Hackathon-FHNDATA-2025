@@ -272,7 +272,7 @@ class homeController {
         await newNotification.save()
       }
       
-      return res.json({isValid: true, message: 'Thêm thông báo thành công'})
+      return res.json({isValid: true, message: 'Add notification successfully'})
     } catch (error) {
       console.log(error)
       return res.json({error: error.message})
@@ -284,7 +284,7 @@ class homeController {
       await notification.updateOne({ _id: req.body.id }, {
         isRead: true
       })
-      return res.json({message: 'Cập nhật thông tin thành công'})
+      return res.json({message: 'Update information successfully'})
     } catch (error) {
       console.log(error)
       return res.json({error: error.message})
@@ -296,7 +296,7 @@ class homeController {
       await notification.updateMany({ receiverId: req.cookies.uid, isRead: false }, {
         isRead: true
       })
-      return res.json({message: 'Cập nhật thông tin thành công'})
+      return res.json({message: 'Update information successfully'})
     } catch (error) {
       console.log(error)
       return res.json({error: error.message})

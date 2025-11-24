@@ -130,8 +130,8 @@ textarea:focus {
 }
 
 select {
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%232B6377' d='M1.41 0L6 4.59 10.59 0 12 1.41 6 7.41 0 1.41z'/%3E%3C/svg%3E");
+  /* appearance: none; */
+  /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%232B6377' d='M1.41 0L6 4.59 10.59 0 12 1.41 6 7.41 0 1.41z'/%3E%3C/svg%3E"); */
   background-repeat: no-repeat;
   background-position: right 14px center;
 }
@@ -169,6 +169,10 @@ div.submit-button {
   align-items: center;
   justify-content: center;
   margin-top: 10px;
+  gap: 5px;
+  button.close-modal {
+    background-color: #d4183d !important;
+  }
 }
 
 /* Primary / Submit button */

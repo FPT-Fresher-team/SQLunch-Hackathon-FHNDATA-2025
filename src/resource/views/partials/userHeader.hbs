@@ -4,15 +4,15 @@
 
   <div class="navbar-inner">
     <!-- LOGO -->
-    <h1 class="font-['Playfair_Display',sans-serif] text-[#224f5f] text-[36px]" style="font-weight: 700; line-height: normal;">BEAUTÉ</h1>
+    <h1 class="font-['Playfair_Display',sans-serif] text-[#224f5f] text-[36px]" style="font-weight: 700; line-height: normal;"><a href="/">BEAUTÉ</a></h1>
 
     <!-- DESKTOP MENU -->
     <div class="menu">
       <!-- Danh mục sản phẩm (giữ nguyên 100% cấu trúc cũ) -->
       <div class="dropdown">
         <div class="dropdown-title">
-          <i class="fi fi-br-menu-burger"></i>
-          <p>PRODUCT CATEGORIES</p>
+          <i class="fi fi-rr-angle-down toggle-icon"></i>
+          <div class="header-title"><a href="/all-products">PRODUCT</a></div>
         </div>
 
         <ul>
@@ -76,12 +76,20 @@
       <div class="header-title"><a href="/home">HOME</a></div>
       <div class="header-title"><a href="/introduce">ABOUT</a></div>
       <div class="header-title"><a href="/all-products/status/new-arrival">NEW ARRIVALS</a></div>
+      <div class="header-title"><a href="/all-blogs">BLOGS</a></div>
       <div class="header-title"><a href="/all-orders/checking">ORDERS</a></div>
-      <div class="header-title search-toggle" data-tippy-content="Search products"><i class="fi fi-br-search"></i></div>
     </div>
 
     <!-- RIGHT ICONS -->
     <div class="header-button">
+      <div class="search-wrapper">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Enter product name or brand name to search"
+        />
+        <i class="fi fi-br-search search-toggle"></i>
+      </div>
       <a href="/all-orders" class="orders">
         <span class="orders-quantity"></span>    
         <i class="fi fi-rr-shopping-cart-add" data-tippy-content="View Cart"></i>
@@ -90,10 +98,8 @@
     </div>
   </div>
 
-  <input type="text" id="search-input" placeholder="Enter product name or brand name to search" style="display: none">
-
   <!-- Search results (giữ nguyên) -->
-  <div id="search-products" style="display: none">
+  <div id="search-products">
     <div id="search-products-header">
       <p style="width: 15%">Brand</p>
       <p style="width: 65%">Product</p>  

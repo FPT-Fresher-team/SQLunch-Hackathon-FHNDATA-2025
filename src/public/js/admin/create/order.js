@@ -231,7 +231,7 @@ async function createOrder() {
     setTimeout(() => window.location.reload(), 2000)
   } catch (error) {
     console.error('Error creating customer:', error)
-    pushNotification("Đã có lỗi xảy ra.")
+    pushNotification("An error occurred.")
   }
 }
 

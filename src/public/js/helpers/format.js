@@ -3,7 +3,7 @@ function formatNumber(number) {
 }
 
 function formatPercentage(number) {
-  return number.toString() + '%'
+  return number.toFixed(0).toString() + '%'
 }
 
 function formatQuantity(number) {
@@ -38,18 +38,26 @@ function formatDateTime(date) {
 
 function formatInputNumber(input) {
   input.addEventListener('input', function (e) {
-    // Lấy giá trị số, loại bỏ dấu chấm cũ
-    let value = e.target.value.replace(/\./g, '')
-    
-    // Kiểm tra nếu không phải số thì return
+    let cursorPos = e.target.selectionStart
+
+    // Remove formatting and currency symbol
+    let value = e.target.value.replace(/\./g, '').replace(/\₫/g, '').trim()
+
+    // If not numeric, return
     if (!/^\d*$/.test(value)) return
-    
-    // Định dạng số với dấu chấm (.) phân tách hàng nghìn
-    e.target.value = Number(value).toLocaleString('de-DE') // 'de-DE' dùng dấu chấm
+
+    // Format with dots
+    let formatted = Number(value).toLocaleString('de-DE')
+
+    // Add the ₫ symbol
+    e.target.value = `${formatted} ₫`
+
+    // Move cursor before the currency symbol
+    e.target.setSelectionRange(e.target.value.length - 2, e.target.value.length - 2)
   })
 }
 
 function deFormatNumber(number) {
   if (number === undefined) return undefined
-  return parseInt(number.replace(/\./g, '').replace(/\s?VND$/, ''))
+  return parseInt(number.toString().replace(/\./g, '').replace(/\s?₫$/, ''))
 }

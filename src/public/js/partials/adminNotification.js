@@ -44,7 +44,6 @@ async function getNotification() {
       unreadQuantity++
     } 
     newNotification.innerHTML = `
-      <img src="https://res.cloudinary.com/bunny-store/image/upload/v1763438302/web-img/Thi%E1%BA%BFt_k%E1%BA%BF_ch%C6%B0a_c%C3%B3_t%C3%AAn_zd0z3o.svg" alt="loading">
       <a href='/admin/all-orders/order/${id}'>${formatDate(item.createdAt)}: ${item.message}</a>
     `
     newNotification.onclick = async function() {

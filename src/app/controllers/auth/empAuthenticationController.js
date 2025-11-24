@@ -8,7 +8,7 @@ const verificationCode = {}
 
 class loginController {
   async signIn(req, res, next) {
-    return res.render('admin/signIn', { title: 'Đăng nhập nhân viên', layout: 'empty'})
+    return res.render('admin/signIn', { title: 'Employee Sign In', layout: 'empty'})
   }
 
   async checkingAccount(req, res, next) {
@@ -17,7 +17,7 @@ class loginController {
       const password = req.body.password
   
       const getEmp = await emp.findOne({ email: email })
-      if (!getEmp) return res.json({isValid: false, message: 'Email chưa đăng ký tài khoản'})
+      if (!getEmp) return res.json({isValid: false, message: 'Email not registered'})
   
       bcrypt.compare(password, getEmp.password, async function(err, result) {
         if (result) {
@@ -44,9 +44,9 @@ class loginController {
             secure: true,
           })
   
-          return res.json({isValid: true, message: 'Đăng nhập thành công', role: getEmp.role})
+          return res.json({isValid: true, message: 'Login successful', role: getEmp.role})
         } else {
-          return res.json({isValid: false, message: 'Mật khẩu không đúng'})
+          return res.json({isValid: false, message: 'Incorrect password'})
         }
       })
     } catch (error) {
@@ -55,7 +55,7 @@ class loginController {
   }
 
   async resetPassword(req, res, next) {
-    return res.render('admin/resetPassword', { title: 'Quên mật khẩu', layout: 'empty' })
+    return res.render('admin/resetPassword', { title: 'Forgot Password', layout: 'empty' })
   }
 
   async verifyingEmail(req, res, next) {
@@ -90,8 +90,8 @@ class loginController {
         await transporter.sendMail({
           from: adminEmail, 
           to: userEmail, 
-          subject: "Mã xác nhận thay đổi mật khẩu", 
-          text: "Đây là mã thay đổi mật khẩu của bạn: " + resetCode, 
+          subject: "Password Reset Code", 
+          text: "Your password reset code is: " + resetCode, 
         })
       }
   
