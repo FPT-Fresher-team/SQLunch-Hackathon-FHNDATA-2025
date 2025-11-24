@@ -153,12 +153,13 @@ class allVouchersController {
         discount    : req.body.discount,
         maxDiscount : req.body.maxDiscount,
         minOrder    : req.body.minOrder,
+        memberCode  : req.body.memberCode,
         startDate   : new Date(req.body.startDate),
         endDate     : new Date(req.body.endDate),
       })
       await newVoucher.save()
 
-      return res.json({message: 'Tạo voucher thành công'})
+      return res.json({message: 'Create voucher successfully'})
     } catch (error) {
       return res.json({error: error.message})
     }

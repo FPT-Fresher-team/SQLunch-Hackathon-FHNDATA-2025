@@ -8,16 +8,15 @@
   display: inline-block;
   width: 50px;
   height: 50px;
-  background-color: white;
   border-radius: 50%;
-  border: 1px solid #2B6377;
+  /* border: 1px solid #2B6377; */
   padding: 10px;
   .unread-quantity {
     position: absolute;
     z-index: 1000;
     top: 0;
     right: 0;
-    padding: 5px 10px;
+    padding: 5px 12px;
     border-radius: 50%;
     background-color: #2B6377;
     color: white;
@@ -55,7 +54,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 10px;
-    i, span { color: white; font-size: 30px; cursor: pointer;}
+    i, span { color: white; font-size: 20px; cursor: pointer;}
   }
   .box-content {
     overflow-y: scroll;

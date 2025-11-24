@@ -1,0 +1,161 @@
+<div class="blog-detail-container">
+  <!-- Blog Header -->
+  <article class="blog-detail-header">
+    <div class="blog-detail-image">
+      <img id="blogImage" loading="lazy" alt="Blog featured image">
+    </div>
+    <div class="blog-detail-meta">
+      <div class="blog-breadcrumb">
+        <a href="/all-blogs">← Back to Blogs</a>
+      </div>
+      <h1 id="blogTitle" class="blog-detail-title"></h1>
+      <div class="blog-detail-info">
+        <span class="blog-author">
+          <i class="fi fi-rr-user"></i>
+          <span id="blogAuthor">Admin</span>
+        </span>
+        <span class="blog-pub-date">
+          <i class="fi fi-rr-calendar"></i>
+          <span id="blogDate"></span>
+        </span>
+        <span class="blog-views">
+          <i class="fi fi-rr-eye"></i>
+          <span id="blogViewCount">0</span> views
+        </span>
+        <span class="blog-category-tag" id="blogCategoryTag"></span>
+      </div>
+      <div class="blog-actions">
+        <button class="share-btn" onclick="shareBlog()">
+          <i class="fi fi-rr-share"></i> Share
+        </button>
+        <button class="bookmark-btn" id="bookmarkBtn" onclick="toggleBookmark()">
+          <i class="fi fi-rr-bookmark"></i> Save
+        </button>
+      </div>
+    </div>
+  </article>
+
+  <!-- Main Content -->
+  <div class="blog-detail-content">
+    <!-- Content Section -->
+    <div class="blog-main">
+      <!-- Summary -->
+      <div class="blog-summary" id="blogSummary"></div>
+
+      <!-- Table of Contents -->
+      <div class="table-of-contents" id="tableOfContents" style="display: none;">
+        <h3>Table of Contents</h3>
+        <ul id="tocList"></ul>
+      </div>
+
+      <!-- Full Content -->
+      <div class="blog-body" id="blogBody"></div>
+
+      <!-- Tags -->
+      <div class="blog-tags-section" id="tagsSection" style="display: none;">
+        <h4>Tags</h4>
+        <div class="blog-tags" id="blogTags"></div>
+      </div>
+
+      <!-- Author Info -->
+      <div class="author-info">
+        <div class="author-avatar">
+          <i class="fi fi-rr-circle-user"></i>
+        </div>
+        <div class="author-details">
+          <h4 id="authorName">Admin</h4>
+          <p>Content Creator & Blog Manager</p>
+        </div>
+      </div>
+
+      <!-- Blog Navigation -->
+      <div class="blog-navigation">
+        <a href="#" id="prevBlogBtn" class="nav-btn prev-btn" style="display: none;">
+          <i class="fi fi-rr-arrow-left"></i>
+          <div>
+            <span class="nav-label">Previous Post</span>
+            <span id="prevBlogTitle" class="nav-title"></span>
+          </div>
+        </a>
+        <a href="#" id="nextBlogBtn" class="nav-btn next-btn" style="display: none;">
+          <div>
+            <span class="nav-label">Next Post</span>
+            <span id="nextBlogTitle" class="nav-title"></span>
+          </div>
+          <i class="fi fi-rr-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="blog-sidebar">
+      <!-- Recent Posts -->
+      <div class="sidebar-widget">
+        <h4>Recent Posts</h4>
+        <ul class="recent-posts-list" id="recentPostsList">
+          {{#each (holderData 5)}}
+            <li class="post-item loading">
+              <a></a>
+              <small></small>
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+
+      <!-- Related Posts -->
+      <div class="sidebar-widget">
+        <h4>Related Posts</h4>
+        <div class="related-posts-sidebar" id="relatedPostsSidebar">
+          {{#each (holderData 3)}}
+            <div class="related-post-item loading">
+              <img loading="lazy" alt="Related post">
+              <a></a>
+            </div>
+          {{/each}}
+        </div>
+      </div>
+
+      <!-- Tags Cloud -->
+      <div class="sidebar-widget">
+        <h4>Popular Tags</h4>
+        <div class="tags-cloud" id="tagsCloud">
+          {{#each (holderData 10)}}
+            <span class="tag-item loading"></span>
+          {{/each}}
+        </div>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="sidebar-widget newsletter-widget">
+        <h4>Subscribe</h4>
+        <p>Get updates on new posts</p>
+        <form id="newsletterForm" onsubmit="subscribeNewsletter(event)">
+          <input type="email" placeholder="Enter your email" required>
+          <button type="submit">Subscribe</button>
+        </form>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Related Blogs Section -->
+  <section class="related-blogs-section">
+    <h2>Related Blog Posts</h2>
+    <div class="related-blogs-container">
+      {{#each (holderData 3)}}
+        <article class="related-blog-card loading">
+          <div class="related-blog-image">
+            <img loading="lazy" alt="Related blog">
+          </div>
+          <div class="related-blog-content">
+            <span class="related-blog-category"></span>
+            <h3 class="related-blog-title"></h3>
+            <p class="related-blog-summary"></p>
+            <a class="read-more">Read More →</a>
+          </div>
+        </article>
+      {{/each}}
+    </div>
+  </section>
+</div>
+
+<script src="/js/user/detailBlog.js"></script>

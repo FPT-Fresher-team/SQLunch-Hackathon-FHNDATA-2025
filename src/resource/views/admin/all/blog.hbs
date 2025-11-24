@@ -1,0 +1,205 @@
+<div class="admin-all-blogs-container">
+  <div class="header">
+    <div class="board-title">
+      <p>Blogs: </p>
+    </div>
+
+    {{> dateFilter}}
+  </div>
+
+  <div class="control-bar">
+    <div class="search">
+      <select id="search-type" class="search-btn">
+        <option value="">Search by</option>
+        <option value="title" selected>Title</option>
+        <option value="category.name">Category</option>
+        <option value="tags">Tags</option>
+        <option value="status">Status</option>
+      </select>
+      <input type="text" id="search-input" placeholder="Search blog..." />
+    </div>
+
+    <div class="sort-filter">
+      <div class="sort">
+        <label for="createdAt">Sort by:</label>
+        <select id="createdAt" class="filter-btn">
+          <option value="">Newest First</option>
+          <option value="-1">Newest - Oldest</option>
+          <option value="1">Oldest - Newest</option>
+        </select>
+      </div>
+
+      <div class="filter">
+        <label>Filter:</label>
+        <select id="status" class="filter-btn">
+          <option value="">All Status</option>
+          <option value="published">Published</option>
+          <option value="draft">Draft</option>
+        </select>
+        <button id="clear-sort-filter" style="display: none">Clear Filter</button>
+      </div>
+    </div>
+
+    <button class="create-btn" id="create-btn">
+      <i class="fi fi-rr-plus"></i>
+      <span>Add Blog</span>
+    </button>
+  </div>
+
+  <div class="table">
+    {{> exportFileButton}}
+    <table class="all-items">
+      <thead>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each (holderData 10)}}
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+
+  <span class="pagination"></span>
+</div>
+
+<!-- CREATE BLOG MODAL -->
+<div class="admin-create-blog-container" id="create-modal">
+  <div id="form">
+    <div class="form-title">
+      <p>Add New Blog</p>
+    </div>
+
+    <div class="form-group">
+      <label for="title">Title <span class="required">*</span></label>
+      <input type="text" id="title" placeholder="Enter blog title">
+    </div>
+
+    <div class="form-group">
+      <label for="featuredImage">Featured Image <span class="required">*</span></label>
+      <input type="file" id="featuredImage" accept="image/*">
+    </div>
+
+    <div class="form-group">
+      <label for="summary">Summary</label>
+      <textarea id="summary" rows="3" placeholder="Short description..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="content">Content <span class="required">*</span></label>
+      <textarea id="content" rows="10" placeholder="Write your blog content here..."></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="categoryName">Category Name</label>
+      <input type="text" id="categoryName" placeholder="e.g. Skincare Tips">
+    </div>
+
+    <div class="form-group">
+      <label for="categorySlug">Category Slug (optional)</label>
+      <input type="text" id="categorySlug" placeholder="e.g. skincare-tips">
+    </div>
+
+    <div class="form-group">
+      <label for="tags">Tags (comma separated)</label>
+      <input type="text" id="tags" placeholder="beauty, skincare, review">
+    </div>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Complete</button>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL / EDIT BLOG MODAL -->
+<div class="blog-details-container" id="detail-modal">
+  <div id="form">
+    <table id="table-1">
+      <thead>
+        <tr><td colspan="2">BLOG INFORMATION</td></tr>
+      </thead>
+      <tr>
+        <td>Blog Code</td>
+        <td><input type="text" id="id" disabled></td>
+      </tr>
+      <tr>
+        <td>Blog Title</td>
+        <td><input type="text" id="title"></td>
+      </tr>
+      <tr>
+        <td>Featured Image</td>
+        <td><img src="" alt="" id="feature-image"></td>
+      </tr>
+      <tr>
+        <td>Summary</td>
+        <td><textarea id="summary" rows="3"></textarea></td>
+      </tr>
+      <tr>
+        <td>Content</td>
+        <td><textarea id="content" rows="12"></textarea></td>
+      </tr>
+      <tr>
+        <td>Category Name</td>
+        <td><input type="text" id="categoryName"></td>
+      </tr>
+      <tr>
+        <td>Category Name</td>
+        <td><input type="text" id="categoryName"></td>
+      </tr>
+      <tr>
+        <td>Category Slug</td>
+        <td><input type="text" id="categorySlug"></td>
+      </tr>
+      <tr>
+        <td>Tags (comma separated)</td>
+        <td><input type="text" id="tags"></td>
+      </tr>
+      <tr>
+        <td>Status</td>
+        <td>
+          <select id="status">
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+          </select>
+        </td>
+      </tr>
+    </table>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Complete</button>
+    </div>
+  </div>
+</div>
+
+<!-- SOFT DELETE CONFIRMATION MODAL -->
+<div id="id01" class="modal">
+  <div class="modal-content">
+    <p id="confirm-message">Are you sure you want to delete this blog?</p>
+    <div class="modal-buttons">
+      <button class="close-modal">Cancel</button>
+      <button id="delete-button">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="/js/admin/all/blog.js"></script>

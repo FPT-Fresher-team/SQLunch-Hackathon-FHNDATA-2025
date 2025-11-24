@@ -4,6 +4,9 @@
   div.table {
     margin-bottom: 10 !important;
     min-height: 400px;
+    input[type="text"] {
+      width: 100%;
+    }
     tbody {
       tr {
         height: 50px;
@@ -27,6 +30,7 @@
   }
   
 }
+
 @media screen and (max-width: 700px) {
   .admin-home-container {
     .info-table {grid-template-columns: auto !important}

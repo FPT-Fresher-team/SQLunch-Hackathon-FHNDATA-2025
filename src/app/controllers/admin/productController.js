@@ -123,8 +123,10 @@ class allProductsController {
   async productUpdated(req, res, next) {  
     try {
       function deFormatNumber(number) {
-        return parseInt(number.replace(/\./g, ''))
+        return parseInt(number.toString().replace(/\./g, ''))
       }
+
+      console.log(req.body.purchasePrice, req.body.oldPrice, req.body.price);
   
       const updatedProduct = await product.findOneAndUpdate(
         { _id: req.body.id },
@@ -233,20 +235,6 @@ class allProductsController {
         'img.filename' : result.public_id
       })
       const savedProduct = await newProduct.save()
-
-      // try {
-      //   await producer.connect()
-      //   await producer.send({
-      //     topic: 'create',
-      //     messages: [{ value: JSON.stringify({
-      //       topic_type: 'product',
-      //       emp_id: req.cookies.uid,
-      //       body: savedProduct
-      //     })}],
-      //   })
-      // } catch (error) {
-      //   console.log(error)
-      // }
 
       return res.json({isValid: true, message: 'Tạo sản phẩn mới thành công'})
     } catch (error) {

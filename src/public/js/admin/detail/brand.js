@@ -10,7 +10,7 @@ async function getBrand() {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {error, brandInfo, productsInfo} = await response.json()
-  if (error) return pushNotification('Có lỗi xảy ra')
+  if (error) return pushNotification('An error occurred')
 
   document.title = brandInfo.name
 
@@ -48,7 +48,7 @@ async function updateBrand(brandInfo) {
 
   if (
     details === brandInfo.details
-  ) return pushNotification('Hãy cập nhật thông tin')
+  ) return pushNotification('Please update the information')
 
   const response = await fetch('/admin/all-brands/brand/updated', {
     method: 'PUT',
@@ -75,7 +75,7 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
       updateBrand(brandInfo)
     }
   } catch (error) {
-    console.error('Có lỗi xảy ra:', error)
-    pushNotification('Có lỗi xảy ra')
+    console.error('An error occurred:', error)
+    pushNotification('An error occurred')
   }
 })

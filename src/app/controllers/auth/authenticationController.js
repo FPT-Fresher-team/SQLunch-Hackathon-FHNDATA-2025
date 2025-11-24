@@ -1,5 +1,6 @@
 require('dotenv').config()
 const user = require('../../models/userModel')
+const aiChat = require('../../models/aiChatModel')
 const chat = require('../../models/chatModel')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
@@ -10,7 +11,7 @@ const verifyCreatingAccountCode = {}
 
 class authenticationController {  
   async signIn(req, res, next) {
-    return res.render('users/signIn', { title: 'Đăng Nhập', layout: 'empty' })
+    return res.render('users/signIn', { title: 'Sign In', layout: 'empty' })
   }
 
   async checkingAccount(req, res, next) {
@@ -19,7 +20,7 @@ class authenticationController {
       const password = req.body.password
 
       const getUser = await user.findOne({ email: email })
-      if (!getUser) return res.json({isValid: false, message: 'Email chưa đăng ký tài khoản'})
+      if (!getUser) return res.json({isValid: false, message: 'Email not registered'})
 
       bcrypt.compare(password, getUser.password, async function(err, result) {
         if (result) {
@@ -44,10 +45,10 @@ class authenticationController {
             secure: true,
           })
 
-          if (getUser.role === 'user') return res.json({isValid: true, message: 'Đăng nhập thành công'})
+          if (getUser.role === 'user') return res.json({isValid: true, message: 'Login Successfully'})
 
         } else {
-          return res.json({isValid: false, message: 'Mật khẩu không đúng'})
+          return res.json({isValid: false, message: 'Incorrect password'})
         }
       })
     } catch (error) {
@@ -56,7 +57,7 @@ class authenticationController {
   }
 
   async signUp(req, res, next) {
-    return res.render('users/signUp', { title: 'Đăng Ký', layout: 'empty' })
+    return res.render('users/signUp', { title: 'Sign Up', layout: 'empty' })
   }
 
   async verifyCreatingEmail(req, res, next) {
@@ -66,7 +67,7 @@ class authenticationController {
       const adminPassword = process.env.GOOGLE_APP_EMAIL
 
       const emailExist = await user.findOne({ email: userEmail})
-      if (emailExist) return res.json({isValid: false, message: 'Email đã tồn tại'})
+      if (emailExist) return res.json({isValid: false, message: 'Email already exists'})
 
       const transporter = nodemailer.createTransport({
         service: "gmail",
@@ -89,13 +90,13 @@ class authenticationController {
         await transporter.sendMail({
           from: adminEmail, 
           to: userEmail, 
-          subject: "Mã xác minh Email", 
-          text: 'Mã xác minh Email của bạn là: ' + resetCode, 
+          subject: "Email Verification Code", 
+          text: 'Your email verification code is: ' + resetCode, 
         })
       }
 
       await sendEmail(userEmail)
-      return res.json({isValid: true, message: 'Kiểm tra email thành công'})
+      return res.json({isValid: true, message: 'Email verification successful'})
 
     } catch (error) {
       return res.json({error: error})
@@ -106,9 +107,9 @@ class authenticationController {
     try {
       const userEmail  = req.body.email  
       const emailExist = await user.findOne({ email: userEmail})
-      if (emailExist) return res.json({isValid: false, message: 'Email đã đăng ký tài khoản'})
+      if (emailExist) return res.json({isValid: false, message: 'Email already registered'})
 
-      return res.json({isValid: true, message: 'Kiểm tra email thành công'})
+      return res.json({isValid: true, message: 'Email verification successful'})
 
     } catch (error) {
       return res.json({error: error})
@@ -132,14 +133,17 @@ class authenticationController {
 
   async creatingAccount(req, res, next) {
     try {
+      const { email, name, password, gender, dob } = req.body
       const salt = await bcrypt.genSalt(10)
-      const hashedPassword = await bcrypt.hash(req.body.password, salt)
+      const hashedPassword = await bcrypt.hash(password, salt)
   
       let newUser = new user({
-        email: req.body.email,
+        email: email,
         password: hashedPassword,
         role: 'user',
-        name: req.body.name,
+        name: name,
+        gender: gender,
+        dob: dob,
       })
       const savedUser = await newUser.save()
   
@@ -156,7 +160,7 @@ class authenticationController {
       await newChat.save()
       await newAIChat.save()
   
-      return res.json({isSuccessful: true, message: 'Đăng ký tài khoản thành công'})
+      return res.json({isSuccessful: true, message: 'Account registration successful'})
       
     } catch (error) {
       return res.json({error: error})
@@ -164,7 +168,7 @@ class authenticationController {
   }
 
   async resetPassword(req, res, next) {
-    return res.render('users/resetPassword', { title: 'Quên mật khẩu', layout: 'empty' })
+    return res.render('users/resetPassword', { title: 'Forgot Password', layout: 'empty' })
   }
 
   async verifyCheckingEmail(req, res, next) {
@@ -199,8 +203,8 @@ class authenticationController {
         await transporter.sendMail({
           from: adminEmail, 
           to: userEmail, 
-          subject: "Mã xác nhận mật khẩu", 
-          text: 'Mã xác nhận lấy lại mật khẩu của bạn là: ' + resetCode,
+          subject: "Password Reset Code", 
+          text: 'Your password reset code is: ' + resetCode,
         })
       }
   
@@ -250,7 +254,7 @@ class authenticationController {
     try {
       const getUser = await user.findOne({ email: email })
       console.log(getUser)
-      if (!getUser) return res.json({isValid: false, message: 'Email chưa đăng ký tài khoản'})
+      if (!getUser) return res.json({isValid: false, message: 'Email not registered'})
 
       const payload = { email: getUser.email }// Payload with only essential data
       const rt = jwt.sign(payload, 'SECRET_KEY', { expiresIn: '1d' })
@@ -273,7 +277,7 @@ class authenticationController {
         secure: true,
       })
 
-      return res.json({isValid: true, message: 'Đăng nhập thành công'})
+      return res.json({isValid: true, message: 'Login successfully'})
     } catch (error) {
       return res.json({error: error})
     }
@@ -283,7 +287,7 @@ class authenticationController {
     try {
       const userEmail = req.body.email  
       const emailExist = await user.findOne({ email: userEmail})
-      if (emailExist) return res.json({isValid: false, message: 'Email đã tồn tại'})
+      if (emailExist) return res.json({isValid: false, message: 'Email already exists'})
 
       let newUser = new user({
         email: req.body.email,
@@ -301,7 +305,7 @@ class authenticationController {
       })
       await newChat.save()
   
-      return res.json({isValid: true, message: 'Đăng ký tài khoản thành công'})
+      return res.json({isValid: true, message: 'Account registration successful'})
       
     } catch (error) {
       return res.json({error: error})

@@ -10,7 +10,7 @@ async function getStore() {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {error, storeInfo} = await response.json()
-  if (error) return pushNotification('Có lỗi xảy ra')
+  if (error) return pushNotification('An error occurred')
 
   document.title = storeInfo.name
 
@@ -32,7 +32,7 @@ async function updateStore(storeInfo) {
     name    === storeInfo.name    &&
     address === storeInfo.address &&
     details === storeInfo.details   
-  ) return pushNotification('Hãy cập nhật thông tin')
+  ) return pushNotification('Please update the information')
 
   const response = await fetch('/admin/all-stores/store/updated', {
     method: 'PUT',
@@ -60,7 +60,7 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
       updateStore(storeInfo)
     }
   } catch (error) {
-    console.error('Có lỗi xảy ra:', error)
-    pushNotification('Có lỗi xảy ra')
+    console.error('An error occurred:', error)
+    pushNotification('An error occurred')
   }  
 })
