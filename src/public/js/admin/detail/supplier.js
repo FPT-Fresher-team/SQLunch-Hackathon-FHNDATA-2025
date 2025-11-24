@@ -10,7 +10,7 @@ async function getSupplier() {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {error, supplierInfo, purchaseInfo} = await response.json()
-  if (error) return pushNotification('Có lỗi xảy ra')
+  if (error) return pushNotification('An error occurred')
 
   document.title = supplierInfo.name
 
@@ -45,7 +45,7 @@ async function updateSupplier(supplierInfo) {
     name    === supplierInfo.name    &&
     phone   === supplierInfo.phone   &&
     address === supplierInfo.address
-  ) return pushNotification('Hãy cập nhật thông tin')
+  ) return pushNotification('Please update the information')
 
   const response = await fetch('/admin/all-suppliers/supplier/updated', {
     method: 'PUT',
@@ -73,7 +73,7 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
       updateSupplier(supplierInfo)
     }
   } catch (error) {
-    console.error('Có lỗi xảy ra:', error)
-    pushNotification('Có lỗi xảy ra')
+    console.error('An error occurred:', error)
+    pushNotification('An error occurred')
   }
 })

@@ -21,7 +21,7 @@ async function getProduct() {
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {error, productInfo, brands, productStatuses} = await response.json()
-  if (error) return pushNotification('Có lỗi xảy ra')
+  if (error) return pushNotification('An error occurred')
 
   document.title = productInfo.name
 
@@ -107,7 +107,7 @@ async function updateProduct(productInfo) {
     guide         === productInfo.guide          &&
     quantity      === formatQuantity(productInfo.quantity)     &&
     status        === productInfo.status
-  ) return pushNotification('Hãy cập nhật thông tin')
+  ) return pushNotification('Please update the information')
 
   const response = await fetch('/admin/all-products/product/updated', {
     method: 'PUT',
@@ -169,7 +169,7 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
       updateProduct(productInfo)
     }
   } catch (error) {
-    console.error('Có lỗi xảy ra:', error)
-    pushNotification('Có lỗi xảy ra')
+    console.error('An error occurred:', error)
+    pushNotification('An error occurred')
   }
 })

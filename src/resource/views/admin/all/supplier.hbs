@@ -4,11 +4,7 @@
       <p>Supplier:</p>
     </div>
 
-    <div class="date-filter">
-      <input type="date" id="start-date">
-      <input type="date" id="end-date">
-      <button title="submit" type="submit">View</button>
-    </div>
+    {{> dateFilter}}
   </div>
 
   <div class="control-bar">
@@ -48,10 +44,10 @@
       </div>
     </div>
 
-    <a href="/admin/all-suppliers/supplier/create" target="_blank" rel="noopener noreferrer" class="create-btn" id="create-btn">
+    <button class="create-btn" id="create-btn">
       <i class="fi fi-rr-plus"></i>
       <span>Add Supplier</span>
-    </a>
+    </button>
   </div>
 
   <div class="table">
@@ -86,6 +82,97 @@
   </div>
 
   <span class="pagination"></span>
+</div>
+
+<div class="admin-create-supplier-container" id="create-modal">
+  <div id="form">
+    <div class="form-title">
+      <p>Add New Supplier</p>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Supplier Name</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="Enter supplier name">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone number">
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
+    </div>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Complete</button>
+    </div>
+  </div>
+</div>
+
+<div class="supplier-details-container" id="detail-modal">
+  <div id="form">
+    <table id="table-1">
+      <thead>
+        <tr><td colspan="2">SUPPLIER INFORMATION</td></tr>
+      </thead>
+      <tr>
+        <td>Supplier Code</td>
+        <td><input type="text" id="id" disabled></td>
+      </tr>
+      <tr>
+        <td>Supplier Name</td>
+        <td><input type="text" id="name"></td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td><input type="text" id="email" disabled></td>
+      </tr>
+      <tr>
+        <td>Phone</td>
+        <td><input type="text" id="phone"></td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td><input type="text" id="address"></td>
+      </tr>
+      <tr>
+        <td>Total Purchase Orders</td>
+        <td><input type="text" id="quantity" disabled></td>
+      </tr>
+      <tr>
+        <td>Total Cost</td>
+        <td><input type="text" id="totalCost" disabled></td>
+      </tr>
+    </table>
+
+    <table id="table-2">
+      <thead>
+        <tr><td colspan="5">PURCHASE ORDER LIST</td></tr>
+      </thead>
+      <thead>
+        <tr>
+          <td style="width:  5%">No.       </td>
+          <td style="width: 35%">Total Price </td>
+          <td style="width: 25%">Import Date </td>
+          <td style="width: 10%">Details  </td>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Update</button>
+    </div>
+  </div>
 </div>
 
 <script type="module" src="/js/admin/all/supplier.js"></script>

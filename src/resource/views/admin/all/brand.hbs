@@ -4,11 +4,7 @@
       <p>Brand: </p>
     </div>
 
-    <div class="date-filter">
-      <input type="date" id="start-date">
-      <input type="date" id="end-date">
-      <button title="submit" type="submit">View</button>
-    </div>
+    {{> dateFilter}}
   </div>
 
   <div class="control-bar">
@@ -50,10 +46,10 @@
       </div>
     </div>
 
-    <a href="/admin/all-orders/order/create" target="_blank" rel="noopener noreferrer" class="create-btn" id="create-btn">
+    <button class="create-btn" id="create-btn">
       <i class="fi fi-rr-plus"></i>
       <span>Add Brand</span>
-    </a>
+    </button>
   </div>
 
   <div class="table">
@@ -86,6 +82,60 @@
   </div>
 
   <span class="pagination"></span>
+</div>
+
+<div class="admin-create-brand-container" id="create-modal">
+  <div id="form">
+    <div class="form-title">
+      <p>Add New Brand</p>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Brand Name</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="Enter brand name">
+    </div>
+
+    <div class="form-group">
+      <label for="img">Brand Logo</label>
+      <input type="file" class="form-control" id="img" name="img">
+    </div>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Complete</button>
+    </div>
+  </div>
+</div>
+
+<div class="brand-details-container" id="detail-modal">
+  <div id="form">
+    <table id="table-1">
+      <thead>
+        <tr><td colspan="2">BRAND INFORMATION</td></tr>
+      </thead>
+      <tr>
+        <td>Brand Code</td>
+        <td><input type="text" name="id" disabled></td>
+      </tr>
+      <tr>
+        <td>Brand Name</td>
+        <td><input type="text" name="name"></td>
+      </tr>
+      <tr>
+        <td>Total Products</td>
+        <td><input type="text" name="totalProduct" disabled></td>
+      </tr>
+      <tr>
+        <td>Total Revenue</td>
+        <td><input type="text" name="totalRevenue" disabled></td>
+      </tr>
+    </table>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Complete</button>
+    </div>
+  </div>
 </div>
 
 <script type="module" src="/js/admin/all/brand.js"></script>

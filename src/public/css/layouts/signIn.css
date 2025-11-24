@@ -34,13 +34,13 @@
 
 .sign-up-form img, 
 .sign-in-form img {
-  width: 60%;
+  width: 50%;
   /* height: 600px; */
   object-fit: cover;
 }
 
 .form {
-  width: 40%;
+  width: 50%;
   padding: 50px 48px;
   display: flex;
   flex-direction: column;

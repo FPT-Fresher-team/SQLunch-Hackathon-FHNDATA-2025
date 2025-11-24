@@ -444,7 +444,7 @@ async function getFeedback() {
   const submitButton = document.createElement('div')
   submitButton.classList.add('submit-button')
   submitButton.innerHTML = `
-    <button type="submit">Cập Nhật</button>
+    <button type="submit">Update</button>
   `
 
   const div = document.createElement('div')

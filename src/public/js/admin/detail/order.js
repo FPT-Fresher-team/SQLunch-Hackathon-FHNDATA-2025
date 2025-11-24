@@ -103,7 +103,7 @@ async function updateOrder(orderInfo) {
     paymentMethod === orderInfo.paymentMethod    &&
     status        === orderInfo.status           &&
     isPaid        === orderInfo.isPaid
-  ) return pushNotification('Hãy cập nhật thông tin')
+  ) return pushNotification('Please update the information')
 
   const response = await fetch('/admin/all-orders/order/updated', {
     method: 'PUT',

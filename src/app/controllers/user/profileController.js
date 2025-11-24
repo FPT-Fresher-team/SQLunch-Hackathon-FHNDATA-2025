@@ -138,7 +138,7 @@ class profileController {
       const userInfo = await user.findOne({ _id: userId }).lean()
       if (!userInfo) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
       
-      return res.render('users/profileInfo', { title: 'Thông tin cá nhân' })
+      return res.render('users/profileInfo', { title: 'Personal Information' })
       
     } catch (error) {
       return res.json({error: error})
@@ -155,7 +155,7 @@ class profileController {
         dob     : req.body.dob
       })
   
-      return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
+      return res.json({isValid: true, message: 'Update information successfully'})
 
     } catch (error) {
       return res.json({error: error})
@@ -176,10 +176,10 @@ class profileController {
             password: hashedPassword
           })
 
-          return res.json({isValid: true, message: 'Cập nhật mật khẩu thành công'})
+          return res.json({isValid: true, message: 'Update password successfully'})
 
         } else {
-          return res.json({isValid: false, message: 'Mật khẩu không đúng'})
+          return res.json({isValid: false, message: 'Incorrect password'})
         }
       })
 
@@ -224,7 +224,7 @@ class profileController {
         }
       })
   
-      return res.json({isValid: true, message: 'Cập nhật thông tin thành công'})
+      return res.json({isValid: true, message: 'Update information successfully'})
 
     } catch (error) {
       return res.json({error: error})

@@ -101,12 +101,12 @@ submitButton.onclick = async function() {
 
       const inputPassword = document.createElement('input')
       inputPassword.type  = 'password'
-      inputPassword.placeholder = 'Nhập mật khẩu mới'
+      inputPassword.placeholder = 'Input new password'
       inputPassword.name  = 'password'
 
       const inputConfirmPassword = document.createElement('input')
       inputConfirmPassword.type  = 'password'
-      inputConfirmPassword.placeholder = 'Xác nhận mật khẩu mới'
+      inputConfirmPassword.placeholder = 'Confirm new password'
       inputConfirmPassword.name  = 'confirm-password'
 
       document.querySelector('div.input').appendChild(inputPassword)

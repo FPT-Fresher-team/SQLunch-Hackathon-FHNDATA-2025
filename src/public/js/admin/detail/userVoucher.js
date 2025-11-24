@@ -60,7 +60,7 @@ async function updateVoucher(voucherInfo) {
     status      === voucherInfo.status      &&
     startDate   === voucherInfo.startDate.split('T')[0]   &&  
     endDate     === voucherInfo.endDate.split('T')[0]   
-  ) return pushNotification('Hãy cập nhật thông tin')
+  ) return pushNotification('Please update the information')
 
   const response = await fetch('/admin/all-vouchers/voucher/updated', {
     method: 'PUT',

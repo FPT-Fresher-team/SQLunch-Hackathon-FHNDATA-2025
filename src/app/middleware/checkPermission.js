@@ -2,6 +2,7 @@ const emp = require('../models/employeeModel')
 const permission = require('../controllers/admin/permissionController')
 const attributePermission = permission.attributePermission
 const brandPermission     = permission.brandPermission
+const blogPermission      = permission.blogPermission
 const chatPermission      = permission.chatPermission
 const chatEmpPermission   = permission.chatEmpPermission
 const customerPermission  = permission.customerPermission
@@ -54,6 +55,20 @@ class brandClass {
   }
   async delete(req, res, next) {
     if (await checkPermission(req, res, brandPermission, 'DELETE')) next();
+  }
+}
+class blogClass {
+  async create(req, res, next) {
+    if (await checkPermission(req, res, blogPermission, 'CREATE')) next();
+  }
+  async read(req, res, next) {
+    if (await checkPermission(req, res, blogPermission, 'READ')) next();
+  }
+  async update(req, res, next) {
+    if (await checkPermission(req, res, blogPermission, 'UPDATE')) next();
+  }
+  async delete(req, res, next) {
+    if (await checkPermission(req, res, blogPermission, 'DELETE')) next();
   }
 }
 class chatClass {
@@ -228,6 +243,7 @@ class voucherClass {
 module.exports = {
   attributeClass: new attributeClass,
   brandClass    : new brandClass,
+  blogClass     : new blogClass,
   chatClass     : new chatClass,
   chatEmpClass  : new chatEmpClass,
   customerClass : new customerClass,

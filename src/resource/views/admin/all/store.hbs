@@ -4,11 +4,7 @@
       <p>Store: </p>
     </div>
 
-    <div class="date-filter">
-      <input type="date" id="start-date">
-      <input type="date" id="end-date">
-      <button title="submit" type="submit">View</button>
-    </div>
+    {{> dateFilter}}
   </div>
 
   <div class="control-bar">
@@ -41,10 +37,10 @@
       </div>
     </div>
 
-    <a href="/admin/all-stores/store/create" target="_blank" rel="noopener noreferrer" class="create-btn" id="create-btn">
+    <button class="create-btn" id="create-btn">
       <i class="fi fi-rr-plus"></i>
       <span>Add Store</span>
-    </a>
+    </button>
   </div>
 
   <div class="table">
@@ -77,6 +73,75 @@
   </div>
 
   <span class="pagination"></span>
+</div>
+
+<div class="admin-create-store-container" id="create-modal">
+  <div id="form">
+    <div class="form-title">
+      <p>Add New Store</p>
+    </div>
+
+    <div class="form-group">
+      <label for="name">Store Name</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="Enter store name">
+    </div>
+
+    <div class="form-group">
+      <label for="address">Address</label>
+      <input type="text" class="form-control" id="address" name="address" placeholder="Enter address">
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone Number</label>
+      <input type="text" class="form-control" id="phone" name="phone" placeholder="Enter phone number">
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+    </div>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Complete</button>
+    </div>
+  </div>
+</div>
+
+<div class="store-details-container" id="detail-modal">
+  <div id="form">
+    
+    <table id="table-1">
+      <thead>
+        <tr><td colspan="2">STORE INFORMATION</td></tr>
+      </thead>
+      <tr>
+        <td>Store Code</td>
+        <td><input type="text" id="id" disabled></td>
+      </tr>
+      <tr>
+        <td>Store Name</td>
+        <td><input type="text" id="name"></td>
+      </tr>
+      <tr>
+        <td>Store Address</td>
+        <td><input type="text" id="address"></td>
+      </tr>
+      <tr>
+        <td>Detailed Description</td>
+        <td><input type="text" id="details"></td>
+      </tr>
+      <tr>
+        <td>Store Revenue</td>
+        <td><input type="text" id="total" disabled></td>
+      </tr>
+    </table>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Update</button>
+    </div>
+  </div>
 </div>
 
 <script type="module" src="/js/admin/all/store.js"></script>

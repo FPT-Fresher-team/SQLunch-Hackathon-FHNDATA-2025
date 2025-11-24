@@ -24,18 +24,20 @@ class homeController {
     try {
       const data      = await product.find({ deletedAt: null }).lean()
       const flashSale = data.filter(item => item.status === 'flash-sale').slice(0, 5)
-      const hotSale   = data.filter(item => item.status === 'hot').slice(0, 5)
+      // const hotSale   = data.filter(item => item.status === 'hot').slice(0, 5)
+      const newArrival= data.filter(item => item.status === 'new-arrival').slice(0, 5)
       const topSale   = data.sort((a, b) => b.saleNumber - a.saleNumber).slice(0, 5)
-      const skincare  = data.filter(item => item.categories === 'skincare').slice(0, 5)
-      const makeup    = data.filter(item => item.categories === 'makeup').slice(0, 5)
+      // const skincare  = data.filter(item => item.categories === 'skincare').slice(0, 5)
+      // const makeup    = data.filter(item => item.categories === 'makeup').slice(0, 5)
       const all       = data.slice(0, 5)
 
       return res.json({
         flashSale : flashSale,
-        hotSale   : hotSale,
+        // hotSale   : hotSale,
+        newArrival: newArrival,
         topSale   : topSale,
-        skincare  : skincare,
-        makeup    : makeup,
+        // skincare  : skincare,
+        // makeup    : makeup,
         all       : all
       })
     } catch (error) {
@@ -136,7 +138,7 @@ class homeController {
         await newNotification.save()
       }
       
-      return res.json({isValid: true, message: 'Thêm thông báo thành công'})
+      return res.json({isValid: true, message: 'Add notification successfully'})
     } catch (error) {
       console.log(error)
       return res.json({error: error.message})

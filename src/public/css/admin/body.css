@@ -26,6 +26,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: start;
+  gap: 5px;
 }
 .board-title p {
   font-size: 20px;
@@ -63,7 +64,9 @@ main {
   flex: 1; /* search expands */
 }
 .search select, 
-.search input {
+.search input,
+.sort select,
+.filter select {
   padding: 10px 12px;
   border: 2px solid #CCDFE3;
   border-radius: 8px;
@@ -74,7 +77,9 @@ main {
 }
 
 .search select:focus, 
-.search input:focus {
+.search input:focus,
+.sort select:focus,
+.filter select:focus {
   border-color: #2B6377;
   box-shadow: 0 0 0 4px rgba(43, 99, 119, 0.1);
   outline: none;
@@ -303,6 +308,34 @@ table img {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
 
+#create-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+#create-modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+#form {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.15);
+  animation: pop 0.35s ease;
+}
+
 /* create item page */
 .admin-create-brand-container,
 .admin-create-customer-container, 
@@ -312,94 +345,194 @@ table img {
 .admin-create-purchase-container,
 .admin-create-store-container,
 .admin-create-supplier-container,
-.admin-create-voucher-container {
+.admin-create-voucher-container,
+.admin-create-blog-container {
   display: flex;
   align-items: center;
   justify-content: center;
-  div#form {
-    width: 100%;
-    padding: 20px;
-    background-color: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    box-sizing: border-box;
-    height: fit-content;
-    transition: all 0.3s ease-in-out;
-  }
+}
 
-  div#form:hover {
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
-  }
+.admin-create-brand-container div#form,
+.admin-create-customer-container div#form,
+.admin-create-employee-container div#form,
+.admin-create-order-container div#form,
+.admin-create-product-container div#form,
+.admin-create-purchase-container div#form,
+.admin-create-store-container div#form,
+.admin-create-supplier-container div#form,
+.admin-create-voucher-container div#form,
+.admin-create-blog-container div#form {
+  width: 70%;
+  padding: 20px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
+  height: fit-content;
+  transition: all 0.3s ease-in-out;
+}
 
-  .form-title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 15px;
-  }
-  .form-title p {
-    text-transform: uppercase;
-    font-size: 22px;
-    font-weight: bolder;
-    border-radius: 8px;
-    padding: 10px 20px;
-    margin: 0;
-    color: #2B6377;
-    letter-spacing: 1px;
-  }
+.admin-create-brand-container div#form:hover,
+.admin-create-customer-container div#form:hover,
+.admin-create-employee-container div#form:hover,
+.admin-create-order-container div#form:hover,
+.admin-create-product-container div#form:hover,
+.admin-create-purchase-container div#form:hover,
+.admin-create-store-container div#form:hover,
+.admin-create-supplier-container div#form:hover,
+.admin-create-voucher-container div#form:hover,
+.admin-create-blog-container div#form:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+}
 
-  .form-group {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 12px;
-    box-sizing: border-box;
-    gap: 10px;
-    padding: 5px 0;
-  }
+.admin-create-brand-container .form-title,
+.admin-create-customer-container .form-title,
+.admin-create-employee-container .form-title,
+.admin-create-order-container .form-title,
+.admin-create-product-container .form-title,
+.admin-create-purchase-container .form-title,
+.admin-create-store-container .form-title,
+.admin-create-supplier-container .form-title,
+.admin-create-voucher-container .form-title,
+.admin-create-blog-container .form-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
 
-  .form-group label {
-    width: 25%;
-    text-align: right;
-    align-self: center;
-    flex: 0 0 auto;
-    font-weight: 600;
-    color: #444;
-  }
+.admin-create-brand-container .form-title p,
+.admin-create-customer-container .form-title p,
+.admin-create-employee-container .form-title p,
+.admin-create-order-container .form-title p,
+.admin-create-product-container .form-title p,
+.admin-create-purchase-container .form-title p,
+.admin-create-store-container .form-title p,
+.admin-create-supplier-container .form-title p,
+.admin-create-voucher-container .form-title p,
+.admin-create-blog-container .form-title p {
+  text-transform: uppercase;
+  font-size: 22px;
+  font-weight: bolder;
+  border-radius: 8px;
+  padding: 10px 20px;
+  margin: 0;
+  color: #2B6377;
+  letter-spacing: 1px;
+}
 
-  .form-group select{
-    width: fit-content !important;
-  }
+.admin-create-brand-container .form-group,
+.admin-create-customer-container .form-group,
+.admin-create-employee-container .form-group,
+.admin-create-order-container .form-group,
+.admin-create-product-container .form-group,
+.admin-create-purchase-container .form-group,
+.admin-create-store-container .form-group,
+.admin-create-supplier-container .form-group,
+.admin-create-voucher-container .form-group,
+.admin-create-blog-container .form-group {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  box-sizing: border-box;
+  gap: 10px;
+  padding: 5px 0;
+}
 
-  .form-group input {
-    width: 70% !important;
-    flex: 1;
-    padding: 10px 12px;
-    border: 2px solid #CCDFE3;
-    border-radius: 8px;
-    font-size: 14px;
-    background: transparent;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
+.admin-create-brand-container .form-group label,
+.admin-create-customer-container .form-group label,
+.admin-create-employee-container .form-group label,
+.admin-create-order-container .form-group label,
+.admin-create-product-container .form-group label,
+.admin-create-purchase-container .form-group label,
+.admin-create-store-container .form-group label,
+.admin-create-supplier-container .form-group label,
+.admin-create-voucher-container .form-group label,
+.admin-create-blog-container .form-group label {
+  width: 25%;
+  text-align: right;
+  align-self: center;
+  flex: 0 0 auto;
+  font-weight: 600;
+  color: #444;
+}
 
-  .form-group input:hover {
-    border-color: #94CCDF;
-  }
+.admin-create-brand-container .form-group select,
+.admin-create-customer-container .form-group select,
+.admin-create-employee-container .form-group select,
+.admin-create-order-container .form-group select,
+.admin-create-product-container .form-group select,
+.admin-create-purchase-container .form-group select,
+.admin-create-store-container .form-group select,
+.admin-create-supplier-container .form-group select,
+.admin-create-voucher-container .form-group select,
+.admin-create-blog-container .form-group select {
+  width: fit-content !important;
+}
 
-  
+.admin-create-brand-container .form-group input,
+.admin-create-customer-container .form-group input,
+.admin-create-employee-container .form-group input,
+.admin-create-order-container .form-group input,
+.admin-create-product-container .form-group input,
+.admin-create-purchase-container .form-group input,
+.admin-create-store-container .form-group input,
+.admin-create-supplier-container .form-group input,
+.admin-create-voucher-container .form-group input,
+.admin-create-blog-container .form-group input {
+  width: 70% !important;
+  flex: 1;
+  padding: 10px 12px;
+  border: 2px solid #CCDFE3;
+  border-radius: 8px;
+  font-size: 14px;
+  background: transparent;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-  .form-group input:focus {
-    border-color: #2B6377;
-    box-shadow: 0 0 0 4px rgba(43, 99, 119, 0.1);
-    outline: none;
-  }
+.admin-create-brand-container .form-group input:hover,
+.admin-create-customer-container .form-group input:hover,
+.admin-create-employee-container .form-group input:hover,
+.admin-create-order-container .form-group input:hover,
+.admin-create-product-container .form-group input:hover,
+.admin-create-purchase-container .form-group input:hover,
+.admin-create-store-container .form-group input:hover,
+.admin-create-supplier-container .form-group input:hover,
+.admin-create-voucher-container .form-group input:hover,
+.admin-create-blog-container .form-group input:hover {
+  border-color: #94CCDF;
+}
 
-  .form-group .form-message {
-    flex-basis: 100%;
-    text-align: center;
-    font-size: 13px;
-    color: red;
-  }
+.admin-create-brand-container .form-group input:focus,
+.admin-create-customer-container .form-group input:focus,
+.admin-create-employee-container .form-group input:focus,
+.admin-create-order-container .form-group input:focus,
+.admin-create-product-container .form-group input:focus,
+.admin-create-purchase-container .form-group input:focus,
+.admin-create-store-container .form-group input:focus,
+.admin-create-supplier-container .form-group input:focus,
+.admin-create-voucher-container .form-group input:focus,
+.admin-create-blog-container .form-group input:focus {
+  border-color: #2B6377;
+  box-shadow: 0 0 0 4px rgba(43, 99, 119, 0.1);
+  outline: none;
+}
+
+.admin-create-brand-container .form-group .form-message,
+.admin-create-customer-container .form-group .form-message,
+.admin-create-employee-container .form-group .form-message,
+.admin-create-order-container .form-group .form-message,
+.admin-create-product-container .form-group .form-message,
+.admin-create-purchase-container .form-group .form-message,
+.admin-create-store-container .form-group .form-message,
+.admin-create-supplier-container .form-group .form-message,
+.admin-create-voucher-container .form-group .form-message,
+.admin-create-blog-container .form-group .form-message {
+  flex-basis: 100%;
+  text-align: center;
+  font-size: 13px;
+  color: red;
 }
 
 /* detail item page */
@@ -412,86 +545,541 @@ table img {
 .purchase-details-container,
 .store-details-container,
 .supplier-details-container,
-.voucher-details-container {
+.voucher-details-container,
+.blog-details-container {
+  flex-direction: column;
+  gap: 10px;
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.brand-details-container div#form,
+.customer-details-container div#form,
+.employee-details-container div#form,
+.order-details-container div#form,
+.product-details-container div#form,
+.profile-details-container div#form,
+.purchase-details-container div#form,
+.store-details-container div#form,
+.supplier-details-container div#form,
+.voucher-details-container div#form,
+.blog-details-container div#form {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Shared Table Styles */
+.brand-details-container div#form table,
+.customer-details-container div#form table,
+.employee-details-container div#form table,
+.order-details-container div#form table,
+.product-details-container div#form table,
+.profile-details-container div#form table,
+.purchase-details-container div#form table,
+.store-details-container div#form table,
+.supplier-details-container div#form table,
+.voucher-details-container div#form table,
+.blog-details-container div#form table {
+  width: 100%;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.brand-details-container div#form table thead tr td,
+.customer-details-container div#form table thead tr td,
+.employee-details-container div#form table thead tr td,
+.order-details-container div#form table thead tr td,
+.product-details-container div#form table thead tr td,
+.profile-details-container div#form table thead tr td,
+.purchase-details-container div#form table thead tr td,
+.store-details-container div#form table thead tr td,
+.supplier-details-container div#form table thead tr td,
+.voucher-details-container div#form table thead tr td,
+.blog-details-container div#form table thead tr td {
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+  color: white;
+  font-weight: 700;
+  text-align: center;
+  padding: 14px 12px;
+  text-transform: uppercase;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+#table-1,
+#table-2 {
+  background: transparent;
+  border: 1px solid #CCDFE3;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(43, 99, 119, 0.05);
+}
+
+#table-1 tr td {
+  padding: 14px 15px;
+  border-bottom: 1px solid #CCDFE3;
+  color: #555;
+}
+
+#table-1 tr:last-child td {
+  border-bottom: none;
+}
+
+#table-2 thead tr td {
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+  color: white;
+  font-weight: 700;
+}
+
+#table-2 tbody tr {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#table-2 tbody tr:hover {
+  background: rgba(148, 204, 223, 0.05);
+}
+
+#table-2 td {
+  padding: 14px 10px;
+  text-align: center;
+  border-bottom: 1px solid #CCDFE3;
+  color: #555;
+}
+
+#table-2 td p {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  margin: 0;
+}
+
+/* ==================== GENERIC MODAL STYLES ==================== */
+
+/* Create Modal */
+#create-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+#create-modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+#form {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, 0.15);
+  animation: pop 0.35s ease;
+}
+
+/* Detail Modals - Generic */
+.admin-create-brand-container,
+.admin-create-customer-container,
+.admin-create-employee-container,
+.admin-create-order-container,
+.admin-create-product-container,
+.admin-create-purchase-container,
+.admin-create-store-container,
+.admin-create-supplier-container,
+.admin-create-voucher-container,
+.admin-create-blog-container,
+.brand-details-container,
+.customer-details-container,
+.employee-details-container,
+.order-details-container,
+.product-details-container,
+.profile-details-container,
+.purchase-details-container,
+.store-details-container,
+.supplier-details-container,
+.voucher-details-container,
+.blog-details-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  overflow-y: auto;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.admin-create-brand-container.show,
+.admin-create-customer-container.show,
+.admin-create-employee-container.show,
+.admin-create-order-container.show,
+.admin-create-product-container.show,
+.admin-create-purchase-container.show,
+.admin-create-store-container.show,
+.admin-create-supplier-container.show,
+.admin-create-voucher-container.show,
+.admin-create-blog-container.show,
+.brand-details-container.show,
+.customer-details-container.show,
+.employee-details-container.show,
+.order-details-container.show,
+.product-details-container.show,
+.profile-details-container.show,
+.purchase-details-container.show,
+.store-details-container.show,
+.supplier-details-container.show,
+.voucher-details-container.show,
+.blog-details-container.show {
+  display: flex;
+}
+
+.admin-create-brand-container #form,
+.admin-create-customer-container #form,
+.admin-create-employee-container #form,
+.admin-create-order-container #form,
+.admin-create-product-container #form,
+.admin-create-purchase-container #form,
+.admin-create-store-container #form,
+.admin-create-supplier-container #form,
+.admin-create-voucher-container #form,
+.admin-create-blog-container #form,
+.brand-details-container #form,
+.customer-details-container #form,
+.employee-details-container #form,
+.order-details-container #form,
+.product-details-container #form,
+.profile-details-container #form,
+.purchase-details-container #form,
+.store-details-container #form,
+.supplier-details-container #form,
+.voucher-details-container #form,
+.blog-details-container #form {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  padding: 32px;
+  max-width: 1200px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  animation: slideUp 0.3s ease-in-out;
+}
+
+/* Animations */
+@keyframes pop {
+  from { 
+    transform: scale(0.85); 
+    opacity: 0; 
+  }
+  to { 
+    transform: scale(1); 
+    opacity: 1; 
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Close Button - Generic */
+.admin-create-brand-container .close-modal-btn,
+.admin-create-customer-container .close-modal-btn,
+.admin-create-employee-container .close-modal-btn,
+.admin-create-order-container .close-modal-btn,
+.admin-create-product-container .close-modal-btn,
+.admin-create-purchase-container .close-modal-btn,
+.admin-create-store-container .close-modal-btn,
+.admin-create-supplier-container .close-modal-btn,
+.admin-create-voucher-container .close-modal-btn,
+.admin-create-blog-container .close-modal-btn,
+.brand-details-container .close-modal-btn,
+.customer-details-container .close-modal-btn,
+.employee-details-container .close-modal-btn,
+.order-details-container .close-modal-btn,
+.product-details-container .close-modal-btn,
+.profile-details-container .close-modal-btn,
+.purchase-details-container .close-modal-btn,
+.store-details-container .close-modal-btn,
+.supplier-details-container .close-modal-btn,
+.voucher-details-container .close-modal-btn,
+.blog-details-container .close-modal-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+  color: white;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
-  gap: 10px;
-  div#form {
-    width: 100%;
-    background-color: transparent;
-    box-sizing: border-box;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1001;
+}
+
+.admin-create-brand-container .close-modal-btn:hover,
+.admin-create-customer-container .close-modal-btn:hover,
+.admin-create-employee-container .close-modal-btn:hover,
+.admin-create-order-container .close-modal-btn:hover,
+.admin-create-product-container .close-modal-btn:hover,
+.admin-create-purchase-container .close-modal-btn:hover,
+.admin-create-store-container .close-modal-btn:hover,
+.admin-create-supplier-container .close-modal-btn:hover,
+.admin-create-voucher-container .close-modal-btn:hover,
+.admin-create-blog-container .close-modal-btn:hover,
+.brand-details-container .close-modal-btn:hover,
+.customer-details-container .close-modal-btn:hover,
+.employee-details-container .close-modal-btn:hover,
+.order-details-container .close-modal-btn:hover,
+.product-details-container .close-modal-btn:hover,
+.profile-details-container .close-modal-btn:hover,
+.purchase-details-container .close-modal-btn:hover,
+.store-details-container .close-modal-btn:hover,
+.supplier-details-container .close-modal-btn:hover,
+.voucher-details-container .close-modal-btn:hover,
+.blog-details-container .close-modal-btn:hover {
+  background: linear-gradient(135deg, #1e4a5f, #7ab5d4);
+  transform: rotate(90deg);
+  box-shadow: 0 4px 12px rgba(43, 99, 119, 0.3);
+}
+
+/* Modal Form/Table Styles */
+.admin-create-brand-container input:disabled,
+.admin-create-customer-container input:disabled,
+.admin-create-employee-container input:disabled,
+.admin-create-order-container input:disabled,
+.admin-create-product-container input:disabled,
+.admin-create-purchase-container input:disabled,
+.admin-create-store-container input:disabled,
+.admin-create-supplier-container input:disabled,
+.admin-create-voucher-container input:disabled,
+.admin-create-blog-container input:disabled,
+.brand-details-container input:disabled,
+.customer-details-container input:disabled,
+.employee-details-container input:disabled,
+.order-details-container input:disabled,
+.product-details-container input:disabled,
+.profile-details-container input:disabled,
+.purchase-details-container input:disabled,
+.store-details-container input:disabled,
+.supplier-details-container input:disabled,
+.voucher-details-container input:disabled,
+.blog-details-container input:disabled {
+  background-color: #f5f5f5;
+  color: #888;
+  cursor: not-allowed;
+}
+
+/* Modal Submit Buttons */
+.admin-create-brand-container .submit-button,
+.admin-create-customer-container .submit-button,
+.admin-create-employee-container .submit-button,
+.admin-create-order-container .submit-button,
+.admin-create-product-container .submit-button,
+.admin-create-purchase-container .submit-button,
+.admin-create-store-container .submit-button,
+.admin-create-supplier-container .submit-button,
+.admin-create-voucher-container .submit-button,
+.admin-create-blog-container .submit-button,
+.brand-details-container .submit-button,
+.customer-details-container .submit-button,
+.employee-details-container .submit-button,
+.order-details-container .submit-button,
+.product-details-container .submit-button,
+.profile-details-container .submit-button,
+.purchase-details-container .submit-button,
+.store-details-container .submit-button,
+.supplier-details-container .submit-button,
+.voucher-details-container .submit-button,
+.blog-details-container .submit-button {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #CCDFE3;
+  text-align: right;
+}
+
+.admin-create-brand-container .submit-button button,
+.admin-create-customer-container .submit-button button,
+.admin-create-employee-container .submit-button button,
+.admin-create-order-container .submit-button button,
+.admin-create-product-container .submit-button button,
+.admin-create-purchase-container .submit-button button,
+.admin-create-store-container .submit-button button,
+.admin-create-supplier-container .submit-button button,
+.admin-create-voucher-container .submit-button button,
+.admin-create-blog-container .submit-button button,
+.brand-details-container .submit-button button,
+.customer-details-container .submit-button button,
+.employee-details-container .submit-button button,
+.order-details-container .submit-button button,
+.product-details-container .submit-button button,
+.profile-details-container .submit-button button,
+.purchase-details-container .submit-button button,
+.store-details-container .submit-button button,
+.supplier-details-container .submit-button button,
+.voucher-details-container .submit-button button,
+.blog-details-container .submit-button button {
+  padding: 10px 24px;
+  margin-left: 12px;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.admin-create-brand-container .submit-button button[type="submit"],
+.admin-create-customer-container .submit-button button[type="submit"],
+.admin-create-employee-container .submit-button button[type="submit"],
+.admin-create-order-container .submit-button button[type="submit"],
+.admin-create-product-container .submit-button button[type="submit"],
+.admin-create-purchase-container .submit-button button[type="submit"],
+.admin-create-store-container .submit-button button[type="submit"],
+.admin-create-supplier-container .submit-button button[type="submit"],
+.admin-create-voucher-container .submit-button button[type="submit"],
+.admin-create-blog-container .submit-button button[type="submit"],
+.brand-details-container .submit-button button[type="submit"],
+.customer-details-container .submit-button button[type="submit"],
+.employee-details-container .submit-button button[type="submit"],
+.order-details-container .submit-button button[type="submit"],
+.product-details-container .submit-button button[type="submit"],
+.profile-details-container .submit-button button[type="submit"],
+.purchase-details-container .submit-button button[type="submit"],
+.store-details-container .submit-button button[type="submit"],
+.supplier-details-container .submit-button button[type="submit"],
+.voucher-details-container .submit-button button[type="submit"],
+.blog-details-container .submit-button button[type="submit"] {
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+  color: white;
+}
+
+.admin-create-brand-container .submit-button button[type="submit"]:hover,
+.admin-create-customer-container .submit-button button[type="submit"]:hover,
+.admin-create-employee-container .submit-button button[type="submit"]:hover,
+.admin-create-order-container .submit-button button[type="submit"]:hover,
+.admin-create-product-container .submit-button button[type="submit"]:hover,
+.admin-create-purchase-container .submit-button button[type="submit"]:hover,
+.admin-create-store-container .submit-button button[type="submit"]:hover,
+.admin-create-supplier-container .submit-button button[type="submit"]:hover,
+.admin-create-voucher-container .submit-button button[type="submit"]:hover,
+.admin-create-blog-container .submit-button button[type="submit"]:hover,
+.brand-details-container .submit-button button[type="submit"]:hover,
+.customer-details-container .submit-button button[type="submit"]:hover,
+.employee-details-container .submit-button button[type="submit"]:hover,
+.order-details-container .submit-button button[type="submit"]:hover,
+.product-details-container .submit-button button[type="submit"]:hover,
+.profile-details-container .submit-button button[type="submit"]:hover,
+.purchase-details-container .submit-button button[type="submit"]:hover,
+.store-details-container .submit-button button[type="submit"]:hover,
+.supplier-details-container .submit-button button[type="submit"]:hover,
+.voucher-details-container .submit-button button[type="submit"]:hover,
+.blog-details-container .submit-button button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(43, 99, 119, 0.25);
+}
+
+/* Responsive Modal */
+@media (max-width: 768px) {
+  .admin-create-brand-container #form,
+  .admin-create-customer-container #form,
+  .admin-create-employee-container #form,
+  .admin-create-order-container #form,
+  .admin-create-product-container #form,
+  .admin-create-purchase-container #form,
+  .admin-create-store-container #form,
+  .admin-create-supplier-container #form,
+  .admin-create-voucher-container #form,
+  .admin-create-blog-container #form,
+  .brand-details-container #form,
+  .customer-details-container #form,
+  .employee-details-container #form,
+  .order-details-container #form,
+  .product-details-container #form,
+  .profile-details-container #form,
+  .purchase-details-container #form,
+  .store-details-container #form,
+  .supplier-details-container #form,
+  .voucher-details-container #form,
+  .blog-details-container #form {
+    padding: 20px;
+    max-height: 90vh;
   }
 
-  /* Shared Table Styles */
-  div#form table {
-    width: 100%;
-    margin-bottom: 10px;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  div#form table thead tr td {
-    background: linear-gradient(135deg, #2B6377, #94CCDF);
-    color: white;
-    font-weight: 700;
-    text-align: center;
-    padding: 14px 12px;
-    text-transform: uppercase;
-    font-size: 13px;
-    letter-spacing: 0.5px;
-  }
-  #table-1 {
-    background: transparent;
-    border: 1px solid #CCDFE3;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(43, 99, 119, 0.05);
-  }
-
-  #table-1 tr td {
-    padding: 14px 15px;
-    border-bottom: 1px solid #CCDFE3;
-    color: #555;
-  }
-
-  #table-1 tr:last-child td {
-    border-bottom: none;
-  }
-  #table-2 {
-    background: transparent;
-    border: 1px solid #CCDFE3;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(43, 99, 119, 0.05);
-  }
-
-  #table-2 thead tr td {
-    background: linear-gradient(135deg, #2B6377, #94CCDF);
-    color: white;
-    font-weight: 700;
-  }
-
-  #table-2 tbody tr {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  #table-2 tbody tr:hover {
-    background: rgba(148, 204, 223, 0.05);
-  }
-
-  #table-2 td {
-    padding: 14px 10px;
-    text-align: center;
-    border-bottom: 1px solid #CCDFE3;
-    color: #555;
-  }
-  #table-2 td p {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2; 
-    -webkit-box-orient: vertical;
-    margin: 0;
+  .admin-create-brand-container .close-modal-btn,
+  .admin-create-customer-container .close-modal-btn,
+  .admin-create-employee-container .close-modal-btn,
+  .admin-create-order-container .close-modal-btn,
+  .admin-create-product-container .close-modal-btn,
+  .admin-create-purchase-container .close-modal-btn,
+  .admin-create-store-container .close-modal-btn,
+  .admin-create-supplier-container .close-modal-btn,
+  .admin-create-voucher-container .close-modal-btn,
+  .admin-create-blog-container .close-modal-btn,
+  .brand-details-container .close-modal-btn,
+  .customer-details-container .close-modal-btn,
+  .employee-details-container .close-modal-btn,
+  .order-details-container .close-modal-btn,
+  .product-details-container .close-modal-btn,
+  .profile-details-container .close-modal-btn,
+  .purchase-details-container .close-modal-btn,
+  .store-details-container .close-modal-btn,
+  .supplier-details-container .close-modal-btn,
+  .voucher-details-container .close-modal-btn,
+  .blog-details-container .close-modal-btn {
+    width: 28px;
+    height: 28px;
+    font-size: 20px;
   }
 }
