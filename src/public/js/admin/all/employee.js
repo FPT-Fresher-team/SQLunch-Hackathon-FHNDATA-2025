@@ -8,6 +8,7 @@ const sortOptions   = {}
 const filterOptions = {}
 const currentPage   = { page: 1 }
 const dataSize      = { size: 0 }
+const searchInput   = document.querySelector('input#search-input')
 
 function generateColumns() {
   const columnsGroup = document.querySelector('div.checkbox-group')
@@ -55,15 +56,19 @@ async function getEmployees(sortOptions, filterOptions, currentPage, itemsPerPag
     }
   })
 
+  const payload = {
+    page: currentPage,
+    itemsPerPage: itemsPerPage,
+    sort: sortOptions,
+    filter: filterOptions
+  }
+
+  if (searchInput.value.trim()) payload.searchQuery = searchInput.value.trim()
+
   const response = await fetch('/admin/all-employees/data/employees', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      sort  : sortOptions, 
-      filter: filterOptions, 
-      page  : currentPage,
-      itemsPerPage: itemsPerPage
-    })    
+    body: JSON.stringify(payload)
   })
 
   if (!response.ok) throw new Error(`Response status: ${response.status}`)

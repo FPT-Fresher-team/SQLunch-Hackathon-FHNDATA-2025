@@ -1,9 +1,5 @@
 const brand = require('../../models/brandModel')
 const product = require('../../models/productModel')
-const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
-const kafka = require("kafkajs").Kafka
-const kafkaClient = new kafka({ brokers: ["localhost:9092"] })
-const producer = kafkaClient.producer()
 
 class allBrandsController {
   async getBrands(req, res, next) {

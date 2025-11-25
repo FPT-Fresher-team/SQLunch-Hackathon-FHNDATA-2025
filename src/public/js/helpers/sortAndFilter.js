@@ -44,11 +44,8 @@ async function sortAndFilter(getDataFunction, sortOptions, filterOptions, curren
   }
 
   searchInput.addEventListener('keypress', function(e) {
-    if (searchInput.value.trim() === '') return
-
-    const searchType = document.querySelector('select#search-type').value
     if (e.key === "Enter") {
-      filterOptions[searchType] = { $regex: searchInput.value.trim(), $options: "i" }
+      if (searchInput.value.trim() === '') return pushNotification('Please enter a search term')
       clearButton.style.display = ''
       const itemsPerPage = document.querySelector('select#pagination').value
       getDataFunction(sortOptions, filterOptions, currentPage, itemsPerPage)

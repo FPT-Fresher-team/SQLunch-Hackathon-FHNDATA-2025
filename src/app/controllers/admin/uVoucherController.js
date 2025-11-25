@@ -1,8 +1,6 @@
 const userVoucher = require('../../models/userVoucherModel')
-const employee = require('../../models/employeeModel')
 const order = require('../../models/orderModel')
 const member = require('../../models/memberModel')
-const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 const { ObjectId } = require('mongodb')
 
 class allUVouchersController {
@@ -100,7 +98,7 @@ class allUVouchersController {
         endDate     : new Date(req.body.endDate)
       })
   
-      return res.json({message: 'Cập nhật thông tin thành công'})
+      return res.json({message: 'Update voucher successfully'})
     } catch (error) {
       return res.json({error: error.message})
     }

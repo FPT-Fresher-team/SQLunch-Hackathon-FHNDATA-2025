@@ -1,20 +1,3 @@
-p.trash {
-  font-size: 15px !important;
-  padding: 10px !important;
-  border: none;
-}
-
-p.trash a {
-  text-decoration: none;
-  color: #2B6377;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-p.trash a:hover {
-  color: #94CCDF;
-  text-decoration: underline;
-}
-
 /* Product table styling */
 .product-all-table {
   width: 100%;

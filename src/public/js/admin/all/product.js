@@ -8,10 +8,11 @@ const sortOptions   = {}
 const filterOptions = { deletedAt: null }
 const currentPage   = { page: 1 }
 const dataSize      = { size: 0 }
+const searchInput   = document.querySelector('input#search-input')
 
 // Soft Delete
 const deleteModal   = document.getElementById('id01')
-const deleteButton  = document.getElementById('delete-button')
+const deleteButton  = document.getElementById('deletebtn')
 let productToDelete = null
 
 function generateColumns() {
@@ -64,10 +65,19 @@ async function getProducts(sortOptions, filterOptions, currentPage, itemsPerPage
     }
   })
 
+  const payload = {
+    page: currentPage,
+    itemsPerPage: itemsPerPage,
+    sort: sortOptions,
+    filter: filterOptions
+  }
+
+  if (searchInput.value.trim()) payload.searchQuery = searchInput.value.trim()
+
   const response = await fetch('/admin/all-products/data/products', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ sort: sortOptions, filter: filterOptions, page: currentPage, itemsPerPage })
+    body: JSON.stringify(payload)
   })
 
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
@@ -150,10 +160,7 @@ async function getProducts(sortOptions, filterOptions, currentPage, itemsPerPage
     tdAction.style.textAlign = 'center'
     tdAction.innerHTML = `
       <button class="view-btn" id="${item._id}">View</button>
-      <button class="delete-btn" 
-              onclick="reply_click('${item._id}', '${item.name.replace(/'/g, "\\'")}')">
-        Delete
-      </button>
+      <button class="delete-btn">Delete</button>
     `
     tdAction.querySelector('.view-btn').onclick = () => openProductDetail(item._id)
     tr.appendChild(tdAction)
@@ -162,12 +169,6 @@ async function getProducts(sortOptions, filterOptions, currentPage, itemsPerPage
   })
 
   pagination(getProducts, sortOptions, filterOptions, currentPage, dataSize.size)
-}
-
-function reply_click(id, name) {
-  productToDelete = id
-  document.querySelector('p#confirm-message').textContent = `Bạn có muốn xoá sản phẩm "${name}" không?`
-  deleteModal.style.display = 'block'
 }
 
 deleteButton.onclick = async function () {
@@ -185,7 +186,7 @@ deleteButton.onclick = async function () {
   deleteModal.style.display = 'none'
 
   if (!response.ok) {
-    pushNotification('Xóa thất bại')
+    pushNotification('Failed to delete')
     return
   }
 
@@ -492,9 +493,23 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     await getFilter()
     await getProducts(sortOptions, filterOptions, currentPage.page, 10)
     await sortAndFilter(getProducts, sortOptions, filterOptions, currentPage.page)
-    await exportJs('BÁO CÁO DANH SÁCH SẢN PHẨM')
+    await exportJs('PRODUCTS REPORT')
   } catch (err) {
     console.error('Error loading data:', err)
     pushNotification('An error occurred while loading data')
+  }
+})
+
+// Đặt ở cuối file, sau khi DOM load
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('delete-btn')) {
+    const row = e.target.closest('tr')
+    const productId = row.querySelector('.view-btn').id
+    const productName = row.querySelector('td:nth-child(3)')?.textContent || 'sản phẩm này'
+    
+    productToDelete = productId
+    document.querySelector('p#confirm-message').textContent = 
+      `Do you want to delete the product "${productName}"?`
+    deleteModal.style.display = 'flex'
   }
 })

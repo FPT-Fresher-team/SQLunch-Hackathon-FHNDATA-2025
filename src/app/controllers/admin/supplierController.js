@@ -1,6 +1,5 @@
 const supplier = require('../../models/supplierModel')
 const purchase = require('../../models/purchaseModel')
-const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 const { ObjectId } = require('mongodb')
 
 class allSuppliersController {
