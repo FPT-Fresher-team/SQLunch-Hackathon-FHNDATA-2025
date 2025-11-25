@@ -4,8 +4,6 @@ const brandController = require('../../app/controllers/admin/brandController')
 const brandPermission = require('../../app/middleware/checkPermission').brandClass
 
 router.get('/'              , brandPermission.read   , brandController.allBrands)
-router.get('/brand/create'  , brandPermission.create , brandController.brandCreate)
-router.get('/brand/:id'     , brandPermission.update , brandController.brandInfo)
 
 router.post('/brand/created', brandController.brandCreated)
 router.put('/brand/updated' , brandController.brandUpdate)

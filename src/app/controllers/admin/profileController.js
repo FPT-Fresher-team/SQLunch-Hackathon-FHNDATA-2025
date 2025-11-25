@@ -21,7 +21,7 @@ class profileController {
   async updateProfile(req, res, next) {
     try {
       if (!checkForHexRegExp(req.cookies.uid)) return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
-      return res.render('admin/detail/profile', { title: 'Thông tin cá nhân', layout: 'admin' } )
+      return res.render('admin/profile', { title: 'Profile', layout: 'admin' } )
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     }
@@ -36,7 +36,7 @@ class profileController {
         gender : req.body.gender ,
       })
   
-      return res.json({message: 'Cập nhật thông tin thành công'})
+      return res.json({message: 'Profile updated successfully'})
     } catch (error) {
       return res.json({error: error.message})
     }

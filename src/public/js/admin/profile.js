@@ -1,5 +1,3 @@
-importLinkCss('/css/admin/detail/profile.css')
-
 async function getProfile() {
   try {
     const response = await fetch('/admin/all-personal-info/data/profile', {
@@ -70,7 +68,6 @@ async function updateProfile(userInfo) {
     if (error) throw new Error(error)
     pushNotification(message)
   
-    setTimeout(() => window.location.reload(), 3000)
   } catch (error) {
     console.log(error)
     pushNotification(error)

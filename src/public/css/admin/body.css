@@ -541,7 +541,6 @@ table img {
 .employee-details-container,
 .order-details-container,
 .product-details-container,
-.profile-details-container,
 .purchase-details-container,
 .store-details-container,
 .supplier-details-container,
@@ -569,7 +568,6 @@ table img {
 .employee-details-container div#form,
 .order-details-container div#form,
 .product-details-container div#form,
-.profile-details-container div#form,
 .purchase-details-container div#form,
 .store-details-container div#form,
 .supplier-details-container div#form,
@@ -585,7 +583,6 @@ table img {
 .employee-details-container div#form table,
 .order-details-container div#form table,
 .product-details-container div#form table,
-.profile-details-container div#form table,
 .purchase-details-container div#form table,
 .store-details-container div#form table,
 .supplier-details-container div#form table,
@@ -602,13 +599,12 @@ table img {
 .employee-details-container div#form table thead tr td,
 .order-details-container div#form table thead tr td,
 .product-details-container div#form table thead tr td,
-.profile-details-container div#form table thead tr td,
 .purchase-details-container div#form table thead tr td,
 .store-details-container div#form table thead tr td,
 .supplier-details-container div#form table thead tr td,
 .voucher-details-container div#form table thead tr td,
 .blog-details-container div#form table thead tr td {
-  background: linear-gradient(135deg, #2B6377, #94CCDF);
+  /* background: linear-gradient(135deg, #2B6377, #94CCDF); */
   color: white;
   font-weight: 700;
   text-align: center;
@@ -637,7 +633,7 @@ table img {
 }
 
 #table-2 thead tr td {
-  background: linear-gradient(135deg, #2B6377, #94CCDF);
+  /* background: linear-gradient(135deg, #2B6377, #94CCDF); */
   color: white;
   font-weight: 700;
 }
@@ -653,7 +649,7 @@ table img {
 #table-2 td {
   padding: 14px 10px;
   text-align: center;
-  border-bottom: 1px solid #CCDFE3;
+  /* border-bottom: 1px solid #CCDFE3; */
   color: #555;
 }
 
@@ -713,7 +709,6 @@ table img {
 .employee-details-container,
 .order-details-container,
 .product-details-container,
-.profile-details-container,
 .purchase-details-container,
 .store-details-container,
 .supplier-details-container,
@@ -749,7 +744,6 @@ table img {
 .employee-details-container.show,
 .order-details-container.show,
 .product-details-container.show,
-.profile-details-container.show,
 .purchase-details-container.show,
 .store-details-container.show,
 .supplier-details-container.show,
@@ -773,7 +767,6 @@ table img {
 .employee-details-container #form,
 .order-details-container #form,
 .product-details-container #form,
-.profile-details-container #form,
 .purchase-details-container #form,
 .store-details-container #form,
 .supplier-details-container #form,
@@ -841,7 +834,6 @@ table img {
 .employee-details-container .close-modal-btn,
 .order-details-container .close-modal-btn,
 .product-details-container .close-modal-btn,
-.profile-details-container .close-modal-btn,
 .purchase-details-container .close-modal-btn,
 .store-details-container .close-modal-btn,
 .supplier-details-container .close-modal-btn,
@@ -880,7 +872,6 @@ table img {
 .employee-details-container .close-modal-btn:hover,
 .order-details-container .close-modal-btn:hover,
 .product-details-container .close-modal-btn:hover,
-.profile-details-container .close-modal-btn:hover,
 .purchase-details-container .close-modal-btn:hover,
 .store-details-container .close-modal-btn:hover,
 .supplier-details-container .close-modal-btn:hover,
@@ -907,7 +898,6 @@ table img {
 .employee-details-container input:disabled,
 .order-details-container input:disabled,
 .product-details-container input:disabled,
-.profile-details-container input:disabled,
 .purchase-details-container input:disabled,
 .store-details-container input:disabled,
 .supplier-details-container input:disabled,
@@ -934,7 +924,6 @@ table img {
 .employee-details-container .submit-button,
 .order-details-container .submit-button,
 .product-details-container .submit-button,
-.profile-details-container .submit-button,
 .purchase-details-container .submit-button,
 .store-details-container .submit-button,
 .supplier-details-container .submit-button,
@@ -942,6 +931,7 @@ table img {
 .blog-details-container .submit-button {
   margin-top: 24px;
   padding-top: 24px;
+  padding-bottom: 24px;
   border-top: 1px solid #CCDFE3;
   text-align: right;
 }
@@ -961,7 +951,6 @@ table img {
 .employee-details-container .submit-button button,
 .order-details-container .submit-button button,
 .product-details-container .submit-button button,
-.profile-details-container .submit-button button,
 .purchase-details-container .submit-button button,
 .store-details-container .submit-button button,
 .supplier-details-container .submit-button button,
@@ -995,7 +984,6 @@ table img {
 .employee-details-container .submit-button button[type="submit"],
 .order-details-container .submit-button button[type="submit"],
 .product-details-container .submit-button button[type="submit"],
-.profile-details-container .submit-button button[type="submit"],
 .purchase-details-container .submit-button button[type="submit"],
 .store-details-container .submit-button button[type="submit"],
 .supplier-details-container .submit-button button[type="submit"],
@@ -1020,7 +1008,6 @@ table img {
 .employee-details-container .submit-button button[type="submit"]:hover,
 .order-details-container .submit-button button[type="submit"]:hover,
 .product-details-container .submit-button button[type="submit"]:hover,
-.profile-details-container .submit-button button[type="submit"]:hover,
 .purchase-details-container .submit-button button[type="submit"]:hover,
 .store-details-container .submit-button button[type="submit"]:hover,
 .supplier-details-container .submit-button button[type="submit"]:hover,
@@ -1047,7 +1034,6 @@ table img {
   .employee-details-container #form,
   .order-details-container #form,
   .product-details-container #form,
-  .profile-details-container #form,
   .purchase-details-container #form,
   .store-details-container #form,
   .supplier-details-container #form,
@@ -1072,7 +1058,6 @@ table img {
   .employee-details-container .close-modal-btn,
   .order-details-container .close-modal-btn,
   .product-details-container .close-modal-btn,
-  .profile-details-container .close-modal-btn,
   .purchase-details-container .close-modal-btn,
   .store-details-container .close-modal-btn,
   .supplier-details-container .close-modal-btn,

@@ -7,8 +7,8 @@ class allProductsController {
   async getProducts(req, res, next) {
     try {
       const currentPage  = req.body.page
-      const sort         = req.body.sort
-      const filter       = req.body.filter
+      let sort           = req.body.sort
+      let filter         = req.body.filter
       const itemsPerPage = 9
       const skip         = (currentPage - 1) * itemsPerPage
 
@@ -49,12 +49,10 @@ class allProductsController {
 
   async getRelatedCategory(req, res, next) {
     try {
-      const productId = req.body.productId
-      const categories = req.body.categories
-      const productInfo = await product.find({ _id: { $ne: productId }, categories: categories }).sort({rate: -1}).lean().limit(5)
-      if (!productInfo) return res.status(404).json({ error: "No products found" })
-      
-      return res.json({data: productInfo})
+      const productId   = req.body.productId
+      const categories  = req.body.categories
+      const productInfo = await product.find({ _id: { $ne: productId }, categories: categories }).sort({rate: -1}).lean()
+      return res.json({data: productInfo || []})
       
     } catch (error) {
       return res.json({error: error})
@@ -83,6 +81,8 @@ class allProductsController {
       const productInfo = await product.find({ _id: { $ne: productId }, brand: brand }).sort({rate: -1}).lean().limit(5)
       if (!productInfo) return res.status(404).json({ error: "No products found" })
       
+      console.log(brand, productInfo)
+
       return res.json({data: productInfo})
       
     } catch (error) {
@@ -132,7 +132,7 @@ class allProductsController {
   }
 
   async showAllProducts(req, res, next) {
-    return res.render('users/allProducts', { title: 'Toàn bộ sản phẩm' }) 
+    return res.render('users/allProducts', { title: 'All Products' }) 
   }
 
   async productInfo(req, res, next) {

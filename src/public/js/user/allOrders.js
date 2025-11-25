@@ -40,6 +40,7 @@ async function checkUser() {
 async function updateTableBody() {
   const getProductInfo  = JSON.parse(localStorage.getItem('product_cart_count')) || {}
   const productIds      = getProductInfo.productInfo.map(product => product.id)
+  const productChecked  = getProductInfo.productInfo.map(product => product.isChecked)
   const tableBody       = document.querySelector('tbody')
   totalOrderPrice.total = 0
 
@@ -140,13 +141,24 @@ async function updateTableBody() {
       preCheckAllProducts()
     }
 
+    CheckBox.checked = productChecked[index] || false
+    if (CheckBox.checked) {
+      totalOrderPrice.total += parseInt(CheckBox.value) * parseInt(product.price)
+    }
+
     CheckBox.onclick = function() {
       if (CheckBox.checked) {
-        totalOrderPrice.total += parseInt(CheckBox.value) * product.price
+        totalOrderPrice.total += parseInt(CheckBox.value) * parseInt(product.price)
       } else {
-        totalOrderPrice.total -= parseInt(CheckBox.value) * product.price
+        totalOrderPrice.total -= parseInt(CheckBox.value) * parseInt(product.price)
       }
       updateTableFooter()
+      getProductInfo.productInfo.forEach((localProduct, index) => {
+        if (localProduct.id === product._id) {
+          localProduct.isChecked = CheckBox.checked
+          localStorage.setItem('product_cart_count', JSON.stringify(getProductInfo))
+        } 
+      })
     }
 
     // add each element to the row
@@ -328,6 +340,26 @@ async function submitOrder() {
         type: 'order'
       })
     })
+
+    // After successful order, remove all ordered products from cart    
+    // Extract only the IDs from the ordered products
+    const orderedProductIds = productIds.map(p => p.id)
+
+    // Filter out all ordered products
+    const updatedCart = Array.from(getProductInfo.productInfo).filter(cartItem => 
+      !orderedProductIds.includes(cartItem.id)
+    )
+
+    const newCartObject = {
+      localCounting: updatedCart.length,
+      productInfo: updatedCart
+    }
+
+    // Save updated cart
+    localStorage.setItem('product_cart_count', JSON.stringify(newCartObject))
+
+    // Trigger cart update event (for badge/count)
+    document.dispatchEvent(new CustomEvent('cartUpdated'))
 
     return
   }

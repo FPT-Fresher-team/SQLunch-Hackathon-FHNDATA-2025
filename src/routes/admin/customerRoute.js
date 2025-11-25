@@ -4,8 +4,6 @@ const customerController = require('../../app/controllers/admin/customerControll
 const customerPermission = require('../../app/middleware/checkPermission').customerClass
 
 router.get('/'                  , customerPermission.read   , customerController.allCustomers)
-router.get('/customer/create'   , customerPermission.create , customerController.createCustomer)
-router.get('/customer/:id'      , customerPermission.update , customerController.customerInfo)
 
 router.post('/customer/created' , customerController.customerCreated)
 router.put('/customer/updated'  , customerController.customerUpdate)

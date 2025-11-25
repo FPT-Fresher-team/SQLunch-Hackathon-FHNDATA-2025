@@ -178,17 +178,17 @@
       <label></label>
       <select name="skincare">
         <option value="">-- Skincare --</option>
-        <option value="xit-khoang">Xịt Khoáng</option>
-        <option value="mat-na">Mặt Nạ</option>
+        <option value="xit-khoang">Facial Mist</option>
+        <option value="mat-na">Face Mask</option>
         <option value="serum">Serum</option>
         <option value="bha">BHA</option>
-        <option value="tay-da-chet">Tẩy Da Chết</option>
-        <option value="duong-da">Dưỡng Da</option>  
+        <option value="tay-da-chet">Exfoliant</option>
+        <option value="duong-da">Skincare</option>
         <option value="toner">Toner</option>
-        <option value="nuoc-tay-trang">Nước Tẩy Trang</option>
-        <option value="cham-mun">Chấm Mụn</option>
-        <option value="kem-duong-am">Kem Dưỡng Ẩm</option>
-        <option value="sua-rua-mat">Sữa Rửa Mặt</option>
+        <option value="nuoc-tay-trang">Makeup Remover</option>
+        <option value="cham-mun">Acne Spot Treatment</option>
+        <option value="kem-duong-am">Moisturizer</option>
+        <option value="sua-rua-mat">Facial Cleanser</option>
       </select>
     </div>
 
@@ -196,19 +196,19 @@
       <label></label>
       <select name="makeup">
         <option value="">-- Makeup --</option>
-        <option value="phan-ma">Phấn Má</option>
+        <option value="phan-ma">Blush</option>
         <option value="mascara">Mascara</option>
-        <option value="ke-mat">Kẻ Mắt</option>
-        <option value="kem-chong-nang">Kem Chống Nắng</option>
-        <option value="che-khuyet-diem">Che Khuyết Điểm</option>
-        <option value="son">Son</option>
+        <option value="ke-mat">Eyeliner</option>
+        <option value="kem-chong-nang">Sunscreen</option>
+        <option value="che-khuyet-diem">Concealer</option>
+        <option value="son">Lipstick</option>
       </select>
     </div>
 
     <div class="form-group">
       <label></label>
       <select id="brand" name="brand">
-        <option value="">-- Chọn hãng --</option>
+        <option value="">-- Select Brand --</option>
         {{#each brands}}
         <option value="{{this.name}}">{{this.name}}</option>
         {{/each}}
@@ -216,48 +216,58 @@
     </div>
 
     <div class="form-group">
-      <label for="name">Tên sản phẩm</label>
-      <input type="text" class="form-control" id="name" name="name" placeholder="VD: TINH CHẤT PHỤC HỒI, DƯỠNG TRẮNG HYDRA B5 MAX SERUM PRETTYSKIN">
+      <label for="name">Product Name</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="e.g. HYDRA B5 MAX SERUM PRETTYSKIN">
     </div>
 
     <div class="form-group">
-      <label for="oldPrice">Giá sản phẩm (cũ)</label>
-      <input type="text" class="form-control" id="oldPrice" name="oldPrice" placeholder="VD: 1.000.000">
+      <label for="purchasePrice">Purchase Price</label>
+      <input type="text" class="form-control" id="purchasePrice" name="purchasePrice" placeholder="e.g. 1,000,000">
     </div>
 
     <div class="form-group">
-      <label for="price">Giá sản phẩm (mới)</label>
-      <input type="text" class="form-control" id="price" name="price" placeholder="VD: 250.000">
+      <label for="oldPrice">Product Price (Old)</label>
+      <input type="text" class="form-control" id="oldPrice" name="oldPrice" placeholder="e.g. 1,000,000">
     </div>
 
     <div class="form-group">
-      <label for="description">Mô tả sản phẩm</label>
-      <input type="text" class="form-control" id="description" name="description" placeholder="VD: TINH CHẤT PHỤC HỒI, DƯỠNG TRẮNG HYDRA B5 MAX SERUM PRETTYSKIN">
+      <label for="price">Product Price (New)</label>
+      <input type="text" class="form-control" id="price" name="price" placeholder="e.g. 250,000">
     </div>
 
     <div class="form-group">
-      <label for="details">Chi tiết sản phẩm</label>
-      <input type="text" class="form-control" id="details" name="details" placeholder="VD: Dưỡng ẩm chuyên sâu với axit Hyaluronic: Axit Hyaluronic giúp bổ sung độ ẩm...">
+      <label for="description">Product Description</label>
+      <input type="text" class="form-control" id="description" name="description" placeholder="e.g. HYDRA B5 MAX SERUM PRETTYSKIN">
+    </div>
+
+    <div class="form-group">
+      <label for="details">Product Details</label>
+      <input type="text" class="form-control" id="details" name="details" placeholder="e.g. Deep moisturizing with Hyaluronic Acid...">
+    </div>
+
+    <div class="form-group">
+      <label for="guide">Usage Instructions</label>
+      <input type="text" class="form-control" id="guide" name="guide" placeholder="e.g. Step 1: Clean your face with a gentle cleanser...">
     </div>
     
     <div class="form-group">
-      <label for="guide">Hướng dẫn sử dụng</label>
-      <input type="text" class="form-control" id="guide" name="guide" placeholder="VD: Bước 1: Làm sạch daDùng sữa rửa mặt nhẹ nhàng phù hợp để làm sạch sâu lỗ chân lông, giúp tinh chất dễ dàng thẩm thấu....">
+      <label for="quantity">Quantity</label>
+      <input type="text" class="form-control" id="quantity" name="quantity" placeholder="e.g. 100">
     </div>
 
     <div class="form-group">
       <label></label>
       <select name="status">
-        <option value="">-- Tình Trạng Sản Phẩm --</option>
-        <option value="no">Bình thường</option>
+        <option value="">-- Product Status --</option>
+        <option value="normal">Normal</option>
         <option value="flash-sale">Flash Sale</option>
         <option value="hot">Hot</option>
-        <option value="new-arrival">Mới về</option>
+        <option value="new-arrival">New Arrival</option>
       </select>
     </div>
 
     <div class="form-group">
-      <label>Ảnh Sản Phẩm</label>
+      <label>Product Image</label>
       <input type="file" name="img" id="img"/>
     </div>
 

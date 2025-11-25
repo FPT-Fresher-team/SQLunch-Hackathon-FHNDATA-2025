@@ -32,13 +32,13 @@ class homeController {
       const all       = data.slice(0, 5)
 
       return res.json({
-        flashSale : flashSale,
+        flashSale : flashSale || [],
         // hotSale   : hotSale,
-        newArrival: newArrival,
-        topSale   : topSale,
+        newArrival: newArrival || [],
+        topSale   : topSale || [],
         // skincare  : skincare,
         // makeup    : makeup,
-        all       : all
+        all       : all || []
       })
     } catch (error) {
       console.log(error)

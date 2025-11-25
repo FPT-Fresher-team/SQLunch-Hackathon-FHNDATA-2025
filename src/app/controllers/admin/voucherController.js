@@ -6,14 +6,17 @@ const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 const { ObjectId } = require('mongodb')
 
 class allVouchersController {
-  // all
   async getVouchers(req, res, next) {
     try {
       const currentPage  = req.body.page
-      const sort         = req.body.sort
-      const filter       = req.body.filter
+      let sort           = req.body.sort
+      let filter         = req.body.filter
       const itemsPerPage = req.body.itemsPerPage
       const skip         = (currentPage - 1) * itemsPerPage
+
+      if (Object.keys(sort).length === 0) {
+        sort = { updatedAt: -1 }
+      }
 
       if (filter['_id']) {
         filter['_id'] = ObjectId.createFromHexString(filter['_id'])
@@ -55,7 +58,6 @@ class allVouchersController {
     }
   }
 
-  // update
   async getVoucher(req, res, next) {
     try {
       const voucherInfo = await voucher.findOne({ _id: req.body.id }).lean()
@@ -98,33 +100,25 @@ class allVouchersController {
     }
   }
 
-  async voucherInfo(req, res, next) {
-    try {
-      if (!checkForHexRegExp(req.params.id)) throw new Error('error')
-      if (!(await voucher.findOne({ _id: req.params.id }).lean())) throw new Error('error')
-      return res.render('admin/detail/voucher', { layout: 'admin' })
-    } catch (error) {
-      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
-    }
-  }
-
   async voucherUpdate(req, res, next) {
     try {
       await voucher.updateOne({ _id: req.body.id }, {
         name        : req.body.name,
         description : req.body.description,
+        discount    : req.body.discount,
+        maxDiscount : req.body.maxDiscount,
+        minOrder    : req.body.minOrder,
         status      : req.body.status,
         startDate   : new Date(req.body.startDate),
         endDate     : new Date(req.body.endDate)
       })
   
-      return res.json({message: 'Cập nhật thông tin thành công'})
+      return res.json({message: 'Update voucher successfully'})
     } catch (error) {
       return res.json({error: error.message})
     }
   }
 
-  // create
   async getMembers(req, res, next) {
     try {
       const memberShip = await member.find().lean()
@@ -133,14 +127,6 @@ class allVouchersController {
     } catch (error) {
       console.log(error)
       return res.json({error: error.message})
-    }
-  }
-
-  async voucherCreate(req, res, next) {
-    try {
-      return res.render('admin/create/voucher', { title: 'Thêm voucher mới', layout: 'admin' })
-    } catch (error) {
-      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
     }
   }
 

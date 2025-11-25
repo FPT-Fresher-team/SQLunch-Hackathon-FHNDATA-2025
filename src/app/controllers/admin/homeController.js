@@ -15,7 +15,7 @@ const position = require('../../models/positionModel')
 class homeController {
   async show(req, res, next) {
     try {
-      return res.render('admin/home', { title: 'Trang chủ', layout: 'admin' })
+      return res.render('admin/home', { title: 'Home', layout: 'admin' })
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     }

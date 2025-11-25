@@ -212,103 +212,51 @@ async function pushDataToRecommendationSystem(data) {
   }
 }
 
-function increaseQuantity(productInfo) {
+function increaseQuantity() {
   getIncreaseQuantity.onclick = function () {
-    // increase the quantity on page
     getQuantityValue.innerText++
-    listProductLength.length = myObj.productInfo.length
-    for (let i = 0; i < listProductLength.length; ++i) {
-      if (myObj.productInfo[i].id === productInfo._id) {
-        // store the quantity on page to localStorage
-        myObj.productInfo[i].quantity = getQuantityValue.innerText
-        localStorage.setItem('product_cart_count', JSON.stringify(myObj))
-      }
-    }
   }
 }
 
-function decreaseQuantity(productInfo) {
+function decreaseQuantity() {
   getDecreaseQuantity.onclick = function () {
     getQuantityValue.innerText--
     if (getQuantityValue.innerText < 1) {
       getQuantityValue.innerText = 1
-    }
-    listProductLength.length = myObj.productInfo.length
-    for (let i = 0; i < listProductLength.length; ++i) {
-      if (myObj.productInfo[i].id === productInfo._id) {
-        if (getQuantityValue.innerText === '1') {
-          getQuantityValue.innerText = 1
-          myObj.productInfo[i].quantity = 1
-        } else {
-          myObj.productInfo[i].quantity = getQuantityValue.innerText
-        }
-        localStorage.setItem('product_cart_count', JSON.stringify(myObj));
-      }
     }
   }
 }
 
 function addToCart(productInfo) {
   getAddToCart.onclick = async function() {
-    // the item has not yet been added, click to add
-    if (getAddToCart.style.backgroundColor === '') {
-      // change button color to 'added button'
-      getAddToCart.style.backgroundColor = '#2B6377'
-      getAddToCart.querySelector('p').style.color = 'white'
-  
-      // add 1 to the cartCounting and set the quantity value min = 1
-      myObj.localCounting++
-      if (getQuantityValue.innerText === '0') {
-        getQuantityValue.innerText = 1
-      }
-
-      // create new added product
-      const newProductInfo = {
-        id      : productInfo._id,
-        quantity: getQuantityValue.innerText
-      };
-  
-      // store new added product to localStorage
-      myObj.productInfo.push(newProductInfo)
-
-      // push event log to kafka
-      // getLog(
-      //   topic = 'cart-update', 
-      //   value = {
-      //     "user_id"     : window.uid,
-      //     "product_id"  : urlSlug,
-      //     "update_type" : 'add',
-      //     "timestamp"   : new Date(),
-      //   }
-      // )
-    } else {
-      // the item has already been added, click to remove
-      // change button color to 'default button'
-      getAddToCart.style.backgroundColor = ''
-      getAddToCart.querySelector('p').style.color = '#2B6377'
-  
-      // minus 1 from the cartCounting and reset the productQuantity to 0
-      myObj.localCounting--
-  
-      // remove the product from the localStorage
-      listProductLength.length = myObj.productInfo.length
-      for (let i = 0; i < listProductLength.length; i++) {
-        if (myObj.productInfo[i].id === productInfo._id) {
-          myObj.productInfo.splice(i, 1)
-          break
-        }
-      }
-
-      // getLog(
-      //   topic = 'cart-update', 
-      //   value = {
-      //     "user_id"     : window.uid,
-      //     "product_id"  : urlSlug,
-      //     "update_type" : 'remove',
-      //     "timestamp"   : new Date(),
-      //   }
-      // )
+    // add 1 to the cartCounting and set the quantity value min = 1
+    if (getQuantityValue.innerText === '0') {
+      getQuantityValue.innerText = 1
     }
+
+    const quantity = parseInt(getQuantityValue.innerText)
+    console.log(quantity)
+
+    listProductLength.length = myObj.productInfo.length
+    for (let i = 0; i < listProductLength.length; ++i) {
+      if (myObj.productInfo[i].id === productInfo._id) {
+        myObj.productInfo[i].quantity += quantity
+        localStorage.setItem('product_cart_count', JSON.stringify(myObj))
+        return
+      }
+    }
+
+    myObj.localCounting++
+    
+    // create new added product
+    const newProductInfo = {
+      id       : productInfo._id,
+      quantity : parseInt(getQuantityValue.innerText),
+      isChecked: false
+    };
+
+    // store new added product to localStorage
+    myObj.productInfo.push(newProductInfo)
   
     localStorage.setItem('product_cart_count', JSON.stringify(myObj));
     document.dispatchEvent(new CustomEvent('cartUpdated'));
@@ -325,37 +273,13 @@ function buyNow(productInfo) {
 
       const newProductInfo = {
         id      : productInfo._id,
-        quantity: getQuantityValue.innerText
+        quantity: parseInt(getQuantityValue.innerText),
+        isChecked: false
       }
   
       myObj.productInfo.push(newProductInfo)
       localStorage.setItem('product_cart_count', JSON.stringify(myObj))
-
-      // getLog(
-      //   topic = 'cart-update', 
-      //   value = {
-      //     "user_id"     : window.uid,
-      //     "product_id"  : urlSlug,
-      //     "update_type" : 'add',
-      //     "timestamp"   : new Date(),
-      //   }
-      // )
     } else {}
-  }
-}
-
-function checkExistedProduct(productInfo) {
-  for (let i = 0; i < listProductLength.length; ++i) {
-    if (myObj.productInfo[i].id === productInfo._id) {
-      // change button color to 'added button'
-      getAddToCart.style.backgroundColor = '#2B6377'
-      getAddToCart.querySelector('p').style.color = 'white'
-  
-      // visible the quantity div
-      getQuantityDiv.style.visibility = 'visible'
-      getQuantityValue.innerText = myObj.productInfo[i].quantity 
-      break
-    } 
   }
 }
 
@@ -397,16 +321,15 @@ async function loadData(retriesLeft) {
     for (let key in data) {
       productInfo[key] = data[key]
     }
-    checkExistedProduct(productInfo)
     checkStatusProduct(productInfo)
     addToCart(productInfo)
     buyNow(productInfo)
-    increaseQuantity(productInfo)
-    decreaseQuantity(productInfo)
+    increaseQuantity()
+    decreaseQuantity()
     getComment()
     // getRelatedProducts(productInfo)
     pushDataToRecommendationSystem(data)
-    await loadRelatedProducts('category', selectedSection)
+    await loadRelatedProducts('category', relatedSections.category)
   } catch (err) {
     if (retriesLeft > 1) {
       console.error(`Retrying... Attempts left: ${retriesLeft - 1}`)
@@ -461,18 +384,19 @@ tabButtons.forEach(button => {
 async function loadRelatedProducts(type, container) {
   try {
     let endpoint = ''
-    let filter = {}
+    let filter = { productId: productInfo._id }
 
     if (type === 'category') {
       // Get category from current product (already loaded)
       endpoint = '/all-products/data/related-category'
-      filter = { category: productInfo.category }
+      filter.categories = productInfo.categories
     } else if (type === 'type') {
       endpoint = '/all-products/data/related-type'
-      filter = { type: productInfo.skincare ? 'skincare' : productInfo.makeup ? 'makeup' : '' }
+      filter.categories = productInfo.categories
+      filter.type = productInfo.skincare ? productInfo.skincare : productInfo.makeup
     } else if (type === 'brand') {
       endpoint = '/all-products/data/related-brand'
-      filter = { brand: productInfo.brand }
+      filter.brand = productInfo.brand
     } else if (type === 'viewed') {
       endpoint = '/all-products/data/related-viewed'
       filter = {}
@@ -488,13 +412,15 @@ async function loadRelatedProducts(type, container) {
     })
 
     const data = await response.json()
+
+    console.log(data)
     
-    if (data.products && data.products.length > 0) {
+    if (data.data && data.data.length > 0) {
       // Clear loading placeholder
       container.innerHTML = ''
       
       // Add products
-      data.products.forEach(product => {
+      data.data.forEach(product => {
         const productHTML = createProductCard(product)
         container.innerHTML += productHTML
       })
@@ -510,30 +436,20 @@ async function loadRelatedProducts(type, container) {
 // Helper function to create product card HTML
 function createProductCard(product) {
   return `
-    <div class="product">
-      <div class="product-img">
-        <img src="${product.image || '/public/images/placeholder.jpg'}" alt="${product.name}" loading="lazy">
-        <div class="product-overlay">
-          <a href="/all-products/${product._id}" class="view-btn">View Details</a>
-        </div>
+    <a href="/all-products/product/${product._id}">
+      <div class="product">
+        <div class="loading"></div>
+        <span class="discount-badge">${formatPercentage((product.oldPrice - product.price) / product.oldPrice * 100)}</span>
+        <img loading="lazy" src="${product.img.path}" alt="${product.img.name}">
+        <del><p id="old-price">${formatNumber(product.oldPrice)}</p></del>
+        <p id="price">${formatNumber(product.price)}</p>
+        <p id="name">${product.name}</p>
+        <p id="rate">
+          <i class="fi fi-ss-star"></i>
+          <span id="rate-score">${formatRate(product.rate)}</span> 
+        </p>
+        <p id="sale-number">${'Sold: ' + product.saleNumber}</p>
       </div>
-      <div class="product-info">
-        <h4>${product.name}</h4>
-        <p class="brand">${product.brand || 'N/A'}</p>
-        <p class="price">$${product.price}</p>
-        <p class="rating">★ ${product.rate || 0}/5</p>
-      </div>
-    </div>
+    </a>
   `
 }
-
-// setTimeout(() => {
-//   getLog(
-//     topic = 'product-view', 
-//     value = {
-//       "user_id"   : window.uid,
-//       "product_id": urlSlug,
-//       "timestamp" : new Date(),
-//     }
-//   )
-// }, 1000)

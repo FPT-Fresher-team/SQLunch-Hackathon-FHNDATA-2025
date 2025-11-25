@@ -4,8 +4,6 @@ const supplierController = require('../../app/controllers/admin/supplierControll
 const supplierPermission = require('../../app/middleware/checkPermission').supplierClass
 
 router.get('/'                  , supplierPermission.read   , supplierController.allSuppliers)
-router.get('/supplier/create'   , supplierPermission.create , supplierController.supplierCreate)
-router.get('/supplier/:id'      , supplierPermission.update , supplierController.supplierInfo)
 
 router.post('/supplier/created' , supplierController.supplierCreated)
 router.put('/supplier/updated'  , supplierController.supplierUpdate)

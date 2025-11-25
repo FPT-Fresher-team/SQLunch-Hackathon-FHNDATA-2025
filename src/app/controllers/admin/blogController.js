@@ -11,14 +11,17 @@ cloudinary.config({
 })
 
 class blogController {
-  // All Blogs
   async getBlogs(req, res, next) {
     try {
       const currentPage  = req.body.page
-      const sort         = req.body.sort
-      const filter       = req.body.filter
+      let sort           = req.body.sort
+      let filter         = req.body.filter
       const itemsPerPage = req.body.itemsPerPage
       const skip         = (currentPage - 1) * itemsPerPage
+
+      if (Object.keys(sort).length === 0) {
+        sort = { updatedAt: -1 }
+      }
 
       if (filter['_id']) {
         filter['_id'] = ObjectId.createFromHexString(filter['_id'])
@@ -55,15 +58,6 @@ class blogController {
   async allBlogs(req, res, next) {
     try {
       return res.render('admin/all/blog', { title: 'Blog List', layout: 'admin' })
-    } catch (error) {
-      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
-    }
-  }
-
-  // Create Blog
-  async blogCreate(req, res, next) {
-    try {
-      return res.render('admin/create/blog', { title: 'Create New Blog', layout: 'admin' })
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     }
@@ -114,7 +108,6 @@ class blogController {
     }
   }
 
-  // Detail Blog
   async getBlog(req, res, next) {
     try {
       const blogInfo = await blog.findOne({ _id: req.body.id }).lean()
@@ -123,17 +116,6 @@ class blogController {
       return res.json({ blogInfo: blogInfo })
     } catch (error) {
       return res.json({ error: error.message })
-    }
-  }
-
-  async blogInfo(req, res, next) {
-    try {
-      if (!checkForHexRegExp(req.params.id)) throw new Error('Invalid ID')
-      if (!(await blog.findOne({ _id: req.params.id }).lean())) throw new Error('Blog not found')
-
-      return res.render('admin/detail/blog', { layout: 'admin' })
-    } catch (error) {
-      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     }
   }
 
@@ -172,7 +154,6 @@ class blogController {
     }
   }
 
-  // Delete Blog
   async deleteBlog(req, res, next) {
     try {
       const { id } = req.body

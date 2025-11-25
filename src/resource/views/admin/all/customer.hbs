@@ -196,15 +196,102 @@
       </thead>
       <thead>
         <tr>
-          <td style="width:  5%">STT                   </td>
-          <td style="width: 35%">Total Amount             </td>
+          <td style="width:  5%">NO            </td>
+          <td style="width: 35%">Total Amount  </td>
           <td style="width: 25%">Payment Method</td>
-          <td style="width: 25%">Status            </td>
-          <td style="width: 10%">Details              </td>
+          <td style="width: 25%">Status        </td>
+          <td style="width: 10%">Details       </td>
         </tr>
       </thead>
       <tbody></tbody>
     </table>
+  </div>
+</div>
+
+<div class="order-details-container" id="detail-modal">
+  <div id="form">
+    <table id="table-1">
+      <thead>
+        <tr><td colspan="2">ORDER INFORMATION</td></tr>
+      </thead>
+      <tr>
+        <td>Order Code</td>
+        <td><input type="text" id="id" disabled></td>
+      </tr>
+      <tr>
+        <td>Order Date</td>
+        <td><input type="text" id="date" disabled></td>
+      </tr>
+      <tr>
+        <td>Customer</td>
+        <td style="display: flex; gap: 10px; align-items: center;">
+          <input type="text" id="name" disabled>
+          <a id="customer-link" href="" target="_blank">View</a>
+        </td>
+      </tr>
+      <tr>
+        <td>Phone</td>
+        <td><input type="text" id="phone" disabled></td>
+      </tr>
+      <tr>
+        <td>Address</td>
+        <td><input type="text" id="address" disabled></td>
+      </tr>
+      <tr>
+        <td>Notes</td>
+        <td><input type="text" id="note" disabled></td>
+      </tr>
+      <tr>
+        <td>Payment Method</td>
+        <td><select name="paymentMethod" id="paymentMethod"></select></td>
+      </tr>
+      <tr>
+        <td>Total Price</td>
+        <td><input type="text" id="total" disabled></td>
+      </tr>
+      <tr>
+        <td>Total After Discount</td>
+        <td><input type="text" id="new-total" disabled></td>
+      </tr>
+      <tr>
+        <td>Order Status</td>
+        <td><select name="status" id="status"></select></td>
+      </tr>
+      <tr>
+        <td>Rating Status</td>
+        <td><input name="status" id="isRated" disabled></input></td>
+      </tr>
+      <tr>
+        <td>Payment Status</td>
+        <td>
+          <select name="status" id="isPaid">
+            <option value="false" disabled>Not Paid</option>
+            <option value="true" disabled>Paid</option>
+          </select>
+        </td>
+      </tr>
+    </table>
+
+    <table id="table-2">
+      <thead>
+        <tr><td colspan="5">ORDER DETAILS</td></tr>
+      </thead>
+      <thead>
+        <tr>
+          <td>STT</td>
+          <td>Product Name</td>
+          <td>Số Lượng</td>
+          <td>Giá</td>
+          <td>Details</td>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
+      <button type="submit">Update</button>
+    </div>
   </div>
 </div>
 

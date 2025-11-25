@@ -334,7 +334,7 @@ async function createBlog() {
     title,
     summary,
     content,
-    featuredImage: createImgPath.path,
+    image: createImgPath.path,
     status: 'draft'
   }
 

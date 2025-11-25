@@ -6,16 +6,19 @@ const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 const { ObjectId } = require('mongodb')
 
 class allEmployeesController {
-  // all
   async getEmployees(req, res, next) {
     try {
       const currentPage  = req.body.page
-      const sort         = req.body.sort
-      const filter       = req.body.filter
+      let sort           = req.body.sort
+      let filter         = req.body.filter
       const itemsPerPage = req.body.itemsPerPage
       const skip         = (currentPage - 1) * itemsPerPage
       const userInfo     = await employee.findOne({ _id: req.cookies.uid }).lean()
       if (!userInfo) throw new Error('User not found')
+
+      if (Object.keys(sort).length === 0) {
+        sort = { updatedAt: -1 }
+      }
 
       if (filter['_id']) {
         filter['_id'] = ObjectId.createFromHexString(filter['_id'])
@@ -60,7 +63,6 @@ class allEmployeesController {
     }
   }
 
-  // update
   async getEmployee(req, res, next) {
     try {
       const [employeeInfo, storesInfo, positionsInfo] = await Promise.all([
@@ -73,17 +75,6 @@ class allEmployeesController {
       return res.json({employeeInfo: employeeInfo, storesInfo: storesInfo, positionsInfo: positionsInfo})
     } catch (error) {
       return res.json({error: error.message})
-    }
-  }
-
-  async employeeInfo(req, res, next) {
-   try {
-      if (!checkForHexRegExp(req.params.id)) throw new Error('error')
-      if (!(await employee.findOne({ _id: req.params.id }).lean())) throw new Error('error')
-
-      return res.render('admin/detail/employee', { layout: 'admin' })
-    } catch (error) {
-      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
     }
   }
 
@@ -101,33 +92,6 @@ class allEmployeesController {
       return res.json({message: 'Cập nhật thông tin thành công'})
     } catch (error) {
       return res.json({error: error.message})
-    }
-  }
-
-  // create
-  async getPositions(req, res, next) {
-    try {
-      const positions = await position.find().lean()
-      return res.json({data: positions})
-    } catch (error) {
-      return res.json({error: error.message})
-    }
-  }
-
-  async getStores(req, res, next) {
-    try {
-      const stores = await store.find().lean()
-      return res.json({data: stores})
-    } catch (error) {
-      return res.json({error: error.message})
-    }
-  }
-
-  async employeeCreate(req, res, next) {
-    try {
-      return res.render('admin/create/employee', { title: 'Thêm nhân viên mới', layout: 'admin' })
-    } catch (error) {
-      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     }
   }
 

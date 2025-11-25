@@ -32,7 +32,7 @@ const mainTitle        = document.querySelector('div.main-title').querySelector(
 const allProducts      = document.querySelector('div[class="products"]').querySelectorAll('div.product')
 const pagination       = document.querySelector('span.pagination')
 const urlSlug          = new URL(window.location).pathname.split('/').slice(1).filter(slug => slug !== 'all-products')
-const sortOptions      = {}
+let sortOptions        = {}
 const filterOptions    = { deletedAt: null, [urlSlug[0]]: urlSlug[1] }
 const currentPage      = { page: 1 }
 
@@ -58,10 +58,14 @@ const titles = {
   'che-khuyet-diem': 'Concealer Products',
   'son': 'Lipstick Products',
   'makeup': 'Makeup Products',
-  'skincare': 'Skincare Products'
+  'skincare': 'Skincare Products',
+  'top-selling': 'Top Selling Products',
 }
 
-if (titles[urlSlug[1]]) mainTitle.innerText = titles[urlSlug[1]]
+if (titles[urlSlug[1]]) {
+  mainTitle.innerText = titles[urlSlug[1]]
+  document.title = titles[urlSlug[1]]
+} 
 
 if (urlSlug.includes('skincare')) {
   skincareCategory.style.display = ''
@@ -73,7 +77,7 @@ if (urlSlug.includes('makeup')) {
 async function paginatingProducts(data_size) {
   pagination.querySelectorAll('p').forEach(p => p.remove())
   var totalPage = 1
-  for (var i = 0; i < data_size; i += 10) {
+  for (var i = 0; i < data_size; i += 9) {
     const newPage = document.createElement('p')
     if (i === 0) newPage.classList.add('current')
     newPage.innerText = `${totalPage}`
@@ -107,31 +111,29 @@ async function getProducts(products, sortOptions, filterOptions, currentPage) {
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {data, data_size} = await response.json()
 
-  window.setTimeout(function() {
-    products.forEach((product, index) => {
-      if (index < data.length) {
-        product.querySelector('span.discount-badge').textContent = formatPercentage((data[index].oldPrice - data[index].price) / data[index].oldPrice * 100) 
-        product.querySelector('img').setAttribute('src', data[index].img.path)
-        product.querySelector('img').setAttribute('alt', data[index].img.name)
-        product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
-        product.querySelector('p#price').textContent = formatNumber(data[index].price) 
-        product.querySelector('p#name').textContent = data[index].name
-        product.querySelector('span#rate-score').textContent = formatRate(data[index].rate) 
-        product.querySelector('p#sale-number').textContent =  'Sold: ' + data[index].saleNumber
-        product.querySelector('div.loading').style.display = 'none'
-        product.querySelectorAll('i').forEach((star, i) => {
-          star.style.color = 'black'
-        })
-        product.querySelectorAll('i').forEach((star, i) => {
-          if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'
-        })
-        product.style.display = ''
-        product.parentElement.setAttribute('href', '/all-products/product/' + data[index]._id)
-      } else {
-        product.style.display = 'none'
-      }
-    })
-  }, 1000)
+  products.forEach((product, index) => {
+    if (index < data.length) {
+      product.querySelector('span.discount-badge').textContent = formatPercentage((data[index].oldPrice - data[index].price) / data[index].oldPrice * 100) 
+      product.querySelector('img').setAttribute('src', data[index].img.path)
+      product.querySelector('img').setAttribute('alt', data[index].img.name)
+      product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
+      product.querySelector('p#price').textContent = formatNumber(data[index].price) 
+      product.querySelector('p#name').textContent = data[index].name
+      product.querySelector('span#rate-score').textContent = formatRate(data[index].rate) 
+      product.querySelector('p#sale-number').textContent =  'Sold: ' + data[index].saleNumber
+      product.querySelector('div.loading').style.display = 'none'
+      product.querySelectorAll('i').forEach((star, i) => {
+        star.style.color = 'black'
+      })
+      product.querySelectorAll('i').forEach((star, i) => {
+        if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'
+      })
+      product.style.display = ''
+      product.parentElement.setAttribute('href', '/all-products/product/' + data[index]._id)
+    } else {
+      product.style.display = 'none'
+    }
+  })
   
   return data_size
 }
@@ -144,10 +146,16 @@ function calcLeftPosition(value) {
 const sortButton = document.querySelector('div.sort').querySelectorAll('select')
 sortButton.forEach((button) => {
   button.onchange = function () {
+    sortButton.forEach(otherSelect => {
+      if (otherSelect !== this) otherSelect.value = '0'  // Reset to Default
+    })
     const sortType = button.id
     const sortValue = parseInt(button.value)
-    sortOptions[sortType] = sortValue
-    if (!sortValue) delete sortOptions[sortType]
+    if (sortValue === 0) {
+      sortOptions = {}
+    } else {
+      sortOptions = { [sortType]: sortValue }
+    }
     getProducts(allProducts, sortOptions, filterOptions, currentPage.page)
     checkingClearButton(clearSortBtn, clearFilterBtn)
   }

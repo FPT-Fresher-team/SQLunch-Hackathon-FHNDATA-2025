@@ -14,6 +14,8 @@ const port = process.env.PORT
 const cron = require('node-cron')
 const { getUsersWithBirthdayThisMonth } = require('./app/controllers/cron/createBirthdayVoucher') 
 const { setVoucherExpired } = require('./app/controllers/cron/setVoucherExpired') 
+const { setFlashDealProducts } = require('./app/controllers/cron/setFlashDealProducts')
+const { setTopSellingProducts } = require('./app/controllers/cron/setTopSellingProducts')
 
 db.connect()
 app.use(express.json({ limit: '50mb' }))
@@ -48,10 +50,12 @@ app.set('view options', { layout: 'other' })
 
 async function main() {
   // await getUsersWithBirthdayThisMonth()
-  await setVoucherExpired()
+  // await setVoucherExpired()
+  // await setFlashDealProducts()
+  // await setTopSellingProducts()
 }
 
-// main()
+main()
 
 route(app)
 server.listen(port, () => {

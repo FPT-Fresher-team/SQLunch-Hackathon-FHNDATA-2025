@@ -5,8 +5,6 @@ const productPermission = require('../../app/middleware/checkPermission').produc
 
 router.get('/'                       , productPermission.read   , productController.allProducts)
 router.get('/trash'                  , productPermission.read   , productController.trash)
-router.get('/product/create'         , productPermission.create , productController.createProduct)
-router.get('/product/:id'            , productPermission.update , productController.productInfo)
 
 router.post('/product/created'       , productController.productCreated)
 router.put('/product/updated'        , productController.productUpdated)

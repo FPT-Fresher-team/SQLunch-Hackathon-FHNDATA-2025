@@ -6,14 +6,17 @@ const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 const { ObjectId } = require('mongodb')
 
 class allUVouchersController {
-  // all
   async getVouchers(req, res, next) {
     try {
       const currentPage  = req.body.page
-      const sort         = req.body.sort
-      const filter       = req.body.filter
+      let sort           = req.body.sort
+      let filter         = req.body.filter
       const itemsPerPage = req.body.itemsPerPage
       const skip         = (currentPage - 1) * itemsPerPage
+
+      if (Object.keys(sort).length === 0) {
+        sort = { updatedAt: -1 }
+      }
 
       if (filter['_id']) {
         filter['_id'] = ObjectId.createFromHexString(filter['_id'])
@@ -48,7 +51,6 @@ class allUVouchersController {
     }
   }
 
-  // update
   async getVoucher(req, res, next) {
     try {
       const voucherInfo = await userVoucher.findOne({ _id: req.body.id }).lean()
@@ -88,16 +90,6 @@ class allUVouchersController {
     }
   }
 
-  async voucherInfo(req, res, next) {
-    try {
-      if (!checkForHexRegExp(req.params.id)) throw new Error('error')
-      if (!(await userVoucher.findOne({ _id: req.params.id }).lean())) throw new Error('error')
-      return res.render('admin/detail/userVoucher', { layout: 'admin' })
-    } catch (error) {
-      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
-    }
-  }
-
   async voucherUpdate(req, res, next) {
     try {
       await userVoucher.updateOne({ _id: req.body.id }, {
@@ -114,7 +106,6 @@ class allUVouchersController {
     }
   }
 
-  // create
   async getMembers(req, res, next) {
     try {
       const memberShip = await member.find().lean()
@@ -123,14 +114,6 @@ class allUVouchersController {
     } catch (error) {
       console.log(error)
       return res.json({error: error.message})
-    }
-  }
-
-  async voucherCreate(req, res, next) {
-    try {
-      return res.render('admin/create/userVoucher', { title: 'Thêm voucher mới', layout: 'admin' })
-    } catch (error) {
-      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
     }
   }
 
