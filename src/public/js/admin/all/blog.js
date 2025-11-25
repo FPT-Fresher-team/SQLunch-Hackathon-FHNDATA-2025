@@ -1,6 +1,6 @@
 importLinkCss('/css/admin/all/blogs.css')
 
-// MAIN TABLE
+// ALL
 const thead         = document.querySelector('table thead')
 const tbody         = document.querySelector('table tbody')
 const changeColumns = document.querySelector('i.fi.fi-rr-objects-column')
@@ -8,11 +8,12 @@ const sortOptions   = {}
 const filterOptions = { deletedAt: null }
 const currentPage   = { page: 1 }
 const dataSize      = { size: 0 }
+const searchInput   = document.querySelector('input#search-input')
 
 // Soft Delete
-let blogToDelete = null
 const deleteModal   = document.getElementById('id01')
-const deleteBtn     = document.getElementById('delete-button')
+const deleteButton  = document.getElementById('deletebtn')
+let blogToDelete    = null
 
 function generateColumns() {
   const columnsGroup = document.querySelector('div.checkbox-group')
@@ -38,10 +39,19 @@ async function getBlogs(sortOptions, filterOptions, currentPage, itemsPerPage) {
     }
   })
 
+  const payload = {
+    page: currentPage,
+    itemsPerPage: itemsPerPage,
+    sort: sortOptions,
+    filter: filterOptions
+  }
+
+  if (searchInput.value.trim()) payload.searchQuery = searchInput.value.trim()
+
   const response = await fetch('/admin/all-blogs/data/blogs', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ sort: sortOptions, filter: filterOptions, page: currentPage, itemsPerPage: itemsPerPage })
+    body: JSON.stringify(payload)
   })
 
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
@@ -114,8 +124,8 @@ async function getBlogs(sortOptions, filterOptions, currentPage, itemsPerPage) {
     const actionTd = document.createElement('td')
     actionTd.style.textAlign = 'center'
     actionTd.innerHTML = `
-      <button class="view-btn">View</button>
-      <button class="delete-btn" onclick="confirmDelete('${blog._id}', '${blog.title.replace(/'/g, "\\'")}')">
+      <button class="view-btn" id="${blog._id}">View</button>
+      <button class="delete-btn">
         Delete
       </button>
     `
@@ -128,29 +138,28 @@ async function getBlogs(sortOptions, filterOptions, currentPage, itemsPerPage) {
   pagination(getBlogs, sortOptions, filterOptions, currentPage, dataSize.size)
 }
 
-// Soft Delete Confirmation
-function confirmDelete(id, title) {
-  blogToDelete = id
-  document.querySelector('#confirm-message').textContent = `Delete blog "${title}"? This action cannot be undone.`
-  deleteModal.style.display = 'block'
-}
-
-deleteBtn.onclick = async () => {
+deleteButton.onclick = async function () {
   if (!blogToDelete) return
-  deleteBtn.classList.add('loading')
 
-  const res = await fetch('/admin/all-blogs/blog/soft-delete', {
+  deleteButton.classList.add('loading')
+
+  const response = await fetch('/admin/all-blogs/blog/soft-delete', {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ id: blogToDelete })
   })
 
-  deleteBtn.classList.remove('loading')
+  deleteButton.classList.remove('loading')
   deleteModal.style.display = 'none'
 
-  if (!res.ok) return pushNotification('Delete failed')
-  const { isValid, message } = await res.json()
+  if (!response.ok) {
+    pushNotification('Failed to delete')
+    return
+  }
+
+  const { isValid, message } = await response.json()
   pushNotification(message)
+
   if (isValid) {
     blogToDelete = null
     await getBlogs(sortOptions, filterOptions, currentPage.page, 10)
@@ -366,5 +375,19 @@ window.addEventListener('DOMContentLoaded', async () => {
   } catch (error) {
     console.error('Error loading data:', error)
     pushNotification(error)
+  }
+})
+
+// Đặt ở cuối file, sau khi DOM load
+document.addEventListener('click', function(e) {
+  if (e.target.classList.contains('delete-btn')) {
+    const row = e.target.closest('tr')
+    const blogtId = row.querySelector('.view-btn').id
+    const blogName = row.querySelector('td:nth-child(3)')?.textContent || 'this blog'
+    
+    blogToDelete = blogtId
+    document.querySelector('p#confirm-message').textContent = 
+      `Do you want to delete the blog "${blogName}"?`
+    deleteModal.style.display = 'flex'
   }
 })

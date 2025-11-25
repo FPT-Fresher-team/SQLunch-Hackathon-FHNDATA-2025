@@ -1,15 +1,10 @@
 const order = require('../../models/orderModel')
 const user = require('../../models/userModel')
 const product = require('../../models/productModel')
-const store = require('../../models/storeModel')
 const orderStatus = require('../../models/orderStatusModel')
 const paymentMethod = require('../../models/paymentMethodModel')
-const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 const employee = require('../../models/employeeModel')
 const { ObjectId } = require('mongodb')
-const kafka = require("kafkajs").Kafka
-const kafkaClient = new kafka({ brokers: ["localhost:9092"] })
-const producer = kafkaClient.producer()
 const nodemailer = require("nodemailer")
 
 class allOrdersController {

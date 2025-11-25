@@ -13,6 +13,6 @@ const voucher = new Schema({
   status      : { type: String, enum: ['active', 'expired'], default: 'active' },
   startDate   : { type: Date, default: Date.now },
   endDate     : { type: Date, default: Date.now },
-  usedAt      : { type: Date, default: null },
+  usedCount   : { type: Number, default: 0 },
 }, { timestamps: true })
 module.exports = mongoose.model('voucher', voucher, 'vouchers')

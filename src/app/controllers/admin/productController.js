@@ -3,10 +3,6 @@ const product = require('../../models/productModel')
 const brand = require('../../models/brandModel')
 const productStatus = require('../../models/productStatusModel')
 const cloudinary = require('cloudinary').v2
-const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
-const kafka = require("kafkajs").Kafka
-const kafkaClient = new kafka({ brokers: ["localhost:9092"] })
-const producer = kafkaClient.producer()
 const { ObjectId } = require('mongodb')
 
 cloudinary.config({
@@ -90,7 +86,7 @@ class allProductsController {
 
   async trash(req, res, next) {
     try {
-      return res.render('admin/all/trash', { title: 'Kho', layout: 'admin' })
+      return res.render('admin/all/trash', { title: 'Products Deleted', layout: 'admin' })
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     }
@@ -176,7 +172,7 @@ class allProductsController {
       await cloudinary.uploader.destroy(deleteImg)
       await product.deleteOne({ _id: req.body.id })
   
-      return res.json({isValid: true, message: 'Xoá sản phẩm thành công'})
+      return res.json({isValid: true, message: 'Move product to trash successfully'})
     } catch (error) {
       return res.json({error: error.message})
     }
@@ -185,7 +181,7 @@ class allProductsController {
   async restore(req, res, next) {
     try {
       await product.updateOne({ _id: req.body.id}, { deletedAt: null })
-      return res.json({message: 'Khôi phục sản phẩm thành công'})
+      return res.json({message: 'Restore product successfully'})
     } catch (error) {
       return res.json({error: error.message})
     }

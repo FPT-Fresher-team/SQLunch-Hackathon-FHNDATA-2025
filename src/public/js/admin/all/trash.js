@@ -2,9 +2,6 @@ importLinkCss('/css/admin/all/trash.css')
 
 const tbody         = document.querySelector('table').querySelector('tbody')
 const thead         = document.querySelector('table').querySelector('thead')
-const paginationBtn = document.querySelector('select[name="pagination"]')
-const changeColumns = document.querySelector('i.fi.fi-rr-objects-column')
-const submitChange  = document.querySelector('button.generate-columns')
 const sortOptions   = {}
 const filterOptions = {}
 const currentPage   = { page: 1 }
@@ -14,25 +11,6 @@ const restoreForm   = document.forms['restore-form']
 const deleteButton  = document.getElementById('delete-button')
 const restoreButton = document.getElementById('restore-button')
 var productId;
-
-function generateColumns() {
-  const columnsGroup = document.querySelector('div.checkbox-group')
-  const inputList = `
-    <label><input type="checkbox" value="_id" checked> Customer Code</label>
-    <label><input type="checkbox" value="name" checked> Customer Name</label>
-    <label><input type="checkbox" value="address" checked> Address</label>
-    <label><input type="checkbox" value="quantity" checked> Order Count</label>
-    <label><input type="checkbox" value="revenue" checked> Total Revenue</label>
-    <label><input type="checkbox" value="email"> Email</label>
-    <label><input type="checkbox" value="phone"> Phone</label>
-    <label><input type="checkbox" value="gender"> Gender</label>
-    <label><input type="checkbox" value="memberCode"> Member Rank</label>
-    <label><input type="checkbox" value="isActive"> Status</label>
-    <label><input type="checkbox" value="dob"> Date of Birth</label>
-    <label><input type="checkbox" value="lastLogin"> Last Login</label>
-  `
-  columnsGroup.insertAdjacentHTML('beforeend', inputList)
-} 
 
 async function getDeletedProducts(sortOptions, filterOptions, currentPage) {
   tbody.querySelectorAll('tr').forEach((tr, index) => {
@@ -85,7 +63,7 @@ async function getDeletedProducts(sortOptions, filterOptions, currentPage) {
 }
 
 function clickToDelete(clicked_id) {
-  document.getElementById('id01').style.display='block'
+  document.getElementById('delete-modal').classList.add('active')
   productId = clicked_id
 }
 
@@ -96,17 +74,17 @@ deleteButton.onclick = async function () {
     body: JSON.stringify({id: productId})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {isValid, message} = await response.json()
+  const {message, error} = await response.json()
+  if (error) return pushNotification(error)
 
   pushNotification(message)
-  
-  if (!isValid) return
-  setTimeout(() => window.location.reload(), 2000)
+  document.getElementById('delete-modal').classList.remove('active')
+  getDeletedProducts(sortOptions, filterOptions, currentPage.page)
 }
 
 //restore button
 function clickToRestore(clicked_id) {
-  document.getElementById('id00').style.display='block'
+  document.getElementById('restore-modal').classList.add('active')
   productId = clicked_id
 }
 
@@ -117,28 +95,22 @@ restoreButton.onclick = async function () {
     body: JSON.stringify({id: productId})
   })
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {isValid, message} = await response.json()
+  const {message, error} = await response.json()
+  if (error) return pushNotification(error)
 
   pushNotification(message)
-  
-  if (!isValid) return
-  setTimeout(() => window.location.reload(), 3000)
-}
-
-changeColumns.onclick = function() {
-  const columnLists = document.querySelector('div.checkbox-group')
-  columnLists.style.display === 'none' ? columnLists.style.display = 'block' : columnLists.style.display = 'none'
-}
-
-submitChange.onclick = async function() {
-  await getCustomers(sortOptions, filterOptions, currentPage.page, 10)
+  document.getElementById('restore-modal').classList.remove('active')
+  getDeletedProducts(sortOptions, filterOptions, currentPage.page)
 }
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
   try {
-    generateColumns()
     await getDeletedProducts(sortOptions, filterOptions, currentPage.page)
   } catch (error) {
     console.error('Error loading data:', error)
   }
 })
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('active')
+}

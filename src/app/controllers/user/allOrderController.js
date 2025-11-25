@@ -219,8 +219,7 @@ class allOrderController {
             await newUserVoucher.save()
             if (voucherInfo) {
               await voucher.updateOne({ _id: voucherInfo._id }, {
-                usedAt: new Date(),
-                status: 'used'
+                usedCount: { $inc: 1 }
               })
             } else if (userVoucherInfo) {
               await userVoucher.updateOne({ _id: userVoucherInfo._id }, {
@@ -375,33 +374,6 @@ class allOrderController {
         await product.bulkWrite(bulkOps)
       }
 
-      // try {
-      //   await producer.connect()
-      //   await producer.send({
-      //     topic: 'create',
-      //     messages: [{ value: JSON.stringify({
-      //       topic_type: 'order',
-      //       body: newOrder
-      //     })}],
-      //   })
-
-      //   setTimeout(async function() {
-      //     await producer.connect()
-      //     await producer.send({
-      //       topic: 'purchase',
-      //       messages: [{ value: JSON.stringify({
-      //         user_id   : customerInfo.userId,
-      //         order_id  : newOrder._id,
-      //         totalOrderPrice : totalNewOrderPrice,
-      //         timestamp : new Date(),
-      //       })}],
-      //     })
-      //   }, 5000)
-        
-        
-      // } catch (error) {
-      //   console.log(error)
-      // }  
       return res.json({id: newOrder._id})
     } catch (error) {
       return res.json({error: error.message})
@@ -528,7 +500,7 @@ class allOrderController {
       const { id, email } = req.query
       const orderInfo = await order.findOne({ _id: id }).lean()
       const orderStatus = orderInfo.status
-      if (orderStatus !== 'delivered') throw new Error('Dơn hàng chưa được giao')
+      if (orderStatus !== 'delivered') throw new Error('Order status invalid')
       await order.updateOne({ _id: id }, {
         status: 'done'
       })

@@ -2,8 +2,6 @@ const employee = require('../../models/employeeModel')
 const store = require('../../models/storeModel')
 const position = require('../../models/positionModel')
 const bcrypt = require('bcryptjs')
-const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
-const { ObjectId } = require('mongodb')
 
 class allEmployeesController {
   async getEmployees(req, res, next) {

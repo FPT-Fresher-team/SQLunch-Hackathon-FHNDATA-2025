@@ -2,6 +2,7 @@
   <div class="header">
     <div class="board-title">
       <p>Blogs: </p>
+      <p class="trash"><a href="/admin/all-blogs/trash">Deleted</a></p>
     </div>
 
     {{> dateFilter}}
@@ -9,13 +10,6 @@
 
   <div class="control-bar">
     <div class="search">
-      <select id="search-type" class="search-btn">
-        <option value="">Search by</option>
-        <option value="title" selected>Title</option>
-        <option value="category.name">Category</option>
-        <option value="tags">Tags</option>
-        <option value="status">Status</option>
-      </select>
       <input type="text" id="search-input" placeholder="Search blog..." />
     </div>
 
@@ -191,15 +185,26 @@
   </div>
 </div>
 
-<!-- SOFT DELETE CONFIRMATION MODAL -->
-<div id="id01" class="modal">
+<div class="modal" id="id01">
   <div class="modal-content">
-    <p id="confirm-message">Are you sure you want to delete this blog?</p>
-    <div class="modal-buttons">
-      <button class="close-modal">Cancel</button>
-      <button id="delete-button">Delete</button>
+    <div class="modal-header">
+      <i class="fi fi-rr-exclamation"></i>
+      <h3>Confirm Delete</h3>
+    </div>
+    <div class="modal-body">
+      <p id="confirm-message" style="font-weight:600; color:#dc2626;"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="cancelbtn" onclick="document.getElementById('id01').style.display='none'">
+        Cancel
+      </button>
+      <button class="deletebtn" id="deletebtn">
+        Delete
+      </button>
     </div>
   </div>
 </div>
+
+<form style="display: none;" name="delete-form" method="post"></form>
 
 <script type="module" src="/js/admin/all/blog.js"></script>

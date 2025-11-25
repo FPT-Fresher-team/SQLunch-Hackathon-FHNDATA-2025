@@ -1,8 +1,6 @@
 const voucher = require('../../models/voucherModel')
-const employee = require('../../models/employeeModel')
 const order = require('../../models/orderModel')
 const member = require('../../models/memberModel')
-const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 const { ObjectId } = require('mongodb')
 
 class allVouchersController {

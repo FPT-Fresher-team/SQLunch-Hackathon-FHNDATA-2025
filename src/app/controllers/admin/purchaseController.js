@@ -3,7 +3,6 @@ const purchase = require('../../models/purchaseModel')
 const supplier = require('../../models/supplierModel')
 const store = require('../../models/storeModel')
 const employee = require('../../models/employeeModel')
-const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 const { ObjectId } = require('mongodb')
 
 class adminController {

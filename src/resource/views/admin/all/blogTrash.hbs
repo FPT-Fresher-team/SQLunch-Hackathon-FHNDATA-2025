@@ -1,10 +1,11 @@
-<div class="admin-trash-products-container">
+<div class="admin-trash-blogs-container">
   <div class="board-title">
     <p>Deleted:</p>
-    <p class="products"><a href="/admin/all-products">Product</a></p>
+    <p class="blogs"><a href="/admin/all-blogs">Blog</a></p>
   </div>
 
   <div class="table">
+    {{> exportFileButton}}
     <table class="all-items">
       <thead>
         <tr>
@@ -39,16 +40,16 @@
   <div class="modal-content">
     <div class="modal-header success">
       <i class="fi fi-rr-refresh"></i>
-      <h3>Restore Product</h3>
+      <h3>Restore Blog</h3>
     </div>
     <div class="modal-body">
-      <p>Do you want to <strong>restore</strong> this product?</p>
-      <p class="product-name">{{this.name}}</p>
+      <p>Do you want to <strong>restore</strong> this blog?</p>
+      <p class="blog-name">{{this.name}}</p>
       <p class="note">It will appear again in your store.</p>
     </div>
     <div class="modal-footer">
       <button type="button" class="cancelbtn" onclick="closeModal('restore-modal')">Cancel</button>
-      <button type="button" class="restorebtn" id="restore-button">Restore Product</button>
+      <button type="button" class="restorebtn" id="restore-button">Restore Blog</button>
     </div>
   </div>
 </div>
@@ -60,8 +61,8 @@
       <h3>Permanent Delete</h3>
     </div>
     <div class="modal-body">
-      <p>Are you sure you want to <strong>permanently delete</strong> this product?</p>
-      <p class="product-name">{{this.name}}</p>
+      <p>Are you sure you want to <strong>permanently delete</strong> this blog?</p>
+      <p class="blog-name">{{this.name}}</p>
       <p class="note warning">This action <strong>cannot be undone</strong>. All data will be lost forever.</p>
     </div>
     <div class="modal-footer">
@@ -74,4 +75,4 @@
 <form style="display: none" name="delete-form" method="post"></form>
 <form style="display: none" name="restore-form" method="get"></form>
 
-<script src="/js/admin/all/trash.js"></script>
+<script src="/js/admin/all/blogTrash.js"></script>

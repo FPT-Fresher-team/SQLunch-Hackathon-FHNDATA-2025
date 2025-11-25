@@ -1,17 +1,17 @@
 /* ==================== TRASH/DELETED ITEMS PAGE ==================== */
-p.products {
+p.products, p.blogs {
   font-size: 15px !important;
   padding: 10px !important;
   border: none;
 }
 
-p.products a {
+p.products, p.blogs a {
   text-decoration: none;
   color: #2B6377;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-p.products a:hover {
+p.products, p.blogs a:hover {
   color: #94CCDF;
   text-decoration: underline;
 }
