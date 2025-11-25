@@ -1,0 +1,260 @@
+/**
+ * ============================================
+ * FILE: src/resource/views/admin/analyticsView.hbs
+ * ============================================
+ * 
+ * CHỨC NĂNG:
+ * - Hiển thị Analytics Dashboard cho admin
+ * - Load dữ liệu từ APIs
+ * - Render interactive UI với cards, tables, charts
+ * 
+ * SECTIONS:
+ * 1. Summary Cards: Tổng sản phẩm, đơn, doanh thu, views, sales
+ * 2. Top Viewed Items: Sản phẩm được xem ≥5s nhiều nhất
+ * 3. Top Purchased: Sản phẩm bán chạy nhất
+ * 4. Top Combined: Sản phẩm hot nhất (xem + mua)
+ * 
+ * LOAD DATA:
+ * - Fetch từ các endpoints: /admin/analytics/*
+ * - Render thành tables/cards
+ * - Auto-update khi load
+ */
+
+<div class="container-fluid mt-4">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="mb-4">📊 Analytics Dashboard</h1>
+    </div>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="row" id="summary-section">
+    <div class="col-lg-3 col-md-6 mb-4">
+      <div class="card border-left-primary">
+        <div class="card-body">
+          <h6 class="text-primary">Tổng Sản Phẩm</h6>
+          <h3 id="total-products">-</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+      <div class="card border-left-info">
+        <div class="card-body">
+          <h6 class="text-info">Tổng Đơn Hàng</h6>
+          <h3 id="total-orders">-</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+      <div class="card border-left-success">
+        <div class="card-body">
+          <h6 class="text-success">Tổng Views (≥5s)</h6>
+          <h3 id="total-views">-</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-3 col-md-6 mb-4">
+      <div class="card border-left-warning">
+        <div class="card-body">
+          <h6 class="text-warning">Tổng Sales</h6>
+          <h3 id="total-sales">-</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Viewed Items -->
+  <div class="row mt-4">
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header bg-success text-white">
+          <h5 class="mb-0">👁️ Sản Phẩm Được Xem Nhiều Nhất (≥5s)</h5>
+        </div>
+        <div class="card-body">
+          <div id="top-viewed" class="table-responsive">
+            <p class="text-muted">Đang tải...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Purchased Items -->
+    <div class="col-lg-6">
+      <div class="card">
+        <div class="card-header bg-info text-white">
+          <h5 class="mb-0">🛍️ Sản Phẩm Bán Chạy Nhất</h5>
+        </div>
+        <div class="card-body">
+          <div id="top-purchased" class="table-responsive">
+            <p class="text-muted">Đang tải...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Top Combined Items -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">⭐ Sản Phẩm Hot Nhất (Xem + Mua)</h5>
+        </div>
+        <div class="card-body">
+          <div id="top-combined" class="table-responsive">
+            <p class="text-muted">Đang tải...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .border-left-primary {
+    border-left: 4px solid #4e73df !important;
+  }
+  .border-left-info {
+    border-left: 4px solid #17a2b8 !important;
+  }
+  .border-left-success {
+    border-left: 4px solid #1cc88a !important;
+  }
+  .border-left-warning {
+    border-left: 4px solid #f6c23e !important;
+  }
+
+  .rank-badge {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+
+  .table-stats {
+    font-size: 13px;
+  }
+
+  .stat-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: 500;
+    margin: 2px;
+    font-size: 12px;
+  }
+
+  .stat-badge.view {
+    background-color: #d1ecf1;
+    color: #0c5460;
+  }
+
+  .stat-badge.purchase {
+    background-color: #d4edda;
+    color: #155724;
+  }
+
+  .stat-badge.interaction {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async function() {
+    try {
+      // Load summary
+      const summaryRes = await fetch('/admin/analytics/summary')
+      const summaryData = await summaryRes.json()
+      if (summaryData.success) {
+        document.getElementById('total-products').textContent = summaryData.data.totalProducts
+        document.getElementById('total-orders').textContent = summaryData.data.totalOrders
+        document.getElementById('total-views').textContent = summaryData.data.totalViews.toLocaleString('vi-VN')
+        document.getElementById('total-sales').textContent = summaryData.data.totalSales.toLocaleString('vi-VN')
+      }
+
+      // Load top viewed
+      const viewedRes = await fetch('/admin/analytics/top-viewed?limit=5')
+      const viewedData = await viewedRes.json()
+      if (viewedData.success) {
+        renderTable('top-viewed', viewedData.data, 'viewed')
+      }
+
+      // Load top purchased
+      const purchasedRes = await fetch('/admin/analytics/top-purchased?limit=5')
+      const purchasedData = await purchasedRes.json()
+      if (purchasedData.success) {
+        renderTable('top-purchased', purchasedData.data, 'purchased')
+      }
+
+      // Load top combined
+      const combinedRes = await fetch('/admin/analytics/top-combined?limit=10')
+      const combinedData = await combinedRes.json()
+      if (combinedData.success) {
+        renderCombinedTable('top-combined', combinedData.data)
+      }
+    } catch (error) {
+      console.error('Error loading analytics:', error)
+    }
+  })
+
+  function renderTable(elementId, items, type) {
+    const container = document.getElementById(elementId)
+    if (items.length === 0) {
+      container.innerHTML = '<p class="text-muted">Không có dữ liệu</p>'
+      return
+    }
+
+    let html = '<table class="table table-sm table-hover mb-0"><tbody>'
+    items.forEach(item => {
+      const count = type === 'viewed' ? item.viewCount : item.purchaseCount
+      const badgeClass = type === 'viewed' ? 'view' : 'purchase'
+      html += `
+        <tr>
+          <td><span class="rank-badge">#${item.rank}</span></td>
+          <td>
+            <div><strong>${item.name}</strong></div>
+            <small class="text-muted">${item.category || 'N/A'} - ${item.brand || 'N/A'}</small>
+          </td>
+          <td class="text-right">
+            <span class="stat-badge ${badgeClass}">${count} ${type === 'viewed' ? 'views' : 'sold'}</span>
+          </td>
+        </tr>
+      `
+    })
+    html += '</tbody></table>'
+    container.innerHTML = html
+  }
+
+  function renderCombinedTable(elementId, items) {
+    const container = document.getElementById(elementId)
+    if (items.length === 0) {
+      container.innerHTML = '<p class="text-muted">Không có dữ liệu</p>'
+      return
+    }
+
+    let html = '<table class="table table-sm table-hover mb-0"><thead><tr><th>Rank</th><th>Sản Phẩm</th><th>Xem</th><th>Mua</th><th>Tương Tác</th></tr></thead><tbody>'
+    items.forEach(item => {
+      html += `
+        <tr>
+          <td><span class="rank-badge" style="font-size: 12px;">#${item.rank}</span></td>
+          <td>
+            <div><strong>${item.name}</strong></div>
+            <small class="text-muted">${item.category || 'N/A'} - ${item.brand || 'N/A'}</small>
+          </td>
+          <td><span class="stat-badge view">${item.viewCount}</span></td>
+          <td><span class="stat-badge purchase">${item.purchaseCount}</span></td>
+          <td><span class="stat-badge interaction">${item.totalInteraction}</span></td>
+        </tr>
+      `
+    })
+    html += '</tbody></table>'
+    container.innerHTML = html
+  }
+</script>

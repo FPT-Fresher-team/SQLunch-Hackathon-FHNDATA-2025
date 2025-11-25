@@ -66,7 +66,7 @@ async function getStores(sortOptions, filterOptions, currentPage, itemsPerPage) 
   tbody.querySelectorAll('tr').forEach(tr => tr.remove())
 
   data.forEach((item, index) => {
-    const rowIndex = index + (currentPage.page - 1) * itemsPerPage + 1
+    const rowIndex = index + (currentPage - 1) * itemsPerPage + 1
     const tr = document.createElement('tr')
 
     const tdNo = document.createElement('td')

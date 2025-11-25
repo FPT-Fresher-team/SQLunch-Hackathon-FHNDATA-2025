@@ -29,6 +29,7 @@ function generateColumns() {
     <label><input type="checkbox" value="quantity" checked> Stock</label>
     <label><input type="checkbox" value="status"> Status</label>
     <label><input type="checkbox" value="rate"> Rating</label>
+    <label><input type="checkbox" value="viewCount"> View Count</label>
     <label><input type="checkbox" value="saleNumber"> Sales Count</label>
     <label><input type="checkbox" value="rateNumber"> Review Count</label>
   `
@@ -137,6 +138,9 @@ async function getProducts(sortOptions, filterOptions, currentPage, itemsPerPage
       }
       else if (col.value === 'brand') {
         td.textContent = item.brand?.name || value
+      } else if (col.value === 'viewCount') {
+        td.textContent = value ?? 0
+        td.style.textAlign = 'right'
       }
       else {
         td.textContent = value ?? ''

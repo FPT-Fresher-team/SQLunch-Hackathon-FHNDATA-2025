@@ -1,4 +1,5 @@
 importLinkCss('/css/user/detailProduct.css')
+// importScript('/js/user/trackProductView.js')
 
 const getAddToCart        = document.querySelector('div.add-to-cart')
 const getBuyNow           = document.querySelector('div.buy-now')

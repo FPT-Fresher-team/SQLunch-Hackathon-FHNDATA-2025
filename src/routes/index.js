@@ -22,6 +22,7 @@ const adminAttributesRoute  = require('./admin/attributeRoute')
 const adminProfileRoute     = require('./admin/profileRoute')
 const adminLogOutRoute      = require('./admin/logOutRoute')
 const adminRefreshRoute     = require('./admin/refreshToken')
+const analyticsRoute        = require('./admin/analyticsRoute')
 
 // user
 const homeRoute           = require('./user/homeRoute')
@@ -36,6 +37,8 @@ const advancedSearchRoute = require('./user/advancedSearchRoute')
 const logOutRoute         = require('./user/logOutRoute')
 const chatRoute           = require('./user/chatRoute')
 const refreshRoute        = require('./user/refreshToken')
+const trackRoute          = require('./user/trackRoute')
+const cartTrackingRoute   = require('./user/cartTrackingRoute')
 
 // login
 const authenticationRoute    = require('./auth/authenticationRoute')
@@ -60,6 +63,7 @@ function route(app) {
   app.use('/admin/all-suppliers'     , checkAdmin, adminSupplierRoute)
   app.use('/admin/all-attributes'    , checkAdmin, adminAttributesRoute)
   app.use('/admin/all-personal-info' , checkAdmin, adminProfileRoute)
+  app.use('/admin/analytics'         , checkAdmin, analyticsRoute)
   app.use('/admin/log-out'           , checkAdmin, adminLogOutRoute)
   app.use('/admin/refresh-token'     , checkAdmin, refreshRoute)
   app.use('/admin/*', function(req, res) {
@@ -79,6 +83,8 @@ function route(app) {
   app.use('/advanced-search', checkUser, advancedSearchRoute)
   app.use('/log-out'        , checkUser, logOutRoute)
   app.use('/api/chat'       , checkUser, chatRoute)
+  app.use('/api'            , trackRoute)
+  app.use('/api'            , cartTrackingRoute)
   app.use('/api/blogs'      , checkUser, allBlogsRoute)
   app.use('/refresh-token'  , refreshRoute)
 

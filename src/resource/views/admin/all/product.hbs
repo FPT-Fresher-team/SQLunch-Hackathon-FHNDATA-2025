@@ -8,6 +8,60 @@
     {{> dateFilter}}
   </div>
 
+  {{!-- <div class="control-bar">
+    <div class="search">
+      <select id="search-type" class="search-btn">
+        <option value="">Search by</option>
+        <option value="_id" selected>ID</option>
+        <option value="name">Name</option>
+        <option value="brand">Brand</option>
+      </select>
+      <input type="text" id="search-input" name="name" placeholder="Search product" />
+    </div>
+
+    <div class="sort-filter">
+      <div class="sort">
+        <label>Sort by:</label>
+        <select id="price" class="filter-btn">
+          <option value="">Price</option>
+          <option value="-1">Price High - Low</option>
+          <option value="1">Price Low - High</option>
+        </select>
+        <select id="rate" class="filter-btn">
+          <option value="">Rating</option>
+          <option value="-1">Rating High - Low</option>
+          <option value="1">Rating Low - High</option>
+        </select>
+        <select id="saleNumber" class="filter-btn">
+          <option value="">Sales Volume</option>
+          <option value="-1">Sales Volume High - Low</option>
+          <option value="1">Sales Volume Low - High</option>
+        </select>
+      </div>
+
+      <div class="filter">
+        <label>Filter:</label>
+        <select id="categories" class="filter-btn">
+          <option value="">Product Type</option>
+          <option value="skincare">Skincare</option>
+          <option value="makeup">Makeup</option>
+        </select>
+        <select id="brand" class="filter-btn">
+          <option value="">Brand</option>
+        </select>
+        <button id="clear-sort-filter" style="display: none">Clear Filter</button>
+      </div>
+    </div>
+
+    <button class="create-btn" id="create-btn">
+      <i class="fi fi-rr-plus"></i>
+      <span>Add Product</span>
+    </button>
+  </div> --}}
+
+  <!-- ANALYTICS SECTION -->
+
+  </script>
   <div class="control-bar">
     <div class="search">
       <select id="search-type" class="search-btn">
@@ -24,18 +78,18 @@
         <label>Sort by:</label>
         <select id="price" class="filter-btn">
           <option value="">Price</option>
-          <option value="1">Price High - Low</option>
-          <option value="-1">Price Low - High</option>
+          <option value="-1">Price High - Low</option>
+          <option value="1">Price Low - High</option>
         </select>
         <select id="rate" class="filter-btn">
           <option value="">Rating</option>
-          <option value="1">Rating High - Low</option>
-          <option value="-1">Rating Low - High</option>
+          <option value="-1">Rating High - Low</option>
+          <option value="1">Rating Low - High</option>
         </select>
         <select id="saleNumber" class="filter-btn">
           <option value="">Sales Volume</option>
-          <option value="1">Sales Volume High - Low</option>
-          <option value="-1">Sales Volume Low - High</option>
+          <option value="-1">Sales Volume High - Low</option>
+          <option value="1">Sales Volume Low - High</option>
         </select>
       </div>
 
@@ -58,7 +112,6 @@
       <span>Add Product</span>
     </button>
   </div>
-
   <div class="table">
     {{> exportFileButton}}
     <table class="all-items">

@@ -1,3 +1,9 @@
 node_modules/
 .vscode
 .env
+docker-compose.yml
+TestClusterCheck.js
+TestCondumer.js
+TestCreateTopic.js
+Testproducer.js
+ANALYTICS_ARCHITECTURE.md
