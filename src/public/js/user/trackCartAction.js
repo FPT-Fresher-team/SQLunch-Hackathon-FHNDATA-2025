@@ -102,6 +102,27 @@
         }
       })
     })
+
+    // ===== Remove Button Tracking (all-orders page) =====
+    // Delegate clicks so dynamically-created delete buttons are handled.
+    document.addEventListener('click', function(e) {
+      const delBtn = e.target.closest('.delete-button')
+      if (!delBtn) return
+
+      const row = delBtn.closest('tr')
+      if (!row) return
+
+      // Try to find product id from checkbox, row data, or button dataset
+      const checkbox = row.querySelector('input[type="checkbox"]')
+      const qtyInput = row.querySelector('input[type="number"]')
+      const productId = (checkbox && checkbox.id) || row.dataset.id || delBtn.dataset.productId
+      const quantity = parseInt((qtyInput && qtyInput.value) || (checkbox && checkbox.value)) || 1
+
+      if (productId) {
+        // Send remove_from_cart tracking
+        trackCartAction(productId, 'remove_from_cart', quantity)
+      }
+    })
   })
 
   // Expose tracking function globally for manual tracking if needed

@@ -75,7 +75,7 @@ class conversionMetricsService {
     }
   }
 
-  // Add to Cart Rate: (Total add_to_cart actions) / (Total views from Product.viewCount)
+  // Add to Cart Rate: (Net add_to_cart = add_to_cart - remove_from_cart) / (Total views from Product.viewCount)
   async getAddToCartRate() {
     try {
       const totalViews = await Product.aggregate([
@@ -83,20 +83,35 @@ class conversionMetricsService {
         { $group: { _id: null, total: { $sum: '$viewCount' } } }
       ])
 
-      const totalAddToCart = await CartInteraction.countDocuments({
-        action: 'add_to_cart',
-        deletedAt: null
+      // Get counts by action
+      const cartCounts = await CartInteraction.aggregate([
+        { $match: { deletedAt: null } },
+        {
+          $group: {
+            _id: '$action',
+            count: { $sum: 1 }
+          }
+        }
+      ])
+
+      // Calculate net adds
+      const countMap = {}
+      cartCounts.forEach(item => {
+        countMap[item._id] = item.count
       })
+      const totalAddToCart = countMap['add_to_cart'] || 0
+      const totalRemoveFromCart = countMap['remove_from_cart'] || 0
+      const netAdds = totalAddToCart - totalRemoveFromCart
 
       const totalViewCount = totalViews.length > 0 ? totalViews[0].total : 0
-      return totalViewCount > 0 ? Number((totalAddToCart / totalViewCount * 100).toFixed(2)) : 0
+      return totalViewCount > 0 ? Number(((netAdds >= 0 ? netAdds : 0) / totalViewCount * 100).toFixed(2)) : 0
     } catch (error) {
       console.error('Error calculating add to cart rate:', error)
       throw error
     }
   }
 
-  // Add to Cart Rate by Product - using Product.viewCount from DB
+  // Add to Cart Rate by Product - using Product.viewCount and net adds (add_to_cart - remove_from_cart)
   async getAddToCartRateByProduct(limit = 10) {
     try {
       // Get all products with viewCount > 0
@@ -109,35 +124,43 @@ class conversionMetricsService {
         return []
       }
 
-      // Get add to cart count by product from CartInteraction
+      // Get add and remove counts by product from CartInteraction
       const cartData = await CartInteraction.aggregate([
-        { $match: { action: 'add_to_cart', deletedAt: null } },
+        { $match: { deletedAt: null } },
         {
           $group: {
-            _id: '$productId',
-            addToCartCount: { $sum: 1 }
+            _id: {
+              productId: '$productId',
+              action: '$action'
+            },
+            count: { $sum: 1 }
           }
         }
       ])
 
-      // Create map from add_to_cart data
+      // Create map from cart data: {productId_action: count}
       const cartMap = {}
       cartData.forEach(cart => {
-        cartMap[String(cart._id)] = cart.addToCartCount
+        const key = `${String(cart._id.productId)}_${cart._id.action}`
+        cartMap[key] = cart.count
       })
 
-      // Merge product data with cart data and calculate rate
+      // Merge product data with cart data and calculate net add-to-cart rate
       const merged = products.map(product => {
         const productIdStr = String(product._id)
-        const addToCartCount = cartMap[productIdStr] || 0
+        const addToCartCount = cartMap[`${productIdStr}_add_to_cart`] || 0
+        const removeFromCartCount = cartMap[`${productIdStr}_remove_from_cart`] || 0
+        const netAdds = addToCartCount - removeFromCartCount
         const viewCount = product.viewCount || 0
-        const rate = viewCount > 0 ? (addToCartCount / viewCount) * 100 : 0
+        const rate = viewCount > 0 ? ((netAdds >= 0 ? netAdds : 0) / viewCount) * 100 : 0
 
         return {
           productId: product._id,
           productName: product.name || 'Unknown',
           viewCount: viewCount,
           addToCart: addToCartCount,
+          removeFromCart: removeFromCartCount,
+          netAdds: netAdds,
           rate: Number(rate.toFixed(2))
         }
       })
