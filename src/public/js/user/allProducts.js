@@ -37,9 +37,6 @@ const filterOptions    = { deletedAt: null, [urlSlug[0]]: urlSlug[1] }
 const currentPage      = { page: 1 }
 
 const titles = {
-  'flash-sale': 'Flash Sale Products',
-  'hot': 'Hot Products',
-  'new-arrival': 'New Arrivals',
   'xit-khoang': 'Mineral Mist Products',
   'mat-na': 'Mask Products',
   'serum': 'Serum Products',
@@ -59,7 +56,16 @@ const titles = {
   'son': 'Lipstick Products',
   'makeup': 'Makeup Products',
   'skincare': 'Skincare Products',
-  'top-selling': 'Top Selling Products',
+}
+
+if (urlSlug[1] === 'true') {
+  if (urlSlug[0] === 'isFlashDeal') {
+    mainTitle.innerText = 'Flash Deal Products'
+  } else if (urlSlug[0] === 'isNewArrival') {
+    mainTitle.innerText = 'New Arrival Products'
+  } else if (urlSlug[0] === 'isTopSelling') {
+    mainTitle.innerText = 'TopSelling Products'
+  }
 }
 
 if (titles[urlSlug[1]]) {
