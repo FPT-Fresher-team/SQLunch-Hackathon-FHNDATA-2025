@@ -99,7 +99,7 @@ async function getCustomers(sortOptions, filterOptions, currentPage, itemsPerPag
   })
 
   const headLink = document.createElement('td')
-  headLink.textContent = 'Details'
+  headLink.textContent = 'Actions'
   trHead.appendChild(headLink)
 
   thead.appendChild(trHead)
@@ -130,7 +130,7 @@ async function getCustomers(sortOptions, filterOptions, currentPage, itemsPerPag
 
     const openButton = document.createElement('td')
     openButton.style.textAlign = 'center'
-    openButton.innerHTML = `<button id="${item._id}">View</button>`
+    openButton.innerHTML = `<button class="view-btn" id="${item._id}"><i class="fi fi-rr-eye"></i></button>`
     openButton.onclick = async function() {
       await openCustomerDetail(item._id)
     }
@@ -205,7 +205,7 @@ async function openCustomerDetail(customerId) {
         <td>${order.paymentMethod.name}</td>
         <td>${order.orderStatus.name}</td>
         <td style="text-align:center">
-          <button class="view-order-btn" data-id="${order._id}">View</button>
+          <button class="view-order-btn" data-id="${order._id}"><i class="fi fi-rr-eye"></i></button>
         </td>
       `
       tbody.appendChild(tr)
@@ -446,7 +446,7 @@ async function openOrderDetail(orderId) {
         </td>
         <td style="text-align: center;">${p.quantity}</td>
         <td style="text-align: right;">${formatNumber(p.price)}</td>
-        <td><button class="view-order-btn" data-id="${p.id}">View</button></td>
+        <td><button class="view-order-btn" data-id="${p.id}"><i class="fi fi-rr-eye"></i></button></td>
       `
       productTbody.appendChild(tr)
     })

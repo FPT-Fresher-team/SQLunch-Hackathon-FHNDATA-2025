@@ -96,7 +96,7 @@ async function getSuppliers(sortOptions, filterOptions, currentPage, itemsPerPag
     // Action button
     const actionTd = document.createElement('td')
     actionTd.style.textAlign = 'center'
-    actionTd.innerHTML = `<button class="view-btn">View</button>`
+    actionTd.innerHTML = `<button class="view-btn"><i class="fi fi-rr-eye"></i></button>`
     actionTd.querySelector('.view-btn').onclick = () => openSupplierDetail(supplier._id)
     tr.appendChild(actionTd)
 

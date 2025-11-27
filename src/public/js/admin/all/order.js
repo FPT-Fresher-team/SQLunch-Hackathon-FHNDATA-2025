@@ -104,7 +104,7 @@ async function getOrders(sortOptions, filterOptions, currentPage, itemsPerPage) 
     trHead.appendChild(th)
   })
   const thAction = document.createElement('td')
-  thAction.textContent = 'Details'
+  thAction.textContent = 'Actions'
   trHead.appendChild(thAction)
   thead.appendChild(trHead)
 
@@ -148,7 +148,7 @@ async function getOrders(sortOptions, filterOptions, currentPage, itemsPerPage) 
 
     const tdAction = document.createElement('td')
     tdAction.style.textAlign = 'center'
-    tdAction.innerHTML = `<button id="${item._id}">View</button>`
+    tdAction.innerHTML = `<button class="view-btn" id="${item._id}"><i class="fi fi-rr-eye"></i></button>`
     tdAction.onclick = () => openOrderDetail(item._id)
     tr.appendChild(tdAction)
 
@@ -270,7 +270,7 @@ async function openOrderDetail(orderId) {
         </td>
         <td style="text-align: center;">${p.quantity}</td>
         <td style="text-align: right;">${formatNumber(p.price)}</td>
-        <td><button class="view-product-btn" data-id="${p.id}">View</button></td>
+        <td><button class="view-product-btn" data-id="${p.id}"><i class="fi fi-rr-eye"></i></button></td>
       `
       productTbody.appendChild(tr)
     })
