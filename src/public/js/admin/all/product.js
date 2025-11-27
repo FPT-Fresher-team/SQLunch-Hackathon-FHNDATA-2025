@@ -165,8 +165,8 @@ async function getProducts(sortOptions, filterOptions, currentPage, itemsPerPage
     const tdAction = document.createElement('td')
     tdAction.style.textAlign = 'center'
     tdAction.innerHTML = `
-      <button class="view-btn" id="${item._id}">View</button>
-      <button class="delete-btn">Delete</button>
+      <button class="view-btn" id="${item._id}"><i class="fi fi-rr-eye"></i></button>
+      <button class="delete-btn"><i class="fi fi-rr-trash"></i></button>
     `
     tdAction.querySelector('.view-btn').onclick = () => openProductDetail(item._id)
     tr.appendChild(tdAction)

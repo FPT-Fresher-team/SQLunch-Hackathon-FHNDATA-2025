@@ -5,63 +5,7 @@
   gap: 20px;
 }
 
-.admin-home-container div.date-filter {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
-  padding: 16px;
-  box-sizing: border-box;
-  background: linear-gradient(to bottom, #FAFBFC, #FAF6F1);
-  border: 1px solid #CCDFE3;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(43, 99, 119, 0.05);
-  flex-wrap: wrap;
-}
-
-.admin-home-container .date-filter input {
-  flex: 0 0 auto;
-  min-width: 150px;
-  width: 30% !important;
-  padding: 10px 12px;
-  border: 2px solid #CCDFE3;
-  border-radius: 8px;
-  font-size: 14px;
-  background: transparent;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.admin-home-container .date-filter input:hover {
-  border-color: #94CCDF;
-}
-
-.admin-home-container .date-filter input:focus {
-  border-color: #2B6377;
-  box-shadow: 0 0 0 4px rgba(43, 99, 119, 0.1);
-  outline: none;
-}
-
-.admin-home-container .date-filter button {
-  padding: 10px 24px;
-  background: linear-gradient(135deg, #2B6377, #94CCDF);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(43, 99, 119, 0.15);
-}
-
-.admin-home-container .date-filter button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(43, 99, 119, 0.25);
-}
-
-.admin-home-container .date-filter button:active {
-  transform: translateY(0);
-}
+/* Các khối .date-filter đã bị xóa khỏi đây vì đã dùng Partial Tag */
 
 .admin-home-container div.table {
   margin-top: 0 !important;
@@ -138,14 +82,5 @@
 @media screen and (max-width: 700px) {
   .admin-home-container div.tables {
     grid-template-columns: 1fr !important;
-  }
-
-  .admin-home-container .date-filter {
-    flex-direction: column;
-  }
-
-  .admin-home-container .date-filter input,
-  .admin-home-container .date-filter button {
-    width: 100%;
   }
 }

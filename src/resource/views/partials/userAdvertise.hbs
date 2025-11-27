@@ -1,66 +1,134 @@
 <div class="slideshow-container">
 
+  <style>
+    /* 1. Định dạng ảnh slider */
+    .slider-img {
+      width: 100%;
+      height: 500px; /* Bạn có thể chỉnh chiều cao banner tại đây (ví dụ: 400px, 600px) */
+      object-fit: cover; /* Giúp ảnh tự cắt để lấp đầy khung mà không bị méo */
+      object-position: center;
+    }
+    
+    /* Trên điện thoại thì cho ảnh thấp lại chút */
+    @media only screen and (max-width: 768px) {
+      .slider-img { height: 250px; }
+    }
+
+    /* 2. Định dạng Container chứa các chấm tròn */
+    .dot-container {
+      text-align: center;
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+
+    /* 3. Định dạng từng chấm tròn */
+    .dot {
+      cursor: pointer;
+      height: 8px;
+      width: 8px;
+      margin: 0 5px;
+      background-color: #bbb; /* Màu xám nhạt */
+      border-radius: 50%; /* Bo tròn */
+      display: inline-block;
+      transition: background-color 0.6s ease;
+    }
+
+    /* Màu khi chấm được chọn hoặc di chuột vào */
+    .active, .dot:hover {
+      background-color: ##2B6377; /* Màu đậm hơn (đen/xám đậm) */
+    }
+
+    /* Ẩn các slide mặc định */
+    .mySlides {
+      display: none;
+    }
+    
+    /* Hiệu ứng mờ dần (tùy chọn, giữ nguyên của bạn) */
+    .fade {
+      animation-name: fade;
+      animation-duration: 1.5s;
+    }
+    @keyframes fade {
+      from {opacity: .4} 
+      to {opacity: 1}
+    }
+  </style>
+
   <div class="mySlides fade">
-    <img src="https://res.cloudinary.com/dtjziz8ri/image/upload/v1763969021/1532_mebsx6.jpg" style="width:100%">
-    <div class="slide-overlay">
-      <h2 class="slide-title">Luxurious Skincare</h2>
-      <p class="slide-slogan">Discover the perfect glow with our premium skincare collection</p>
-    </div>
+    <img class="slider-img" src="https://res.cloudinary.com/dtjziz8ri/image/upload/v1763969021/1532_mebsx6.jpg">
   </div>
 
   <div class="mySlides fade">
-    <img src="https://res.cloudinary.com/dtjziz8ri/image/upload/v1763970434/7759804_vzppnu.jpg" style="width:100%">
-    <div class="slide-overlay">
-      <h2 class="slide-title">Professional Makeup</h2>
-      <p class="slide-slogan">Express yourself with our full range of professional makeup</p>
-    </div>
+    <img class="slider-img" src="https://res.cloudinary.com/dtjziz8ri/image/upload/v1763970434/7759804_vzppnu.jpg">
   </div>
 
   <div class="mySlides fade">
-    <img src="https://res.cloudinary.com/dtjziz8ri/image/upload/v1763967372/1544_pjgwnb.jpg" style="width:100%">
-    <div class="slide-overlay">
-      <h2 class="slide-title">Natural Beauty</h2>
-      <p class="slide-slogan">Embrace your natural beauty with our organic cosmetics</p>
-    </div>
+    <img class="slider-img" src="https://res.cloudinary.com/dtjziz8ri/image/upload/v1763968100/1764_z7thfr.jpg">
   </div>
   
   <div class="mySlides fade">
-    <img src="https://res.cloudinary.com/dtjziz8ri/image/upload/v1763968100/1764_z7thfr.jpg" style="width:100%">
-    <div class="slide-overlay">
-      <h2 class="slide-title">Anti-Aging Solutions</h2>
-      <p class="slide-slogan">Timeless beauty starts with the right anti-aging care</p>
-    </div>
+    <img class="slider-img" src="https://res.cloudinary.com/dtjziz8ri/image/upload/v1763967372/1544_pjgwnb.jpg">
   </div>
 
-  <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-  <a class="next" onclick="plusSlides(1)">&#10095;</a>
+</div>
+
+<div class="dot-container">
+  <span class="dot" onclick="currentSlide(1)"></span> 
+  <span class="dot" onclick="currentSlide(2)"></span> 
+  <span class="dot" onclick="currentSlide(3)"></span> 
+  <span class="dot" onclick="currentSlide(4)"></span> 
 </div>
 
 <script>
   let slideIndex = 1;
+  let slideInterval; // Biến để lưu bộ đếm thời gian
+  
   showSlides(slideIndex);
+  startAutoSlide(); // Bắt đầu tự động chạy
 
-  // Điều khiển Next/Previous
-  function plusSlides(n) {
-    showSlides(slideIndex += n);
+  // Hàm chuyển đến slide cụ thể khi bấm dot
+  function currentSlide(n) {
+    showSlides(slideIndex = n);
+    resetAutoSlide(); // Khi người dùng bấm, reset lại bộ đếm để không bị chuyển trang ngay lập tức
   }
 
   function showSlides(n) {
     let i;
     let slides = document.getElementsByClassName("mySlides");
+    let dots = document.getElementsByClassName("dot");
     
-    // Logic quay vòng: Nếu đang ở cuối mà bấm Next thì về đầu
-    if (n > slides.length) {slideIndex = 1}
-    
-    // Logic quay vòng: Nếu đang ở đầu mà bấm Prev thì về cuối
+    // Logic vòng lặp
+    if (n > slides.length) {slideIndex = 1}    
     if (n < 1) {slideIndex = slides.length}
     
-    // Ẩn tất cả các slide trước khi hiện slide mới
+    // 1. Ẩn tất cả ảnh
     for (i = 0; i < slides.length; i++) {
       slides[i].style.display = "none";  
     }
     
-    // Chỉ hiện slide đang chọn
+    // 2. Bỏ class active ở tất cả các chấm
+    for (i = 0; i < dots.length; i++) {
+      dots[i].className = dots[i].className.replace(" active", "");
+    }
+    
+    // 3. Hiện ảnh hiện tại và active chấm tương ứng
     slides[slideIndex-1].style.display = "block";  
+    if (dots.length > 0) {
+        dots[slideIndex-1].className += " active";
+    }
+  }
+
+  // Hàm tự động chuyển trang
+  function startAutoSlide() {
+    slideInterval = setInterval(function() {
+      slideIndex++;
+      showSlides(slideIndex);
+    }, 4000); // 4000ms = 4 giây chuyển 1 lần
+  }
+
+  // Hàm reset lại thời gian (dùng khi người dùng click thủ công)
+  function resetAutoSlide() {
+    clearInterval(slideInterval); // Xóa bộ đếm cũ
+    startAutoSlide(); // Bắt đầu bộ đếm mới
   }
 </script>
