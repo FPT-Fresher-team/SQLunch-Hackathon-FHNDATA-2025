@@ -102,19 +102,6 @@ class authenticationController {
       return res.json({error: error})
     }
   }
-  
-  async verifyCreatingGoogleEmail(req, res, next) {
-    try {
-      const userEmail  = req.body.email  
-      const emailExist = await user.findOne({ email: userEmail})
-      if (emailExist) return res.json({isValid: false, message: 'Email already registered'})
-
-      return res.json({isValid: true, message: 'Email verification successful'})
-
-    } catch (error) {
-      return res.json({error: error})
-    }
-  }
 
   async verifyCreatingCode(req, res, next) {
     try {
@@ -278,35 +265,6 @@ class authenticationController {
       })
 
       return res.json({isValid: true, message: 'Login successfully'})
-    } catch (error) {
-      return res.json({error: error})
-    }
-  }
-
-  async creatingGoogleAccount(req, res, next) {
-    try {
-      const userEmail = req.body.email  
-      const emailExist = await user.findOne({ email: userEmail})
-      if (emailExist) return res.json({isValid: false, message: 'Email already exists'})
-
-      let newUser = new user({
-        email: req.body.email,
-        // password: hashedPassword,
-        role: 'user',
-        name: req.body.name,
-      })
-      const savedUser = await newUser.save()
-  
-      const adminId = process.env.ADMIN_ID
-      const newChat = new chat({
-        adminId: adminId,
-        userId: savedUser._id,
-        lastMessage: ''
-      })
-      await newChat.save()
-  
-      return res.json({isValid: true, message: 'Account registration successful'})
-      
     } catch (error) {
       return res.json({error: error})
     }

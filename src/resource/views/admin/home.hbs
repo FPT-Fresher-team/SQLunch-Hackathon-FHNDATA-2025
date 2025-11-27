@@ -1,20 +1,58 @@
 <div class="admin-home-container">
-  <div class="date-filter">
-    <input type="date" id="start-date">
-    <input type="date" id="end-date">
-    <button title="submit" type="submit">View</button>
+  <!-- Dashboard Navigator -->
+  <div class="dashboard-navigator">
+    <div class="navigator-header">
+      <h2>Analytics Dashboard</h2>
+      {{> dateFilter}}
+    </div>
+
+    <div class="navigator-buttons">
+      <button class="dashboard-btn active" data-dashboard="finance">
+        <i class="fi fi-rr-briefcase"></i>
+        <span>Finance</span>
+      </button>
+      <button class="dashboard-btn" data-dashboard="order">
+        <i class="fi fi-rr-shopping-cart"></i>
+        <span>Orders</span>
+      </button>
+      <button class="dashboard-btn" data-dashboard="customer">
+        <i class="fi fi-rr-users"></i>
+        <span>Customers</span>
+      </button>
+      <button class="dashboard-btn" data-dashboard="employee">
+        <i class="fi fi-rr-employees"></i>
+        <span>Employees</span>
+      </button>
+      <button class="dashboard-btn" data-dashboard="product">
+        <i class="fi fi-rr-box-open"></i>
+        <span>Products</span>
+      </button>
+      <button class="dashboard-btn" data-dashboard="brand">
+        <i class="fi fi-rr-brand"></i>
+        <span>Brands</span>
+      </button>
+      <button class="dashboard-btn" data-dashboard="store">
+        <i class="fi fi-rr-store-alt"></i>
+        <span>Stores</span>
+      </button>
+      <button class="dashboard-btn" data-dashboard="purchase">
+        <i class="fi fi-rr-file-import"></i>
+        <span>Purchases</span>
+      </button>
+      <button class="dashboard-btn" data-dashboard="supplier">
+        <i class="fi fi-rr-supplier"></i>
+        <span>Suppliers</span>
+      </button>
+    </div>
   </div>
   
-  <div class="table">
+  <div class="table finance">
     <div class="finance"></div>
   </div>
 
-  <div class="table">
+  <div class="table order">
     <div class="order"></div>
-    <div style="display: flex; gap: 20px; align-items: center; justify-content: center;">
-      <div style="width: 70%;"><canvas id="order"></canvas></div>
-      <div style="width: 30%;"><canvas id="order-status"></canvas></div>
-    </div>
+    
     <!-- Order Analytics: Payment Success & Add-to-Cart -->
     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0;">
       <div style="padding: 16px; background: #eef6ff; border-left: 4px solid #6f42c1; border-radius: 4px;">
@@ -33,25 +71,32 @@
         <p style="color: #999;">Loading...</p>
       </div>
     </div>
+
+    <div style="display: flex; gap: 20px; align-items: center; justify-content: center;">
+      <div style="width: 70%;"><canvas id="order"></canvas></div>
+      <div style="width: 30%;"><canvas id="order-status"></canvas></div>
+    </div>
   </div>
 
-  <div class="table">
+  <div class="table customer">
     <div class="customer"></div>
+    
     <div style="display: flex; gap: 20px; align-items: center; justify-content: center;">
       <div style="width: 30%;"><canvas id="customer-membership"></canvas></div>
       <div style="width: 70%;"><canvas id="customer"></canvas></div>
     </div>
   </div> 
   
-  <div class="table">
+  <div class="table employee">
     <div class="employee"></div>
+    
     <div style="display: flex; gap: 20px; align-items: center; justify-content: center;">
       <div style="width: 70%;"><canvas id="employee"></canvas></div>
       <div style="width: 30%;"><canvas id="employee-role"></canvas></div>
     </div>
   </div> 
   
-  <div class="table">
+  <div class="table product">
     <div class="product"></div>
     
     <!-- Product Analytics: Views & Sales -->
@@ -83,29 +128,25 @@
     </div>
 
     <div style="display: flex; gap: 20px; align-items: center; justify-content: center;">
-      <div style="width: 30%;"><canvas id="product-category"></canvas></div>
       <div style="width: 70%;"><canvas id="product"></canvas></div>
     </div>
   </div> 
 
-  <div class="tables">
-    {{!-- <div class="table">
-      <div class="purchase"></div>
-      <div><canvas id="purchase"></canvas></div>
-    </div>  --}}
+  <div class="tables brand">
+    <div class="brand"></div>
+  </div>
+ 
+  <div class="tables store">
+    <div class="store"></div>
+  </div>
 
-    <div class="table">
-      <div class="supplier"></div>
-      <div><canvas id="supplier"></canvas></div>
-    </div>
+  <div class="tables purchase">
+    <div class="purchase"></div>
+  </div>
 
-    {{!-- <div class="table">
-      <div class="brand"></div>
-    </div>  --}}
-
-    <div class="table">
-      <div class="store"></div>
-    </div>
+  <div class="tables supplier">
+    <div class="supplier"></div>
+    <div><canvas id="supplier"></canvas></div>
   </div>
 </div>
 

@@ -1,34 +1,5 @@
 importLinkCss('/css/layouts/signIn.css')
 
-const client = new Appwrite.Client()
-  .setEndpoint("https://syd.cloud.appwrite.io/v1")
-  .setProject("68a4957600115808485e")
-
-const account = new Appwrite.Account(client)
-const databases = new Appwrite.Databases(client)
-
-async function googleRedirect() {
-  try {
-    document.querySelector('button.google-sign-up').classList.add('loading')
-    
-    try {
-      await account.get() 
-      await account.deleteSession("current")
-      console.log("Existing session cleared")
-    } catch (err) {
-      console.log("No existing session, skipping delete")
-    }
-    
-    account.createOAuth2Session(
-      'google', 
-      'http://localhost:3000/authentication/sign-up?signup=google',
-      'http://localhost:3000/failed'
-    )
-  } catch (error) {
-    console.error('Google sign-in error:', error)
-  }
-}
-
 const submitButton = document.querySelector('button')
 
 async function verifyingEmail(email) {
@@ -178,7 +149,6 @@ submitButton.onclick = async function() {
     genderContainer.style.display = 'flex'
     genderContainer.style.alignItems = 'center'
     genderContainer.style.gap = '10px'
-    genderContainer.style.justifyContent = 'space-between'
     genderContainer.appendChild(genderMale)
     genderContainer.appendChild(labelMale)
     genderContainer.appendChild(genderFemale)
@@ -236,65 +206,3 @@ submitButton.onclick = async function() {
     return
   }
 }
-
-window.onload = async () => {
-  const params = new URLSearchParams(window.location.search)
-  const signup = params.get("signup")
-
-  if (signup === "google") {
-    try {
-      const user = await account.get()
-      pushNotification("Checking account")
-
-      const response = await fetch("/authentication/sign-up/verifying-google-email", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: user.email,
-        }),
-      })
-      if (!response.ok) throw new Error(`Response status: ${response.status}`)
-      const {isValid, message} = await response.json()
-
-      if (!isValid) {
-        document.querySelector('p.wrong-info').textContent = message
-        document.querySelector('p.wrong-info').style.color = 'red'
-        return 
-      } 
-
-      document.querySelector('input[name="email"]').value = user.email
-      document.querySelector('input[name="email"]').disabled = true
-
-      const name = document.createElement('input')
-      name.type  = 'text'
-      name.value = user.name
-      name.name  = 'name'
-
-      const password = document.createElement('input')
-      password.type  = 'password'
-      password.placeholder = 'Enter new password'
-      password.name  = 'password'
-
-      const confirmPassword = document.createElement('input')
-      confirmPassword.type  = 'password'
-      confirmPassword.placeholder = 'Confirm new password'
-      confirmPassword.name  = 'confirm-password'
-
-      document.querySelector('div[class="form-group name"]').style.display = ''
-      document.querySelector('div[class="form-group name"]').appendChild(name)
-
-      document.querySelector('div[class="form-group password"]').style.display = ''
-      document.querySelector('div[class="form-group password"]').appendChild(password)
-      
-      document.querySelector('div[class="form-group confirm-password"]').style.display = ''
-      document.querySelector('div[class="form-group confirm-password"]').appendChild(confirmPassword)
-
-      submitButton.innerText = 'Xác nhận'
-      submitButton.className = 'submit-password'
-    } catch (err) {
-      console.error("Failed to get user:", err)
-    }
-  }
-}
-
-document.querySelector("button.google-sign-up").addEventListener("click", googleRedirect)

@@ -1,5 +1,38 @@
 importLinkCss('/css/admin/home.css')
 
+// Dashboard Navigator Setup
+function initDashboardNavigator() {
+  const dashboardBtns = document.querySelectorAll('.dashboard-btn')
+  const tables = document.querySelectorAll('.admin-home-container div.table')
+  const tableGroups = document.querySelectorAll('.admin-home-container div.tables')
+
+  dashboardBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const dashboard = this.dataset.dashboard
+
+      // Remove active class from all buttons
+      dashboardBtns.forEach(b => b.classList.remove('active'))
+      // Add active class to clicked button
+      this.classList.add('active')
+
+      // Hide all tables
+      tables.forEach(table => table.classList.remove('active'))
+      tableGroups.forEach(group => group.classList.remove('active'))
+
+      // Show selected dashboard table
+      const targetTable = document.querySelector(`.admin-home-container div.table.${dashboard}`)
+      const targetGroup = document.querySelector(`.admin-home-container div.tables.${dashboard}`)
+
+      if (targetTable) targetTable.classList.add('active')
+      if (targetGroup) targetGroup.classList.add('active')
+    })
+  })
+
+  // Set finance as default active
+  const financeBtn = document.querySelector('.dashboard-btn[data-dashboard="finance"]')
+  if (financeBtn) financeBtn.click()
+}
+
 async function getFinance(fetchBody) {
   const response = await fetch('/admin/all/data/finance', fetchBody)
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
@@ -30,11 +63,11 @@ async function getFinance(fetchBody) {
     </tbody>
   `
 
-  if (document.querySelector('div.finance').contains(document.querySelector("table"))) {
+  if (document.querySelector('div.table.finance').querySelector('div.finance').contains(document.querySelector("table"))) {
     document.querySelector("table").remove()
   }
 
-  document.querySelector('div.finance').appendChild(table)
+  document.querySelector('div.table.finance').querySelector('div.finance').appendChild(table)
 }
 
 async function getOrders(fetchBody) {
@@ -56,7 +89,7 @@ async function getOrders(fetchBody) {
     </tbody>
   `
 
-  const orderDiv = document.querySelector('div.order')
+  const orderDiv = document.querySelector('div.table.order').querySelector('div.order')
   const oldTable = orderDiv.querySelector("table")
 
   if (oldTable) oldTable.remove()
@@ -163,7 +196,7 @@ async function getCustomers(fetchBody) {
     </tbody>
   `
 
-  const customerDiv = document.querySelector('div.customer')
+  const customerDiv = document.querySelector('div.table.customer').querySelector('div.customer')
   const oldTable = customerDiv.querySelector("table")
 
   if (oldTable) oldTable.remove()
@@ -270,7 +303,7 @@ async function getEmployees(fetchBody) {
     </tbody>
   `
 
-  const employeeDiv = document.querySelector('div.employee')
+  const employeeDiv = document.querySelector('div.table.employee').querySelector('div.employee')
   const oldTable = employeeDiv.querySelector("table")
 
   if (oldTable) oldTable.remove()
@@ -351,7 +384,7 @@ async function getProducts() {
     </tbody>
   `
 
-  const productDiv = document.querySelector('div.product')
+  const productDiv = document.querySelector('div.table.product').querySelector('div.product')
   const oldTable = productDiv.querySelector("table")
 
   if (oldTable) oldTable.remove()
@@ -381,33 +414,6 @@ async function getProducts() {
         ],
         borderWidth: 1,
         backgroundColor: '#76B7B2'
-      }]
-    }
-  })
-
-  const productCategoryCtx = document.getElementById("product-category")
-  Chart.getChart(productCategoryCtx)?.destroy()
-  new Chart(productCategoryCtx, {
-    type: 'pie',
-    options: {
-      plugins: {
-        legend: {
-          display: false
-        },
-        title: {
-          display: true,
-          text: 'TỈ LỆ DOANH THU'
-        }
-      }
-    },
-    data: {
-      labels: ['Skincare', 'Makeup'],
-      datasets: [{
-        data: [
-          data.filter(product => product.categories === 'skincare').reduce((acc, product) => acc + product.price * product.saleNumber, 0), 
-          data.filter(product => product.categories === 'makeup').reduce((acc, product) => acc + product.price * product.saleNumber, 0)
-        ],
-        borderWidth: 1,
       }]
     }
   })
@@ -546,9 +552,14 @@ async function getSuppliers() {
     </tbody>
   `
 
-  document.querySelector('div.supplier').appendChild(table)
+  const supplierDiv = document.querySelector('div.table.supplier').querySelector('div.supplier')
+  const oldTable = supplierDiv.querySelector("table")
 
-  new Chart(supplier, {
+  if (oldTable) oldTable.remove()
+  supplierDiv.appendChild(table)
+  const supplierCtx = document.getElementById("product")
+  Chart.getChart(supplierCtx)?.destroy()
+  new Chart(supplierCtx, {
     type: 'bar',
     options: {
       plugins: {
@@ -617,7 +628,7 @@ async function getPurchases(fetchBody) {
     </tbody>
   `
 
-  const purchaseDiv = document.querySelector('div.purchase')
+  const purchaseDiv = document.querySelector('div.table.purchase').querySelector('div.purchase')
   const oldTable = purchaseDiv.querySelector("table")
 
   if (oldTable) oldTable.remove()
@@ -662,7 +673,13 @@ async function getStores() {
     </tbody>
   `
 
-  document.querySelector('div.store').appendChild(table)
+  const storeDiv = document.querySelector('div.table.store').querySelector('div.store')
+  const oldTable = storeDiv.querySelector("table")
+
+  if (oldTable) oldTable.remove()
+  storeDiv.appendChild(table)
+  const storeCtx = document.getElementById("product")
+  Chart.getChart(storeCtx)?.destroy()
 }
 
 async function getAll() {
@@ -697,13 +714,13 @@ async function getAll() {
 
     await getFinance(fetchBody)
     await getOrders(fetchBody)
+    await getOrderAnalytics()
     await getCustomers(fetchBody)
     await getEmployees(fetchBody)
-    await getSuppliers()
     await getProducts()
     await getProductAnalytics()
-    await getOrderAnalytics()
-    await getStores()
+    // await getStores()
+    // await getSuppliers()
     // await getPurchases(fetchBody)
     // await getBrands()
   } catch (error) {
@@ -736,5 +753,6 @@ document.querySelector('button[type="submit"]').addEventListener('click', async 
 })
 
 window.addEventListener('DOMContentLoaded', async function loadData() {
+  initDashboardNavigator()
   await getAll()
 })

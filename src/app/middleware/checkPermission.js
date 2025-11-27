@@ -4,7 +4,6 @@ const attributePermission = permission.attributePermission
 const brandPermission     = permission.brandPermission
 const blogPermission      = permission.blogPermission
 const chatPermission      = permission.chatPermission
-const chatEmpPermission   = permission.chatEmpPermission
 const customerPermission  = permission.customerPermission
 const employeePermission  = permission.employeePermission
 const homePermission      = permission.homePermission
@@ -82,20 +81,6 @@ class chatClass {
   }
   async delete(req, res, next) {
     if (await checkPermission(req, res, chatPermission, 'DELETE')) next();
-  }
-}
-class chatEmpClass {
-  async create(req, res, next) {
-    if (await checkPermission(req, res, chatEmpPermission, 'CREATE')) next();
-  }
-  async read(req, res, next) {
-    if (await checkPermission(req, res, chatEmpPermission, 'READ')) next();
-  }
-  async update(req, res, next) {
-    if (await checkPermission(req, res, chatEmpPermission, 'UPDATE')) next();
-  }
-  async delete(req, res, next) {
-    if (await checkPermission(req, res, chatEmpPermission, 'DELETE')) next();
   }
 }
 class customerClass {
@@ -230,7 +215,6 @@ module.exports = {
   brandClass    : new brandClass,
   blogClass     : new blogClass,
   chatClass     : new chatClass,
-  chatEmpClass  : new chatEmpClass,
   customerClass : new customerClass,
   employeeClass : new employeeClass,
   homeClass     : new homeClass,

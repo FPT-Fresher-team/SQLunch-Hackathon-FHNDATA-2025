@@ -17,9 +17,7 @@ router.post('/checking-google-account'  , authenticationController.checkingGoogl
 router.get('/sign-up'                         , authenticationController.signUp )
 router.post('/sign-up/verifying-email'        , authenticationController.verifyCreatingEmail )
 router.post('/sign-up/verifying-code'         , authenticationController.verifyCreatingCode )
-router.post('/sign-up/verifying-google-email' , authenticationController.verifyCreatingGoogleEmail )
 router.post('/creating-account'               , authenticationController.creatingAccount )
-router.post('/creating-google-account'        , authenticationController.creatingGoogleAccount )
 
 router.get('/reset-password'                  , authenticationController.resetPassword )
 router.post('/reset-password/verifying-email' , authenticationController.verifyCheckingEmail )

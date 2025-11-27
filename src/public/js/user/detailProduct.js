@@ -235,7 +235,6 @@ function addToCart(productInfo) {
     }
 
     const quantity = parseInt(getQuantityValue.innerText)
-    console.log(quantity)
 
     listProductLength.length = myObj.productInfo.length
     for (let i = 0; i < listProductLength.length; ++i) {
@@ -266,19 +265,33 @@ function addToCart(productInfo) {
 function buyNow(productInfo) {
   getBuyNow.onclick = function () {
     if (getAddToCart.style.backgroundColor === '') {
-      myObj.localCounting++
       if (getQuantityValue.innerText === '0') {
         getQuantityValue.innerText = 1
       }
 
+      const quantity = parseInt(getQuantityValue.innerText)
+
+      listProductLength.length = myObj.productInfo.length
+      for (let i = 0; i < listProductLength.length; ++i) {
+        if (myObj.productInfo[i].id === productInfo._id) {
+          myObj.productInfo[i].quantity += quantity
+          myObj.productInfo[i].isChecked = true
+          localStorage.setItem('product_cart_count', JSON.stringify(myObj))
+          return
+        }
+      }
+
+      myObj.localCounting++
+
       const newProductInfo = {
         id      : productInfo._id,
         quantity: parseInt(getQuantityValue.innerText),
-        isChecked: false
+        isChecked: true
       }
   
       myObj.productInfo.push(newProductInfo)
       localStorage.setItem('product_cart_count', JSON.stringify(myObj))
+      document.dispatchEvent(new CustomEvent('cartUpdated'));
     } else {}
   }
 }

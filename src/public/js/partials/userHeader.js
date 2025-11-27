@@ -100,8 +100,6 @@ searchInput.oninput = async function(event) {
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
     const {data} = await response.json()
 
-    console.log(data)
-
     searchProducts.classList.add("open")
 
     data.forEach((element) => {

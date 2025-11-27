@@ -5,80 +5,112 @@
   gap: 20px;
 }
 
-.admin-home-container div.date-filter {
-  width: 100%;
+/* ==================== DASHBOARD NAVIGATOR ==================== */
+
+.dashboard-navigator {
+  background: linear-gradient(135deg, #2B6377, #94CCDF);
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(43, 99, 119, 0.15);
+  margin-bottom: 10px;
+}
+
+.navigator-header {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 12px;
-  padding: 16px;
-  box-sizing: border-box;
-  background: linear-gradient(to bottom, #FAFBFC, #FAF6F1);
-  border: 1px solid #CCDFE3;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(43, 99, 119, 0.05);
-  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 20px;
 }
 
-.admin-home-container .date-filter input {
-  flex: 0 0 auto;
-  min-width: 150px;
-  width: 30% !important;
-  padding: 10px 12px;
-  border: 2px solid #CCDFE3;
-  border-radius: 8px;
-  font-size: 14px;
-  background: transparent;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.admin-home-container .date-filter input:hover {
-  border-color: #94CCDF;
-}
-
-.admin-home-container .date-filter input:focus {
-  border-color: #2B6377;
-  box-shadow: 0 0 0 4px rgba(43, 99, 119, 0.1);
-  outline: none;
-}
-
-.admin-home-container .date-filter button {
-  padding: 10px 24px;
-  background: linear-gradient(135deg, #2B6377, #94CCDF);
+.navigator-header h2 {
+  margin: 0;
   color: white;
-  border: none;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  font-family: 'Playfair Display', serif;
+  flex-shrink: 0;
+}
+
+.navigator-header .date-filter {
+  margin: 0;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 10px 16px;
+  flex-shrink: 0;
+}
+
+.navigator-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.dashboard-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
   border-radius: 8px;
   font-weight: 600;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 12px rgba(43, 99, 119, 0.15);
+  font-family: 'Montserrat', sans-serif;
 }
 
-.admin-home-container .date-filter button:hover {
+.dashboard-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(43, 99, 119, 0.25);
 }
 
-.admin-home-container .date-filter button:active {
-  transform: translateY(0);
+.dashboard-btn.active {
+  background: white;
+  color: #2B6377;
+  border-color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
+
+.dashboard-btn i {
+  font-size: 16px;
+}
+
+/* Date Filter */
+.date-filter {
+  border-radius: 8px;
+  border: 1px solid #CCDFE3;
+  box-shadow: 0 2px 8px rgba(43, 99, 119, 0.05);
+}
+
+/* ==================== DASHBOARD TABLES ==================== */
 
 .admin-home-container div.table {
   margin-top: 0 !important;
   min-height: 400px;
   box-sizing: border-box;
-  background: transparent;
+  background: white;
   border: 1px solid #CCDFE3;
   border-radius: 12px;
-  padding: 20px;
+  padding: 24px;
   box-shadow: 0 2px 8px rgba(43, 99, 119, 0.05);
-  display: flex;
+  display: none;
   flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.admin-home-container div.table.active {
+  display: flex;
 }
 
 .admin-home-container div.table > div:first-child {
   padding: 12px 16px;
-  /* background: linear-gradient(135deg, #2B6377, #94CCDF); */
   color: white;
   border-radius: 8px;
   font-weight: 700;
@@ -129,23 +161,95 @@
   box-sizing: border-box;
 }
 
+.admin-home-container div.tables.active {
+  display: grid;
+}
+
+.admin-home-container div.tables {
+  display: none;
+}
+
 /* Chart styling */
 .admin-home-container canvas {
   max-width: 100%;
   height: auto;
 }
 
+@media screen and (max-width: 1024px) {
+  .navigator-buttons {
+    gap: 10px;
+  }
+
+  .dashboard-btn {
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  .dashboard-btn span {
+    display: none;
+  }
+
+  .date-filter {
+    flex-wrap: wrap;
+  }
+
+  .navigator-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .navigator-header .date-filter {
+    width: 100%;
+  }
+}
+
 @media screen and (max-width: 700px) {
+  .dashboard-navigator {
+    padding: 16px;
+  }
+
+  .navigator-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .navigator-header h2 {
+    font-size: 20px;
+    width: 100%;
+  }
+
+  .navigator-header .date-filter {
+    width: 100%;
+    gap: 8px;
+  }
+
+  .navigator-header .date-filter input {
+    flex: 1;
+    min-width: 100px;
+  }
+
+  .navigator-buttons {
+    gap: 8px;
+  }
+
+  .dashboard-btn {
+    padding: 8px 12px;
+    font-size: 11px;
+  }
+
   .admin-home-container div.tables {
     grid-template-columns: 1fr !important;
   }
 
-  .admin-home-container .date-filter {
+  .date-filter {
     flex-direction: column;
   }
 
-  .admin-home-container .date-filter input,
-  .admin-home-container .date-filter button {
+  .date-filter input,
+  .filter-btn {
     width: 100%;
   }
 }

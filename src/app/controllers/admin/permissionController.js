@@ -22,12 +22,6 @@ const chatPermission = {
   UPDATE: ['chat', 'admin'],
   DELETE: ['chat', 'admin']
 }
-const chatEmpPermission = {
-  CREATE: ['admin', 'manager', 'employee'],
-  READ  : ['admin', 'manager', 'employee'],
-  UPDATE: ['admin', 'manager', 'employee'],
-  DELETE: ['admin', 'manager', 'employee']
-}
 const customerPermission = {
   CREATE: ['admin', 'manager', 'employee'],
   READ  : ['admin', 'manager', 'employee', 'chat'],
@@ -88,7 +82,6 @@ module.exports = {
   brandPermission     ,
   blogPermission      ,
   chatPermission      ,
-  chatEmpPermission   ,
   customerPermission  ,
   employeePermission  ,
   homePermission      ,
