@@ -4,8 +4,7 @@ mongoose.plugin(slug)
 const Schema = mongoose.Schema
 const product = new Schema({
   categories   : { type: String, default: '' }, 
-  skincare     : { type: String, default: '' }, 
-  makeup       : { type: String, default: '' }, 
+  subcategories: { type: String, default: '' },
   brand        : { type: String, default: '' },
   name         : { type: String, default: '' },
   purchasePrice: { type: Number, default: 0 },

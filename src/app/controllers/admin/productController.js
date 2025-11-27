@@ -150,8 +150,7 @@ class allProductsController {
         {
           $set: {
             categories    : req.body.categories,
-            skincare      : req.body.skincare,
-            makeup        : req.body.makeup,
+            subcategories : req.body.subcategories,
             brand         : req.body.brand,
             name          : req.body.name,
             purchasePrice : deFormatNumber(req.body.purchasePrice),
@@ -168,20 +167,6 @@ class allProductsController {
         },
         { new: true }
       )
-
-      // try {
-      //   await producer.connect()
-      //   await producer.send({
-      //     topic: 'update',
-      //     messages: [{ value: JSON.stringify({
-      //       topic_type: 'product',
-      //       emp_id: req.cookies.uid,
-      //       body: updatedProduct
-      //     })}],
-      //   })
-      // } catch (error) {
-      //   console.log(error)
-      // }
   
       return res.json({message: 'Updated successfully'})
     } catch (error) {
@@ -192,7 +177,7 @@ class allProductsController {
   async softDelete(req, res, next) {
     try {
       await product.updateOne({ _id: req.body.id}, { deletedAt: Date.now() })
-      return res.json({isValid: true, message: 'Xoá sản phẩm thành công'})
+      return res.json({isValid: true, message: 'Deleted successfully'})
     } catch (error) {
       return res.json({error: error.message})
     }
@@ -229,19 +214,18 @@ class allProductsController {
       })
   
       const newProduct = new product({
-        categories  : req.body.categories,
-        skincare    : req.body.skincare,
-        makeup      : req.body.makeup,
-        brand       : req.body.brand,
-        name        : req.body.name,
-        oldPrice    : req.body.oldPrice,
+        categories    : req.body.categories,
+        subcategories : req.body.subcategories,
+        brand         : req.body.brand,
+        name          : req.body.name,
+        oldPrice      : req.body.oldPrice,
         purchasePrice : req.body.purchasePrice,
-        price       : req.body.price,
-        description : req.body.description,
-        details     : req.body.details,
-        guide       : req.body.guide,
-        quantity    : req.body.quantity,
-        'img.path'  : result.secure_url,
+        price         : req.body.price,
+        description   : req.body.description,
+        details       : req.body.details,
+        guide         : req.body.guide,
+        quantity      : req.body.quantity,
+        'img.path'    : result.secure_url,
         'img.filename' : result.public_id
       })
       const savedProduct = await newProduct.save()

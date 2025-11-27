@@ -435,6 +435,7 @@ async function openProductDetail(productId) {
     // Fill form
     productDetailModal.querySelector('input#id').value = productInfo._id
     productDetailModal.querySelector('select#categories').value = productInfo.categories || ''
+    productDetailModal.querySelector('select#subcategories').value = productInfo.subcategories || ''
     productDetailModal.querySelector('input#name').value = productInfo.name || ''
     productDetailModal.querySelector('input#oldPrice').value = formatNumber(productInfo.oldPrice)
     productDetailModal.querySelector('input#price').value = formatNumber(productInfo.price)
@@ -469,39 +470,6 @@ async function openProductDetail(productId) {
       if (s.code === productInfo.status) opt.selected = true
       statusSelect.appendChild(opt)
     })
-
-    // Hiển thị dòng sản phẩm phù hợp
-    productDetailModal.querySelector('select#categories').value = productInfo.categories
-
-    const skincareBox = productDetailModal.querySelector('select#skincare')
-    const makeupBox = productDetailModal.querySelector('select#makeup')
-    if (productInfo.categories === 'skincare') {
-      skincareBox.style.display = 'block'
-      makeupBox.style.display = 'none'
-      productDetailModal.querySelector('select#skincare').value = productInfo.skincare || ''
-    } else if (productInfo.categories === 'makeup') {
-      skincareBox.style.display = 'none'
-      makeupBox.style.display = 'block'
-      productDetailModal.querySelector('select#makeup').value = productInfo.makeup || ''
-    } else {
-      skincareBox.style.display = 'none'
-      makeupBox.style.display = 'none'
-    }
-
-    // Xử lý thay đổi category
-    productDetailModal.querySelector('select#categories').onchange = function () {
-      const val = this.value
-      if (val === 'skincare') {
-        skincareBox.style.display = 'block'
-        makeupBox.style.display = 'none'
-      } else if (val === 'makeup') {
-        skincareBox.style.display = 'none'
-        makeupBox.style.display = 'block'
-      } else {
-        skincareBox.style.display = 'none'
-        makeupBox.style.display = 'none'
-      }
-    }
 
     // Format số khi nhập
     formatInputNumber(productDetailModal.querySelector('input#purchasePrice'))
