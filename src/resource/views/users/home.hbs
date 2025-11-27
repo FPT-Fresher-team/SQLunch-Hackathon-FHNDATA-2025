@@ -1,134 +1,115 @@
-<div class="slideshow-container">
-
-  <style>
-    /* 1. Định dạng ảnh slider */
-    .slider-img {
-      width: 100%;
-      height: 500px; /* Bạn có thể chỉnh chiều cao banner tại đây (ví dụ: 400px, 600px) */
-      object-fit: cover; /* Giúp ảnh tự cắt để lấp đầy khung mà không bị méo */
-      object-position: center;
-    }
-    
-    /* Trên điện thoại thì cho ảnh thấp lại chút */
-    @media only screen and (max-width: 768px) {
-      .slider-img { height: 250px; }
-    }
-
-    /* 2. Định dạng Container chứa các chấm tròn */
-    .dot-container {
-      text-align: center;
-      padding-top: 15px;
-      padding-bottom: 15px;
-    }
-
-    /* 3. Định dạng từng chấm tròn */
-    .dot {
-      cursor: pointer;
-      height: 12px;
-      width: 12px;
-      margin: 0 5px;
-      background-color: #bbb; /* Màu xám nhạt */
-      border-radius: 50%; /* Bo tròn */
-      display: inline-block;
-      transition: background-color 0.6s ease;
-    }
-
-    /* Màu khi chấm được chọn hoặc di chuột vào */
-    .active, .dot:hover {
-      background-color: #2B6377; /* Màu đậm hơn (đen/xám đậm) */
-    }
-
-    /* Ẩn các slide mặc định */
-    .mySlides {
-      display: none;
-    }
-    
-    /* Hiệu ứng mờ dần (tùy chọn, giữ nguyên của bạn) */
-    .fade {
-      animation-name: fade;
-      animation-duration: 1.5s;
-    }
-    @keyframes fade {
-      from {opacity: .4} 
-      to {opacity: 1}
-    }
-  </style>
-
-  <div class="mySlides fade">
-    <img class="slider-img" src="https://res.cloudinary.com/dtjziz8ri/image/upload/v1763969021/1532_mebsx6.jpg">
-  </div>
-
-  <div class="mySlides fade">
-    <img class="slider-img" src="https://res.cloudinary.com/dtjziz8ri/image/upload/v1763970434/7759804_vzppnu.jpg">
-  </div>
-
-  <div class="mySlides fade">
-    <img class="slider-img" src="https://res.cloudinary.com/dtjziz8ri/image/upload/v1763968100/1764_z7thfr.jpg">
-  </div>
-  
-  <div class="mySlides fade">
-    <img class="slider-img" src="https://res.cloudinary.com/dtjziz8ri/image/upload/v1763967372/1544_pjgwnb.jpg">
-  </div>
-
+<div class="advertise-board">
+  {{> userAdvertise}}
 </div>
 
-<div class="dot-container">
-  <span class="dot" onclick="currentSlide(1)"></span> 
-  <span class="dot" onclick="currentSlide(2)"></span> 
-  <span class="dot" onclick="currentSlide(3)"></span> 
-  <span class="dot" onclick="currentSlide(4)"></span> 
+<div class="vouchers-board" id="voucher" style="display: none;">
+  <div class="title">
+    <div><a href="/" class="main-title"><b>EXCLUSIVE VOUCHERS FOR YOU</b></a></div>
+    <p class="subtitle">Discover special offers just for you</p>
+  </div>
+  
+  <div class="vouchers">
+    {{#each (holderData 5)}}
+      {{> voucher}}
+    {{/each}}
+  </div>
+  
+  <a href="/" class="view-all-btn">View All Vouchers</a>
 </div>
 
-<script>
-  let slideIndex = 1;
-  let slideInterval; // Biến để lưu bộ đếm thời gian
+<div class="products-board" id="favorite" style="display: none;">
+  <div class="title">
+    <div><a href="/all-products" class="main-title"><b>PRODUCTS YOU MAY LIKE</b></a></div>
+    <p class="subtitle">Great choices tailored to your style</p>
+  </div>
+
+  <div class="products">
+    {{#each (holderData 10)}}
+      {{> product}}
+    {{/each}}
+  </div>
   
-  showSlides(slideIndex);
-  startAutoSlide(); // Bắt đầu tự động chạy
+  <a href="/all-products" class="view-all-btn">View All Products</a>
+</div>
 
-  // Hàm chuyển đến slide cụ thể khi bấm dot
-  function currentSlide(n) {
-    showSlides(slideIndex = n);
-    resetAutoSlide(); // Khi người dùng bấm, reset lại bộ đếm để không bị chuyển trang ngay lập tức
-  }
+<div class="flash-deal-board" id="flash-deal">
+  <div class="title">
+    <img src="https://res.cloudinary.com/bunny-store/image/upload/v1763628638/web-img/istockphoto-1147787504-612x612_%C4%90%C3%A3_s%E1%BB%ADa_mjajgn.png" alt="">
+    <p class="subtitle">Limited time deals - Don't miss out!</p>
+  </div>
+  
+  <div class="products">
+    {{#each (holderData 5)}}
+      {{> product}}
+    {{/each}}
+  </div>
+  
+  <a href="/all-products/isFlashDeal/true" class="view-all-btn">View All Flash Deals</a>
+</div>
 
-  function showSlides(n) {
-    let i;
-    let slides = document.getElementsByClassName("mySlides");
-    let dots = document.getElementsByClassName("dot");
-    
-    // Logic vòng lặp
-    if (n > slides.length) {slideIndex = 1}    
-    if (n < 1) {slideIndex = slides.length}
-    
-    // 1. Ẩn tất cả ảnh
-    for (i = 0; i < slides.length; i++) {
-      slides[i].style.display = "none";  
-    }
-    
-    // 2. Bỏ class active ở tất cả các chấm
-    for (i = 0; i < dots.length; i++) {
-      dots[i].className = dots[i].className.replace(" active", "");
-    }
-    
-    // 3. Hiện ảnh hiện tại và active chấm tương ứng
-    slides[slideIndex-1].style.display = "block";  
-    if (dots.length > 0) {
-        dots[slideIndex-1].className += " active";
-    }
-  }
+<div class="products-board" id="top-sale">
+  <div class="title">
+    <div><a href="/all-products/isTopSelling/true" class="main-title"><b>TOP SELLING PRODUCTS</b></a></div>
+    <p class="subtitle">Loved by thousands of customers</p>
+  </div>
+  
+  <div class="products">
+    {{#each (holderData 5)}}
+      {{> product}}
+    {{/each}}
+  </div>
+  
+  <a href="/all-products/isTopSelling/true" class="view-all-btn">View All Top Selling</a>
+</div>
 
-  // Hàm tự động chuyển trang
-  function startAutoSlide() {
-    slideInterval = setInterval(function() {
-      slideIndex++;
-      showSlides(slideIndex);
-    }, 4000); // 4000ms = 4 giây chuyển 1 lần
-  }
+<div class="products-board" id="new-arrival">
+  <div class="title">
+    <div><a href="/all-products/isNewArrival/true" class="main-title"><b>NEW ARRIVAL PRODUCTS</b></a></div>
+    <p class="subtitle">The trendiest products right now</p>
+  </div>
+  
+  <div class="products">
+    {{#each (holderData 5)}}
+      {{> product}}
+    {{/each}}
+  </div>
+  
+  <a href="/all-products/isNewArrival/true" class="view-all-btn">View All New Release Products</a>
+</div>
 
-  // Hàm reset lại thời gian (dùng khi người dùng click thủ công)
-  function resetAutoSlide() {
-    clearInterval(slideInterval); // Xóa bộ đếm cũ
-    startAutoSlide(); // Bắt đầu bộ đếm mới
-  }
-</script>
+<div class="products-board" id="all">
+  <div class="title">
+    <div><a href="/all-products" class="main-title"><b>ALL PRODUCTS</b></a></div>
+    <p class="subtitle">Explore our complete collection</p>
+  </div>
+
+  <div class="products">
+    {{#each (holderData 5)}}
+      {{> product}}
+    {{/each}}
+  </div>
+  
+  <a href="/all-products" class="view-all-btn">View All Products</a>
+</div>
+
+<div class="famous-brand-board" id="brand">
+  <div class="title">
+    <div><a href="/all-brands" class="main-title"><b>FEATURED BRANDS</b></a></div>
+    <p class="subtitle">Brands we're proud to feature</p>
+  </div>
+
+  <div class="brands">
+    <div class="inner">
+      {{#each (holderData 15)}}
+      <a class="brand">
+        <img loading="lazy">
+      </a>
+      {{/each}}
+    </div>
+    <div class="fade"></div>
+  </div>
+  
+  <a href="/all-brands" class="view-all-btn">View All Brands</a>
+</div>
+
+<script src="/js/user/home.js"></script>
