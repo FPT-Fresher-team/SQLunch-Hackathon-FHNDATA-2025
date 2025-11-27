@@ -1,15 +1,10 @@
 const order = require('../../models/orderModel')
 const user = require('../../models/userModel')
 const product = require('../../models/productModel')
-const store = require('../../models/storeModel')
 const orderStatus = require('../../models/orderStatusModel')
 const paymentMethod = require('../../models/paymentMethodModel')
-const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 const employee = require('../../models/employeeModel')
 const { ObjectId } = require('mongodb')
-const kafka = require("kafkajs").Kafka
-const kafkaClient = new kafka({ brokers: ["localhost:9092"] })
-const producer = kafkaClient.producer()
 const nodemailer = require("nodemailer")
 
 class allOrdersController {
@@ -65,7 +60,7 @@ class allOrdersController {
 
   async allOrders(req, res, next) {
     try {
-      return res.render('admin/all/order', { title: 'Danh sách đơn hàng', layout: 'admin' })
+      return res.render('admin/all/order', { title: 'Order List', layout: 'admin' })
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
     }
@@ -235,7 +230,7 @@ class allOrdersController {
       //   console.log(error)
       // }
   
-      return res.json({message: 'Cập nhật thông tin thành công'})
+      return res.json({message: 'Updated successfully'})
     } catch (error) {
       return res.json({error: error.message})
     }
@@ -318,7 +313,7 @@ class allOrdersController {
       //   console.log(error)
       // }
       
-      return res.json({message: 'Tạo đơn hàng mới thành công'})
+      return res.json({message: 'Created successfully'})
     } catch (error) {
       return res.json({error: error.message})
     }

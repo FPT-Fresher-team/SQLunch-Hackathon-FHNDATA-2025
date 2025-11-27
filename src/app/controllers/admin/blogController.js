@@ -1,7 +1,6 @@
 require('dotenv').config()
 const blog = require('../../models/blogModel')
 const cloudinary = require('cloudinary').v2
-const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 const { ObjectId } = require('mongodb')
 
 cloudinary.config({
@@ -44,6 +43,28 @@ class blogController {
     }
   }
 
+  async getDeletedBlogs(req, res, next) {
+    try {
+      const currentPage  = req.body.page
+      const itemsPerPage = 10
+      const skip         = (currentPage - 1) * itemsPerPage
+  
+      const [data, dataSize] = await Promise.all([
+        blog
+          .find({ deletedAt: { $ne: null }})
+          .skip(skip)
+          .limit(itemsPerPage)
+          .lean(),
+        blog.find({ deletedAt: { $ne: null }}).countDocuments(),
+      ]) 
+      if (!data) throw new Error('Data not found')
+      
+      return res.json({data: data, data_size: dataSize})
+    } catch (error) {
+      return res.json({error: error.message})
+    }
+  }
+
   async getFilter(req, res, next) {
     try {
       const categories = await blog.distinct('category.name')
@@ -58,6 +79,14 @@ class blogController {
   async allBlogs(req, res, next) {
     try {
       return res.render('admin/all/blog', { title: 'Blog List', layout: 'admin' })
+    } catch (error) {
+      return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
+    }
+  }
+
+  async trash(req, res, next) {
+    try {
+      return res.render('admin/all/blogTrash', { title: 'Blog Deleted', layout: 'admin' })
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     }
@@ -100,7 +129,7 @@ class blogController {
       })
 
       await newBlog.save()
-      return res.json({ isValid: true, message: 'Tạo blog mới thành công' })
+      return res.json({ isValid: true, message: 'Created successfully' })
 
     } catch (error) {
       console.log(error)
@@ -154,21 +183,36 @@ class blogController {
     }
   }
 
+  async softDelete(req, res, next) {
+    try {
+      await blog.updateOne({ _id: req.body.id}, { deletedAt: Date.now() })
+      return res.json({isValid: true, message: 'Move blog to trash successfully'})
+    } catch (error) {
+      return res.json({error: error.message})
+    }
+  }
+
   async deleteBlog(req, res, next) {
     try {
-      const { id } = req.body
-
-      if (!id) {
-        return res.json({ error: 'Blog ID is required' })
-      }
-
-      const deletedBlog = await blog.findByIdAndDelete(id)
-
-      if (!deletedBlog) throw new Error('Blog not found')
-
-      return res.json({ message: 'Blog deleted successfully' })
+      const newBlog = await blog.findOne({ _id: req.body.id })
+      const deleteImg = newBlog.featuredImage.filename
+      
+      await cloudinary.uploader.destroy(deleteImg)
+      await blog.deleteOne({ _id: req.body.id })
+  
+      return res.json({isValid: true, message: 'Delete blog successfully'})
     } catch (error) {
-      return res.json({ error: error.message })
+      return res.json({error: error.message})
+    }
+  }
+
+  async restore(req, res, next) {
+    try {
+      console.log(req.body.id)
+      await blog.updateOne({ _id: req.body.id}, { deletedAt: null })
+      return res.json({message: 'Restore blog successfully'})
+    } catch (error) {
+      return res.json({error: error.message})
     }
   }
 }

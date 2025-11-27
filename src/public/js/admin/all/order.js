@@ -8,6 +8,7 @@ const sortOptions   = {}
 const filterOptions = {}
 const currentPage   = { page: 1 }
 const dataSize      = { size: 0 }
+const searchInput   = document.querySelector('input#search-input')
 
 function generateColumns() {
   const columnsGroup = document.querySelector('div.checkbox-group')
@@ -66,10 +67,19 @@ async function getOrders(sortOptions, filterOptions, currentPage, itemsPerPage) 
     }
   })
 
+  const payload = {
+    page: currentPage,
+    itemsPerPage: itemsPerPage,
+    sort: sortOptions,
+    filter: filterOptions
+  }
+
+  if (searchInput.value.trim()) payload.searchQuery = searchInput.value.trim()
+
   const response = await fetch('/admin/all-orders/data/orders', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ sort: sortOptions, filter: filterOptions, page: currentPage, itemsPerPage })
+    body: JSON.stringify(payload)
   })
 
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
@@ -365,6 +375,7 @@ async function openProductDetail(productId) {
     // Fill form
     productDetailModal.querySelector('input#id').value = productInfo._id
     productDetailModal.querySelector('select#categories').value = productInfo.categories || ''
+    productDetailModal.querySelector('select#subcategories').value = productInfo.subcategories || ''
     productDetailModal.querySelector('input#name').value = productInfo.name || ''
     productDetailModal.querySelector('input#oldPrice').value = formatNumber(productInfo.oldPrice)
     productDetailModal.querySelector('input#price').value = formatNumber(productInfo.price)
@@ -400,39 +411,6 @@ async function openProductDetail(productId) {
       statusSelect.appendChild(opt)
     })
 
-    // Hiển thị dòng sản phẩm phù hợp
-    productDetailModal.querySelector('select#categories').value = productInfo.categories
-
-    const skincareBox = productDetailModal.querySelector('select#skincare')
-    const makeupBox = productDetailModal.querySelector('select#makeup')
-    if (productInfo.categories === 'skincare') {
-      skincareBox.style.display = 'block'
-      makeupBox.style.display = 'none'
-      productDetailModal.querySelector('select#skincare').value = productInfo.skincare || ''
-    } else if (productInfo.categories === 'makeup') {
-      skincareBox.style.display = 'none'
-      makeupBox.style.display = 'block'
-      productDetailModal.querySelector('select#makeup').value = productInfo.makeup || ''
-    } else {
-      skincareBox.style.display = 'none'
-      makeupBox.style.display = 'none'
-    }
-
-    // Xử lý thay đổi category
-    productDetailModal.querySelector('select#categories').onchange = function () {
-      const val = this.value
-      if (val === 'skincare') {
-        skincareBox.style.display = 'block'
-        makeupBox.style.display = 'none'
-      } else if (val === 'makeup') {
-        skincareBox.style.display = 'none'
-        makeupBox.style.display = 'block'
-      } else {
-        skincareBox.style.display = 'none'
-        makeupBox.style.display = 'none'
-      }
-    }
-
     // Format số khi nhập
     formatInputNumber(productDetailModal.querySelector('input#purchasePrice'))
     formatInputNumber(productDetailModal.querySelector('input#oldPrice'))
@@ -459,7 +437,7 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
     await getFilter()
     await getOrders(sortOptions, filterOptions, currentPage.page, 10)
     await sortAndFilter(getOrders, sortOptions, filterOptions, currentPage.page)
-    await exportJs('BÁO CÁO DANH SÁCH ĐƠN HÀNG')
+    await exportJs('ORDER LIST')
   } catch (err) {
     console.error('Error loading data:', err)
     pushNotification('An error occurred while loading data')

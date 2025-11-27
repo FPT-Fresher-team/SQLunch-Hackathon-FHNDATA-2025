@@ -86,7 +86,7 @@ class allOrderController {
   async getAllVouchers(req, res, next) {
     try {
       const userInfo = await user.findOne({ _id: req.cookies.uid }).lean()
-      if (!userInfo) throw new Error('Hãy đăng nhập để xem voucher của bạn nha!')
+      if (!userInfo) throw new Error('Please log in to view your vouchers!')
 
       const voucherInfo = await voucher.find({ memberCode: userInfo.memberCode, status: 'active' }).lean()
       const userVoucherInfo = await userVoucher.find({ status: 'active', userId: req.cookies.uid }).lean()
@@ -98,7 +98,7 @@ class allOrderController {
   }
   
   async show(req, res, next) {
-    return res.render('users/allOrders', { title: 'Đơn hàng' })
+    return res.render('users/allOrders', { title: 'Orders' })
   }
 
   async orderInfo(req, res, next) {
@@ -108,14 +108,14 @@ class allOrderController {
       
       const orderInfo = await order.findOne({ _id: req.params.id }).lean()
       if (!orderInfo) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
-      if (orderInfo.customerInfo.userId === 'guest') return res.render('users/detailOrder', { title: `Đơn của khách` })
+      if (orderInfo.customerInfo.userId === 'guest') return res.render('users/detailOrder', { title: 'Order of Guest' })
 
       const userInfo = await user.findOne({ _id: orderInfo.customerInfo.userId }).lean()
       if (!userInfo) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
       if (userInfo._id.toString() !== id ) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
-      return res.render('users/detailOrder', { title: `Đơn của ${orderInfo.customerInfo.name}` })
+      return res.render('users/detailOrder', { title: `Order of ${orderInfo.customerInfo.name}` })
 
     } catch (error) {
       return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
@@ -123,7 +123,7 @@ class allOrderController {
   }
 
   async ordersChecking(req, res, next) {
-    return res.render('users/ordersChecking', { title: 'Kiểm Tra Đơn Hàng' })
+    return res.render('users/ordersChecking', { title: 'Checking Orders' })
   }
 
   async createOrders(req, res, next) {
@@ -219,8 +219,7 @@ class allOrderController {
             await newUserVoucher.save()
             if (voucherInfo) {
               await voucher.updateOne({ _id: voucherInfo._id }, {
-                usedAt: new Date(),
-                status: 'used'
+                usedCount: { $inc: 1 }
               })
             } else if (userVoucherInfo) {
               await userVoucher.updateOne({ _id: userVoucherInfo._id }, {
@@ -375,33 +374,6 @@ class allOrderController {
         await product.bulkWrite(bulkOps)
       }
 
-      // try {
-      //   await producer.connect()
-      //   await producer.send({
-      //     topic: 'create',
-      //     messages: [{ value: JSON.stringify({
-      //       topic_type: 'order',
-      //       body: newOrder
-      //     })}],
-      //   })
-
-      //   setTimeout(async function() {
-      //     await producer.connect()
-      //     await producer.send({
-      //       topic: 'purchase',
-      //       messages: [{ value: JSON.stringify({
-      //         user_id   : customerInfo.userId,
-      //         order_id  : newOrder._id,
-      //         totalOrderPrice : totalNewOrderPrice,
-      //         timestamp : new Date(),
-      //       })}],
-      //     })
-      //   }, 5000)
-        
-        
-      // } catch (error) {
-      //   console.log(error)
-      // }  
       return res.json({id: newOrder._id})
     } catch (error) {
       return res.json({error: error.message})
@@ -449,7 +421,7 @@ class allOrderController {
 
       if (userInfo._id.toString() !== id ) return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
 
-      res.render('users/detailRateOrder', { title: 'Đánh giá đơn hàng' })
+      res.render('users/detailRateOrder', { title: 'Rate Order' })
 
     } catch (error) {
       return res.render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
@@ -528,7 +500,7 @@ class allOrderController {
       const { id, email } = req.query
       const orderInfo = await order.findOne({ _id: id }).lean()
       const orderStatus = orderInfo.status
-      if (orderStatus !== 'delivered') throw new Error('Dơn hàng chưa được giao')
+      if (orderStatus !== 'delivered') throw new Error('Order status invalid')
       await order.updateOne({ _id: id }, {
         status: 'done'
       })

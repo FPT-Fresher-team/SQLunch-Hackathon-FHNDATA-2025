@@ -13,7 +13,7 @@ async function createBirthdayVoucher(user) {
     code: code,
     description: `Happy Birthday ${user.name}! Enjoy your special discount.`,
     discount: 100000,
-    minOrder: 400000,
+    minOrder: 500000,
     startDate: now,
     endDate: new Date(new Date().setMonth(now.getMonth() + 1)),
   })

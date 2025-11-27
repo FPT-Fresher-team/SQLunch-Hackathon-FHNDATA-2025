@@ -1,9 +1,5 @@
 const brand = require('../../models/brandModel')
 const product = require('../../models/productModel')
-const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
-const kafka = require("kafkajs").Kafka
-const kafkaClient = new kafka({ brokers: ["localhost:9092"] })
-const producer = kafkaClient.producer()
 
 class allBrandsController {
   async getBrands(req, res, next) {
@@ -45,7 +41,7 @@ class allBrandsController {
   
   async allBrands(req, res, next) {
     try {
-      return res.render('admin/all/brand', { title: 'Danh sách đại lý', layout: 'admin' })
+      return res.render('admin/all/brand', { title: 'Brand List', layout: 'admin' })
     } catch (error) {
       console.log(error)
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 

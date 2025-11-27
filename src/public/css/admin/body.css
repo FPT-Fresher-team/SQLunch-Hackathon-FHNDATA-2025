@@ -8,6 +8,22 @@ main {
   padding: 0 10px;
   margin-top: 10px;
 }
+p.trash {
+  font-size: 15px !important;
+  padding: 10px !important;
+  border: none;
+}
+
+p.trash a {
+  text-decoration: none;
+  color: #2B6377;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+p.trash a:hover {
+  color: #94CCDF;
+  text-decoration: underline;
+}
 
 /* all items page */
 .header {
@@ -62,6 +78,7 @@ main {
   gap: 8px;
   align-items: center;
   flex: 1; /* search expands */
+  max-width: 500px;
 }
 .search select, 
 .search input,
@@ -73,7 +90,8 @@ main {
   font-size: 14px;
   background: transparent;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  width: fit-content !important;
+  width: 100% !important;
+  min-width: 200px;
 }
 
 .search select:focus, 

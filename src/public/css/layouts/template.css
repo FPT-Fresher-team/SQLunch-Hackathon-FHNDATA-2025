@@ -227,42 +227,134 @@ div.notification {
 }
 
 /* ---------- Modal ---------- */
-div.modal {
+.modal {
   display: none;
   position: fixed;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
   z-index: 9999;
   align-items: center;
   justify-content: center;
+  animation: fadeIn 0.25s ease;
 }
-div.modal.active { display: flex; }
+
+.modal.active {
+  display: flex;
+}
 
 .modal-content {
-  background: var(--card);
-  color: var(--card-foreground);
+  background: white;
   width: 90%;
-  max-width: 480px;
-  border-radius: var(--radius);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  max-width: 460px;
+  border-radius: 16px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.25);
   overflow: hidden;
+  animation: popUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.modal-content .container {
-  padding: 32px 24px;
+
+/* Header */
+.modal-header {
+  padding: 24px 28px 16px;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+.modal-header i {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+.modal-header.success i   { color: #10b981; }
+.modal-header.danger i    { color: #ef4444; }
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #111;
+}
+
+/* Body */
+.modal-body {
+  padding: 20px 28px 24px;
   text-align: center;
 }
-.modal-content button {
-  margin: 8px;
+.modal-body p {
+  margin: 8px 0;
+  color: #444;
+  line-height: 1.5;
 }
-.modal-content .cancelbtn {
-  background: var(--muted);
-  border: none;
-  color: var(--foreground);
+.product-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin: 12px 0;
+  word-break: break-word;
 }
-.modal-content .deletebtn {
-  background: var(--destructive);
+.note {
+  font-size: 0.92rem;
+  color: #666;
+  margin-top: 12px;
+}
+.note.warning {
+  color: #dc2626;
+  font-weight: 500;
+}
+
+/* Footer */
+.modal-footer {
+  padding: 16px 28px 28px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.modal-footer button {
+  min-width: 120px;
+  padding: 11px 20px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
   border: none;
-  color: #fff;
+}
+
+.cancelbtn {
+  background: #f3f4f6;
+  color: #374151;
+}
+.cancelbtn:hover {
+  background: #e5e7eb;
+  transform: translateY(-1px);
+}
+
+.restorebtn {
+  background: #10b981;
+  color: white;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+}
+.restorebtn:hover {
+  background: #059669;
+  transform: translateY(-2px);
+}
+
+.deletebtn {
+  background: #ef4444;
+  color: white;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.4);
+}
+.deletebtn:hover {
+  background: #dc2626;
+  transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes popUp {
+  from { opacity: 0; transform: scale(0.8) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
 }
 
 /* ---------- Pagination ---------- */

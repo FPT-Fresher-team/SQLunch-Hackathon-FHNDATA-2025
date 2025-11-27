@@ -279,73 +279,6 @@ function shareBlog() {
   }
 }
 
-function submitComment(event) {
-  event.preventDefault()
-
-  const name = document.getElementById('commentName').value
-  const email = document.getElementById('commentEmail').value
-  const text = document.getElementById('commentText').value
-
-  // Save to localStorage (in production, this would be sent to server)
-  const comments = JSON.parse(localStorage.getItem(`blog_${blogData._id}_comments`) || '[]')
-  comments.push({
-    name,
-    email,
-    text,
-    date: new Date().toISOString()
-  })
-  localStorage.setItem(`blog_${blogData._id}_comments`, JSON.stringify(comments))
-
-  // Reset form and re-render
-  commentForm.reset()
-  renderComments()
-  pushNotification('Comment posted successfully!')
-}
-
-function renderComments() {
-  const comments = JSON.parse(localStorage.getItem(`blog_${blogData._id}_comments`) || '[]')
-
-  commentCount.textContent = comments.length
-  commentsList.innerHTML = ''
-
-  comments.forEach(comment => {
-    const div = document.createElement('div')
-    div.classList.add('comment')
-
-    const avatar = document.createElement('div')
-    avatar.classList.add('comment-avatar')
-    avatar.textContent = comment.name.charAt(0).toUpperCase()
-
-    const body = document.createElement('div')
-    body.classList.add('comment-body')
-
-    const header = document.createElement('div')
-    header.classList.add('comment-header')
-
-    const nameSpan = document.createElement('span')
-    nameSpan.classList.add('comment-name')
-    nameSpan.textContent = comment.name
-
-    const dateSpan = document.createElement('span')
-    dateSpan.classList.add('comment-date')
-    dateSpan.textContent = formatDate(comment.date)
-
-    header.appendChild(nameSpan)
-    header.appendChild(dateSpan)
-
-    const text = document.createElement('p')
-    text.classList.add('comment-text')
-    text.textContent = comment.text
-
-    body.appendChild(header)
-    body.appendChild(text)
-
-    div.appendChild(avatar)
-    div.appendChild(body)
-    commentsList.appendChild(div)
-  })
-}
-
 function subscribeNewsletter(event) {
   event.preventDefault()
   const email = event.target.querySelector('input[type="email"]').value
@@ -357,5 +290,4 @@ function subscribeNewsletter(event) {
 window.addEventListener('DOMContentLoaded', () => {
   fetchBlog()
   fetchAllBlogs()
-  renderComments()
 })

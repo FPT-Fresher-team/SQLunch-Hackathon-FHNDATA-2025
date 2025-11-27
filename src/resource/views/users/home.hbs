@@ -44,12 +44,12 @@
     {{/each}}
   </div>
   
-  <a href="/all-products/status/flash-sale" class="view-all-btn">View All Flash Deals</a>
+  <a href="/all-products/isFlashDeal/true" class="view-all-btn">View All Flash Deals</a>
 </div>
 
 <div class="products-board" id="top-sale">
   <div class="title">
-    <div><a href="/all-products/status/top-selling" class="main-title"><b>TOP SELLING PRODUCTS</b></a></div>
+    <div><a href="/all-products/isTopSelling/true" class="main-title"><b>TOP SELLING PRODUCTS</b></a></div>
     <p class="subtitle">Loved by thousands of customers</p>
   </div>
   
@@ -59,12 +59,12 @@
     {{/each}}
   </div>
   
-  <a href="/all-products/status/top-selling" class="view-all-btn">View All Top Selling</a>
+  <a href="/all-products/isTopSelling/true" class="view-all-btn">View All Top Selling</a>
 </div>
 
 <div class="products-board" id="new-arrival">
   <div class="title">
-    <div><a href="/all-products/status/new-arrival" class="main-title"><b>NEW RELEASE PRODUCTS</b></a></div>
+    <div><a href="/all-products/isNewArrival/true" class="main-title"><b>NEW ARRIVAL PRODUCTS</b></a></div>
     <p class="subtitle">The trendiest products right now</p>
   </div>
   
@@ -74,38 +74,8 @@
     {{/each}}
   </div>
   
-  <a href="/all-products/status/new-arrival" class="view-all-btn">View All New Release Products</a>
+  <a href="/all-products/isNewArrival/true" class="view-all-btn">View All New Release Products</a>
 </div>
-
-{{!-- <div class="products-board" id="skincare">
-  <div class="title">
-    <div><a href="/all-products/categories/skincare" class="main-title"><b>SKINCARE PRODUCTS</b></a></div>
-    <p class="subtitle">Proper skincare for healthy skin</p>
-  </div>
-  
-  <div class="products">
-    {{#each (holderData 5)}}
-      {{> product}}
-    {{/each}}
-  </div>
-  
-  <a href="/all-products/categories/skincare" class="view-all-btn">View All Skincare</a>
-</div>
-
-<div class="products-board" id="makeup">
-  <div class="title">
-    <div><a href="/all-products/categories/makeup" class="main-title"><b>MAKEUP PRODUCTS</b></a></div>
-    <p class="subtitle">Color your life with quality makeup</p>
-  </div>
-  
-  <div class="products">
-    {{#each (holderData 5)}}
-      {{> product}}
-    {{/each}}
-  </div>
-  
-  <a href="/all-products/categories/makeup" class="view-all-btn">View All Makeup</a>
-</div> --}}
 
 <div class="products-board" id="all">
   <div class="title">

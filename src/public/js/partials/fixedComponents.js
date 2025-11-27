@@ -147,15 +147,17 @@ AIminimize.onclick = function () {
 sendBtn.onclick = async function() {
   try {
     if (input.value.trim() !== '') {
-      socket.emit('privateMessage', { room: window.uid, message: `${window.uid}:${input.value}` })
+      const prompt = input.value
+      input.value = ''
+      sendBtn.classList.add('not-allowed')
+      socket.emit('privateMessage', { room: window.uid, message: `${window.uid}:${prompt}` })
       const response = await fetch('/api/chat/create', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({value: input.value})
+        body: JSON.stringify({value: prompt})
       })
-      if (!response.ok) throw new Error(`Response status: ${response.status}`)
       input.value = ''
-      sendBtn.classList.add('not-allowed')
+      if (!response.ok) throw new Error(`Response status: ${response.status}`)
       chatContent.scrollTo(0, chatContent.scrollHeight)
     }
   } catch (error) {
@@ -184,6 +186,7 @@ AIsendBtn.onclick = async function() {
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({prompt: prompt})
     })
+    AIinput.value = ''
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
     const json = await response.json()
 

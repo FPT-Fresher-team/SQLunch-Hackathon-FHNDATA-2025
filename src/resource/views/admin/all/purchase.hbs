@@ -9,11 +9,6 @@
 
   <div class="control-bar">
     <div class="search">
-      <select id="search-type" class="search-btn">
-        <option value="">Search by</option>
-        <option value="_id" selected>ID</option>
-        <option value="supplierId">Supplier Code</option>
-      </select>
       <input type="text" id="search-input" name="name" placeholder="Search purchase order" />
     </div>
 
@@ -51,14 +46,13 @@
           <td></td>
           <td></td>
           <td></td>
+          <td></td>
         </tr>
       </thead>
 
       <tbody>
         {{#each (holderData 10)}}
         <tr>
-          <td></td>
-          <td></td>
           <td></td>
           <td></td>
           <td></td>
@@ -91,14 +85,39 @@
     </div>
 
     <div class="form-group">
-      <label for="totalPurchasePrice">Total Cost</label>
-      <input type="number" class="form-control" id="totalPurchasePrice" name="totalPurchasePrice" placeholder="Enter total cost">
+      <label for="note">Note</label>
+      <input type="text" id="note" name="note">
     </div>
 
     <div class="form-group">
-      <label for="items">Total Items</label>
-      <input type="number" class="form-control" id="items" name="items" placeholder="Enter number of items">
+      <label>Select Products</label>
+      <input type="text"  id="product-search" placeholder="Enter product name">
     </div>
+
+    <div class="products-match"></div>
+
+    <table>
+      <thead>
+        <tr>
+          <td style="width:  5%;">NO</td>
+          <td style="width: 40%;">Product</td>
+          <td style="width: 15%; text-align:right">Price</td>
+          <td style="width: 10%;">Quantity</td>
+          <td style="width: 15%; text-align:right">Total Price</td>
+          <td style="width: 10%;"></td>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+      <tfoot>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="text-align: right">0</td>
+        <td></td>
+      </tfoot>
+    </table>
 
     <div class="submit-button">
       <button class="close-modal">Close</button>
@@ -109,36 +128,163 @@
 
 <div class="purchase-details-container" id="detail-modal">
   <div id="form">
-    
     <table id="table-1">
       <thead>
         <tr><td colspan="2">PURCHASE ORDER INFORMATION</td></tr>
       </thead>
       <tr>
-        <td>Purchase Order Code</td>
-        <td><input type="text" name="id" disabled></td>
+        <td>Order ID</td>
+        <td><input type="text" id="id" disabled></td>
       </tr>
       <tr>
-        <td>Supplier Code</td>
-        <td><input type="text" name="supplierId" disabled></td>
+        <td>Import Date</td>
+        <td><input type="text" id="date" disabled></td>
       </tr>
       <tr>
-        <td>Purchase Date</td>
-        <td><input type="text" name="purchaseDate" disabled></td>
+        <td>Supplier</td>
+        <td><input type="text" id="supplier" disabled></td>
       </tr>
       <tr>
-        <td>Total Items</td>
-        <td><input type="text" name="items" disabled></td>
+        <td>Phone</td>
+        <td><input type="text" id="phone" disabled></td>
       </tr>
       <tr>
-        <td>Total Cost</td>
-        <td><input type="text" id="totalPurchasePrice" name="totalPurchasePrice" disabled></td>
+        <td>Address</td>
+        <td><input type="text" id="address" disabled></td>
       </tr>
+      <tr>
+        <td>Notes</td>
+        <td><input type="text" id="note" disabled></td>
+      </tr>
+      <tr>
+        <td>Total Amount</td>
+        <td><input type="text" id="total" disabled></td>
+      </tr>
+    </table>
+
+    <table id="table-2">
+      <thead>
+        <tr><td colspan="5">PRODUCTS</td></tr>
+      </thead>
+      <thead>
+        <tr>
+          <td>No.</td>
+          <td>Product Name</td>
+          <td>Quantity</td>
+          <td>Price</td>
+          <td>Details</td>
+        </tr>
+      </thead>
+      <tbody></tbody>
     </table>
 
     <div class="submit-button">
       <button class="close-modal">Close</button>
       <button type="submit">Update</button>
+    </div>
+  </div>
+</div>
+
+<div class="product-details-container" id="detail-modal">
+  <div id="form">
+    <table id="table-1">
+      <thead>
+        <tr><td colspan="2">PRODUCT INFORMATION</td></tr>
+      </thead>
+      <tr>
+        <td>Product ID</td>
+        <td><input type="text" id="id" disabled></td>
+      <tr>
+      <tr>
+        <td>Product Type</td>
+        <td>
+          <select name="categories" id="categories">
+            <option value="skincare">Skincare</option>
+            <option value="makeup">Makeup</option>
+          </select>
+          <select name="subcategories" id="subcategories">
+            <option value="xit-khoang">Xịt Khoáng</option>
+            <option value="mat-na">Mặt Nạ</option>
+            <option value="serum">Serum</option>
+            <option value="bha">BHA</option>
+            <option value="tay-da-chet">Tẩy Da Chết</option>
+            <option value="duong-da">Dưỡng Da</option>  
+            <option value="toner">Toner</option>
+            <option value="nuoc-tay-trang">Nước Tẩy Trang</option>
+            <option value="cham-mun">Chấm Mụn</option>
+            <option value="kem-duong-am">Kem Dưỡng Ẩm</option>
+            <option value="sua-rua-mat">Sữa Rửa Mặt</option>
+            <option value="phan-ma">Phấn Má</option>
+            <option value="mascara">Mascara</option>
+            <option value="ke-mat">Kẻ Mắt</option>
+            <option value="kem-chong-nang">Kem Chống Nắng</option>
+            <option value="che-khuyet-diem">Che Khuyết Điểm</option>
+            <option value="son">Son</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>Brand</td>
+        <td><select name="brand" id="brand"></select></td>
+      <tr>
+        <td>Tên</td>
+        <td><input type="text" id="name"></td>
+      </tr>
+      <tr>
+        <td>Purchase Price</td>
+        <td><input type="text" id="purchasePrice"></td>
+      </tr>
+      <tr>
+        <td>Old Price</td>
+        <td><input type="text" id="oldPrice"></td>
+      </tr>
+      <tr>
+        <td>New Price</td>
+        <td><input type="text" id="price"></td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td><input type="text" id="description"></td>
+      </tr>
+      <tr>
+        <td>Details</td>
+        <td><input type="text" id="details"></td>
+      </tr>
+      <tr>
+        <td>Usage Guide</td>
+        <td><input type="text" id="guide"></td>
+      </tr>
+      <tr>
+        <td>Quantity</td>
+        <td><input type="text" id="quantity"></td>
+      </tr>
+      <tr>
+        <td>Rating</td>
+        <td><input type="text" id="rate" disabled></td>
+      </tr>
+      <tr>
+        <td>Sales Count</td>
+        <td><input type="text" id="saleNumber" disabled></td>
+      </tr>
+      <tr>
+        <td>Rating Count</td>
+        <td><input type="text" id="rateNumber" disabled></td>
+      </tr>
+      <tr>
+        <td>Product Status</td>
+        <td><select name="status" id="status"></select></td>
+      </tr>
+      <tr>
+        <td>Product Image</td>
+        <td>
+          <img src="" alt="loading" id="image">
+          <input type="file" name="img" id="img"/>
+        </td>
+      </tr>
+    </table>
+
+    <div class="submit-button">
+      <button class="close-modal">Close</button>
     </div>
   </div>
 </div>

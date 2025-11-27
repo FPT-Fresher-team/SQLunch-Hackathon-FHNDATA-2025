@@ -1,8 +1,6 @@
 const userVoucher = require('../../models/userVoucherModel')
-const employee = require('../../models/employeeModel')
 const order = require('../../models/orderModel')
 const member = require('../../models/memberModel')
-const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 const { ObjectId } = require('mongodb')
 
 class allUVouchersController {
@@ -45,7 +43,7 @@ class allUVouchersController {
 
   async allVouchers(req, res, next) {
     try {
-      return res.render('admin/all/userVoucher', { title: 'Danh sách voucher', layout: 'admin' })
+      return res.render('admin/all/userVoucher', { title: 'Voucher List', layout: 'admin' })
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     }
@@ -100,7 +98,7 @@ class allUVouchersController {
         endDate     : new Date(req.body.endDate)
       })
   
-      return res.json({message: 'Cập nhật thông tin thành công'})
+      return res.json({message: 'Update voucher successfully'})
     } catch (error) {
       return res.json({error: error.message})
     }
@@ -131,7 +129,7 @@ class allUVouchersController {
       })
       await newVoucher.save()
 
-      return res.json({message: 'Tạo voucher thành công'})
+      return res.json({message: 'Create voucher successfully'})
     } catch (error) {
       return res.json({error: error.message})
     }

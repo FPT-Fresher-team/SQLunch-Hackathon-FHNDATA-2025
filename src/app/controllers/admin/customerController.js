@@ -1,15 +1,10 @@
 require('dotenv').config()
-const employee = require('../../models/employeeModel')
 const user = require('../../models/userModel')
+const employee = require('../../models/employeeModel')
 const chat = require('../../models/chatModel')
 const order = require('../../models/orderModel')
 const member = require('../../models/memberModel')
 const bcrypt = require('bcryptjs')
-const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
-const kafka = require("kafkajs").Kafka
-const kafkaClient = new kafka({ brokers: ["localhost:9092"] })
-const producer = kafkaClient.producer()
-const { ObjectId } = require('mongodb')
 
 class allCustomersController {
   async getCustomers(req, res, next) {
@@ -19,6 +14,8 @@ class allCustomersController {
       let filter         = req.body.filter
       const itemsPerPage = req.body.itemsPerPage
       const skip         = (currentPage - 1) * itemsPerPage
+      const userInfo     = await employee.findOne({ _id: req.cookies.uid }).lean()
+      if (!userInfo) throw new Error('User not found')
 
       if (Object.keys(sort).length === 0) {
         sort = { updatedAt: -1 }
@@ -27,7 +24,7 @@ class allCustomersController {
       if (filter['_id']) {
         filter['_id'] = ObjectId.createFromHexString(filter['_id'])
       }
-  
+
       const [data, dataSize] = await Promise.all([
         user
           .find(filter)
@@ -35,14 +32,14 @@ class allCustomersController {
           .skip(skip)
           .limit(itemsPerPage)
           .lean(),
-          user.find(filter).countDocuments(),
+        user.find(filter).countDocuments(),
       ]) 
       if (!data) throw new Error('Data not found')
       
       return res.json({data: data, data_size: dataSize})
     } catch (error) {
-      console.log(error)
-      return res.json({error: error.message})
+      console.error('getCustomers error:', error)
+      return res.status(500).json({ error: error.message })
     }
   }
 
@@ -59,7 +56,7 @@ class allCustomersController {
 
   async allCustomers(req, res, next) {
     try {
-      return res.render('admin/all/customer', { title: 'All Customers', layout: 'admin' })
+      return res.render('admin/all/customer', { title: 'Customer List', layout: 'admin' })
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     }

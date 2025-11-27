@@ -412,8 +412,6 @@ async function loadRelatedProducts(type, container) {
     })
 
     const data = await response.json()
-
-    console.log(data)
     
     if (data.data && data.data.length > 0) {
       // Clear loading placeholder

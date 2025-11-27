@@ -1,6 +1,5 @@
 const store = require('../../models/storeModel')
 const employee = require('../../models/employeeModel')
-const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 const { ObjectId } = require('mongodb')
 
 class allStoresController {
@@ -47,7 +46,7 @@ class allStoresController {
 
   async allStores(req, res, next) {
     try {
-      return res.render('admin/all/store', { title: 'Danh sách đại lý', layout: 'admin' })
+      return res.render('admin/all/store', { title: 'Store List', layout: 'admin' })
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' })
     }
@@ -72,7 +71,7 @@ class allStoresController {
         details: req.body.details
       })
   
-      return res.json({message: 'Cập nhật thông tin thành công'})
+      return res.json({message: 'Updated successfully'})
     } catch (error) {
       return res.json({error: error.message})
     }
@@ -83,7 +82,7 @@ class allStoresController {
       const newStore = new store(req.body)
       await newStore.save()
 
-      return res.json({message: 'Tạo đại lý thành công'})
+      return res.json({message: 'Created successfully'})
     } catch (error) {
       return res.json({error: error.message})
     }

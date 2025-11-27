@@ -3,7 +3,6 @@ const purchase = require('../../models/purchaseModel')
 const supplier = require('../../models/supplierModel')
 const store = require('../../models/storeModel')
 const employee = require('../../models/employeeModel')
-const checkForHexRegExp = require('../../middleware/checkForHexRegExp')
 const { ObjectId } = require('mongodb')
 
 class adminController {
@@ -54,7 +53,7 @@ class adminController {
 
   async allPurchases(req, res, next) {
     try {
-      return res.render('admin/all/purchase', { title: 'Danh sách phiếu nhập', layout: 'admin' })
+      return res.render('admin/all/purchase', { title: 'Purchase List', layout: 'admin' })
     } catch (error) {
       return res.status(403).render('partials/denyUserAccess', { title: 'Not found', layout: 'empty' }) 
     }
@@ -88,7 +87,86 @@ class adminController {
     }
   }
 
+  async getProducts(req, res, next) {
+    try {
+      const query = req.body.query
+      const products = await product.find({
+        deletedAt: null,
+        name: { $regex: query, $options: 'i'}
+      }).lean()
+      return res.json({data: products})
+    } catch (error) {
+      console.log(error)
+      return res.json({error: error.message})
+    }
+  }
+
   async purchaseCreated(req, res, next) {
+    try {
+      let { 
+        purchaseDate, 
+        supplierId,
+        note,
+        productId, 
+        productName,
+        productImg,
+        productPrice,
+        productQuantity,
+        totalPurchasePrice
+      } = req.body
+  
+      // if the req.body has only 1 record, convert 1 record to array
+      if(!Array.isArray(productId)) {
+        productId       = [productId]
+        productName     = [productName]
+        productImg      = [productImg]
+        productPrice    = [productPrice]
+        productQuantity = [productQuantity]
+      }
+  
+      const newPurchase = new purchase({
+        products: productId.map((product, index) => ({
+          id        : productId[index],
+          name      : productName[index],
+          image     : productImg[index],
+          price     : productPrice[index],
+          quantity  : productQuantity[index], 
+          totalPrice: productPrice[index] * productQuantity[index]
+        })),
+        supplierId: supplierId,
+        note: note,
+        purchaseDate: purchaseDate,
+        totalProducts: productQuantity.reduce((acc, curr) => acc + parseInt(curr), 0),
+        totalPurchasePrice: totalPurchasePrice
+      });
+      await newPurchase.save()
+  
+      const productUpdates = []
+      productId.forEach((id, index) => {
+        productUpdates.push({ productId: id, quantity: productQuantity[index] })
+      })
+      
+      await supplier.updateOne({ _id: supplierId }, {
+        $inc: { 
+          totalCost: totalPurchasePrice,
+          quantity: 1
+         }
+      })
+  
+      const bulkOps = productUpdates.map(({ productId, quantity }) => ({
+        updateOne: {
+          filter: { _id: productId },
+          update: { $inc: { quantity: quantity } }, 
+          upsert: true,
+        },
+      }))
+      await product.bulkWrite(bulkOps)
+
+      return res.json({message: 'Created successfully'})
+    } catch (error) {
+      console.log(error)
+      return res.json({error: error.message})
+    }
   }
 }
 module.exports = new adminController

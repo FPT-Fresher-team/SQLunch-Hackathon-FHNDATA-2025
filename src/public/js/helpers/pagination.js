@@ -1,7 +1,9 @@
 async function pagination(getDataFunction, sortOptions, filterOptions, currentPage, data_size) {
   document.querySelector('span.pagination').querySelectorAll('p').forEach(p => p.remove())
   var totalPage = 1
-  const itemsPerPage = parseInt(document.querySelector('select#pagination').value)
+  const itemsPerPage = parseInt(document.querySelector('select#pagination')?.value, 10)
+  if (!itemsPerPage) return
+  
   for (var i = 0; i < data_size; i += itemsPerPage) {
     const newPage = document.createElement('p')
     if (totalPage === currentPage) {

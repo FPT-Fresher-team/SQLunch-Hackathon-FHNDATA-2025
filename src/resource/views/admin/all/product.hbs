@@ -12,12 +12,6 @@
   </script>
   <div class="control-bar">
     <div class="search">
-      <select id="search-type" class="search-btn">
-        <option value="">Search by</option>
-        <option value="_id" selected>ID</option>
-        <option value="name">Name</option>
-        <option value="brand">Brand</option>
-      </select>
       <input type="text" id="search-input" name="name" placeholder="Search product" />
     </div>
 
@@ -89,19 +83,6 @@
         {{/each}}
       </tbody>
     </table>
-
-    <div id="id01" class="modal">
-      <form class="modal-content">
-        <div class="container">
-          <p><strong>Xoá sản phẩm ?</strong></p>
-          <p id="confirm-message"></p>
-          <div class="clearfix">
-            <button id="delete-button" type="button" class="deletebtn">Xoá</button>
-            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Huỷ</button>
-          </div>
-        </div>
-      </form>
-    </div>
   </div>
 
   <span class="pagination"></span>
@@ -124,7 +105,7 @@
 
     <div class="form-group" style="display: none;">
       <label></label>
-      <select name="skincare">
+      <select name="subcategories">
         <option value="">-- Skincare --</option>
         <option value="xit-khoang">Facial Mist</option>
         <option value="mat-na">Face Mask</option>
@@ -142,7 +123,7 @@
 
     <div class="form-group" style="display: none;">
       <label></label>
-      <select name="makeup">
+      <select name="subcategories">
         <option value="">-- Makeup --</option>
         <option value="phan-ma">Blush</option>
         <option value="mascara">Mascara</option>
@@ -204,17 +185,6 @@
     </div>
 
     <div class="form-group">
-      <label></label>
-      <select name="status">
-        <option value="">-- Product Status --</option>
-        <option value="normal">Normal</option>
-        <option value="flash-sale">Flash Sale</option>
-        <option value="hot">Hot</option>
-        <option value="new-arrival">New Arrival</option>
-      </select>
-    </div>
-
-    <div class="form-group">
       <label>Product Image</label>
       <input type="file" name="img" id="img"/>
     </div>
@@ -237,13 +207,14 @@
         <td><input type="text" id="id" disabled></td>
       <tr>
       <tr>
-        <td>Product Type</td>
+        <td>Product Categories</td>
         <td>
           <select name="categories" id="categories">
             <option value="skincare">Skincare</option>
             <option value="makeup">Makeup</option>
           </select>
-          <select name="skincare" id="skincare" style="display: none">
+          <select name="subcategories" id="subcategories">
+            <option value="" selected></option>
             <option value="xit-khoang">Xịt Khoáng</option>
             <option value="mat-na">Mặt Nạ</option>
             <option value="serum">Serum</option>
@@ -255,8 +226,7 @@
             <option value="cham-mun">Chấm Mụn</option>
             <option value="kem-duong-am">Kem Dưỡng Ẩm</option>
             <option value="sua-rua-mat">Sữa Rửa Mặt</option>
-          </select>
-          <select name="makeup" id="makeup" style="display: none">
+            <option value="" selected></option>
             <option value="phan-ma">Phấn Má</option>
             <option value="mascara">Mascara</option>
             <option value="ke-mat">Kẻ Mắt</option>
@@ -270,7 +240,7 @@
         <td>Brand</td>
         <td><select name="brand" id="brand"></select></td>
       <tr>
-        <td>Tên</td>
+        <td>Name</td>
         <td><input type="text" id="name"></td>
       </tr>
       <tr>
@@ -318,6 +288,24 @@
         <td><select name="status" id="status"></select></td>
       </tr>
       <tr>
+        <td>Flash Deal ?</td>
+        <td>
+          <select name="isFlashDeal" id="isFlashDeal">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td>New Arrival ?</td>
+        <td>
+          <select name="isNewArrival" id="isNewArrival">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
         <td>Product Image</td>
         <td>
           <img src="" alt="loading" id="image">
@@ -329,6 +317,26 @@
     <div class="submit-button">
       <button class="close-modal">Close</button>
       <button type="submit">Update</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="id01">
+  <div class="modal-content">
+    <div class="modal-header">
+      <i class="fi fi-rr-exclamation"></i>
+      <h3>Confirm Delete</h3>
+    </div>
+    <div class="modal-body">
+      <p id="confirm-message" style="font-weight:600; color:#dc2626;"></p>
+    </div>
+    <div class="modal-footer">
+      <button class="cancelbtn" onclick="document.getElementById('id01').style.display='none'">
+        Cancel
+      </button>
+      <button class="deletebtn" id="deletebtn">
+        Delete
+      </button>
     </div>
   </div>
 </div>

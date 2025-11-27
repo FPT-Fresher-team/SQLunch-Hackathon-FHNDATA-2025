@@ -9,7 +9,6 @@ async function getVouchers() {
 
   
   if (!window.isLoggedIn) return
-  console.log(window.isLoggedIn)
   document.querySelector('div[class="vouchers-board"][id="voucher"]').style.display = 'flex'
 
   try {

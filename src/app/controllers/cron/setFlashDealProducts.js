@@ -27,11 +27,9 @@ async function setFlashDealProducts() {
         filter: { _id: p._id },
         update: {
           $set: {
-            status: 'flash-sale',
+            isFlashDeal: true,
             oldPrice: p.price,                    // save original price
             price: Math.round(p.price * 0.5),     // 50% off, rounded
-            flashDealStart: new Date(),
-            flashDealDiscount: 50                 // optional: store % for display
           }
         }
       }

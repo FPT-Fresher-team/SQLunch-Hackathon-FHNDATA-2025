@@ -16,6 +16,7 @@ const { getUsersWithBirthdayThisMonth } = require('./app/controllers/cron/create
 const { setVoucherExpired } = require('./app/controllers/cron/setVoucherExpired') 
 const { setFlashDealProducts } = require('./app/controllers/cron/setFlashDealProducts')
 const { setTopSellingProducts } = require('./app/controllers/cron/setTopSellingProducts')
+const { setNewArrivalProducts } = require('./app/controllers/cron/setNewArrivalProducts')
 
 db.connect()
 app.use(express.json({ limit: '50mb' }))
@@ -53,6 +54,7 @@ async function main() {
   // await setVoucherExpired()
   // await setFlashDealProducts()
   // await setTopSellingProducts()
+  // await setNewArrivalProducts()
 }
 
 main()

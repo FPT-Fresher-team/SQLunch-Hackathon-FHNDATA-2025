@@ -9,12 +9,6 @@
   
   <div class="control-bar">
     <div class="search">
-      <select id="search-type" class="search-btn">
-        <option value="">Search by</option>
-        <option value="_id" selected>ID</option>
-        <option value="customerInfo.userId">Customer Code</option>
-        <option value="customerInfo.name">Customer Name</option>
-      </select>
       <input type="text" id="search-input" name="name" placeholder="Search order" />
     </div>
 
@@ -84,8 +78,6 @@
 
   <span class="pagination"></span>
 </div>
-
-
 
 <div class="admin-create-order-container" id="create-modal">
   <div id="form">
@@ -252,7 +244,7 @@
             <option value="skincare">Skincare</option>
             <option value="makeup">Makeup</option>
           </select>
-          <select name="skincare" id="skincare" style="display: none">
+          <select name="subcategories" id="subcategories">
             <option value="xit-khoang">Xịt Khoáng</option>
             <option value="mat-na">Mặt Nạ</option>
             <option value="serum">Serum</option>
@@ -264,8 +256,6 @@
             <option value="cham-mun">Chấm Mụn</option>
             <option value="kem-duong-am">Kem Dưỡng Ẩm</option>
             <option value="sua-rua-mat">Sữa Rửa Mặt</option>
-          </select>
-          <select name="makeup" id="makeup" style="display: none">
             <option value="phan-ma">Phấn Má</option>
             <option value="mascara">Mascara</option>
             <option value="ke-mat">Kẻ Mắt</option>
@@ -279,7 +269,7 @@
         <td>Brand</td>
         <td><select name="brand" id="brand"></select></td>
       <tr>
-        <td>Tên</td>
+        <td>Name</td>
         <td><input type="text" id="name"></td>
       </tr>
       <tr>
@@ -337,7 +327,6 @@
 
     <div class="submit-button">
       <button class="close-modal">Close</button>
-      <button type="submit">Update</button>
     </div>
   </div>
 </div>

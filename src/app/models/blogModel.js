@@ -20,7 +20,8 @@ const blog = new Schema({
   tags: [{ type: String }],
   status: { type: String, enum: ['draft', 'published'], default: 'draft' },
   publishedAt: { type: Date, default: null },
-  views: { type: Number, default: 0 }
+  views: { type: Number, default: 0 },
+  deletedAt: { type: Date, default: null }
 }, { timestamps: true })
 
 module.exports = mongoose.model('blog', blog)
