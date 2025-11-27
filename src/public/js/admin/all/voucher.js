@@ -100,7 +100,7 @@ async function getVouchers(sortOptions, filterOptions, currentPage, itemsPerPage
   })
 
   const headLink = document.createElement('td')
-  headLink.textContent = 'Chi tiết'
+  headLink.textContent = 'Actions'
   trHead.appendChild(headLink)
 
   thead.appendChild(trHead)
@@ -131,7 +131,7 @@ async function getVouchers(sortOptions, filterOptions, currentPage, itemsPerPage
 
     const openButton = document.createElement('td')
     openButton.style.textAlign = 'center'
-    openButton.innerHTML = `<button id="${item._id}">View</button>`
+    openButton.innerHTML = `<button class="view-btn" id="${item._id}"><i class="fi fi-rr-eye"></i></button>`
     openButton.onclick = async function() {
       await openVoucherDetail(item._id)
     }

@@ -76,7 +76,7 @@ async function getPurchases(sortOptions, filterOptions, currentPage, itemsPerPag
   })
 
   const headLink = document.createElement('td')
-  headLink.textContent = 'Details'
+  headLink.textContent = 'Actions'
   trHead.appendChild(headLink)
 
   thead.appendChild(trHead)
@@ -105,7 +105,7 @@ async function getPurchases(sortOptions, filterOptions, currentPage, itemsPerPag
 
     const openButton = document.createElement('td')
     openButton.style.textAlign = 'center'
-    openButton.innerHTML = `<button id="${item._id}">View</button>`
+    openButton.innerHTML = `<button class="view-btn" id="${item._id}"><i class="fi fi-rr-eye"></i></button>`
     openButton.onclick = async function() {
       await openPurchaseDetail(item._id)
     }
@@ -171,7 +171,7 @@ async function openPurchaseDetail(purchaseId) {
       </td>
       <td>${product.quantity}</td>
       <td>${formatNumber(product.price)}</td>
-      <td><button class="view-product-btn" data-id="${product.id}">View</button></td>
+      <td><button class="view-product-btn" data-id="${product.id}"><i class="fi fi-rr-eye"></i></button></td>
     `
     document.querySelector('table#table-2').querySelector('tbody').appendChild(tr)
   })

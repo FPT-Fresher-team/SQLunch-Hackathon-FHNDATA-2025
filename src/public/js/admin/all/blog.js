@@ -124,10 +124,8 @@ async function getBlogs(sortOptions, filterOptions, currentPage, itemsPerPage) {
     const actionTd = document.createElement('td')
     actionTd.style.textAlign = 'center'
     actionTd.innerHTML = `
-      <button class="view-btn" id="${blog._id}">View</button>
-      <button class="delete-btn">
-        Delete
-      </button>
+      <button class="view-btn" id="${blog._id}"><i class="fi fi-rr-eye"></i></button>
+      <button class="delete-btn"><i class="fi fi-rr-trash"></i></button>
     `
     actionTd.querySelector('.view-btn').onclick = () => openBlogDetail(blog._id)
     tr.appendChild(actionTd)

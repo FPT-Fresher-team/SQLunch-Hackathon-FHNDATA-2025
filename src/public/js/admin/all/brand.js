@@ -75,7 +75,7 @@ async function getBrands(sortOptions, filterOptions, currentPage, itemsPerPage) 
   })
 
   const thAction = document.createElement('td')
-  thAction.textContent = 'Details'
+  thAction.textContent = 'Actions'
   trHead.appendChild(thAction)
   thead.appendChild(trHead)
 
@@ -124,7 +124,7 @@ async function getBrands(sortOptions, filterOptions, currentPage, itemsPerPage) 
     // Cột hành động
     const tdAction = document.createElement('td')
     tdAction.style.textAlign = 'center'
-    tdAction.innerHTML = `<button id="${item._id}">View</button>`
+    tdAction.innerHTML = `<button class="view-btn" id="${item._id}"><i class="fi fi-rr-eye"></i></button>`
     tdAction.onclick = () => openBrandDetail(item._id)
     tr.appendChild(tdAction)
 

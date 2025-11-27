@@ -30,8 +30,8 @@ async function createAttribute(id, rowIndex) {
   if (orderInput) orderInput.disabled = true
 
   row.querySelector('td:last-child').innerHTML = `
-    <button id="${id}" onclick="updateAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-refresh"></i></button>
-    <button id="${id}" onclick="deleteAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-tr-trash-slash"></i></button>
+    <button class="update-btn" id="${id}" onclick="updateAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-refresh"></i></button>
+    <button class="delete-btn" id="${id}" onclick="deleteAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-trash"></i></button>
   `
   return
 }
@@ -192,8 +192,8 @@ async function getMembership() {
               <td><input type="text" id="code" value="${item.code}" disabled></td>
               <td><input type="text" id="name" value="${item.name}" disabled></td>
               <td>
-                <button id="membership" onclick="updateAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-refresh"></i></button>
-                <button id="membership" onclick="deleteAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-tr-trash-slash"></i></button>
+                <button class="update-btn" id="membership" onclick="updateAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-refresh"></i></button>
+                <button class="delete-btn" id="membership" onclick="deleteAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-trash"></i></button>
               </td>
             </tr>
           `
@@ -234,8 +234,8 @@ async function getOrderStatus() {
               <td><input type="text" id="code" value="${item.code}" disabled></td>
               <td><input type="text" id="name" value="${item.name}" disabled></td>
               <td>
-                <button id="order-status" onclick="updateAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-refresh"></i></button>
-                <button id="order-status" onclick="deleteAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-tr-trash-slash"></i></button>
+                <button class="update-btn" id="order-status" onclick="updateAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-refresh"></i></button>
+                <button class="delete-btn" id="order-status" onclick="deleteAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-trash"></i></button>
               </td>
             </tr>
           `
@@ -274,8 +274,8 @@ async function getPaymentMethod() {
               <td><input type="text" id="code" value="${item.code}" disabled></td>
               <td><input type="text" id="name" value="${item.name}" disabled></td>
               <td>
-                <button id="payment-method" onclick="updateAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-refresh"></i></button>
-                <button id="payment-method" onclick="deleteAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-tr-trash-slash"></i></button>
+                <button class="update-btn" id="payment-method" onclick="updateAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-refresh"></i></button>
+                <button class="delete-btn" id="payment-method" onclick="deleteAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-trash"></i></button>
               </td>
             </tr>
           `
@@ -316,8 +316,8 @@ async function getPosition() {
               <td><input type="text" id="wage" value="${formatNumber(item.wage)}" disabled></td>
               <td><input type="text" id="name" value="${item.name}" disabled></td>
               <td>
-                <button id="position" onclick="updateAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-refresh"></i></button>
-                <button id="position" onclick="deleteAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-tr-trash-slash"></i></button>
+                <button class="update-btn" id="position" onclick="updateAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-refresh"></i></button>
+                <button class="delete-btn" id="position" onclick="deleteAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-trash"></i></button>
               </td>
             </tr>
           `
@@ -356,8 +356,8 @@ async function getProductStatus() {
               <td><input type="text" id="code" value="${item.code}" disabled></td>
               <td><input type="text" id="name" value="${item.name}" disabled></td>
               <td>
-                <button id="product-status" onclick="updateAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-refresh"></i></button>
-                <button id="product-status" onclick="deleteAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-tr-trash-slash"></i></button>
+                <button class="update-btn" id="product-status" onclick="updateAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-refresh"></i></button>
+                <button class="delete-btn" id="product-status" onclick="deleteAttribute(this.id, this.parentElement.parentElement.rowIndex)"><i class="fi fi-rr-trash"></i></button>
               </td>
             </tr>
           `

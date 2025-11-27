@@ -286,6 +286,62 @@ table td {
   font-size: 14px;
 }
 
+/* =========================================
+   STYLE CHUNG CHO CÁC NÚT ICON
+   ========================================= */
+/* Thêm .update-btn vào đây để xóa sạch stroke (border) */
+.view-btn, 
+.view-order-btn,
+.delete-btn,
+.update-btn { 
+  background: transparent none !important;
+  border: 0 !important;      
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  cursor: pointer;
+  font-size: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- MÀU SẮC RIÊNG --- */
+
+/* 1. Mắt (Xanh) */
+.view-btn, .view-order-btn { color: #2B6377; }
+
+/* 2. Thùng rác (Đỏ) */
+.delete-btn { color: #dc3545; }
+
+/* 3. Nút Refresh/Update (Cam) */
+.update-btn { 
+  color: #F28E2B; /* Hoặc màu xanh lá cây #59A14F nếu muốn */
+}
+
+/* --- HOVER --- */
+.view-btn:hover, .view-order-btn:hover, .delete-btn:hover, .update-btn:hover {
+  background: transparent !important;
+  transform: translateY(-3px);
+}
+
+/* Hover nút Update -> Đổ bóng Cam */
+.update-btn:hover {
+  color: #d67d26;
+  filter: drop-shadow(0 5px 4px rgba(242, 142, 43, 0.35));
+}
+
+/* Hover các nút khác (Giữ nguyên như cũ) */
+.view-btn:hover, .view-order-btn:hover {
+  color: #1a3f52; filter: drop-shadow(0 5px 4px rgba(43, 99, 119, 0.35));
+}
+.delete-btn:hover {
+  color: #a71d2a; filter: drop-shadow(0 5px 4px rgba(220, 53, 69, 0.35));
+}
+
 table td:first-child {
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
