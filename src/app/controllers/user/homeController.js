@@ -88,13 +88,26 @@ class homeController {
 
   async searchInfo(req, res, next) {
     try {
-      const query = req.body.query
-      const data = await product.find({
-        $or: [
-          { name: { $regex: query, $options: 'i'} },
-          { brand: { $regex: query, $options: 'i'}}
-        ]
-      }).lean()
+      const searchQuery = req.body.searchQuery
+      const pipeline = [
+        {
+          $search: {
+            index: 'product_index',                   
+            text: {
+              query: searchQuery,
+              path: [
+                'name',    
+              ],
+              fuzzy: {
+                maxEdits: 2,           // allow up to 2 typos (e.g. "jhon" → "john")
+                prefixLength: 1        // first letter must be correct
+              }
+            }
+          }
+        },
+      ]
+
+      const data = await product.aggregate(pipeline)
       return res.json({data: data})
     } catch (error) {
       return res.json({error: error.message})
@@ -152,6 +165,18 @@ class homeController {
     } catch (error) {
       console.log(error)
       return res.json({error: error.message})
+    }
+  }
+
+  async testCDC(req, res, next) {
+    try {
+      // Simulate CDC event handling here
+      console.log("CDC test endpoint hit");
+      console.log(req.body)
+      return res.json({message: 'CDC test successful'});
+    } catch (error) {
+      console.log(error)
+      return res.json({message: error.message})
     }
   }
 }

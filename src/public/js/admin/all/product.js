@@ -85,6 +85,8 @@ async function getProducts(sortOptions, filterOptions, currentPage, itemsPerPage
 
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const { data, data_size, error } = await response.json()
+
+  console.log(data, data_size)
   if (error) return pushNotification(error)
 
   dataSize.size = data_size

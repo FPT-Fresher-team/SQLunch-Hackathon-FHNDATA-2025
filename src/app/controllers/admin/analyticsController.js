@@ -133,10 +133,6 @@ class analyticsController {
       const rate = await conversionMetricsService.getPaymentSuccessRate()
       const rateByMethod = await conversionMetricsService.getPaymentSuccessRateByMethod()
 
-      console.log(rateByMethod)
-
-      console.log(rate)
-
       res.json({
         success: true,
         data: {

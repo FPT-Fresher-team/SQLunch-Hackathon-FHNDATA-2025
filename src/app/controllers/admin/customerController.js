@@ -1,5 +1,6 @@
 require('dotenv').config()
 const user = require('../../models/userModel')
+const employee = require('../../models/employeeModel')
 const chat = require('../../models/chatModel')
 const order = require('../../models/orderModel')
 const member = require('../../models/memberModel')
@@ -8,76 +9,34 @@ const bcrypt = require('bcryptjs')
 class allCustomersController {
   async getCustomers(req, res, next) {
     try {
-      const currentPage  = Number(req.body.page) || 1
-      const itemsPerPage = Number(req.body.itemsPerPage) || 10
+      const currentPage  = req.body.page
+      let sort           = req.body.sort
+      let filter         = req.body.filter
+      const itemsPerPage = req.body.itemsPerPage
       const skip         = (currentPage - 1) * itemsPerPage
-      let sort           = req.body.sort || {}
-      let filter         = req.body.filter || {}
+      const userInfo     = await employee.findOne({ _id: req.cookies.uid }).lean()
+      if (!userInfo) throw new Error('User not found')
 
-      const searchQuery  = req.body.searchQuery?.trim()
-      const isSearchMode = !!searchQuery
-
-      let data = []
-      let dataSize = 0
-
-      if (isSearchMode) {
-        const pipeline = [
-          {
-            $search: {
-              index: 'customer',                   
-              text: {
-                query: searchQuery,
-                path: [
-                  'name',        // search in name
-                  'email',       // search in email
-                  'phone',       // search in phone
-                  'address'      // search in address
-                ],
-                fuzzy: {
-                  maxEdits: 2,           // allow up to 2 typos (e.g. "jhon" → "john")
-                  prefixLength: 1        // first letter must be correct
-                }
-              }
-            }
-          },
-          { $skip: skip },
-          { $limit: itemsPerPage },
-        ]
-
-        const countPipeline = [
-          { $search: { index: "customer", text: { query: searchQuery, path: ["name", "email", "phone", "address"] } } },
-          { $count: "total" }
-        ]
-
-        const [result, countResult] = await Promise.all([
-          user.aggregate(pipeline),
-          user.aggregate(countPipeline)
-        ])
-
-        data = result
-        dataSize = countResult[0]?.total || 0
-
-      } else {
-        // NORMAL MODE
-        if (Object.keys(sort).length === 0) sort = { updatedAt: -1 }
-
-        if (filter._id?.$regex) {
-          try {
-            filter._id = mongoose.Types.ObjectId.createFromHexString(filter._id.$regex)
-          } catch (e) { delete filter._id }
-        }
-
-        const [result, total] = await Promise.all([
-          user.find(filter).sort(sort).skip(skip).limit(itemsPerPage).lean().select('-password'),
-          user.countDocuments(filter)
-        ])
-
-        data = result
-        dataSize = total
+      if (Object.keys(sort).length === 0) {
+        sort = { updatedAt: -1 }
       }
 
-      return res.json({ data, data_size: dataSize })
+      if (filter['_id']) {
+        filter['_id'] = ObjectId.createFromHexString(filter['_id'])
+      }
 
+      const [data, dataSize] = await Promise.all([
+        user
+          .find(filter)
+          .sort(sort)
+          .skip(skip)
+          .limit(itemsPerPage)
+          .lean(),
+        user.find(filter).countDocuments(),
+      ]) 
+      if (!data) throw new Error('Data not found')
+      
+      return res.json({data: data, data_size: dataSize})
     } catch (error) {
       console.error('getCustomers error:', error)
       return res.status(500).json({ error: error.message })
