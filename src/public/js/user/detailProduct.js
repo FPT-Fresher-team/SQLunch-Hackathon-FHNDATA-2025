@@ -400,14 +400,18 @@ async function loadRelatedProducts(type, container) {
       endpoint = '/all-products/data/related-viewed'
       filter = {}
     } else if (type === 'recommended') {
-      endpoint = '/all-products/data/related-recommended'
-      filter = {}
+      endpoint = 'http://localhost:8000/recommend'
+      filter = {
+        productId: productInfo._id,     // current viewed product
+        mode: "product"
+      }
     }
 
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(filter)
+      body: JSON.stringify(filter),
+      credentials: 'include' 
     })
 
     const data = await response.json()
