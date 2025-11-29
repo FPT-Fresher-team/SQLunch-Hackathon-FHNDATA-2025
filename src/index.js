@@ -2,6 +2,12 @@ require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const cookieParser = require('cookie-parser')
+
+/*add more for caching */
+const oneYearInSeconds = 31536000;
+const oneYearInMilliseconds = oneYearInSeconds * 1000;
+/* done adding*/ 
+
 const handlebars = require('express-handlebars')
 const path = require('path')
 const methodOverride = require('method-override')
@@ -21,7 +27,13 @@ const { setNewArrivalProducts } = require('./app/controllers/cron/setNewArrivalP
 db.connect()
 db.startWatch()
 app.use(express.json({ limit: '50mb' }))
-app.use(express.static(path.join(__dirname, 'public')))
+/* app.use(express.static(path.join(__dirname, 'public'))) */
+// Change to
+app.use(express.static(path.join(__dirname, 'public'), {
+    maxAge: oneYearInMilliseconds, // Thiết lập Cache-Control Header TTL (1 năm)
+    immutable: true // Tùy chọn: khuyến nghị dùng nếu tên file tĩnh của bạn có hash
+}));
+
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(morgan('combined'))

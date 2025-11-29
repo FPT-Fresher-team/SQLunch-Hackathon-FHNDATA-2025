@@ -8,7 +8,7 @@ const verificationCode = {}
 
 class loginController {
   async signIn(req, res, next) {
-    return res.render('admin/signIn', { title: 'Employee Sign In', layout: 'empty'})
+    return res.render('admin/signIn', { title: 'Employee Login', layout: 'empty'})
   }
 
   async checkingAccount(req, res, next) {
@@ -44,7 +44,7 @@ class loginController {
             secure: true,
           })
   
-          return res.json({isValid: true, message: 'Login successful', role: getEmp.role})
+          return res.json({isValid: true, message: 'Login successfully!', role: getEmp.role})
         } else {
           return res.json({isValid: false, message: 'Incorrect password'})
         }

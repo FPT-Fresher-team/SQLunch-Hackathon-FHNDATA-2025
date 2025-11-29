@@ -86,7 +86,7 @@ class allOrderController {
   async getAllVouchers(req, res, next) {
     try {
       const userInfo = await user.findOne({ _id: req.cookies.uid }).lean()
-      if (!userInfo) throw new Error('Please log in to view your vouchers!')
+      if (!userInfo) throw new Error('Please login to view your vouchers!')
 
       const voucherInfo = await voucher.find({ memberCode: userInfo.memberCode, status: 'active' }).lean()
       const userVoucherInfo = await userVoucher.find({ status: 'active', userId: req.cookies.uid }).lean()

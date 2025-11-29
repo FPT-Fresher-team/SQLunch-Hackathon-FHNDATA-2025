@@ -106,7 +106,7 @@ async function getOrders(fetchBody) {
         },
         title: {
           display: true,
-          text: 'ORDER STATUS'
+          text: 'Order Status'
         }
       }
     },
@@ -141,7 +141,7 @@ async function getOrders(fetchBody) {
         },
         title: {
           display: true,
-          text: 'ORDERS OVER TIME',
+          text: 'Orders Over Time',
           font: {
             size: 14,
             weight: 'bold'
@@ -189,7 +189,7 @@ async function getCustomers(fetchBody) {
     </thead>
     <tbody>
       <tr>
-        <td>Số lượng khách hàng</td>
+        <td>Customer Quantity</td>
         <td>${data.length}</td>
         <td><a href="/admin/all-customers">Details</a></td>
       </tr>
@@ -213,7 +213,7 @@ async function getCustomers(fetchBody) {
         },
         title: {
           display: true,
-          text: 'HẠNG THÀNH VIÊN'
+          text: 'Member Rank'
         }
       }
     },
@@ -248,7 +248,7 @@ async function getCustomers(fetchBody) {
         },
         title: {
           display: true,
-          text: 'KHÁCH HÀNG THEO THỜI GIAN',
+          text: 'Customers Over Time',
           font: {
             size: 14,
             weight: 'bold'
@@ -296,7 +296,7 @@ async function getEmployees(fetchBody) {
     </thead>
     <tbody>
       <tr>
-        <td>Số lượng nhân sự</td>
+        <td>Employee Quantity</td>
         <td>${data.length}</td>
         <td><a href="/admin/all-employees">Details</a></td>
       </tr>
@@ -320,7 +320,7 @@ async function getEmployees(fetchBody) {
         },
         title: {
           display: true,
-          text: 'VỊ TRÍ NHÂN SỰ'
+          text: 'Employees by Position'
         }
       }
     },
@@ -346,7 +346,7 @@ async function getEmployees(fetchBody) {
         },
         title: {
           display: true,
-          text: 'NHÂN SỰ THEO THỜI GIAN'
+          text: 'Employees Over Time'
         }
       }
     },
@@ -377,7 +377,7 @@ async function getProducts() {
     </thead>
     <tbody>
       <tr>
-        <td>Số lượng sản phẩm</td>
+        <td>Product Quantity</td>
         <td>${data.length}</td>
         <td><a href="/admin/all-products/?page=&type=">Details</a></td>
       </tr>
@@ -401,7 +401,7 @@ async function getProducts() {
         },
         title: {
           display: true,
-          text: 'SẢN PHẨM THEO DANH MỤC'
+          text: 'Products by Categories'
         }
       }
     },
@@ -545,7 +545,7 @@ async function getSuppliers() {
     </thead>
     <tbody>
       <tr>
-        <td>Số lượng nhà cung cấp</td>
+        <td>Supplier Quantity</td>
         <td>${data.length}</td>
         <td><a href="/admin/all-suppliers">Details</a></td>
       </tr>
@@ -568,7 +568,7 @@ async function getSuppliers() {
         },
         title: {
           display: true,
-          text: 'NHÀ CUNG CẤP THEO THỜI GIAN'
+          text: 'Supplier Over Time'
         }
       }
     },
@@ -599,7 +599,7 @@ async function getBrands() {
     </thead>
     <tbody>
       <tr>
-        <td>Number of Brands</td>
+        <td>Brand Quantity</td>
         <td>${data.length}</td>
         <td><a href="/admin/all-brands">Details</a></td>
       </tr>
@@ -641,7 +641,7 @@ async function getPurchases(fetchBody) {
     data: {
       labels: Array.from(new Set(data.map(purchase => formatDate(purchase.createdAt)))),
       datasets: [{
-        label: 'IMPORTS OVER TIME',
+        label: 'Import Over Time',
         data: data.map(purchase => purchase.createdAt).reduce((acc, date) => {
           const formattedDate = formatDate(date)
           acc[formattedDate] = (acc[formattedDate] || 0) + 1
@@ -662,11 +662,11 @@ async function getStores() {
   const table = document.createElement('table')
   table.innerHTML = `
     <thead>
-      <tr><td colspan="3">DISTRIBUTOR MANAGEMENT</td></tr>
+      <tr><td colspan="3">STORE MANAGEMENT</td></tr>
     </thead>
     <tbody>
       <tr>
-        <td>Số lượng đại lý</td>
+        <td>Store Quantity</td>
         <td>${data.length}</td>
         <td><a href="/admin/all-stores">Details</a></td>
       </tr>

@@ -18,9 +18,17 @@
 .navigator-header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;  /* space-between */
   gap: 24px;
   margin-bottom: 20px;
+}
+
+/* --- THÊM KHỐI MỚI: Nhóm Tiêu đề và Bộ lọc lại --- */
+.header-left-group {
+    display: flex; 
+    align-items: center;
+    gap: 20px; /* Khoảng cách giữa Tiêu đề và Bộ lọc */
+    flex-wrap: wrap; /* Cho phép xuống dòng nếu cần */
 }
 
 .navigator-header h2 {
@@ -35,8 +43,9 @@
 
 .navigator-header .date-filter {
   margin: 0;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 10px 16px;
+  background: white;/*rgba(255, 255, 255, 0.95);*/
+  border: none !important;
+  padding: 8px 10px;
   flex-shrink: 0;
 }
 
