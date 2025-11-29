@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 import pandas as pd
 import pymongo
 import os
-
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -225,8 +224,7 @@ async def recommend(request: Request):
                 "_id": str(p["_id"]),
                 "brand": p["brand"],
                 "categories": p["categories"],
-                "skincare": p["skincare"],
-                "makeup": p["makeup"],
+                "subcategories":p["subcategories"],
                 "img": p["img"],
                 "oldPrice": p["oldPrice"],
                 "price": p["price"],
