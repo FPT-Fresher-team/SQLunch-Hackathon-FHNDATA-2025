@@ -50,8 +50,8 @@ async function getDeletedProducts(sortOptions, filterOptions, currentPage) {
         <td>${item.categories}</td>
         <td style="text-align: right;">${formatNumber(item.price)}</td>
         <td>
-          <button id="${item._id}" onclick="clickToRestore(this.id)">Restore</button>
-          <button id="${item._id}" onclick="clickToDelete(this.id)">Delete</button>
+          <button class= "restore-btn" id="${item._id}" onclick="clickToRestore(this.id)"><i class="fi fi-rr-undo"></i></button>
+          <button class= "delete-btn" id="${item._id}" onclick="clickToDelete(this.id)"><i class="fi fi-rr-trash"></i></button>
         </td>
       `
       tbody.appendChild(newTr)
