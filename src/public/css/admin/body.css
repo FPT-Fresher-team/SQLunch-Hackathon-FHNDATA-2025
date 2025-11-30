@@ -84,8 +84,8 @@ p.trash a:hover {
 .search input,
 .sort select,
 .filter select {
-  padding: 10px 12px;
-  border: 2px solid #CCDFE3;
+  padding: 10px 15px;
+  border: 1.5px solid #CCDFE3;
   border-radius: 8px;
   font-size: 14px;
   background: transparent;
@@ -120,24 +120,26 @@ p.trash a:hover {
 }
 
 #clear-sort-filter {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #d4183d, #ff5a5a);
-  color: white;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 2px 8px rgba(212, 24, 61, 0.15);
+  padding: 0px 0px;
+    background: transparent; 
+    border: 1.5px solid #d4183d; 
+    color: #d4183d; 
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: none; 
 }
 
 #clear-sort-filter:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(212, 24, 61, 0.25);
+    background-color: rgba(212, 24, 61, 0.05); 
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(212, 24, 61, 0.1); 
 }
 
 #clear-sort-filter:active {
-  transform: translateY(0);
+    transform: translateY(0);
+    background-color: rgba(212, 24, 61, 0.1); 
 }
 
 .create-btn {
@@ -285,21 +287,20 @@ table td {
   padding: 10px;
   font-size: 14px;
 }
-
 /* =========================================
    STYLE CHUNG CHO CÁC NÚT ICON
    ========================================= */
-/* Thêm .update-btn vào đây để xóa sạch stroke (border) */
-.view-btn, 
+.view-btn,
 .view-order-btn,
 .delete-btn,
-.update-btn { 
-  background: transparent none !important;
-  border: 0 !important;      
+.update-btn,
+.restore-btn {
+  background: transparent !important;
+  border: none !important;
   outline: none !important;
   box-shadow: none !important;
   border-radius: 0 !important;
-  
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -309,37 +310,43 @@ table td {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* --- MÀU SẮC RIÊNG --- */
-
-/* 1. Mắt (Xanh) */
-.view-btn, .view-order-btn { color: #2B6377; }
-
-/* 2. Thùng rác (Đỏ) */
+/* MÀU CHO TỪNG NÚT */
+.view-btn,
+.view-order-btn { color: #2B6377; }
 .delete-btn { color: #dc3545; }
+.update-btn { color: #F28E2B; }
+.restore-btn { color: #28a745; }
 
-/* 3. Nút Refresh/Update (Cam) */
-.update-btn { 
-  color: #F28E2B; /* Hoặc màu xanh lá cây #59A14F nếu muốn */
-}
-
-/* --- HOVER --- */
-.view-btn:hover, .view-order-btn:hover, .delete-btn:hover, .update-btn:hover {
+/* EFFECT KHI HOVER CHUNG */
+.view-btn:hover,
+.view-order-btn:hover,
+.delete-btn:hover,
+.update-btn:hover,
+.restore-btn:hover {
   background: transparent !important;
   transform: translateY(-3px);
 }
 
-/* Hover nút Update -> Đổ bóng Cam */
+/* EFFECT RIÊNG CHO TỪNG NÚT KHI HOVER */
+.view-btn:hover,
+.view-order-btn:hover {
+  color: #1a3f52;
+  filter: drop-shadow(0 5px 4px rgba(43, 99, 119, 0.35));
+}
+
 .update-btn:hover {
   color: #d67d26;
   filter: drop-shadow(0 5px 4px rgba(242, 142, 43, 0.35));
 }
 
-/* Hover các nút khác (Giữ nguyên như cũ) */
-.view-btn:hover, .view-order-btn:hover {
-  color: #1a3f52; filter: drop-shadow(0 5px 4px rgba(43, 99, 119, 0.35));
+.restore-btn:hover {
+  color: #1e7e34;
+  filter: drop-shadow(0 5px 4px rgba(40, 167, 69, 0.35));
 }
+
 .delete-btn:hover {
-  color: #a71d2a; filter: drop-shadow(0 5px 4px rgba(220, 53, 69, 0.35));
+  color: #a71d2a;
+  filter: drop-shadow(0 5px 4px rgba(220, 53, 69, 0.35));
 }
 
 table td:first-child {

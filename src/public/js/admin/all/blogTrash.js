@@ -121,8 +121,8 @@ async function getDeletedBlogs(sortOptions, filterOptions, currentPage, itemsPer
     const actionTd = document.createElement('td')
     actionTd.style.textAlign = 'center'
     actionTd.innerHTML = `
-      <button id="${blog._id}" onclick="clickToRestore(this.id)">Restore</button>
-      <button id="${blog._id}" onclick="clickToDelete(this.id)">Delete</button>
+      <button class="restore-btn"id="${blog._id}" onclick="clickToRestore(this.id)"><i class="fi fi-rr-undo"></i></button> 
+      <button class="delete-btn" id="${blog._id}" onclick="clickToDelete(this.id)"><i class="fi fi-rr-trash"></i></button>
     `
     tr.appendChild(actionTd)
 

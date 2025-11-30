@@ -11,7 +11,7 @@ const verifyCreatingAccountCode = {}
 
 class authenticationController {  
   async signIn(req, res, next) {
-    return res.render('users/signIn', { title: 'Sign In', layout: 'empty' })
+    return res.render('users/signIn', { title: 'Login', layout: 'empty' })
   }
 
   async checkingAccount(req, res, next) {
@@ -45,7 +45,7 @@ class authenticationController {
             secure: true,
           })
 
-          if (getUser.role === 'user') return res.json({isValid: true, message: 'Login Successfully'})
+          if (getUser.role === 'user') return res.json({isValid: true, message: 'Login successfully!'})
 
         } else {
           return res.json({isValid: false, message: 'Incorrect password'})
@@ -264,7 +264,7 @@ class authenticationController {
         secure: true,
       })
 
-      return res.json({isValid: true, message: 'Login successfully'})
+      return res.json({isValid: true, message: 'Login successfully!'})
     } catch (error) {
       return res.json({error: error})
     }

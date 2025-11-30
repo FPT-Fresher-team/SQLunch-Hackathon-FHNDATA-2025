@@ -25,13 +25,13 @@ async function checkUser() {
     avatarMenuBottom.appendChild(updateProfileButton)
   
     const logOutButton = document.createElement('a')
-    logOutButton.innerText = 'Sign Out'
+    logOutButton.innerText = 'Log Out'
     logOutButton.setAttribute('href', '/log-out')
     avatarMenuBottom.appendChild(logOutButton)
   } 
   else {
     const logInButton = document.createElement('a')
-    logInButton.innerText = 'Sign In'
+    logInButton.innerText = 'Login'
     logInButton.setAttribute('href', '/authentication/sign-in')
     avatarMenuBottom.appendChild(logInButton)
   }
