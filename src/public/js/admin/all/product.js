@@ -461,14 +461,17 @@ window.addEventListener('DOMContentLoaded', async function loadData() {
 
 // Đặt ở cuối file, sau khi DOM load
 document.addEventListener('click', function(e) {
-  if (e.target.classList.contains('delete-btn')) {
-    const row = e.target.closest('tr')
-    const productId = row.querySelector('.view-btn').id
-    const productName = row.querySelector('td:nth-child(3)')?.textContent || 'sản phẩm này'
-    
-    productToDelete = productId
-    document.querySelector('p#confirm-message').textContent = 
-      `Do you want to delete the product "${productName}"?`
-    deleteModal.style.display = 'flex'
-  }
+  const deleteBtn = e.target.closest('.delete-btn')
+  if (!deleteBtn) return
+
+  const row = deleteBtn.closest('tr')
+  const productId = row.querySelector('.view-btn').id
+  const productName = row.querySelector('td:nth-child(3)')?.textContent || 'sản phẩm này'
+
+  productToDelete = productId
+
+  document.querySelector('p#confirm-message').textContent =
+    `Do you want to delete the product "${productName}"?`
+
+  deleteModal.style.display = 'flex'
 })

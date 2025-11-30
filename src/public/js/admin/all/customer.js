@@ -460,10 +460,13 @@ async function openOrderDetail(orderId) {
 
 // === HOẶC TỐT HƠN: Dùng event delegation (chỉ cần thêm 1 lần) ===
 detailModal.querySelector('table#table-2 tbody').addEventListener('click', e => {
-  if (e.target.classList.contains('view-order-btn')) {
-    const orderId = e.target.dataset.id
+  detailModal.querySelector('table#table-2 tbody').addEventListener('click', e => {
+    const btn = e.target.closest('.view-order-btn')
+    if (!btn) return
+
+    const orderId = btn.dataset.id
     openOrderDetail(orderId)
-  }
+  })
 })
 
 window.addEventListener('DOMContentLoaded', async function loadData() {

@@ -473,6 +473,9 @@
 .detail-product-container .comment p {
   margin: 0 0 8px 0;
   font-size: 13px;
+  display: flex;
+  align-items: baseline;
+  justify-content: start;
 }
 
 .detail-product-container #sender {
@@ -486,14 +489,14 @@
 }
 
 .detail-product-container .comment #rate {
-  color: #FFA500;
   padding: 0;
+  margin-bottom: 3px;
   background: none;
 }
 
-.detail-product-container .comment #rate i {
+.detail-product-container .comment i {
   color: #FFA500;
-  margin-left: 4px;
+  margin-left: 2px;
 }
 
 .detail-product-container #comment {

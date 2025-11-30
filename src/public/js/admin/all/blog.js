@@ -378,14 +378,16 @@ window.addEventListener('DOMContentLoaded', async () => {
 
 // Đặt ở cuối file, sau khi DOM load
 document.addEventListener('click', function(e) {
-  if (e.target.classList.contains('delete-btn')) {
-    const row = e.target.closest('tr')
-    const blogtId = row.querySelector('.view-btn').id
-    const blogName = row.querySelector('td:nth-child(3)')?.textContent || 'this blog'
-    
-    blogToDelete = blogtId
-    document.querySelector('p#confirm-message').textContent = 
-      `Do you want to delete the blog "${blogName}"?`
-    deleteModal.style.display = 'flex'
-  }
+  const deleteBtn = e.target.closest('.delete-btn')
+  if (!deleteBtn) return
+
+  const row = deleteBtn.closest('tr')
+  const blogId = row.querySelector('.view-btn').id
+  const blogName = row.querySelector('td:nth-child(3)')?.textContent || 'this blog'
+
+  blogToDelete = blogId
+  document.querySelector('p#confirm-message').textContent =
+    `Do you want to delete the blog "${blogName}"?`
+
+  deleteModal.style.display = 'flex'
 })

@@ -87,7 +87,7 @@ async function getOrders(sortOptions, filterOptions, currentPage, itemsPerPage) 
   if (error) return pushNotification(error)
 
   dataSize.size = data_size
-  document.querySelector('div.board-title p').textContent = 'Đơn hàng: ' + dataSize.size
+  document.querySelector('div.board-title p').textContent = 'Orders: ' + dataSize.size
 
   const selected = Array.from(document.querySelectorAll('.checkbox-group input:checked'))
     .map(cb => ({ value: cb.value, name: cb.closest('label').innerText.trim() }))

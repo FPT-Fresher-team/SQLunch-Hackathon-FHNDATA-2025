@@ -7,7 +7,7 @@ function initDashboardNavigator() {
   const tableGroups = document.querySelectorAll('.admin-home-container div.tables')
 
   dashboardBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', async function() {
       const dashboard = this.dataset.dashboard
 
       // Remove active class from all buttons
@@ -25,12 +25,87 @@ function initDashboardNavigator() {
 
       if (targetTable) targetTable.classList.add('active')
       if (targetGroup) targetGroup.classList.add('active')
+
+      // Load data for the selected dashboard
+      await loadDashboardData(dashboard)
     })
   })
 
   // Set finance as default active
   const financeBtn = document.querySelector('.dashboard-btn[data-dashboard="finance"]')
   if (financeBtn) financeBtn.click()
+}
+
+// Load data based on selected dashboard
+async function loadDashboardData(dashboard) {
+  try {
+    // Show loading overlay for the active table
+    const tableElement = document.querySelector(`.admin-home-container div.table.${dashboard}, .admin-home-container div.tables.${dashboard}`)
+    if (tableElement) {
+      const overlay = tableElement.querySelector('.loading-overlay')
+      if (overlay) overlay.style.display = 'flex'
+    }
+
+    const startDate = document.querySelector('input#start-date').value
+    const endDate = document.querySelector('input#end-date').value
+
+    const fetchBody = {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        startDate: startDate,
+        endDate: endDate
+      })
+    }
+
+    switch(dashboard) {
+      case 'finance':
+        await getFinance(fetchBody)
+        break
+      case 'order':
+        await getOrders(fetchBody)
+        await getOrderAnalytics()
+        break
+      case 'customer':
+        await getCustomers(fetchBody)
+        break
+      case 'employee':
+        await getEmployees(fetchBody)
+        break
+      case 'product':
+        await getProducts()
+        await getProductAnalytics()
+        break
+      case 'supplier':
+        await getSuppliers()
+        break
+      case 'purchase':
+        await getPurchases(fetchBody)
+        break
+      case 'store':
+        await getStores()
+        break
+      case 'brand':
+        await getBrands()
+        break
+    }
+
+    // Hide loading overlay after data is loaded
+    if (tableElement) {
+      const overlay = tableElement.querySelector('.loading-overlay')
+      if (overlay) overlay.style.display = 'none'
+    }
+  } catch (error) {
+    console.error('Error loading dashboard data:', error)
+    pushNotification('An error occurred while loading data')
+
+    // Hide loading overlay even on error
+    const tableElement = document.querySelector(`.admin-home-container div.table.${dashboard}, .admin-home-container div.tables.${dashboard}`)
+    if (tableElement) {
+      const overlay = tableElement.querySelector('.loading-overlay')
+      if (overlay) overlay.style.display = 'none'
+    }
+  }
 }
 
 async function getFinance(fetchBody) {
@@ -73,18 +148,21 @@ async function getFinance(fetchBody) {
 async function getOrders(fetchBody) {
   const response = await fetch('/admin/all/data/orders', fetchBody)
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data, status} = await response.json()
+  const {allData, data, status} = await response.json()
 
   const table = document.createElement('table')
   table.innerHTML = `
     <thead>
-      <tr><td colspan="3">ORDER MANAGEMENT</td></tr>
+      <tr><td colspan="2">ORDER MANAGEMENT</td></tr>
     </thead>
     <tbody>
       <tr>
-        <td>Order Quantity</td>
+        <td>Total Orders</td>
+        <td>${allData}</td>
+      </tr>
+      <tr>
+        <td>Filtered Orders</td>
         <td>${data.length}</td>
-        <td><a href="/admin/all-orders">Details</a></td>
       </tr>
     </tbody>
   `
@@ -180,18 +258,21 @@ async function getOrders(fetchBody) {
 async function getCustomers(fetchBody) {
   const response = await fetch('/admin/all/data/customers', fetchBody)
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data, members} = await response.json()
+  const {allData, data, members} = await response.json()
 
   const table = document.createElement('table')
   table.innerHTML = `
     <thead>
-      <tr><td colspan="3">CUSTOMER MANAGEMENT</td></tr>
+      <tr><td colspan="2">CUSTOMER MANAGEMENT</td></tr>
     </thead>
     <tbody>
       <tr>
-        <td>Số lượng khách hàng</td>
+        <td>Total Customers</td>
+        <td>${allData}</td>
+      </tr>
+      <tr>
+        <td>Filtered Customers</td>
         <td>${data.length}</td>
-        <td><a href="/admin/all-customers">Details</a></td>
       </tr>
     </tbody>
   `
@@ -287,18 +368,21 @@ async function getCustomers(fetchBody) {
 async function getEmployees(fetchBody) {
   const response = await fetch('/admin/all/data/employees', fetchBody)
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data, positions} = await response.json()
+  const {allData, data, positions} = await response.json()
 
   const table = document.createElement('table')
   table.innerHTML = `
     <thead>
-      <tr><td colspan="3">EMPLOYEE MANAGEMENT</td></tr>
+      <tr><td colspan="2">EMPLOYEE MANAGEMENT</td></tr>
     </thead>
     <tbody>
       <tr>
-        <td>Số lượng nhân sự</td>
+        <td>Total Employees</td>
+        <td>${allData}</td>
+      </tr>
+      <tr>
+        <td>Filtered Employees</td>
         <td>${data.length}</td>
-        <td><a href="/admin/all-employees">Details</a></td>
       </tr>
     </tbody>
   `
@@ -320,7 +404,7 @@ async function getEmployees(fetchBody) {
         },
         title: {
           display: true,
-          text: 'VỊ TRÍ NHÂN SỰ'
+          text: 'EMPLOYEES POSITION'
         }
       }
     },
@@ -346,7 +430,7 @@ async function getEmployees(fetchBody) {
         },
         title: {
           display: true,
-          text: 'NHÂN SỰ THEO THỜI GIAN'
+          text: 'NEW EMPLOYEES BY TIME'
         }
       }
     },
@@ -373,13 +457,12 @@ async function getProducts() {
   const table = document.createElement('table')
   table.innerHTML = `
     <thead>
-      <tr><td colspan="3">PRODUCT MANAGEMENT</td></tr>
+      <tr><td colspan="2">PRODUCT MANAGEMENT</td></tr>
     </thead>
     <tbody>
       <tr>
-        <td>Số lượng sản phẩm</td>
+        <td>Total Products</td>
         <td>${data.length}</td>
-        <td><a href="/admin/all-products/?page=&type=">Details</a></td>
       </tr>
     </tbody>
   `
@@ -401,7 +484,7 @@ async function getProducts() {
         },
         title: {
           display: true,
-          text: 'SẢN PHẨM THEO DANH MỤC'
+          text: 'PRODUCTS BY CATEGORY'
         }
       }
     },
@@ -533,60 +616,6 @@ function renderHomeTopProducts(elementId, items, type) {
   container.innerHTML = html
 }
 
-async function getSuppliers() {
-  const response = await fetch('/admin/all/data/suppliers')
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
-
-  const table = document.createElement('table')
-  table.innerHTML = `
-    <thead>
-      <tr><td colspan="3">SUPPLIER MANAGEMENT</td></tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Số lượng nhà cung cấp</td>
-        <td>${data.length}</td>
-        <td><a href="/admin/all-suppliers">Details</a></td>
-      </tr>
-    </tbody>
-  `
-
-  const supplierDiv = document.querySelector('div.table.supplier').querySelector('div.supplier')
-  const oldTable = supplierDiv.querySelector("table")
-
-  if (oldTable) oldTable.remove()
-  supplierDiv.appendChild(table)
-  const supplierCtx = document.getElementById("product")
-  Chart.getChart(supplierCtx)?.destroy()
-  new Chart(supplierCtx, {
-    type: 'bar',
-    options: {
-      plugins: {
-        legend: {
-          display: false
-        },
-        title: {
-          display: true,
-          text: 'NHÀ CUNG CẤP THEO THỜI GIAN'
-        }
-      }
-    },
-    data: {
-      labels: Array.from(new Set(data.map(supplier => formatDate(supplier.createdAt)))),
-      datasets: [{
-        data: data.map(supplier => supplier.createdAt).reduce((acc, date) => {
-          const formattedDate = formatDate(date)
-          acc[formattedDate] = (acc[formattedDate] || 0) + 1
-          return acc
-        }, {}),
-        borderWidth: 1,
-        backgroundColor: '#59A14F'
-      }]
-    }
-  })
-}
-
 async function getBrands() {
   const response = await fetch('/admin/all/data/brands')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
@@ -599,14 +628,45 @@ async function getBrands() {
     </thead>
     <tbody>
       <tr>
-        <td>Number of Brands</td>
+        <td>Total Brands</td>
         <td>${data.length}</td>
         <td><a href="/admin/all-brands">Details</a></td>
       </tr>
     </tbody>
   `
 
-  document.querySelector('div.brand').appendChild(table)
+  const brandDiv = document.querySelector('div.table.brand').querySelector('div.brand')
+  const oldTable = brandDiv.querySelector("table")
+
+  if (oldTable) oldTable.remove()
+  brandDiv.appendChild(table)
+}
+
+async function getStores() {
+  const response = await fetch('/admin/all/data/stores')
+  if (!response.ok) throw new Error(`Response status: ${response.status}`)
+  const {data} = await response.json()
+
+  const table = document.createElement('table')
+  table.innerHTML = `
+    <thead>
+      <tr><td colspan="2">STORES MANAGEMENT</td></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Total Stores</td>
+        <td>${data.length}</td>
+      </tr>
+    </tbody>
+  `
+
+  const storeDiv = document.querySelector('div.table.store').querySelector('div.store')
+  const oldTable = storeDiv.querySelector("table")
+
+  if (oldTable) oldTable.remove()
+  storeDiv.appendChild(table)
+  const storeCtx = document.getElementById("product")
+  Chart.getChart(storeCtx)?.destroy()
 }
 
 async function getPurchases(fetchBody) {
@@ -617,13 +677,12 @@ async function getPurchases(fetchBody) {
   const table = document.createElement('table')
   table.innerHTML = `
     <thead>
-      <tr><td colspan="3">PURCHASE ORDER MANAGEMENT</td></tr>
+      <tr><td colspan="2">PURCHASE ORDER MANAGEMENT</td></tr>
     </thead>
     <tbody>
       <tr>
-        <td>Import Order Quantity</td>
+        <td>Total Purchase Orders</td>
         <td>${data.length}</td>
-        <td><a href="/admin/all-purchases">Details</a></td>
       </tr>
     </tbody>
   `
@@ -641,7 +700,7 @@ async function getPurchases(fetchBody) {
     data: {
       labels: Array.from(new Set(data.map(purchase => formatDate(purchase.createdAt)))),
       datasets: [{
-        label: 'IMPORTS OVER TIME',
+        label: 'NEW PURCHASE ORDER BY TIME',
         data: data.map(purchase => purchase.createdAt).reduce((acc, date) => {
           const formattedDate = formatDate(date)
           acc[formattedDate] = (acc[formattedDate] || 0) + 1
@@ -654,32 +713,57 @@ async function getPurchases(fetchBody) {
   })
 }
 
-async function getStores() {
-  const response = await fetch('/admin/all/data/stores')
+async function getSuppliers() {
+  const response = await fetch('/admin/all/data/suppliers')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {data} = await response.json()
 
   const table = document.createElement('table')
   table.innerHTML = `
     <thead>
-      <tr><td colspan="3">DISTRIBUTOR MANAGEMENT</td></tr>
+      <tr><td colspan="2">SUPPLIER MANAGEMENT</td></tr>
     </thead>
     <tbody>
       <tr>
-        <td>Số lượng đại lý</td>
+        <td>Total Suppliers</td>
         <td>${data.length}</td>
-        <td><a href="/admin/all-stores">Details</a></td>
       </tr>
     </tbody>
   `
 
-  const storeDiv = document.querySelector('div.table.store').querySelector('div.store')
-  const oldTable = storeDiv.querySelector("table")
+  const supplierDiv = document.querySelector('div.table.supplier').querySelector('div.supplier')
+  const oldTable = supplierDiv.querySelector("table")
 
   if (oldTable) oldTable.remove()
-  storeDiv.appendChild(table)
-  const storeCtx = document.getElementById("product")
-  Chart.getChart(storeCtx)?.destroy()
+  supplierDiv.appendChild(table)
+  const supplierCtx = document.getElementById("supplier")
+  Chart.getChart(supplierCtx)?.destroy()
+  new Chart(supplierCtx, {
+    type: 'bar',
+    options: {
+      plugins: {
+        legend: {
+          display: false
+        },
+        title: {
+          display: true,
+          text: 'NEW SUPPLIER BY TIME'
+        }
+      }
+    },
+    data: {
+      labels: Array.from(new Set(data.map(supplier => formatDate(supplier.createdAt)))),
+      datasets: [{
+        data: data.map(supplier => supplier.createdAt).reduce((acc, date) => {
+          const formattedDate = formatDate(date)
+          acc[formattedDate] = (acc[formattedDate] || 0) + 1
+          return acc
+        }, {}),
+        borderWidth: 1,
+        backgroundColor: '#59A14F'
+      }]
+    }
+  })
 }
 
 async function getAll() {
@@ -712,17 +796,8 @@ async function getAll() {
       })
     }
 
+    // Only load finance data on initial page load
     await getFinance(fetchBody)
-    await getOrders(fetchBody)
-    await getOrderAnalytics()
-    await getCustomers(fetchBody)
-    await getEmployees(fetchBody)
-    await getProducts()
-    await getProductAnalytics()
-    // await getStores()
-    // await getSuppliers()
-    // await getPurchases(fetchBody)
-    // await getBrands()
   } catch (error) {
     console.error('An error occurred:', error)
     pushNotification('An error occurred')
@@ -737,6 +812,10 @@ document.querySelector('button[type="submit"]').addEventListener('click', async 
 
   if (new Date(startDate) > new Date(endDate)) return pushNotification('Start date cannot be greater than end date')
 
+  // Get the currently active dashboard
+  const activeBtn = document.querySelector('.dashboard-btn.active')
+  const activeDashboard = activeBtn ? activeBtn.dataset.dashboard : 'finance'
+
   const fetchBody = {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -745,11 +824,9 @@ document.querySelector('button[type="submit"]').addEventListener('click', async 
       endDate: endDate
     })
   }
-  await getFinance(fetchBody)
-  await getOrders(fetchBody)
-  await getCustomers(fetchBody)
-  await getEmployees(fetchBody)
-  // await getPurchases(fetchBody)
+
+  // Reload data for the currently active dashboard
+  await loadDashboardData(activeDashboard)
 })
 
 window.addEventListener('DOMContentLoaded', async function loadData() {

@@ -127,12 +127,13 @@ class homeController {
         }
       }
 
-      const [customers, members] = await Promise.all([
+      const [allCustomers, filteredCustomers, members] = await Promise.all([
+        user.estimatedDocumentCount(),
         user.find(matchStage).lean(),
         member.find().lean()
       ])
 
-      return res.json({data: customers, members: members})
+      return res.json({allData: allCustomers, data: filteredCustomers, members: members})
     } catch (error) {
       console.log(error)
       return res.json({error: error.message})
@@ -149,12 +150,13 @@ class homeController {
         }
       }
 
-      const [employees, positions] = await Promise.all([
+      const [totalEmployees, filteredEmployees, positions] = await Promise.all([
+        employee.estimatedDocumentCount(),
         employee.find(matchStage).lean(),
         position.find().lean()
       ])
 
-      return res.json({data: employees, positions: positions})
+      return res.json({allData: totalEmployees, data: filteredEmployees, positions: positions})
     } catch (error) {
       console.log(error)
       return res.json({error: error.message})
@@ -171,12 +173,13 @@ class homeController {
         }
       }
 
-      const [orders, status] = await Promise.all([
+      const [allOrders, filterOrders, status] = await Promise.all([
+        order.estimatedDocumentCount(),
         order.find(matchStage).lean(),
         orderStatus.find().lean()
       ])
       
-      return res.json({data: orders, status: status})
+      return res.json({allData: allOrders, data: filterOrders, status: status})
     } catch (error) {
       console.log(error)
       return res.json({error: error.message})

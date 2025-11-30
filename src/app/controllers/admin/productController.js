@@ -3,7 +3,6 @@ const product = require('../../models/productModel')
 const brand = require('../../models/brandModel')
 const productStatus = require('../../models/productStatusModel')
 const cloudinary = require('cloudinary').v2
-const { ObjectId } = require('mongodb')
 
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
@@ -42,14 +41,12 @@ class allProductsController {
                 }
               }
             }
-          },
-          { $skip: skip },
-          // { $limit: itemsPerPage },
+          }
         ]
 
         const result = await product.aggregate(pipeline)
 
-        data = result
+        data = result.slice(skip, skip + itemsPerPage)
         dataSize = result.length
 
       } else {

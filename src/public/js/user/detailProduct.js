@@ -115,7 +115,7 @@ async function getProduct() {
     star.style.color = 'black'
   })
   productElement.querySelector('p#product-rate').querySelectorAll('i').forEach((star, i) => {
-    if (i + 1 <= data.rate) star.style.color = 'orange'
+    if (i + 1 <= formatRate(data.rate)) star.style.color = 'orange'
   })
   productElement.querySelector('h3#brand').textContent = data.brand
   productElement.querySelector('h1#name').textContent = data.name
