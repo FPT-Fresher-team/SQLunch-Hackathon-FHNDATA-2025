@@ -287,20 +287,20 @@ table td {
   padding: 10px;
   font-size: 14px;
 }
-
 /* =========================================
    STYLE CHUNG CHO CÁC NÚT ICON
    ========================================= */
-.view-btn, 
+.view-btn,
 .view-order-btn,
 .delete-btn,
-.update-btn { 
-  background: transparent none !important;
-  border: 0 !important;      
+.update-btn,
+.restore-btn {
+  background: transparent !important;
+  border: none !important;
   outline: none !important;
   box-shadow: none !important;
   border-radius: 0 !important;
-  
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -310,25 +310,43 @@ table td {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.view-btn, .view-order-btn { color: #2B6377; }
+/* MÀU CHO TỪNG NÚT */
+.view-btn,
+.view-order-btn { color: #2B6377; }
 .delete-btn { color: #dc3545; }
-.update-btn { 
-  color: #F28E2B; 
-}
+.update-btn { color: #F28E2B; }
+.restore-btn { color: #28a745; }
 
-.view-btn:hover, .view-order-btn:hover, .delete-btn:hover, .update-btn:hover {
+/* EFFECT KHI HOVER CHUNG */
+.view-btn:hover,
+.view-order-btn:hover,
+.delete-btn:hover,
+.update-btn:hover,
+.restore-btn:hover {
   background: transparent !important;
   transform: translateY(-3px);
 }
+
+/* EFFECT RIÊNG CHO TỪNG NÚT KHI HOVER */
+.view-btn:hover,
+.view-order-btn:hover {
+  color: #1a3f52;
+  filter: drop-shadow(0 5px 4px rgba(43, 99, 119, 0.35));
+}
+
 .update-btn:hover {
   color: #d67d26;
   filter: drop-shadow(0 5px 4px rgba(242, 142, 43, 0.35));
 }
-.view-btn:hover, .view-order-btn:hover {
-  color: #1a3f52; filter: drop-shadow(0 5px 4px rgba(43, 99, 119, 0.35));
+
+.restore-btn:hover {
+  color: #1e7e34;
+  filter: drop-shadow(0 5px 4px rgba(40, 167, 69, 0.35));
 }
+
 .delete-btn:hover {
-  color: #a71d2a; filter: drop-shadow(0 5px 4px rgba(220, 53, 69, 0.35));
+  color: #a71d2a;
+  filter: drop-shadow(0 5px 4px rgba(220, 53, 69, 0.35));
 }
 
 table td:first-child {
