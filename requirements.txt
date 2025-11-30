@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+pydantic
+python-dotenv
+google-generativeai
+pymongo
+faiss-cpu
+numpy
+apscheduler
+sentence-transformers

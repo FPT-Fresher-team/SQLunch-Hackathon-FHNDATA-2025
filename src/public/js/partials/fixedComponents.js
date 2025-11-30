@@ -95,7 +95,13 @@ async function getAIChatData() {
     AIchatContent.replaceChildren()
     messages.forEach((message) => {
       const chat = document.createElement('li')
-      chat.textContent = message.content 
+      // Use innerHTML for AI responses (may contain HTML from Markdown conversion)
+      // Use textContent for user messages (plain text)
+      if (message.senderId === 'rag-bot') {
+        chat.innerHTML = message.content
+      } else {
+        chat.textContent = message.content
+      }
       message.senderId === window.uid ? chat.setAttribute('class', 'right-content') : chat.setAttribute('class', 'left-content')
         
       AIchatContent.appendChild(chat)
@@ -190,7 +196,8 @@ AIsendBtn.onclick = async function() {
     if (!response.ok) throw new Error(`Response status: ${response.status}`)
     const json = await response.json()
 
-    answer.textContent = json.answer
+    // Use innerHTML for HTML-formatted answers (Markdown converted to HTML)
+    answer.innerHTML = json.answer
     AIchatContent.scrollTo(0, AIchatContent.scrollHeight)
   }
 }

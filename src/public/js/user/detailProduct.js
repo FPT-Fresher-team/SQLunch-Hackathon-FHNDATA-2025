@@ -1,5 +1,4 @@
 importLinkCss('/css/user/detailProduct.css')
-// importScript('/js/user/trackProductView.js')
 
 const getAddToCart        = document.querySelector('div.add-to-cart')
 const getBuyNow           = document.querySelector('div.buy-now')
@@ -235,6 +234,7 @@ function addToCart(productInfo) {
     }
 
     const quantity = parseInt(getQuantityValue.innerText)
+    console.log(quantity)
 
     listProductLength.length = myObj.productInfo.length
     for (let i = 0; i < listProductLength.length; ++i) {
@@ -265,33 +265,19 @@ function addToCart(productInfo) {
 function buyNow(productInfo) {
   getBuyNow.onclick = function () {
     if (getAddToCart.style.backgroundColor === '') {
+      myObj.localCounting++
       if (getQuantityValue.innerText === '0') {
         getQuantityValue.innerText = 1
       }
 
-      const quantity = parseInt(getQuantityValue.innerText)
-
-      listProductLength.length = myObj.productInfo.length
-      for (let i = 0; i < listProductLength.length; ++i) {
-        if (myObj.productInfo[i].id === productInfo._id) {
-          myObj.productInfo[i].quantity += quantity
-          myObj.productInfo[i].isChecked = true
-          localStorage.setItem('product_cart_count', JSON.stringify(myObj))
-          return
-        }
-      }
-
-      myObj.localCounting++
-
       const newProductInfo = {
         id      : productInfo._id,
         quantity: parseInt(getQuantityValue.innerText),
-        isChecked: true
+        isChecked: false
       }
   
       myObj.productInfo.push(newProductInfo)
       localStorage.setItem('product_cart_count', JSON.stringify(myObj))
-      document.dispatchEvent(new CustomEvent('cartUpdated'));
     } else {}
   }
 }
@@ -414,17 +400,23 @@ async function loadRelatedProducts(type, container) {
       endpoint = '/all-products/data/related-viewed'
       filter = {}
     } else if (type === 'recommended') {
-      endpoint = '/all-products/data/related-recommended'
-      filter = {}
+      endpoint = 'http://localhost:8000/recommend'
+      filter = {
+        productId: productInfo._id,     // current viewed product
+        mode: "product"
+      }
     }
 
     const response = await fetch(endpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(filter)
+      body: JSON.stringify(filter),
+      credentials: 'include' 
     })
 
     const data = await response.json()
+
+    console.log(data)
     
     if (data.data && data.data.length > 0) {
       // Clear loading placeholder
