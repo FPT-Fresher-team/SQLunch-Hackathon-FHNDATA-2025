@@ -452,7 +452,7 @@ async function getEmployees(fetchBody) {
 async function getProducts() {
   const response = await fetch('/admin/all/data/products')
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {data} = await response.json()
+  const {allData, data} = await response.json()
 
   const table = document.createElement('table')
   table.innerHTML = `
