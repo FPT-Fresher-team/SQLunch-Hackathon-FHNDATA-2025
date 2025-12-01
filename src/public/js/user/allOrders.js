@@ -40,7 +40,6 @@ async function checkUser() {
 async function updateTableBody() {
   const getProductInfo  = JSON.parse(localStorage.getItem('product_cart_count')) || {}
   const productIds      = getProductInfo.productInfo.map(product => product.id)
-  const productChecked  = getProductInfo.productInfo.map(product => product.isChecked)
   const tableBody       = document.querySelector('tbody')
   totalOrderPrice.total = 0
 
@@ -62,7 +61,9 @@ async function updateTableBody() {
     CheckBox.type = 'checkbox'
     CheckBox.id = product._id
     CheckBox.name = product.name
-
+    const cartItem = getProductInfo.productInfo.find(item => item.id === product._id);
+    CheckBox.checked = cartItem ? cartItem.isChecked : false;
+    
     const newProductImage = document.createElement('td')
     const productImage = document.createElement('img')
     productImage.setAttribute('src', `${product.img.path}`)
@@ -147,7 +148,6 @@ async function updateTableBody() {
       preCheckAllProducts()
     }
 
-    CheckBox.checked = productChecked[index] || false
     if (CheckBox.checked) {
       totalOrderPrice.total += parseInt(CheckBox.value) * parseInt(product.price)
     }
@@ -560,14 +560,3 @@ checkOutOfOrderProduct()
 checkUser()
 
 loadData(5)
-
-// setTimeout(() => {
-//   getLog(
-//     topic = 'page-view', 
-//     value = {
-//       "user_id"   : window.uid,
-//       "page_type" : 'orders',
-//       "timestamp" : new Date(),
-//     }
-//   )
-// }, 1000)
