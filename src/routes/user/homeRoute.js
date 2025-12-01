@@ -12,6 +12,7 @@ router.get('/data/user'                 , homeController.getUsers)
 router.post('/data/search'              , homeController.searchInfo)
 router.post('/data/notification'        , homeController.setNotification)
 router.post('/data/streamingKafka'      , homeController.streamingKafka)
+router.post('/data/streamingKafka'      , homeController.streamingFabric);
 
 router.post('/test_cdc', homeController.testCDC)
 

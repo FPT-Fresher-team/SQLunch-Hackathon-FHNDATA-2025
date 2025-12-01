@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/trinhnam1537/SQLunch-Hackathon-FHNDATA-2025#readme",
   "dependencies": {
+    "@azure/event-hubs": "^6.0.0",
     "@clickhouse/client": "^1.13.0",
     "appwrite": "^18.2.0",
     "bcryptjs": "^2.4.3",

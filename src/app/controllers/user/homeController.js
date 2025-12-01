@@ -9,6 +9,15 @@ const employee = require('../../models/employeeModel')
 const { producer } = require("../../kafka/producer");
 
 
+////fabric
+const { EventHubProducerClient } = require("@azure/event-hubs");
+
+const eventHubProducer = new EventHubProducerClient(process.env.EVENTHUB_CONNECTION);
+///fabric
+
+
+
+
 class homeController {
   async getVouchers(req, res, next) {
     try {
@@ -183,6 +192,43 @@ class homeController {
     }
   }
 
+
+  async streamingFabric(req, res, next) {
+  try {
+    const { value } = req.body;
+
+    // Resolve user ID (just like original)
+    const uid = req.cookies.uid || value.userId;
+
+    const enhancedValue = {
+      ...value,
+      userId: uid
+    };
+
+    // Create a batch
+    const batch = await eventHubProducer.createBatch();
+
+    const eventBody = {
+      ...enhancedValue,
+      _producerTimestamp: Date.now(), // optional but useful
+    };
+
+    batch.tryAdd({
+      body: eventBody,
+      partitionKey: uid
+    });
+
+    // Send batch
+    await eventHubProducer.sendBatch(batch);
+
+    return res.json({ success: true });
+
+  } catch (error) {
+    console.error("EventHub error:", error);
+    return res.status(500).json({ error: error.message });
+  }
+}
+
   async testCDC(req, res, next) {
     try {
       // Simulate CDC event handling here
@@ -194,5 +240,7 @@ class homeController {
       return res.json({message: error.message})
     }
   }
+
+  
 }
 module.exports = new homeController
