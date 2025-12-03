@@ -47,92 +47,133 @@ async function getFilter() {
 }
 
 async function getEmployees(sortOptions, filterOptions, currentPage, itemsPerPage) {
-  // Show loading
+  // Show loading on "No" column
   tbody.querySelectorAll('tr').forEach(tr => {
-    const firstTd = tr.querySelector('td')
+    const firstTd = tr.querySelector('td:nth-child(1)');
     if (firstTd) {
-      firstTd.textContent = ''
-      firstTd.classList.add('loading')
+      firstTd.textContent = '';
+      firstTd.classList.add('loading');
     }
-  })
+  });
 
   const payload = {
     page: currentPage,
     itemsPerPage: itemsPerPage,
     sort: sortOptions,
     filter: filterOptions
-  }
+  };
 
-  if (searchInput.value.trim()) payload.searchQuery = searchInput.value.trim()
+  if (searchInput.value.trim()) payload.searchQuery = searchInput.value.trim();
 
   const response = await fetch('/admin/all-employees/data/employees', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) throw new Error(`Response status: ${response.status}`);
+  const { data, data_size, error } = await response.json();
+  if (error) return pushNotification(error);
+
+  // Update total count
+  dataSize.size = data_size;
+  document.querySelector('div.board-title p').textContent = 'Employees: ' + dataSize.size;
+
+  const selected = Array.from(document.querySelectorAll('.checkbox-group input[type="checkbox"]'))
+    .slice(1)  // Skip the very first checkbox (the "Select All")
+    .filter(cb => cb.checked)
+    .map(cb => ({
+      value: cb.value,
+      name: cb.closest("label").innerText.trim()
+    }));
+
+  thead.querySelectorAll('tr').forEach((tr, index) => {
+    tr.remove()
   })
 
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const { data, data_size, error } = await response.json()
-  if (error) return pushNotification(error)
+  // HEADER
+  const trHead = document.createElement("tr")
 
-  dataSize.size = data_size
-  document.querySelector('div.board-title p').textContent = `Employees: ${dataSize.size}`
+  const headData = document.createElement('td')
+  headData.textContent = 'No'
+  trHead.appendChild(headData)
 
-  const selectedCols = Array.from(document.querySelectorAll('.checkbox-group input:checked'))
-    .map(cb => ({ value: cb.value, label: cb.closest('label').innerText.trim() }))
+  selected.forEach(col => {
+    const td = document.createElement("td")
+    td.textContent = col.name
+    trHead.appendChild(td)
+  })
 
-  // Rebuild header
-  thead.innerHTML = ''
-  const headerRow = document.createElement('tr')
-  headerRow.innerHTML = `<td>No</td>`
-  selectedCols.forEach(col => headerRow.insertAdjacentHTML('beforeend', `<td>${col.label}</td>`))
-  headerRow.insertAdjacentHTML('beforeend', `<td>Actions</td>`)
-  thead.appendChild(headerRow)
+  const headLink = document.createElement('td')
+  headLink.textContent = 'Actions'
+  trHead.appendChild(headLink)
 
-  // Rebuild body
-  tbody.innerHTML = ''
-  data.forEach((emp, idx) => {
-    const tr = document.createElement('tr')
-    const no = idx + (currentPage - 1) * itemsPerPage + 1
+  thead.appendChild(trHead)
 
-    tr.innerHTML = `<td>${no}</td>`
+  // BODY
+  tbody.querySelectorAll('tr').forEach((tr, index) => {
+    tr.remove()
+  })
 
-    selectedCols.forEach(col => {
-      const td = document.createElement('td')
-      let value = emp[col.value]
+  data.forEach((emp, index) => {
+    const tr = document.createElement('tr');
+
+    // No column
+    const tdNo = document.createElement('td');
+    tdNo.textContent = index + (currentPage - 1) * itemsPerPage + 1;
+    tr.appendChild(tdNo);
+
+    // Dynamic selected columns
+    selected.forEach(col => {
+      const td = document.createElement("td");
+      const value = emp[col.value];
 
       if (col.value === 'dob') {
-        td.textContent = value ? formatDate(value) : ''
-        td.style.textAlign = 'center'
+        td.textContent = value ? formatDate(value) : '-';
+        td.style.textAlign = 'center';
       }
       else if (col.value === 'gender') {
-        td.textContent = value === 'male' ? 'Male' : 'Female'
+        td.textContent = value === 'male' ? 'Male' : value === 'female' ? 'Female' : '-';
       }
       else if (col.value === 'isActive') {
-        td.textContent = value ? 'Online' : 'Offline'
-        td.style.color = value ? 'green' : 'red'
-        td.style.fontWeight = 'bold'
+        const isOnline = !!value;
+        td.textContent = isOnline ? 'Online' : 'Offline';
+        td.style.color = isOnline ? 'green' : 'red';
+        td.style.fontWeight = 'bold';
+        td.style.textAlign = 'center';
       }
       else if (col.value === 'role') {
-        td.textContent = emp.roleInfo?.name || value || ''
+        td.textContent = emp.roleInfo?.name || emp.role || '-';
+      }
+      else if (col.value === 'avatar' || col.value === 'profileImage') {
+        const imgSrc = emp.avatar?.path || emp.profileImage?.path;
+        td.innerHTML = imgSrc
+          ? `<img src="${imgSrc}" alt="avatar" style="width:40px;height:40px;border-radius:50%;object-fit:cover;">`
+          : '<div style="width:40px;height:40px;background:#ddd;border-radius:50%;"></div>';
+        td.style.textAlign = 'center';
       }
       else {
-        td.textContent = value ?? ''
+        td.textContent = value ?? '-';
       }
-      tr.appendChild(td)
-    })
 
-    // Action button
-    const actionTd = document.createElement('td')
-    actionTd.style.textAlign = 'center'
-    actionTd.innerHTML = `<button class="view-btn"><i class="fi fi-rr-eye"></i></button>`
-    actionTd.querySelector('.view-btn').onclick = () => openEmployeeDetail(emp._id)
-    tr.appendChild(actionTd)
+      tr.appendChild(td);
+    });
 
-    tbody.appendChild(tr)
-  })
+    // Actions column
+    const tdActions = document.createElement('td');
+    tdActions.style.textAlign = 'center';
+    tdActions.innerHTML = `
+      <button class="view-btn" id="${emp._id}"><i class="fi fi-rr-eye"></i></button>
+    `;
 
-  pagination(getEmployees, sortOptions, filterOptions, currentPage, dataSize.size)
+    tdActions.querySelector('.view-btn').onclick = () => openEmployeeDetail(emp._id);
+
+    tr.appendChild(tdActions);
+    tbody.appendChild(tr);
+  });
+
+  // Update pagination
+  pagination(getEmployees, sortOptions, filterOptions, currentPage, dataSize.size);
 }
 
 // Toggle column selector

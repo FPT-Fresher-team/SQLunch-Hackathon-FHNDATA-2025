@@ -44,9 +44,9 @@ async function publishEvents() {
 }
  
 // Run
-publishEvents().catch((err) => {
-  console.error("Error sending events:", err);
-});
+// publishEvents().catch((err) => {
+//   console.error("Error sending events:", err);
+// });
 
 const connect = async () => {
   try {

@@ -18,6 +18,7 @@ async function pagination(getDataFunction, sortOptions, filterOptions, currentPa
     if (isCurrent) p.classList.add('current');
     p.onclick = () => {
       getDataFunction(sortOptions, filterOptions, number, itemsPerPage);
+      window.scrollTo({ top: document.querySelector('.header').offsetTop - 10, behavior: 'smooth' })
     };
     return p;
   };

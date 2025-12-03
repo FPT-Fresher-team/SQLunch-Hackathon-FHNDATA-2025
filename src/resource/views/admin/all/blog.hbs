@@ -10,7 +10,7 @@
 
   <div class="control-bar">
     <div class="search">
-      <input type="text" id="search-input" placeholder="Search blog..." />
+      <input type="text" id="search-input" data-id="title" placeholder="Search blog by title" />
     </div>
 
     <div class="sort-filter">
@@ -108,11 +108,6 @@
     </div>
 
     <div class="form-group">
-      <label for="categorySlug">Category Slug (optional)</label>
-      <input type="text" id="categorySlug" placeholder="e.g. skincare-tips">
-    </div>
-
-    <div class="form-group">
       <label for="tags">Tags (comma separated)</label>
       <input type="text" id="tags" placeholder="beauty, skincare, review">
     </div>
@@ -141,7 +136,10 @@
       </tr>
       <tr>
         <td>Featured Image</td>
-        <td><img src="" alt="" id="feature-image"></td>
+        <td>
+          <img src="" alt="loading" id="feature-image">
+          <input type="file" name="img" id="featuredImage"/>
+        </td>
       </tr>
       <tr>
         <td>Summary</td>
@@ -154,14 +152,6 @@
       <tr>
         <td>Category Name</td>
         <td><input type="text" id="categoryName"></td>
-      </tr>
-      <tr>
-        <td>Category Name</td>
-        <td><input type="text" id="categoryName"></td>
-      </tr>
-      <tr>
-        <td>Category Slug</td>
-        <td><input type="text" id="categorySlug"></td>
       </tr>
       <tr>
         <td>Tags (comma separated)</td>

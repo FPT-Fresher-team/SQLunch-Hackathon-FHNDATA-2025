@@ -102,6 +102,7 @@ div.products .product {
   position: relative;
   background-color: #ffffff; 
   min-height: 360px;
+  min-width: 200px;
   padding: 12px;
   border-radius: 16px;
   border: 1px solid #f0f0f0;

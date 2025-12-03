@@ -31,109 +31,143 @@ function generateColumns() {
 }
 
 async function getBlogs(sortOptions, filterOptions, currentPage, itemsPerPage) {
+  // Show loading state on the first column (No)
   tbody.querySelectorAll('tr').forEach(tr => {
-    const firstTd = tr.querySelector('td')
+    const firstTd = tr.querySelector('td:nth-child(1)');
     if (firstTd) {
-      firstTd.textContent = ''
-      firstTd.classList.add('loading')
+      firstTd.textContent = '';
+      firstTd.classList.add('loading');
     }
-  })
+  });
 
   const payload = {
     page: currentPage,
     itemsPerPage: itemsPerPage,
     sort: sortOptions,
     filter: filterOptions
-  }
+  };
 
-  if (searchInput.value.trim()) payload.searchQuery = searchInput.value.trim()
+  if (searchInput.value.trim()) payload.searchQuery = searchInput.value.trim();
 
   const response = await fetch('/admin/all-blogs/data/blogs', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
+  });
+
+  if (!response.ok) throw new Error(`Response status: ${response.status}`);
+  const { data, data_size, error } = await response.json();
+  if (error) return pushNotification(error);
+
+  // Update total count
+  dataSize.size = data_size;
+  document.querySelector('div.board-title p').textContent = 'Blogs: ' + dataSize.size;
+
+  const selected = Array.from(document.querySelectorAll('.checkbox-group input[type="checkbox"]'))
+    .slice(1)  // Skip the very first checkbox (the "Select All")
+    .filter(cb => cb.checked)
+    .map(cb => ({
+      value: cb.value,
+      name: cb.closest("label").innerText.trim()
+    }));
+
+  thead.querySelectorAll('tr').forEach((tr, index) => {
+    tr.remove()
   })
 
-  if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const { data, data_size, error } = await response.json()
-  if (error) return pushNotification(error)
+  // HEADER
+  const trHead = document.createElement("tr")
 
-  dataSize.size = data_size
-  document.querySelector('div.board-title p').textContent = `Blogs: ${dataSize.size}`
+  const headData = document.createElement('td')
+  headData.textContent = 'No'
+  trHead.appendChild(headData)
 
-  const selectedCols = Array.from(document.querySelectorAll('.checkbox-group input:checked'))
-    .map(cb => ({ value: cb.value, label: cb.closest('label').innerText.trim() }))
+  selected.forEach(col => {
+    const td = document.createElement("td")
+    td.textContent = col.name
+    trHead.appendChild(td)
+  })
 
-  // Rebuild header
-  thead.innerHTML = ''
-  const headerRow = document.createElement('tr')
-  headerRow.innerHTML = `<td>No</td>`
-  selectedCols.forEach(col => headerRow.insertAdjacentHTML('beforeend', `<td>${col.label}</td>`))
-  headerRow.insertAdjacentHTML('beforeend', `<td>Actions</td>`)
-  thead.appendChild(headerRow)
+  const headLink = document.createElement('td')
+  headLink.textContent = 'Actions'
+  trHead.appendChild(headLink)
 
-  // Rebuild body
-  tbody.innerHTML = ''
-  data.forEach((blog, idx) => {
-    const tr = document.createElement('tr')
-    const no = idx + + (currentPage - 1) * itemsPerPage + 1
+  thead.appendChild(trHead)
 
-    tr.innerHTML = `<td>${no}</td>`
+  // BODY
+  tbody.querySelectorAll('tr').forEach((tr, index) => {
+    tr.remove()
+  })
 
-    selectedCols.forEach(col => {
-      const td = document.createElement('td')
-      let value = blog[col.value]
+  data.forEach((blog, index) => {
+    const tr = document.createElement('tr');
+
+    // No column
+    const tdNo = document.createElement('td');
+    tdNo.textContent = index + (currentPage - 1) * itemsPerPage + 1;
+    tr.appendChild(tdNo);
+
+    // Dynamic selected columns
+    selected.forEach(col => {
+      const td = document.createElement("td");
+      const value = blog[col.value];
 
       if (col.value === 'featuredImage') {
-        const img = blog.featuredImage?.path
-          ? `<img src="${blog.featuredImage.path}" alt="thumb" style="width:50px;height:50px;object-fit:cover;border-radius:4px;">`
-          : '<div style="width:50px;height:50px;background:#eee;border-radius:4px;"></div>'
-        td.innerHTML = img
-      }
+        const imgPath = blog.featuredImage?.path;
+        td.innerHTML = imgPath
+          ? `<img src="${imgPath}" alt="thumb" style="width:50px;height:50px;object-fit:cover;border-radius:4px;">`
+          : '<div style="width:50px;height:50px;background:#eee;border-radius:4px;"></div>';
+      } 
       else if (col.value === 'title') {
-        td.innerHTML = `<strong>${blog.title}</strong>`
-      }
+        td.innerHTML = `<strong>${value || ''}</strong>`;
+      } 
       else if (col.value === 'category') {
-        td.textContent = blog.category?.name || '-'
-      }
+        td.textContent = blog.category || '-';
+      } 
       else if (col.value === 'tags') {
         td.innerHTML = blog.tags?.length
           ? blog.tags.map(t => `<span class="tag">${t}</span>`).join(' ')
-          : '<em style="color:#999">No tags</em>'
-      }
+          : '<em style="color:#999">No tags</em>';
+      } 
       else if (col.value === 'status') {
-        const color = blog.status === 'published' ? 'green' : 'orange'
-        const text = blog.status === 'published' ? 'Published' : 'Draft'
-        td.innerHTML = `<span style="color:${color};font-weight:bold">${text}</span>`
-      }
+        const isPublished = blog.status === 'published';
+        td.innerHTML = `<span style="color:${isPublished ? 'green' : 'orange'};font-weight:bold">
+                          ${isPublished ? 'Published' : 'Draft'}
+                        </span>`;
+      } 
       else if (col.value === 'views') {
-        td.textContent = value || 0
-        td.style.textAlign = 'right'
-      }
+        td.textContent = value || 0;
+        td.style.textAlign = 'right';
+      } 
       else if (col.value === 'publishedAt' || col.value === 'createdAt') {
-        td.textContent = value ? formatDate(value) : '-'
-        td.style.textAlign = 'center'
-      }
+        td.textContent = value ? formatDate(value) : '-';
+        td.style.textAlign = 'center';
+      } 
       else {
-        td.textContent = value ?? ''
+        td.textContent = value ?? '';
       }
-      tr.appendChild(td)
-    })
 
-    // Actions
-    const actionTd = document.createElement('td')
-    actionTd.style.textAlign = 'center'
-    actionTd.innerHTML = `
-      <button class="view-btn" id="${blog._id}"><i class="fi fi-rr-eye"></i></button>
-      <button class="delete-btn"><i class="fi fi-rr-trash"></i></button>
-    `
-    actionTd.querySelector('.view-btn').onclick = () => openBlogDetail(blog._id)
-    tr.appendChild(actionTd)
+      tr.appendChild(td);
+    });
 
-    tbody.appendChild(tr)
-  })
+    // Actions column
+    const tdActions = document.createElement('td');
+    tdActions.style.textAlign = 'center';
+    tdActions.innerHTML = `
+      <button class="view-btn"   id="${blog._id}"><i class="fi fi-rr-eye"></i></button>
+      <button class="delete-btn" id="${blog._id}"><i class="fi fi-rr-trash"></i></button>
+    `;
 
-  pagination(getBlogs, sortOptions, filterOptions, currentPage, dataSize.size)
+    tdActions.querySelector('.view-btn').onclick = () => openBlogDetail(blog._id);
+    // Optional: add delete handler
+    // tdActions.querySelector('.delete-btn').onclick = () => deleteBlog(blog._id);
+
+    tr.appendChild(tdActions);
+    tbody.appendChild(tr);
+  });
+
+  // Update pagination
+  pagination(getBlogs, sortOptions, filterOptions, currentPage, dataSize.size);
 }
 
 deleteButton.onclick = async function () {
@@ -186,7 +220,7 @@ detailModal.querySelector('input#featuredImage')?.addEventListener('change', fun
     const reader = new FileReader()
     reader.onload = e => {
       imgPath.path = e.target.result
-      detailModal.querySelector('img#preview').src = e.target.result
+      detailModal.querySelector('img#feature-image').src = e.target.result
     }
     reader.readAsDataURL(file)
   }
@@ -213,8 +247,7 @@ async function openBlogDetail(blogId) {
     detailModal.querySelector('input#title').value = blogInfo.title || ''
     detailModal.querySelector('textarea#summary').value = blogInfo.summary || ''
     detailModal.querySelector('textarea#content').value = blogInfo.content || ''
-    detailModal.querySelector('input#categoryName').value = blogInfo.category?.name || ''
-    detailModal.querySelector('input#categorySlug').value = blogInfo.category?.slug || ''
+    detailModal.querySelector('input#categoryName').value = blogInfo.category || ''
     detailModal.querySelector('input#tags').value = blogInfo.tags?.join(', ') || ''
     detailModal.querySelector('select#status').value = blogInfo.status || 'draft'
 
@@ -245,9 +278,7 @@ async function updateBlog() {
     const summary      = detailModal.querySelector('#summary').value.trim();
     const content      = detailModal.querySelector('#content').value.trim();
     const categoryName = detailModal.querySelector('#categoryName').value.trim();
-    const categorySlug = detailModal.querySelector('#categorySlug').value.trim();
-    const tagsInput    = detailModal.querySelector('#tags').value;
-    const tags         = tagsInput.split(',').map(t => t.trim()).filter(Boolean);
+    const tags         = detailModal.querySelector('#tags').value;
     const status       = detailModal.querySelector('#status').value;
 
     if (!title || !content) {
@@ -260,8 +291,8 @@ async function updateBlog() {
       title,
       summary,
       content,
-      category: JSON.stringify({ name: categoryName, slug: categorySlug }), // send as string
-      tags: JSON.stringify(tags), // send as string
+      categoryName,
+      tags,
       status,
       // Only send oldImageId if we have current image in DB
       oldImageId: currentBlog.img?.filename || null
@@ -331,6 +362,8 @@ async function createBlog() {
     const title   = createModal.querySelector('#title')?.value.trim()
     const summary = createModal.querySelector('#summary')?.value.trim()
     const content = createModal.querySelector('#content')?.value.trim()
+    const category = createModal.querySelector('#categoryName')?.value.trim()
+    const tags    = createModal.querySelector('#tags')?.value.trim()
 
     if (!title || !content || !createImgPath.path) {
       return pushNotification('Title, content, and image are required!')
@@ -341,6 +374,8 @@ async function createBlog() {
       summary,
       content,
       image: createImgPath.path,
+      category,
+      tags,
       status: 'draft'
     }
 

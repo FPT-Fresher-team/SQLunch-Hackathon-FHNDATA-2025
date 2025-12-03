@@ -13,10 +13,8 @@ const blog = new Schema({
   },
   summary : { type: String, default: '' },
   content : { type: String, default: '' },
-  category: {
-    name: String,
-    slug: String
-  },
+  category: { type: String, default: '' },
+  categorySlug: { type: String, slug: "category" },
   tags        : [{ type: String }],
   status      : { type: String, enum: ['draft', 'published'], default: 'draft' },
   publishedAt : { type: Date, default: null },

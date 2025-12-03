@@ -113,7 +113,6 @@
   gap: 10px;
   width: 100%;
   justify-content: center;
-  flex-wrap: wrap;
 }
 
 .detail-product-container .thumbnail {

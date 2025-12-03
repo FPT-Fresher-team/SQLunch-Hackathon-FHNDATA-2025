@@ -1,206 +1,246 @@
-importLinkCss('/css/user/home.css')
-importLinkCss('/css/user/advertise.css')
+importLinkCss('/css/user/home.css');
+importLinkCss('/css/user/advertise.css');
+
+/* ====================== UTILS ====================== */
+const delay = (ms) => new Promise(res => setTimeout(res, ms));
+
+/* Wait for global flags (isLoggedIn & recommend_url) */
+async function waitForGlobals() {
+  while (
+    typeof window.isLoggedIn === 'undefined' ||
+    typeof window.recommend_url === 'undefined'
+  ) {
+    await delay(50);
+  }
+}
+
+/* ====================== PRODUCT RENDERER ====================== */
+function renderProducts(containerSelector, productsData) {
+  const container = document.querySelector(containerSelector);
+  if (!container) return;
+
+  const productEls = container.querySelectorAll('div.product');
+
+  productEls.forEach((el, index) => {
+    const item = productsData[index];
+
+    // Hide extra placeholders if we have fewer items than slots
+    if (!item) {
+      el.closest('a')?.setAttribute('href', '#');
+      el.style.display = 'none';
+      return;
+    }
+
+    // Discount badge
+    const discount = item.oldPrice && item.price
+      ? (item.oldPrice - item.price) / item.oldPrice * 100
+      : 0;
+    const badge = el.querySelector('span.discount-badge');
+    if (badge) badge.textContent = formatPercentage(discount);
+
+    // Image
+    const img = el.querySelector('img');
+    if (img) {
+      img.src = item.img?.path || '/images/placeholder.jpg';
+      img.alt = item.img?.name || item.name || 'Product';
+    }
+
+    // Prices
+    const oldPriceEl = el.querySelector('p#old-price');
+    const priceEl = el.querySelector('p#price');
+    if (oldPriceEl) oldPriceEl.textContent = formatNumber(item.oldPrice || 0);
+    if (priceEl) priceEl.textContent = formatNumber(item.price || 0);
+
+    // Name & sales
+    const nameEl = el.querySelector('p#name');
+    if (nameEl) nameEl.textContent = item.name || 'Unknown Product';
+
+    const saleEl = el.querySelector('p#sale-number');
+    if (saleEl) saleEl.textContent = `Sold: ${item.saleNumber || 0}`;
+
+    // Rating stars
+    const rateScoreEl = el.querySelector('span#rate-score');
+    const score = item.rate ? parseFloat(item.rate) : 0;
+    if (rateScoreEl) rateScoreEl.textContent = formatRate(score);
+
+    el.querySelectorAll('i').forEach((star, i) => {
+      star.style.color = i < Math.floor(score) ? 'orange' : '';
+    });
+
+    // Link
+    const link = el.closest('a');
+    if (link) link.href = `/all-products/product/${item._id || item.id}`;
+
+    // Hide loading spinner
+    const loading = el.querySelector('div.loading');
+    if (loading) loading.style.display = 'none';
+
+    el.style.display = ''; // ensure visible
+  });
+}
+
+/* ====================== DATA LOADERS ====================== */
 
 async function getVouchers() {
-  // Wait until window.isLoggedIn is assigned
-  while (typeof window.isLoggedIn === 'undefined' | typeof window.recommend_url === 'undefined') {
-    await new Promise(resolve => setTimeout(resolve, 50));
-  }
+  await waitForGlobals();
+  if (!window.isLoggedIn) return;
 
-  
-  if (!window.isLoggedIn) return
-  document.querySelector('div[class="vouchers-board"][id="voucher"]').style.display = 'flex'
+  const board = document.querySelector('div.vouchers-board#voucher');
+  if (!board) return;
+  board.style.display = 'flex';
 
   try {
-    const response = await fetch('/data/vouchers', {
+    const res = await fetch('/data/vouchers', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-    })
-    if (!response.ok) throw new Error(`Response status: ${response.status}`)
-    const {data} = await response.json()
-  
-    const vouchersDiv = document.querySelector('div[class="vouchers-board"][id="voucher"]').querySelectorAll('div.voucher')
-    window.setTimeout(function() {
-      vouchersDiv.forEach((voucher, index) => {
-        if (index < data.length) {
-          voucher.querySelector('p#name').textContent         = data[index].name
-          voucher.querySelector('p#description').textContent  = data[index].description
-          voucher.querySelector('p#end-date').textContent     = formatDate(data[index].endDate)
-          voucher.querySelector('p#code').textContent         = 'Code: ' + data[index].code
-          voucher.querySelector('div.loading').style.display  = 'none'
-          voucher.parentElement.setAttribute('href', '/all-vouchers/voucher/' + data[index]._id)
-          voucher.querySelector('button').addEventListener('click', function(e) {
-            e.preventDefault()
-            e.stopPropagation()
-            const codeText = data[index].code
-            navigator.clipboard.writeText(codeText)
-            alert("Code copied successfully: " + codeText)
-          })
-        } else {
-          voucher.style.display = 'none'
-        }
-      })
-    }, 1000)
-  } catch (error) {
-    console.log(error)
-    pushNotification(`Error loading favorite products: ${error}`)
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include'
+    });
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+    const { data } = await res.json();
+    const voucherEls = board.querySelectorAll('div.v"All"');
+
+    voucherEls.forEach((v, i) => {
+      const voucher = data[i];
+      if (!voucher) {
+        v.style.display = 'none';
+        return;
+      }
+
+      v.querySelector('p#name').textContent = voucher.name;
+      v.querySelector('p#description').textContent = voucher.description;
+      v.querySelector('p#end-date').textContent = formatDate(voucher.endDate);
+      v.querySelector('p#code').textContent = 'Code: ' + voucher.code;
+
+      const loading = v.querySelector('div.loading');
+      if (loading) loading.style.display = 'none';
+
+      // Link to voucher detail
+      v.closest('a')?.setAttribute('href', `/all-vouchers/voucher/${voucher._id}`);
+
+      // Copy button
+      const btn = v.querySelector('button');
+      if (btn) {
+        btn.onclick = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          navigator.clipboard.writeText(voucher.code).then(() => {
+            pushNotification(`Code copied: ${voucher.code}`, 'success');
+          }).catch(() => {
+            pushNotification('Failed to copy code', 'error');
+          });
+        };
+      }
+
+      v.style.display = '';
+    });
+  } catch (err) {
+    console.error(err);
+    pushNotification('Failed to load vouchers');
   }
 }
 
 async function getFavProducts() {
-  // Wait until window.isLoggedIn is assigned
-  while (typeof window.isLoggedIn === 'undefined' | typeof window.recommend_url === 'undefined') {
-    await new Promise(resolve => setTimeout(resolve, 50));
-  }
+  await waitForGlobals();
+  if (!window.isLoggedIn) return;
 
-  if (!window.isLoggedIn) return
-  document.querySelector('div[class="products-board"][id="favorite"]').style.display = 'flex'
-      try { 
-    const response = await fetch(`http://localhost:8000/recommend/`, {
+  const board = document.querySelector('div.products-board#favorite');
+  if (!board) return;
+  board.style.display = 'flex';
+
+  try {
+    const res = await fetch('/recommend/', {  // relative URL – works in production
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({ // current viewed product
-      mode: "rating"}),
-      credentials: "include"
-    })
-    if (!response.ok) throw new Error(`Response status: ${response.status}`)
-    const response_data = await response.json()
-    const data = response_data.data
-    const favProductsDiv = document.querySelector('div[class="products-board"][id="favorite"]').querySelectorAll('div.product')
-    window.setTimeout(function() {
-      favProductsDiv.forEach((product, index) => {
-        product.querySelector('span.discount-badge').textContent = formatPercentage((data[index].oldPrice - data[index].price) / data[index].oldPrice * 100) 
-        product.querySelector('img').setAttribute('src', data[index].img.path)
-        product.querySelector('img').setAttribute('alt', data[index].img.name)
-        product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
-        product.querySelector('p#price').textContent = formatNumber(data[index].price) 
-        product.querySelector('p#name').textContent = data[index].name
-        product.querySelector('span#rate-score').textContent = formatRate(data[index].rate) 
-        product.querySelector('p#sale-number').textContent =  'Sold: ' + data[index].saleNumber
-        product.querySelector('div.loading').style.display = 'none'
-        product.querySelectorAll('i').forEach((star, i) => {
-          if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'
-        })
-        product.parentElement.setAttribute('href', '/all-products/product/' + data[index].id)
-      })
-    }, 1000)
-  } catch (error) {
-    pushNotification(`Error loading favorite products: ${error}`)
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mode: 'rating' }),
+      credentials: 'include'
+    });
+
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const { data } = await res.json();
+
+    renderProducts('div.products-board#favorite', data);
+  } catch (err) {
+    console.error(err);
+    pushNotification('Failed to load recommended products');
   }
 }
 
 async function getProducts() {
   try {
-    const response = await fetch('/data/products', {
+    const res = await fetch('/data/products', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify()
-    })
-    if (!response.ok) throw new Error(`Response status: ${response.status}`)
-    const {
-      flashSale,
-      // hotSale,
-      newArrival,
-      topSale,
-      // skincare,
-      // makeup,
-      all
-    } = await response.json()
-    const flashSaleProductsDiv  = document.querySelector('div[class="flash-deal-board"][id="flash-deal"]').querySelectorAll('div.product')
-    const topSaleProductsDiv    = document.querySelector('div[class="products-board"][id="top-sale"]').querySelectorAll('div.product')
-    const newArrivalProductsDiv = document.querySelector('div[class="products-board"][id="new-arrival"]').querySelectorAll('div.product')
-    // const skincareProductsDiv   = document.querySelector('div[class="products-board"][id="skincare"]').querySelectorAll('div.product')
-    // const makeupProductsDiv     = document.querySelector('div[class="products-board"][id="makeup"]').querySelectorAll('div.product')
-    const allProductsDiv        = document.querySelector('div[class="products-board"][id="all"]').querySelectorAll('div.product')
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include'
+    });
 
-    function setProductData(products, data) {
-      window.setTimeout(function() {
-        products.forEach((product, index) => {
-          product.querySelector('span.discount-badge').textContent = formatPercentage((data[index].oldPrice - data[index].price) / data[index].oldPrice * 100) 
-          product.querySelector('img').setAttribute('src', data[index].img.path)
-          product.querySelector('img').setAttribute('alt', data[index].img.name)
-          product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
-          product.querySelector('p#price').textContent = formatNumber(data[index].price) 
-          product.querySelector('p#name').textContent = data[index].name
-          product.querySelector('span#rate-score').textContent = formatRate(data[index].rate) 
-          product.querySelector('p#sale-number').textContent =  'Sold: ' + data[index].saleNumber
-          product.querySelector('div.loading').style.display = 'none'
-          product.querySelectorAll('i').forEach((star, i) => {
-            if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'
-          })
-          product.parentElement.setAttribute('href', '/all-products/product/' + data[index]._id)
-        })
-      }, 1000)
-    }
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const { flashSale, newArrival, topSale, all } = await res.json();
 
-    setProductData(flashSaleProductsDiv, flashSale)
-    setProductData(topSaleProductsDiv  , topSale  )
-    setProductData(newArrivalProductsDiv, newArrival  )
-    // setProductData(skincareProductsDiv , skincare )
-    // setProductData(makeupProductsDiv   , makeup   )
-    setProductData(allProductsDiv      , all      )
-
-  } catch (error) {
-    console.log(error)
-    pushNotification(`Error loading products: ${error}`) 
+    renderProducts('div.flash-deal-board#flash-deal', flashSale);
+    renderProducts('div.products-board#top-sale', topSale);
+    renderProducts('div.products-board#new-arrival', newArrival);
+    renderProducts('div.products-board#all', all);
+  } catch (err) {
+    console.error(err);
+    pushNotification('Failed to load products');
   }
 }
 
 async function getBrands() {
   try {
-    const response = await fetch('/data/brands', {
+    const res = await fetch('/data/brands', {
       method: 'POST',
-      headers: {'Content-Type': 'application/json'},
-    })
-    if (!response.ok) throw new Error(`Response status: ${response.status}`)
-    const {data} = await response.json()
-    const allBrandsDiv = document.querySelector('div[class="famous-brand-board"][id="brand"]').querySelectorAll('img')
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include'
+    });
 
-    allBrandsDiv.forEach((img, index) => {
-      img.parentElement.setAttribute('href', '/all-brands/brand/' + data[index]._id)
-      img.setAttribute('src', data[index].img.path)
-      img.setAttribute('alt', data[index].name)
-    }) 
-  } catch (error) {
-    pushNotification(`Error loading brands: ${error}`)
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const { data } = await res.json();
+
+    const brandImgs = document.querySelectorAll('div.famous-brand-board#brand img');
+    brandImgs.forEach((img, i) => {
+      const brand = data[i];
+      if (!brand) {
+        img.closest('a')?.setAttribute('href', '#');
+        img.style.display = 'none';
+        return;
+      }
+
+      img.src = brand.img?.path || '/images/brand-placeholder.png';
+      img.alt = brand.name || 'Brand';
+      img.closest('a')?.setAttribute('href', `/all-brands/brand/${brand._id}`);
+      img.style.display = '';
+    });
+  } catch (err) {
+    console.error(err);
+    pushNotification('Failed to load brands');
   }
 }
 
-async function loadData(retriesLeft) {
+/* ====================== MAIN LOADER WITH RETRY ====================== */
+async function loadHomeData(attempts = 5) {
   try {
-    await getVouchers()
-    await new Promise(r => setTimeout(r, 500))
+    await Promise.allSettled([
+      getVouchers(),
+      getFavProducts(),
+      getProducts(),
+      getBrands()
+    ]);
 
-    await getFavProducts()
-    await new Promise(r => setTimeout(r, 500))
-
-    await getProducts()
-    await new Promise(r => setTimeout(r, 500))
-
-    await getBrands()
+    console.log('Homepage data loaded successfully');
   } catch (err) {
-    if (retriesLeft > 1) {
-      console.error(`Retrying... Attempts left: ${retriesLeft - 1}`)
-      pushNotification('Error loading data. Retrying...')
-      window.setTimeout(async function() {
-        loadData(retriesLeft - 1)
-      }, 2000)
+    if (attempts > 1) {
+      pushNotification(`Retrying... (${attempts - 1} attempts left)`);
+      await delay(2000);
+      return loadHomeData(attempts - 1);
     } else {
-      console.error("Failed to fetch products after multiple attempts:", err)
-      pushNotification(`Error loading data: ${err}. Please try again later`)
+      console.error('Failed to load homepage after multiple attempts:', err);
+      pushNotification('Failed to load content. Please refresh the page.');
     }
   }
 }
 
-loadData(5)
-
-// setTimeout(() => {
-//   getLog(
-//     topic = 'page-view', 
-//     value = {
-//       "user_id"   : window.uid,
-//       "page_type" : 'home',
-//       "timestamp" : new Date(),
-//     }
-//   )
-// }, 1000);
+/* ====================== START ====================== */
+loadHomeData(5);

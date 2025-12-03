@@ -56,26 +56,49 @@ async function getSuppliers(sortOptions, filterOptions, currentPage, itemsPerPag
   dataSize.size = data_size
   document.querySelector('div.board-title p').textContent = `Suppliers: ${dataSize.size}`
 
-  const selectedCols = Array.from(document.querySelectorAll('.checkbox-group input:checked'))
-    .map(cb => ({ value: cb.value, label: cb.closest('label').innerText.trim() }))
+  const selected = Array.from(document.querySelectorAll('.checkbox-group input[type="checkbox"]'))
+    .slice(1)  // Skip the very first checkbox (the "Select All")
+    .filter(cb => cb.checked)
+    .map(cb => ({
+      value: cb.value,
+      name: cb.closest("label").innerText.trim()
+    }));
 
-  // Rebuild header
-  thead.innerHTML = ''
-  const headerRow = document.createElement('tr')
-  headerRow.innerHTML = `<td>No</td>`
-  selectedCols.forEach(col => headerRow.insertAdjacentHTML('beforeend', `<td>${col.label}</td>`))
-  headerRow.insertAdjacentHTML('beforeend', `<td>Actions</td>`)
-  thead.appendChild(headerRow)
+  thead.querySelectorAll('tr').forEach((tr, index) => {
+    tr.remove()
+  })
 
-  // Rebuild body
-  tbody.innerHTML = ''
+  // HEADER
+  const trHead = document.createElement("tr")
+
+  const headData = document.createElement('td')
+  headData.textContent = 'No'
+  trHead.appendChild(headData)
+
+  selected.forEach(col => {
+    const td = document.createElement("td")
+    td.textContent = col.name
+    trHead.appendChild(td)
+  })
+
+  const headLink = document.createElement('td')
+  headLink.textContent = 'Actions'
+  trHead.appendChild(headLink)
+
+  thead.appendChild(trHead)
+
+  // BODY
+  tbody.querySelectorAll('tr').forEach((tr, index) => {
+    tr.remove()
+  })
+
   data.forEach((supplier, idx) => {
     const tr = document.createElement('tr')
     const no = idx + + (currentPage - 1) * itemsPerPage + 1
 
     tr.innerHTML = `<td>${no}</td>`
 
-    selectedCols.forEach(col => {
+    selected.forEach(col => {
       const td = document.createElement('td')
       let value = supplier[col.value]
 

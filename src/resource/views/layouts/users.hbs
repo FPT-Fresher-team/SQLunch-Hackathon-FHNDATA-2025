@@ -8,9 +8,10 @@
   <link rel="icon" type="image/svg+xml" href="https://res.cloudinary.com/bunny-store/image/upload/v1763438302/web-img/Thi%E1%BA%BFt_k%E1%BA%BF_ch%C6%B0a_c%C3%B3_t%C3%AAn_zd0z3o.svg" />
   <link rel="stylesheet" href="/css/layouts/template.css">
   <link rel="stylesheet" href="/css/user/responsive.css">
+  {{!-- <link rel="stylesheet" href="/css/user/responsiveMobile.css">
+  <link rel="stylesheet" href="/css/user/responsiveUtils.css"> --}}
   <link rel="stylesheet" href="/css/user/body.css">
   <link rel="stylesheet" href="/css/partials/header.css">
-  <link rel="stylesheet" href="/css/partials/headerBottom.css">
   <link rel="stylesheet" href="/css/partials/fixedComponents.css">
   <link rel="stylesheet" href="/css/partials/footer.css" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -26,7 +27,6 @@
   <script src="/js/helpers/pushNotification.js"></script>
   <script src="/js/helpers/sortAndFilter.js"></script>
   <script src="/js/helpers/format.js"></script>
-  {{!-- <script src="/js/helpers/getLog.js"></script> --}}
   <title>{{title}}</title>
 </head>
 <body>
@@ -37,7 +37,6 @@
   <main>{{{body}}}</main>
   <div>{{> fixedComponents}}</div>
   <footer>{{> userFooter}}</footer>
-  <headerBottom style="display: none;">{{> userHeaderBottom}}</headerBottom>
 </body>
 </html>
 

@@ -10,7 +10,7 @@ class allProductsController {
       const currentPage  = req.body.page
       let sort           = req.body.sort
       let filter         = req.body.filter
-      const itemsPerPage = 9
+      const itemsPerPage = req.body.limit
       const skip         = (currentPage - 1) * itemsPerPage
 
       if (filter.hasOwnProperty('price')) {

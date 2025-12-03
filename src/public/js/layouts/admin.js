@@ -1,15 +1,4 @@
-window.recommend_url = 'https://cosmetic-garden-recommendation.onrender.com'
-const socket = io("https://cosmetic-garden-chat.onrender.com", { path: "/socket.io" })
-
-setInterval(async () => {
-  if (socket.connected) {
-    socket.emit('heartbeat', { message: 'admin ping' })
-  }
-  await fetch(window.recommend_url, {
-    method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-  })
-}, 30000)
+const socket = io("https://beaute-chat.onrender.com/", { path: "/socket.io" })
 
 async function checkRole() {
   try {
@@ -52,10 +41,6 @@ function initSocketEvents(role, adminId) {
     if (id === adminId) return
     if (role === 'chat' || role === 'admin') updateNotification('Bạn có tin nhắn mới')
   })
-
-  // socket.on('privateMessageEmp', () => {
-  //   if (role === 'employee') updateNotification('Bạn có đơn hàng mới')
-  // })
 }
 
 window.addEventListener('load', () => {

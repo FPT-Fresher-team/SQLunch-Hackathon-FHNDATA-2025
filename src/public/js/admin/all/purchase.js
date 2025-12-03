@@ -51,12 +51,13 @@ async function getPurchases(sortOptions, filterOptions, currentPage, itemsPerPag
 
   document.querySelector('div.board-title').querySelector('p').textContent = 'Purchase Orders: ' + dataSize.size
 
-  const selected = Array.from(document.querySelectorAll('.checkbox-group input:checked'))
-                        .slice(1)   // remove the first checkbox
-                        .map(cb => ({
-                          value: cb.value,
-                          name: cb.closest("label").innerText.trim()
-                        }))
+  const selected = Array.from(document.querySelectorAll('.checkbox-group input[type="checkbox"]'))
+    .slice(1)  // Skip the very first checkbox (the "Select All")
+    .filter(cb => cb.checked)
+    .map(cb => ({
+      value: cb.value,
+      name: cb.closest("label").innerText.trim()
+    }));
 
   thead.querySelectorAll('tr').forEach((tr, index) => {
     tr.remove()
@@ -66,7 +67,7 @@ async function getPurchases(sortOptions, filterOptions, currentPage, itemsPerPag
   const trHead = document.createElement("tr")
 
   const headData = document.createElement('td')
-  headData.textContent = 'NO'
+  headData.textContent = 'No'
   trHead.appendChild(headData)
 
   selected.forEach(col => {
@@ -81,6 +82,7 @@ async function getPurchases(sortOptions, filterOptions, currentPage, itemsPerPag
 
   thead.appendChild(trHead)
 
+  // BODY
   tbody.querySelectorAll('tr').forEach((tr, index) => {
     tr.remove()
   })

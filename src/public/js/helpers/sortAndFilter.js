@@ -46,9 +46,15 @@ async function sortAndFilter(getDataFunction, sortOptions, filterOptions, curren
   searchInput.addEventListener('keypress', function(e) {
     if (e.key === "Enter") {
       if (searchInput.value.trim() === '') return pushNotification('Please enter a search term')
+
+      const searchType = searchInput.dataset.id
+      if (e.key === "Enter") {
+        filterOptions[searchType] = { $regex: searchInput.value.trim(), $options: "i" }
+        clearButton.style.display = ''
+        const itemsPerPage = document.querySelector('select#pagination').value
+        getDataFunction(sortOptions, filterOptions, currentPage, itemsPerPage)
+      }
       clearButton.style.display = ''
-      const itemsPerPage = document.querySelector('select#pagination').value
-      getDataFunction(sortOptions, filterOptions, currentPage, itemsPerPage)
     }
   })
 

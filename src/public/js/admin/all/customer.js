@@ -74,12 +74,13 @@ async function getCustomers(sortOptions, filterOptions, currentPage, itemsPerPag
 
   document.querySelector('div.board-title').querySelector('p').textContent = 'Customers: ' + dataSize.size
 
-  const selected = Array.from(document.querySelectorAll('.checkbox-group input:checked'))
-                        .slice(1)   // remove the first checkbox
-                        .map(cb => ({
-                          value: cb.value,
-                          name: cb.closest("label").innerText.trim()
-                        }))
+  const selected = Array.from(document.querySelectorAll('.checkbox-group input[type="checkbox"]'))
+    .slice(1)  // Skip the very first checkbox (the "Select All")
+    .filter(cb => cb.checked)
+    .map(cb => ({
+      value: cb.value,
+      name: cb.closest("label").innerText.trim()
+    }));
 
   thead.querySelectorAll('tr').forEach((tr, index) => {
     tr.remove()

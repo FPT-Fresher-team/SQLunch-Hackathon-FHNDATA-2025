@@ -1,0 +1,614 @@
+/* ===================================
+   MOBILE-FIRST RESPONSIVE HELPERS
+   Additional utilities for mobile optimization
+   ==================================== */
+
+/* ===================================
+   NAVIGATION & HEADER RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  nav {
+    flex-direction: column;
+  }
+  
+  nav ul {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  nav li {
+    width: 100%;
+  }
+  
+  nav a {
+    display: block;
+    padding: 12px 15px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  /* Mobile Menu Toggle */
+  .mobile-menu-toggle {
+    display: block !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top: 1px solid #e0e0e0;
+  }
+  
+  nav ul {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  
+  nav li {
+    flex: 1;
+    text-align: center;
+  }
+  
+  nav a {
+    padding: 8px 5px;
+  }
+}
+
+/* ===================================
+   SIDEBAR RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  aside,
+  .sidebar {
+    position: relative;
+    width: 100% !important;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar-toggle {
+    display: block;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  aside,
+  .sidebar {
+    padding: 10px;
+  }
+  
+  .sidebar > div {
+    margin-bottom: 15px;
+  }
+}
+
+/* ===================================
+   MODAL & MODAL-LIKE RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  .modal,
+  .modal-content,
+  .dialog {
+    width: 90% !important;
+    margin: 20px auto;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .modal,
+  .modal-content,
+  .dialog {
+    width: 95% !important;
+    margin: 10px auto;
+    padding: 10px !important;
+  }
+  
+  .modal-header {
+    padding: 10px;
+  }
+  
+  .modal-body {
+    padding: 10px;
+  }
+  
+  .modal-footer {
+    padding: 10px;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .modal-footer button {
+    width: 100%;
+  }
+}
+
+/* ===================================
+   CARD COMPONENT RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  .card {
+    margin-bottom: 15px;
+  }
+  
+  .card-header {
+    padding: 12px;
+  }
+  
+  .card-body {
+    padding: 12px;
+  }
+  
+  .card-footer {
+    padding: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .card {
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  
+  .card-header {
+    padding: 8px;
+  }
+  
+  .card-body {
+    padding: 8px;
+  }
+  
+  .card-footer {
+    padding: 8px;
+  }
+}
+
+/* ===================================
+   LIST RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  ul, ol {
+    padding-left: 20px;
+  }
+  
+  ul li, ol li {
+    margin-bottom: 8px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  ul, ol {
+    padding-left: 15px;
+  }
+  
+  ul li, ol li {
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+}
+
+/* ===================================
+   FORMS RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  
+  .form-row {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .form-row .form-group {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .form-group {
+    margin-bottom: 12px;
+  }
+  
+  .form-group label {
+    font-size: 14px;
+  }
+  
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    padding: 8px;
+    font-size: 16px;
+  }
+  
+  .form-group textarea {
+    min-height: 80px;
+    resize: vertical;
+  }
+}
+
+/* ===================================
+   PAGINATION RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  .pagination {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 5px;
+  }
+  
+  .pagination a,
+  .pagination span {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .pagination {
+    gap: 3px;
+  }
+  
+  .pagination a,
+  .pagination span {
+    padding: 6px 8px;
+    font-size: 11px;
+  }
+  
+  .pagination .page-info {
+    width: 100%;
+    text-align: center;
+    font-size: 12px;
+  }
+}
+
+/* ===================================
+   BREADCRUMB RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  .breadcrumb {
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .breadcrumb {
+    font-size: 12px;
+    gap: 5px;
+  }
+  
+  .breadcrumb li {
+    display: inline;
+  }
+}
+
+/* ===================================
+   BADGE RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  .badge {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .badge {
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+}
+
+/* ===================================
+   ALERT RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  .alert {
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+  }
+  
+  .alert-close {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .alert {
+    padding: 10px 12px;
+    margin-bottom: 10px;
+    font-size: 13px;
+  }
+}
+
+/* ===================================
+   DROPDOWN RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  .dropdown-menu {
+    position: relative;
+    width: 100%;
+    top: auto;
+    left: auto;
+    right: auto;
+  }
+  
+  .dropdown-menu a {
+    display: block;
+    padding: 10px 15px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .dropdown-menu {
+    width: 100%;
+    padding: 8px 0;
+  }
+  
+  .dropdown-menu a {
+    padding: 8px 12px;
+    font-size: 14px;
+  }
+}
+
+/* ===================================
+   TOOLTIP RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  .tooltip {
+    display: none;
+  }
+}
+
+/* ===================================
+   IMAGE GALLERY RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  .gallery {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px;
+  }
+  
+  .gallery-item {
+    aspect-ratio: 1;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .gallery {
+    grid-template-columns: 1fr !important;
+    gap: 8px;
+  }
+}
+
+/* ===================================
+   ACCORDION RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  .accordion {
+    border-radius: 4px;
+  }
+  
+  .accordion-item {
+    margin-bottom: 8px;
+  }
+  
+  .accordion-button {
+    padding: 12px;
+    font-size: 14px;
+  }
+  
+  .accordion-body {
+    padding: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .accordion-button {
+    padding: 10px;
+    font-size: 13px;
+  }
+  
+  .accordion-body {
+    padding: 10px;
+  }
+}
+
+/* ===================================
+   CAROUSEL RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  .carousel {
+    height: auto;
+  }
+  
+  .carousel-item {
+    height: auto;
+  }
+  
+  .carousel-item img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .carousel-control {
+    padding: 8px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .carousel-indicator {
+    bottom: 8px;
+  }
+  
+  .carousel-indicator li {
+    width: 6px;
+    height: 6px;
+    margin: 0 4px;
+  }
+}
+
+/* ===================================
+   FOOTER RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  footer {
+    padding: 20px 15px;
+  }
+  
+  footer .footer-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  footer .footer-section {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  footer {
+    padding: 15px 10px;
+  }
+  
+  footer .footer-content {
+    gap: 15px;
+  }
+}
+
+/* ===================================
+   SOCIAL LINKS RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  .social-links {
+    gap: 12px;
+  }
+  
+  .social-links a {
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
+    min-width: 40px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .social-links {
+    gap: 10px;
+  }
+  
+  .social-links a {
+    width: 36px;
+    height: 36px;
+    min-height: 36px;
+    min-width: 36px;
+    font-size: 16px;
+  }
+}
+
+/* ===================================
+   LOADING SPINNER RESPONSIVE
+   ==================================== */
+@media screen and (max-width: 768px) {
+  .spinner {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .spinner {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* ===================================
+   UTILITY DISPLAY CLASSES
+   ==================================== */
+@media screen and (max-width: 768px) {
+  .d-none-tablet {
+    display: none !important;
+  }
+  
+  .d-block-tablet {
+    display: block !important;
+  }
+  
+  .d-flex-tablet {
+    display: flex !important;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .d-none-mobile {
+    display: none !important;
+  }
+  
+  .d-block-mobile {
+    display: block !important;
+  }
+  
+  .d-flex-mobile {
+    display: flex !important;
+  }
+}
+
+/* ===================================
+   SCROLLING BEHAVIOR
+   ==================================== */
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
+@media screen and (prefers-reduced-motion: reduce) {
+  .scroll-smooth {
+    scroll-behavior: auto;
+  }
+}
+
+/* ===================================
+   RESPONSIVE ASPECT RATIO
+   ==================================== */
+.aspect-ratio-16-9 {
+  aspect-ratio: 16 / 9;
+}
+
+.aspect-ratio-4-3 {
+  aspect-ratio: 4 / 3;
+}
+
+.aspect-ratio-1-1 {
+  aspect-ratio: 1 / 1;
+}
+
+@media screen and (max-width: 768px) {
+  .aspect-ratio-16-9,
+  .aspect-ratio-4-3,
+  .aspect-ratio-1-1 {
+    width: 100%;
+    height: auto;
+  }
+}

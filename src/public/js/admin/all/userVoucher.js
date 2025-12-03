@@ -59,32 +59,41 @@ async function getVouchers(sortOptions, filterOptions, currentPage, itemsPerPage
   dataSize.size = data_size
   document.querySelector('div.board-title p').textContent = 'User Vouchers: ' + dataSize.size
 
-  const selected = Array.from(document.querySelectorAll('.checkbox-group input:checked'))
+  const selected = Array.from(document.querySelectorAll('.checkbox-group input[type="checkbox"]'))
+    .slice(1)  // Skip the very first checkbox (the "Select All")
+    .filter(cb => cb.checked)
     .map(cb => ({
       value: cb.value,
-      name: cb.closest('label').innerText.trim()
-    }))
+      name: cb.closest("label").innerText.trim()
+    }));
 
-  // Rebuild THEAD
-  thead.querySelectorAll('tr').forEach(tr => tr.remove())
-  const trHead = document.createElement('tr')
-  const thNo = document.createElement('td')
-  thNo.textContent = 'No'
-  trHead.appendChild(thNo)
-
-  selected.forEach(col => {
-    const th = document.createElement('td')
-    th.textContent = col.name
-    trHead.appendChild(th)
+  thead.querySelectorAll('tr').forEach((tr, index) => {
+    tr.remove()
   })
 
-  const thAction = document.createElement('td')
-  thAction.textContent = 'Actions'
-  trHead.appendChild(thAction)
+  // HEADER
+  const trHead = document.createElement("tr")
+
+  const headData = document.createElement('td')
+  headData.textContent = 'No'
+  trHead.appendChild(headData)
+
+  selected.forEach(col => {
+    const td = document.createElement("td")
+    td.textContent = col.name
+    trHead.appendChild(td)
+  })
+
+  const headLink = document.createElement('td')
+  headLink.textContent = 'Actions'
+  trHead.appendChild(headLink)
+
   thead.appendChild(trHead)
 
-  // Rebuild TBODY
-  tbody.querySelectorAll('tr').forEach(tr => tr.remove())
+  // BODY
+  tbody.querySelectorAll('tr').forEach((tr, index) => {
+    tr.remove()
+  })
 
   data.forEach((item, index) => {
     const rowIndex = index + (currentPage - 1) * itemsPerPage + 1

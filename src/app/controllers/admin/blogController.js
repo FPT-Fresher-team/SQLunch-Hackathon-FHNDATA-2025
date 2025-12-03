@@ -112,14 +112,10 @@ class blogController {
         title   : req.body.title,
         summary : req.body.summary,
         content : req.body.content,
-        category: req.body.category 
-          ? JSON.parse(req.body.category)
-          : { name: 'General', slug: 'general' },
-
+        category: req.body.category,
         tags    : req.body.tags 
-          ? JSON.parse(req.body.tags) 
+          ? req.body.tags.split(',').map(t => t.trim()).filter(Boolean)
           : [],
-
         status     : req.body.status || 'draft',
         publishedAt: req.body.status === 'published' ? new Date() : null,
         featuredImage: {
@@ -150,7 +146,7 @@ class blogController {
 
   async blogUpdate(req, res) {
     try {
-      const { id, title, summary, content, category, tags, status, img, oldImageId } = req.body;
+      const { id, title, summary, content, categoryName, tags, status, img, oldImageId } = req.body;
 
       if (!id || !title || !summary || !content) {
         return res.status(400).json({ error: 'Missing required fields' });
@@ -164,19 +160,18 @@ class blogController {
       };
 
       // Parse JSON strings from frontend
-      if (category) updateData.category = JSON.parse(category);
-      if (tags) updateData.tags = JSON.parse(tags);
+      if (categoryName) updateData.category = categoryName;
+      if (tags) updateData.tags = tags.split(',').map(t => t.trim()).filter(Boolean);
 
       // Handle image upload
-      if (img && img.startsWith('data:image')) {
+      if (img) {
         const uploadResult = await cloudinary.uploader.upload(img, {
           folder: 'blogs',
           use_filename: true,
           unique_filename: false,
-          overwrite: true
         });
 
-        updateData.img = {
+        updateData.featuredImage = {
           path: uploadResult.secure_url,
           filename: uploadResult.public_id
         };

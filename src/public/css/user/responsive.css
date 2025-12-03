@@ -1,205 +1,517 @@
-/* header  */
-@media screen and (max-width: 800px) {
-  header { display: none !important;}
-  main { 
-    margin-top: 0 !important;
-    margin-bottom: 80px !important;
-    .main-title {font-size: 20px !important}
-  }
-  headerBottom { display: flex !important;}
-}
+/* ===================================
+   RESPONSIVE BREAKPOINTS
+   Large Desktop: 1920px
+   Desktop: 1024px
+   Tablet: 768px
+   Mobile: 480px
+   ==================================== */
 
-/* profile */
-@media screen and (max-width: 700px) {
+/* ===================================
+   LARGE MOBILE & TABLET (768px and below)
+   ==================================== */
+@media screen and (max-width: 768px) {
+  /* General Layout */
+  body,
+  main {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0 15px;
+    box-sizing: border-box;
+  }
+
+  main {
+    margin-top: 100px !important;
+    margin-bottom: 80px !important;
+  }
+
+  /* Typography */
+  .title,
+  .main-title {
+    font-size: 24px !important;
+  }
+
+  h1 {
+    font-size: 24px !important;
+  }
+
+  h2 {
+    font-size: 20px !important;
+  }
+
+  h3 {
+    font-size: 18px !important;
+  }
+
+  /* Profile Page */
   .profile-container {
     flex-direction: column;
+    gap: 20px;
   }
+
   .sidebar-menu {
     width: 100%;
+    margin-bottom: 15px;
   }
+
   .content {
     width: 100%;
-    margin-top: 10px;
+    margin-top: 0;
   }
+
   .content form {
     grid-template-columns: 1fr;
+    gap: 15px;
   }
-}
 
-/* orders */
-@media screen and (max-width: 700px) {
+  /* Tables */
   table {
-    a {
-      overflow: hidden;
-      display: -webkit-box;
-      line-clamp: 2;
-      -webkit-box-orient: vertical;
-    }
+    width: 100% !important;
+    font-size: 14px;
   }
+
+  table thead {
+    font-size: 13px;
+  }
+
+  table tbody td {
+    padding: 10px 8px !important;
+  }
+
+  table a {
+    overflow: hidden;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+  }
+
   table tr td:nth-child(2) {
     width: 20% !important;
   }
-  .contact-info .info{
-    grid-template-columns: auto !important
-  }
-}
 
-/* all products */
-@media screen and (max-width: 500px) {
-  .title {
-    font-size: 25px !important;
+  /* Contact Info */
+  .contact-info .info {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
   }
-  .all-category-skincare, .all-category-makeup {
-    ul {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
-      overflow-x: scroll;
-      box-sizing: content-box;
-      scroll-behavior: smooth;
-      align-items: center;
-      display: grid;
-      grid-template-columns: repeat(6, minmax(min(175px, 100%), 1fr));
-      scroll-snap-type: x mandatory;
-    }
-  }
-  .all-products {
-    grid-template-columns: repeat(2, minmax(min(11.25rem, 100%), 1fr)) !important;
-  }
-  .sort {
-    flex-direction: column;
-    align-items: flex-start !important;
-    gap: 10px !important;
-  }
-  .sort label {
-    margin-right: 0;
-  }
-  .sort select {
+
+  .contact-info .info > div {
     width: 100%;
   }
+
+  /* Products Layout */
+  .products-wrapper {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .products-grid {
+    width: 100%;
+  }
+
+  /* All Products */
+  .user-all-products-container {
+    width: 95% !important;
+    margin: 20px auto;
+  }
+
+  .user-all-products-container .all-category-skincare,
+  .user-all-products-container .all-category-makeup {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+
+  .user-all-products-container .all-category-skincare ul,
+  .user-all-products-container .all-category-makeup ul {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    overflow-x: auto;
+    box-sizing: content-box;
+    scroll-behavior: smooth;
+    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(min(150px, 100%), 1fr));
+    scroll-snap-type: x mandatory;
+    gap: 10px;
+    padding: 10px 0;
+  }
+
+  .user-all-products-container .all-category-skincare ul::-webkit-scrollbar,
+  .user-all-products-container .all-category-makeup ul::-webkit-scrollbar {
+    display: none;
+  }
+
+  .all-products {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 15px;
+  }
+
+  /* Sorting */
+  .sort {
+    flex-direction: column;
+    align-items: stretch !important;
+    gap: 12px !important;
+    width: 100%;
+  }
+
+  .sort label {
+    margin-right: 0;
+    margin-bottom: 5px;
+    display: block;
+  }
+
+  .sort select {
+    width: 100%;
+    padding: 8px;
+  }
+
   #clear-sort {
     width: 100%;
     text-align: center;
+    padding: 10px;
   }
-}
 
-/* brands */
-@media screen and (max-width: 700px) {
+  /* Detail Pages (Product, Brand, Order) */
   .table {
     flex-direction: column;
-    .image-box {
-      width: 90% !important;
-      .image {
-        margin-left: 0;
-        margin-top: 10px
-      }
-    }
-    .details-box {
-      width: 90% !important;
-      h1 {
-        font-size: 25px !important;
-      }
-      h3 {
-        font-size: 20px !important;
-      }
-      .quantity {
-        width: 100% !important;
-        justify-content: center !important;
-      }
-      .button > div {
-        width: 50% !important
-      }
-    }
-  };
-}
+    width: 100% !important;
+    gap: 20px;
+  }
 
-/* detail order */
-@media screen and (max-width: 700px) {
-  table {
-    tbody {
-      td:nth-child(1) {
-        overflow: hidden;
-        display: -webkit-box;
-        line-clamp: 2; 
-        -webkit-box-orient: vertical;
-      }
-    }
+  .table .image-box {
+    width: 100% !important;
+    display: flex;
+    justify-content: center;
+  }
+
+  .table .image-box .image {
+    margin-left: 0 !important;
+    margin-top: 0 !important;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .table .details-box {
     width: 100% !important;
   }
-}
 
-/* detail product */
-@media screen and (max-width: 700px) {
-  .table {
+  .table .details-box h1 {
+    font-size: 24px !important;
+    line-height: 1.3;
+  }
+
+  .table .details-box h3 {
+    font-size: 18px !important;
+  }
+
+  .table .quantity {
+    width: 100% !important;
+    justify-content: center !important;
     flex-direction: column;
-    .image-box {
-      width: 90% !important;
-      .image {
-        margin-left: 0;
-        margin-top: 10px
-      }
-    }
-    .details-box {
-      width: 90% !important;
-      h1 {font-size: 25px !important}
-      h3 {font-size: 20px !important}
-      .quantity {
-        width: 100% !important;
-        justify-content: center !important;
-      }
-      .button > div {
-        width: 50% !important
-      }
-    }
   }
-}
 
-/* detail rate order */
-@media screen and (max-width: 700px) {
-  table {
-    tbody {
-      td:nth-child(1) {
-        overflow: hidden;
-        display: -webkit-box;
-        line-clamp: 2; 
-        -webkit-box-orient: vertical;
-      }
-    }
+  .table .button {
+    flex-direction: column;
+  }
+
+  .table .button > div {
     width: 100% !important;
   }
-}
 
-/* detail voucher */
-@media screen and (max-width: 700px) {
-  table {
-    tbody {
-      td:nth-child(1) {
-        overflow: hidden;
-        display: -webkit-box;
-        line-clamp: 2; 
-        -webkit-box-orient: vertical;
-      }
-    }
-    width: 100% !important;
+  .table .button > div button {
+    width: 100%;
   }
-}
 
-/* introduce */
-@media (max-width: 900px) {
+  /* Detail Order/Voucher Tables */
+  table tbody td:nth-child(1) {
+    overflow: hidden;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+
+  /* Introduce Page */
   .intro-section {
     flex-direction: column;
     text-align: center;
+    padding: 20px 10px !important;
   }
+
   .intro-section.reverse {
     flex-direction: column;
   }
+
+  .intro-section > div {
+    width: 100% !important;
+    text-align: center;
+  }
+
+  /* Order Checking */
+  .order-checking-container h1 {
+    font-size: 24px;
+    text-align: center;
+    padding: 15px 10px;
+  }
+
+  /* Forms */
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  form input,
+  form select,
+  form textarea {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  form button {
+    width: 100%;
+  }
+
+  /* Cards */
+  .card {
+    margin: 10px 0;
+  }
+
+  /* Buttons */
+  button,
+  .btn {
+    padding: 10px 15px;
+    font-size: 14px;
+  }
+
+  /* Spacing */
+  .container {
+    padding: 15px;
+    box-sizing: border-box;
+  }
 }
 
-/* order checking */
-@media screen and (max-width: 700px) {
-  .order-checking-container {
-    h1 {
-      font-size: 25px;
-      text-align: center;
-    }
+/* ===================================
+   SMALL MOBILE (480px and below)
+   ==================================== */
+@media screen and (max-width: 480px) {
+  /* General */
+  body {
+    font-size: 14px;
+  }
+
+  main {
+    margin-top: 80px !important;
+    margin-bottom: 60px !important;
+    padding: 0 10px;
+  }
+
+  /* Typography */
+  .title,
+  .main-title {
+    font-size: 20px !important;
+    padding: 10px 0;
+  }
+
+  h1 {
+    font-size: 20px !important;
+  }
+
+  h2 {
+    font-size: 18px !important;
+  }
+
+  h3 {
+    font-size: 16px !important;
+  }
+
+  p {
+    font-size: 13px;
+  }
+
+  /* Profile */
+  .profile-container {
+    gap: 15px;
+  }
+
+  .content form {
+    gap: 10px;
+  }
+
+  .content form input,
+  .content form select {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  /* Tables - Stack everything */
+  table {
+    font-size: 12px;
+    overflow-x: auto;
+    display: block;
+  }
+
+  table thead {
+    display: none;
+  }
+
+  table tbody,
+  table tr {
+    display: block;
+    width: 100%;
+  }
+
+  table tr {
+    margin-bottom: 15px;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    padding: 10px;
+  }
+
+  table td {
+    display: block;
+    text-align: left;
+    padding: 8px 0 !important;
+    border: none;
+  }
+
+  table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    display: inline-block;
+    width: 100px;
+    margin-right: 10px;
+  }
+
+  /* Contact Info */
+  .contact-info .info {
+    grid-template-columns: 1fr !important;
+    gap: 8px;
+  }
+
+  .contact-info .info > div {
+    padding: 5px;
+  }
+
+  /* Products Grid */
+  .all-products {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+  }
+
+  .user-all-products-container .all-category-skincare ul,
+  .user-all-products-container .all-category-makeup ul {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  /* Sorting */
+  .sort {
+    gap: 8px !important;
+  }
+
+  .sort label,
+  .sort select {
+    font-size: 12px;
+  }
+
+  /* Detail Pages */
+  .table .image-box .image {
+    max-width: 280px;
+  }
+
+  .table .details-box h1 {
+    font-size: 18px !important;
+  }
+
+  .table .details-box h3 {
+    font-size: 14px !important;
+  }
+
+  .table .button > div {
+    padding: 8px !important;
+  }
+
+  .table .button > div button {
+    font-size: 12px;
+    padding: 8px;
+  }
+
+  /* Buttons */
+  button,
+  .btn {
+    padding: 8px 12px;
+    font-size: 12px;
+    border-radius: 4px;
+  }
+
+  /* Forms */
+  form input,
+  form select,
+  form textarea {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  /* Utilities */
+  .container {
+    padding: 10px;
+  }
+
+  .spacing-large {
+    margin: 15px 0;
+  }
+
+  .spacing-medium {
+    margin: 10px 0;
+  }
+
+  .spacing-small {
+    margin: 5px 0;
+  }
+
+  /* Hide non-essential elements */
+  .hide-mobile {
+    display: none !important;
+  }
+
+  /* Touchable elements */
+  button,
+  input,
+  select,
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* ===================================
+   INTRODUCE PAGE - MEDIUM SCREENS
+   ==================================== */
+@media screen and (max-width: 900px) {
+  .intro-section {
+    flex-direction: column;
+    text-align: center;
+    padding: 25px 15px !important;
+  }
+
+  .intro-section.reverse {
+    flex-direction: column;
+  }
+
+  .intro-section > div {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .intro-section img {
+    width: 100%;
+    max-width: 100%;
   }
 }

@@ -164,7 +164,8 @@
 }
 
 .user-all-products-container .sort,
-.user-all-products-container .filter {
+.user-all-products-container .filter, 
+.user-all-products-container .items-per-page {
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -178,11 +179,13 @@
 
 .user-all-products-container .sort select,
 .user-all-products-container .filter select,
+.user-all-products-container .items-per-page select,
 .user-all-products-container .sort option {
   width: 100%;
 }
 
-.user-all-products-container .sort label {
+.user-all-products-container .sort label 
+.user-all-products-container .items-per-page label {
   font-weight: 600;
   color: #2B6377;
   font-size: 13px;
@@ -193,6 +196,7 @@
 }
 
 .user-all-products-container .sort select,
+.user-all-products-container .items-per-page select,
 .user-all-products-container .filter button,
 .user-all-products-container .filter input[type="range"] {
   padding: 10px 12px;
@@ -206,6 +210,7 @@
   transition: all 0.3s ease;
 }
 
+.user-all-products-container .items-per-page select:hover,
 .user-all-products-container .sort select:hover,
 .user-all-products-container .filter button:hover {
   background-color: #2B6377;
