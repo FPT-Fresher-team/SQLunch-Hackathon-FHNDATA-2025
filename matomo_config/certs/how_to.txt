@@ -1,7 +1,0 @@
-# to get pem, run in terminal
-
-mkcert -install
-mkcert matomo.localhost
-
-
-#make sure mkcert.exe is in environment path

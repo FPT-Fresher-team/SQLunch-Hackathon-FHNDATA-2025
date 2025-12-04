@@ -219,7 +219,7 @@ class allOrderController {
             await newUserVoucher.save()
             if (voucherInfo) {
               await voucher.updateOne({ _id: voucherInfo._id }, {
-                usedCount: { $inc: 1 }
+                $inc: { usedCount: 1 }
               })
             } else if (userVoucherInfo) {
               await userVoucher.updateOne({ _id: userVoucherInfo._id }, {

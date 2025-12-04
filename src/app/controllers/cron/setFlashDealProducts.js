@@ -4,17 +4,11 @@ async function setFlashDealProducts() {
   console.log("Running setFlashDealProducts cron...")
 
   try {
-    const thirtyDaysAgo = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
-
     // Step 1: Get 5 oldest + lowest-selling products
     const productsToUpdate = await product.find({
-      createdAt: { $lt: thirtyDaysAgo },
-      price: { $gt: 0 }                     // ensure price exists
+      createdAt: { $lte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) },
+      group: 'low_low',
     })
-    .sort({ saleNumber: 1 })   // lowest sales first
-    .limit(5)
-    .select('_id price name')  // we need current price
-    .lean()
 
     if (productsToUpdate.length === 0) {
       console.log("No products eligible for flash deal.")
@@ -38,11 +32,40 @@ async function setFlashDealProducts() {
     const result = await product.bulkWrite(bulkOps)
 
     console.log(`Successfully set ${result.modifiedCount} products to 50% Flash Deal!`)
-    console.log("Flash deal products:", productsToUpdate.map(p => `${p.name} → ${p.price}đ`))
-
   } catch (error) {
     console.error("Error setting flash deals:", error)
   }
 }
 
-module.exports = { setFlashDealProducts }
+async function randomizeSaleNumber() {
+  try {
+    const result = await product.updateMany(
+      {group: true},
+      [// 1st: create saleNumber (0 - 10)
+    {
+      $set: {
+        saleNumber: { $floor: { $multiply: [ { $rand: {} }, 11 ] } }
+      }
+    },
+    // 2nd: set rateNumber < saleNumber
+    {
+      $set: {
+        rateNumber: {
+          $floor: {
+            $multiply: [
+              { $rand: {} },
+              "$saleNumber" // random scaled by saleNumber
+            ]
+          }
+        }
+      }
+    }]
+    );
+
+    console.log(`Updated ${result.modifiedCount} products`);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+module.exports = { setFlashDealProducts, randomizeSaleNumber }

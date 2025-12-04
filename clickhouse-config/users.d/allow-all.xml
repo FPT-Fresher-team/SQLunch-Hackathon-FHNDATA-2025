@@ -1,9 +1,0 @@
-<clickhouse>
-  <users>
-    <default>
-      <networks>
-        <ip>::/0</ip> <!-- Allow all IPv4 and IPv6 addresses -->
-      </networks>
-    </default>
-  </users>
-</clickhouse>

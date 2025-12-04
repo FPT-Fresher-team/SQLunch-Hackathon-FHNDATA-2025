@@ -22,6 +22,7 @@ const product = new Schema({
   saleNumber   : { type: Number, default: 0 },
   rateNumber   : { type: Number, default: 0 },
   viewCount    : { type: Number, default: 0 },
+  group        : { type: String, default: '' },
   img          : { 
     path       : String,
     filename   : String,

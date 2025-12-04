@@ -38,27 +38,25 @@ async function getRelatedProducts(brandInfo) {
   const json = await response.json()
   const data = json.data
 
-  window.setTimeout(function() {
-    relatedProducts.forEach((product, index) => {
-      if (index < data.length) {
-        product.querySelector('img').setAttribute('src', data[index].img.path)
-        product.querySelector('img').setAttribute('alt', data[index].img.name)
-        product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
-        product.querySelector('p#price').textContent = formatNumber(data[index].price) 
-        product.querySelector('p#name').textContent = data[index].name
-        product.querySelector('span#rate-score').textContent = data[index].rateNumber
-        product.querySelector('p#sale-number').textContent =  'Sold: ' + data[index].saleNumber
-        product.querySelector('div.loading').style.display = 'none'
-        product.querySelectorAll('i').forEach((star, i) => {
-          if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'
-        })
-        product.style.display = ''
-        product.parentElement.setAttribute('href', '/all-products/product/' + data[index]._id)
-      } else {
-        product.remove()
-      }
-    })
-  }, 2000)
+  relatedProducts.forEach((product, index) => {
+    if (index < data.length) {
+      product.querySelector('img').setAttribute('src', data[index].img.path)
+      product.querySelector('img').setAttribute('alt', data[index].img.name)
+      product.querySelector('p#old-price').textContent = formatNumber(data[index].oldPrice) 
+      product.querySelector('p#price').textContent = formatNumber(data[index].price) 
+      product.querySelector('p#name').textContent = data[index].name
+      product.querySelector('span#rate-score').textContent = data[index].rateNumber
+      product.querySelector('p#sale-number').textContent =  'Sold: ' + data[index].saleNumber
+      product.querySelector('div.loading').style.display = 'none'
+      product.querySelectorAll('i').forEach((star, i) => {
+        if (i + 1 <= Math.floor(parseInt(product.querySelector('span#rate-score').innerText))) star.style.color = 'orange'
+      })
+      product.style.display = ''
+      product.parentElement.setAttribute('href', '/all-products/product/' + data[index]._id)
+    } else {
+      product.remove()
+    }
+  })
 }
 
 async function loadData(retriesLeft) {

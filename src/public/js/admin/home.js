@@ -1264,7 +1264,7 @@ new Chart(canvas, {
 
     scales: {
       x: {
-        type: "time",
+        type: "category",
         time: {
           unit: "hour",
           stepSize: 1,

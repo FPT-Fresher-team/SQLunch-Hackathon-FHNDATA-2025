@@ -130,7 +130,7 @@ class homeController {
         if (!startDate || !endDate) {
           console.log('[getFinance] Missing dates for charts')
         } else {
-          const fabricBase = process.env.FABRIC_API_URL || 'http://127.0.0.1:8000'
+          const fabricBase = process.env.FABRIC_API_URL || 'http://localhost:8000/fabric'
 
           // Helper function to fetch from Fabric API
           const fetchFromFabric = (endpoint, top = 20) => {
@@ -228,7 +228,7 @@ class homeController {
       const start = startDate.split('T')[0]
       const end = endDate.split('T')[0]
 
-      const fabricBase = process.env.FABRIC_API_URL || 'http://127.0.0.1:8000'
+      const fabricBase = process.env.FABRIC_API_URL || 'http://localhost:8000/fabric'
       const urlString = `${fabricBase.replace(/\/$/, '')}/chart/revenue-by-brand?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}&top=${top}`
       
       const urlObj = new URL(urlString)
@@ -282,7 +282,7 @@ class homeController {
       const start = startDate.split('T')[0]
       const end = endDate.split('T')[0]
 
-      const fabricBase = process.env.FABRIC_API_URL || 'http://127.0.0.1:8000'
+      const fabricBase = process.env.FABRIC_API_URL || 'http://localhost:8000/fabric'
       const urlString = `${fabricBase.replace(/\/$/, '')}/chart/revenue-by-category?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}&top=${top}`
       
       const urlObj = new URL(urlString)
@@ -336,7 +336,7 @@ class homeController {
       const start = startDate.split('T')[0]
       const end = endDate.split('T')[0]
 
-      const fabricBase = process.env.FABRIC_API_URL || 'http://127.0.0.1:8000'
+      const fabricBase = process.env.FABRIC_API_URL || 'http://localhost:8000/fabric'
       const urlString = `${fabricBase.replace(/\/$/, '')}/chart/revenue-by-subcategory?start=${encodeURIComponent(start)}&end=${encodeURIComponent(end)}&top=${top}`
       
       const urlObj = new URL(urlString)

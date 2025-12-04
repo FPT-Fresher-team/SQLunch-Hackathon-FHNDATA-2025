@@ -4,7 +4,10 @@ async function setNewArrivalProducts() {
   console.log("Running setNewArrivalProducts cron...")
   try {
     const productsToUpdate = await product
-    .find({ createdAt: { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) } }) // added in last 30 days
+    .find({ 
+      createdAt: { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) },
+      group: 'low_low'
+    }) // added in last 30 days
     .select('_id')
     .lean()
 
@@ -27,8 +30,6 @@ async function setNewArrivalProducts() {
     )
 
     console.log(`Successfully set ${result.modifiedCount} products to new arrival!`)
-    console.log("Updated product IDs:", productIds)
-
   } catch (error) {
     console.error("Error in setNewArrivalProducts:", error)
   }
