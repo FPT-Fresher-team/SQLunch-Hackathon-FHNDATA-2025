@@ -3,7 +3,7 @@
 console.log('start load file')
 
 function generateSessionId() {
-  return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
+  return `${getVietnamTimestamp()}-${Math.random().toString(36).slice(2, 9)}`;
 }
 
 function getOrCreateSessionId() {
@@ -18,7 +18,7 @@ function getOrCreateSessionId() {
 function getAnonymousId() {
   let id = localStorage.getItem("anonId");
   if (!id) {
-    id = "anon-" + Date.now() + "-" + Math.random().toString(36).slice(2, 9);
+    id = "anon-" + getVietnamTimestamp() + "-" + Math.random().toString(36).slice(2, 9);
     localStorage.setItem("anonId", id);
   }
   return id;
@@ -28,7 +28,7 @@ function getAnonymousId() {
 let SESSION_ID = getOrCreateSessionId();
 const USER_ID = window.uid || getAnonymousId();
 
-let lastActivityTime = Date.now();
+let lastActivityTime = getVietnamTimestamp();
 let isIdle = false;
 let sessionExpired = false;
 let sessionStarted = false;
@@ -46,6 +46,15 @@ const HEARTBEAT_INTERVAL = 6767;
 
 let idleExitTimeout = null;
 let hiddenTabTimeout = null;
+
+// ===============================================
+// TIMEZONE: GMT+7 Vietnam
+// ===============================================
+function getVietnamTimestamp() {
+  const now = Date.now();
+  const vietnamOffset = 7 * 60 * 60 * 1000; // GMT+7 in milliseconds
+  return now + vietnamOffset;
+}
 
 // ===============================================
 // UTIL: Send to backend → Kafka
@@ -83,7 +92,7 @@ function eventBase(type) {
     type,
     sessionId: SESSION_ID,
     userId: USER_ID,
-    timestamp: Date.now(),
+    timestamp: getVietnamTimestamp(),
     url: window.location.pathname
   };
 }
@@ -93,7 +102,7 @@ const pageExitEvent = () => eventBase("page_exit");
 const visibilityEvent = (state) => ({ ...eventBase("visibility_change"), state });
 
 function activityEvent(action) {
-  lastActivityTime = Date.now();
+  lastActivityTime = getVietnamTimestamp();
 
   if (hiddenTabTimeout) {
     clearTimeout(hiddenTabTimeout);
@@ -118,7 +127,7 @@ const heartbeatEvent = () => eventBase("heartbeat");
 function throttle(func, delay) {
   let lastCall = 0;
   return function (...args) {
-    const now = Date.now();
+    const now = getVietnamTimestamp();
     if (now - lastCall >= delay) {
       lastCall = now;
       func(...args);
@@ -341,7 +350,7 @@ window.addEventListener("keydown", throttledKeydown);
 window.addEventListener("click", throttledClick);
 
 setInterval(() => {
-  const now = Date.now();
+  const now = getVietnamTimestamp();
   const inactive = now - lastActivityTime >= IDLE_LIMIT;
 
   if (inactive && !isIdle) {
@@ -358,7 +367,7 @@ setInterval(() => {
 }, 10000);
 
 setInterval(() => {
-  const now = Date.now();
+  const now = getVietnamTimestamp();
   const active = now - lastActivityTime < IDLE_LIMIT;
 
   if (active && isPageVisible && !sessionEnded) {
