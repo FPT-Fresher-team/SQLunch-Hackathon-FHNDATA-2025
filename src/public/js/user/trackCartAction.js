@@ -13,7 +13,7 @@
   // Helper to track action
   async function trackCartAction(productId, action, quantity = 1) {
     try {
-      const response = await fetch('/api/track-cart-action', {
+      const response = await fetch('http://localhost:8000/marketing/events', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -21,7 +21,8 @@
           action,
           quantity,
           sessionId: getSessionId()
-        })
+        }),
+        credentials: 'include' 
       })
       const data = await response.json()
       if (data.success) {
@@ -59,70 +60,10 @@
           const quantity = quantityElement ? parseInt(quantityElement.innerText) || 1 : 1
           
           // Only track if it's being ADDED (not already in cart)
-          if (this.style.backgroundColor === '') {
-            trackCartAction(productId, 'add_to_cart', quantity)
-          } else {
-            // Being removed from cart
-            trackCartAction(productId, 'remove_from_cart', quantity)
-          }
-        }
-      })
-    }
-
-    // ===== Generic Cart Button Tracking (fallback for other pages) =====
-    // Track Add to Cart button clicks with flexible selectors
-    const addToCartButtons = document.querySelectorAll(
-      '[data-action="add-to-cart"], .add-to-cart-btn, .addToCart, [class*="add-to-cart"]'
-    )
-
-    addToCartButtons.forEach(btn => {
-      // Skip if it's the detail product div (already handled above)
-      if (btn.classList.contains('add-to-cart') && btn.tagName === 'DIV' && document.querySelector('div.detail-product-container')) {
-        return
-      }
-
-      btn.addEventListener('click', function(e) {
-        // Get product ID from various possible locations
-        const productId =
-          this.dataset.productId ||
-          this.closest('[data-product-id]')?.dataset.productId ||
-          this.getAttribute('data-id') ||
-          this.closest('form')?.querySelector('[name="productId"]')?.value ||
-          this.closest('.product-item')?.dataset.id ||
-          getProductIdFromPage()
-
-        if (productId) {
-          // Get quantity if available
-          const quantityInput = this.closest('form')?.querySelector('[name="quantity"]') ||
-                                this.closest('.product-item')?.querySelector('[name="quantity"]') ||
-                                document.querySelector('div.quantity > p')
-          const quantity = quantityInput ? parseInt(quantityInput.innerText || quantityInput.value) || 1 : 1
-
           trackCartAction(productId, 'add_to_cart', quantity)
         }
       })
-    })
-
-    // ===== Remove Button Tracking (all-orders page) =====
-    // Delegate clicks so dynamically-created delete buttons are handled.
-    document.addEventListener('click', function(e) {
-      const delBtn = e.target.closest('.delete-button')
-      if (!delBtn) return
-
-      const row = delBtn.closest('tr')
-      if (!row) return
-
-      // Try to find product id from checkbox, row data, or button dataset
-      const checkbox = row.querySelector('input[type="checkbox"]')
-      const qtyInput = row.querySelector('input[type="number"]')
-      const productId = (checkbox && checkbox.id) || row.dataset.id || delBtn.dataset.productId
-      const quantity = parseInt((qtyInput && qtyInput.value) || (checkbox && checkbox.value)) || 1
-
-      if (productId) {
-        // Send remove_from_cart tracking
-        trackCartAction(productId, 'remove_from_cart', quantity)
-      }
-    })
+    }
   })
 
   // Expose tracking function globally for manual tracking if needed

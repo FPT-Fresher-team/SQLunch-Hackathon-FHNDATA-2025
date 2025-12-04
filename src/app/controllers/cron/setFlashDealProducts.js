@@ -38,11 +38,40 @@ async function setFlashDealProducts() {
     const result = await product.bulkWrite(bulkOps)
 
     console.log(`Successfully set ${result.modifiedCount} products to 50% Flash Deal!`)
-    console.log("Flash deal products:", productsToUpdate.map(p => `${p.name} → ${p.price}đ`))
-
   } catch (error) {
     console.error("Error setting flash deals:", error)
   }
 }
 
-module.exports = { setFlashDealProducts }
+async function randomizeSaleNumber() {
+  try {
+    const result = await product.updateMany(
+      {isNewArrival: true},
+      [// 1st: create saleNumber (0 - 10)
+    {
+      $set: {
+        saleNumber: { $floor: { $multiply: [ { $rand: {} }, 11 ] } }
+      }
+    },
+    // 2nd: set rateNumber < saleNumber
+    {
+      $set: {
+        rateNumber: {
+          $floor: {
+            $multiply: [
+              { $rand: {} },
+              "$saleNumber" // random scaled by saleNumber
+            ]
+          }
+        }
+      }
+    }]
+    );
+
+    console.log(`Updated ${result.modifiedCount} products`);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+module.exports = { setFlashDealProducts, randomizeSaleNumber }

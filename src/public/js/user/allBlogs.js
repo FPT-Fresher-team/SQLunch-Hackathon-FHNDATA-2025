@@ -37,7 +37,7 @@ async function fetchBlogs() {
 }
 
 function populateCategories() {
-  const categories = [...new Set(allBlogs.map(blog => blog.category?.name).filter(Boolean))]
+  const categories = [...new Set(allBlogs.map(blog => blog.category).filter(Boolean))]
   
   categories.forEach(category => {
     const option = document.createElement('option')
@@ -52,7 +52,7 @@ function filterBlogs() {
   const searchQuery = blogSearch.value.toLowerCase()
 
   filteredBlogs = allBlogs.filter(blog => {
-    const matchCategory = !category || blog.category?.name === category
+    const matchCategory = !category || blog.category === category
     const matchSearch = !searchQuery || 
       blog.title.toLowerCase().includes(searchQuery) ||
       blog.summary.toLowerCase().includes(searchQuery) ||
@@ -69,85 +69,83 @@ function renderBlogs() {
   const endIndex = startIndex + ITEMS_PER_PAGE
   const paginatedBlogs = filteredBlogs.slice(startIndex, endIndex)
 
-  window.setTimeout(function() {
-    blogsList.querySelectorAll('article.blog-card').forEach(card => card.remove())
+  blogsList.querySelectorAll('article.blog-card').forEach(card => card.remove())
 
-    paginatedBlogs.forEach(blog => {
-      const article = document.createElement('article')
-      article.classList.add('blog-card')
+  paginatedBlogs.forEach(blog => {
+    const article = document.createElement('article')
+    article.classList.add('blog-card')
 
-      const imageDiv = document.createElement('div')
-      imageDiv.classList.add('blog-image')
-      const img = document.createElement('img')
-      img.src = blog.featuredImage?.path || '/images/placeholder.jpg'
-      img.alt = blog.title
-      imageDiv.appendChild(img)
+    const imageDiv = document.createElement('div')
+    imageDiv.classList.add('blog-image')
+    const img = document.createElement('img')
+    img.src = blog.featuredImage?.path || '/images/placeholder.jpg'
+    img.alt = blog.title
+    imageDiv.appendChild(img)
 
-      const contentDiv = document.createElement('div')
-      contentDiv.classList.add('blog-content')
+    const contentDiv = document.createElement('div')
+    contentDiv.classList.add('blog-content')
 
-      // Meta information
-      const metaDiv = document.createElement('div')
-      metaDiv.classList.add('blog-meta')
+    // Meta information
+    const metaDiv = document.createElement('div')
+    metaDiv.classList.add('blog-meta')
 
-      const category = document.createElement('span')
-      category.classList.add('blog-category')
-      category.textContent = blog.category?.name || 'Uncategorized'
-      metaDiv.appendChild(category)
+    const category = document.createElement('span')
+    category.classList.add('blog-category')
+    category.textContent = blog.category || 'Uncategorized'
+    metaDiv.appendChild(category)
 
-      const date = document.createElement('span')
-      date.classList.add('blog-date')
-      date.innerHTML = `<i class="fi fi-rr-calendar"></i> ${formatDate(blog.publishedAt)}`
-      metaDiv.appendChild(date)
+    const date = document.createElement('span')
+    date.classList.add('blog-date')
+    date.innerHTML = `<i class="fi fi-rr-calendar"></i> ${formatDate(blog.publishedAt)}`
+    metaDiv.appendChild(date)
 
-      const views = document.createElement('span')
-      views.classList.add('blog-views')
-      views.innerHTML = `<i class="fi fi-rr-eye"></i> ${blog.views || 0} views`
-      metaDiv.appendChild(views) 
+    const views = document.createElement('span')
+    views.classList.add('blog-views')
+    views.innerHTML = `<i class="fi fi-rr-eye"></i> ${blog.views || 0} views`
+    metaDiv.appendChild(views) 
 
-      contentDiv.appendChild(metaDiv)
+    contentDiv.appendChild(metaDiv)
 
-      // Title
-      const title = document.createElement('h3')
-      title.classList.add('blog-title')
-      title.textContent = blog.title
-      contentDiv.appendChild(title)
+    // Title
+    const title = document.createElement('h3')
+    title.classList.add('blog-title')
+    title.textContent = blog.title
+    contentDiv.appendChild(title)
 
-      // Summary
-      const summary = document.createElement('p')
-      summary.classList.add('blog-summary')
-      summary.textContent = blog.summary
-      contentDiv.appendChild(summary)
+    // Summary
+    const summary = document.createElement('p')
+    summary.classList.add('blog-summary')
+    summary.textContent = blog.summary
+    contentDiv.appendChild(summary)
 
-      // Tags
-      if (blog.tags && blog.tags.length > 0) {
-        const tagsDiv = document.createElement('div')
-        tagsDiv.classList.add('blog-tags')
-        blog.tags.slice(0, 3).forEach(tag => {
-          const tagSpan = document.createElement('span')
-          tagSpan.classList.add('tag')
-          tagSpan.textContent = tag
-          tagSpan.onclick = () => {
-            blogSearch.value = tag
-            filterBlogs()
-          }
-          tagsDiv.appendChild(tagSpan)
-        })
-        contentDiv.appendChild(tagsDiv)
-      }
+    // Tags
+    if (blog.tags && blog.tags.length > 0) {
+      const tagsDiv = document.createElement('div')
+      tagsDiv.classList.add('blog-tags')
+      blog.tags.slice(0, 3).forEach(tag => {
+        const tagSpan = document.createElement('span')
+        tagSpan.classList.add('tag')
+        tagSpan.textContent = tag
+        tagSpan.onclick = () => {
+          blogSearch.value = tag
+          filterBlogs()
+        }
+        tagsDiv.appendChild(tagSpan)
+      })
+      contentDiv.appendChild(tagsDiv)
+    }
 
-      // Read More Link
-      const readMore = document.createElement('a')
-      readMore.classList.add('read-more')
-      readMore.href = `/all-blogs/blog/${blog._id}`
-      readMore.textContent = 'Read More →'
-      contentDiv.appendChild(readMore)
+    // Read More Link
+    const readMore = document.createElement('a')
+    readMore.classList.add('read-more')
+    readMore.href = `/all-blogs/blog/${blog._id}`
+    readMore.textContent = 'Read More →'
+    contentDiv.appendChild(readMore)
 
-      article.appendChild(imageDiv)
-      article.appendChild(contentDiv)
-      blogsList.appendChild(article)
-    })
-  }, 300)
+    article.appendChild(imageDiv)
+    article.appendChild(contentDiv)
+    blogsList.appendChild(article)
+  })
 
   updatePagination()
 }

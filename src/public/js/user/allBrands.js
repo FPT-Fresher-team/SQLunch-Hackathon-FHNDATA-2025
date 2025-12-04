@@ -9,31 +9,29 @@ async function getBrands() {
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
   const {data} = await response.json()
 
-  window.setTimeout(function() {
-    brands.querySelectorAll('div.brand').forEach((brand, index) => {
-      brand.remove()
-    })
+  brands.querySelectorAll('div.brand').forEach((brand, index) => {
+    brand.remove()
+  })
 
-    data.forEach((data) => {
-      const container = document.createElement('div')
-      container.classList.add('brand')
+  data.forEach((data) => {
+    const container = document.createElement('div')
+    container.classList.add('brand')
 
-      const href = document.createElement('a')
-      href.setAttribute('href', '/all-brands/brand/' + data._id)
+    const href = document.createElement('a')
+    href.setAttribute('href', '/all-brands/brand/' + data._id)
 
-      const img = document.createElement('img')
-      img.setAttribute('src', data.img.path)
-      img.setAttribute('alt', data.name)
+    const img = document.createElement('img')
+    img.setAttribute('src', data.img.path)
+    img.setAttribute('alt', data.name)
 
-      const span = document.createElement('span')
-      span.textContent = data.name
+    const span = document.createElement('span')
+    span.textContent = data.name
 
-      href.appendChild(img)
-      href.appendChild(span)
-      container.appendChild(href)
-      brands.appendChild(container)
-    })
-  }, 1000)
+    href.appendChild(img)
+    href.appendChild(span)
+    container.appendChild(href)
+    brands.appendChild(container)
+  })
 }
 
 async function loadData(retriesLeft) {
@@ -54,12 +52,3 @@ async function loadData(retriesLeft) {
 }
 
 loadData(5)
-
-// getLog(
-//   topic = 'page-view', 
-//   value = {
-//     "user_id"   : window.uid,
-//     "page_type" : 'brands',
-//     "timestamp" : new Date(),
-//   }
-// )

@@ -27,8 +27,6 @@ async function setNewArrivalProducts() {
     )
 
     console.log(`Successfully set ${result.modifiedCount} products to new arrival!`)
-    console.log("Updated product IDs:", productIds)
-
   } catch (error) {
     console.error("Error in setNewArrivalProducts:", error)
   }

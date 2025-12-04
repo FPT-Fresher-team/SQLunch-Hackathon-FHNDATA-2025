@@ -29,8 +29,6 @@ async function setTopSellingProducts() {
     )
 
     console.log(`Successfully set ${result.modifiedCount} products to top-selling!`)
-    console.log("Updated product IDs:", productIds)
-
   } catch (error) {
     console.error("Error in setTopSellingProducts:", error)
   }

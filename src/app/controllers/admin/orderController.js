@@ -48,7 +48,7 @@ class allOrdersController {
     try {
       const [customers, orderStatuses, paymentMethods] = await Promise.all([
         user.find().lean(),
-        orderStatus.find().sort({name: 1}).lean(),
+        orderStatus.find().sort({order: 1}).lean(),
         paymentMethod.find().lean(),
       ]) 
   
@@ -215,20 +215,6 @@ class allOrdersController {
           })
         }
       }
-
-      // try {
-      //   await producer.connect()
-      //   await producer.send({
-      //     topic: 'update',
-      //     messages: [{ value: JSON.stringify({
-      //       topic_type: 'order',
-      //       emp_id: req.cookies.uid,
-      //       body: updatedOrder
-      //     })}],
-      //   })
-      // } catch (error) {
-      //   console.log(error)
-      // }
   
       return res.json({message: 'Updated successfully'})
     } catch (error) {

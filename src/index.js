@@ -20,9 +20,10 @@ const port = process.env.PORT
 const cron = require('node-cron')
 const { getUsersWithBirthdayThisMonth } = require('./app/controllers/cron/createBirthdayVoucher') 
 const { setVoucherExpired } = require('./app/controllers/cron/setVoucherExpired') 
-const { setFlashDealProducts } = require('./app/controllers/cron/setFlashDealProducts')
+const { setFlashDealProducts, randomizeSaleNumber } = require('./app/controllers/cron/setFlashDealProducts')
 const { setTopSellingProducts } = require('./app/controllers/cron/setTopSellingProducts')
 const { setNewArrivalProducts } = require('./app/controllers/cron/setNewArrivalProducts')
+const { resetStatusProducts } = require('./app/controllers/cron/resetStatusProducts')
 
 db.connect()
 app.use(express.json({ limit: '50mb' }))
@@ -62,11 +63,13 @@ app.set('view options', { layout: 'other' })
 // })
 
 async function main() {
-  // await getUsersWithBirthdayThisMonth()
+  await getUsersWithBirthdayThisMonth()
   // await setVoucherExpired()
+  // await resetStatusProducts()
   // await setFlashDealProducts()
   // await setTopSellingProducts()
   // await setNewArrivalProducts()
+  // await randomizeSaleNumber()
 }
 
 main()
