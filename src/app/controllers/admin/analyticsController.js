@@ -56,7 +56,11 @@ class analyticsController {
   async getTopPurchased(req, res) {
     try {
       const limit = parseInt(req.query.limit) || 10
-      const data = await analyticsService.getTopPurchasedItems(limit)
+      const { startDate, endDate } = req.body || {}
+      
+      console.log('[getTopPurchased] Called with dates:', { startDate, endDate, limit })
+      
+      const data = await analyticsService.getTopPurchasedItems(limit, startDate, endDate)
 
       res.json({
         success: true,
@@ -130,8 +134,13 @@ class analyticsController {
 
   async getPaymentSuccessRate(req, res) {
     try {
-      const rate = await conversionMetricsService.getPaymentSuccessRate()
-      const rateByMethod = await conversionMetricsService.getPaymentSuccessRateByMethod()
+      const { startDate, endDate } = req.body || {}
+      console.log('[getPaymentSuccessRate] Received request with:', { startDate, endDate })
+      
+      const rate = await conversionMetricsService.getPaymentSuccessRate(startDate, endDate)
+      const rateByMethod = await conversionMetricsService.getPaymentSuccessRateByMethod(startDate, endDate)
+
+      console.log('[getPaymentSuccessRate] Calculated rates:', { rate, rateByMethod: rateByMethod?.length || 0 })
 
       res.json({
         success: true,

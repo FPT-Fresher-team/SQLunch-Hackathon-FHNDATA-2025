@@ -26,23 +26,68 @@ class analyticsService {
     }
   }
 
-  async getTopPurchasedItems(limit = 10) {
+  async getTopPurchasedItems(limit = 10, startDate = null, endDate = null) {
     try {
-      const topPurchased = await Product.find({ deletedAt: null })
-        .select('_id name saleNumber price img categories brand')
-        .sort({ saleNumber: -1 })
-        .limit(limit)
-        .lean()
+      const matchStage = { $match: { deletedAt: null, isPaid: true } }
+      
+      // Add date range filter if provided
+      if (startDate || endDate) {
+        const dateFilter = {}
+        if (startDate) {
+          const start = new Date(startDate)
+          start.setHours(0, 0, 0, 0)
+          dateFilter.$gte = start
+        }
+        if (endDate) {
+          const end = new Date(endDate)
+          end.setHours(23, 59, 59, 999)
+          dateFilter.$lte = end
+        }
+        matchStage.$match.createdAt = dateFilter
+      }
 
-      return topPurchased.map((product, index) => ({
+      console.log('[getTopPurchasedItems] Match stage:', JSON.stringify(matchStage, null, 2))
+
+      const topPurchased = await Order.aggregate([
+        matchStage,
+        { $unwind: '$products' },
+        {
+          $group: {
+            _id: '$products.id',
+            totalQuantity: { $sum: '$products.quantity' },
+            totalRevenue: { $sum: '$products.totalPrice' },
+            productName: { $first: '$products.name' },
+            productPrice: { $first: '$products.price' },
+            productImage: { $first: '$products.image' }
+          }
+        },
+        { $sort: { totalQuantity: -1 } },
+        { $limit: limit },
+        {
+          $lookup: {
+            from: 'product',
+            let: { productId: { $toObjectId: '$_id' } },
+            pipeline: [
+              { $match: { $expr: { $eq: ['$_id', '$$productId'] } } },
+              { $project: { name: 1, price: 1, img: 1, categories: 1, brand: 1 } }
+            ],
+            as: 'productInfo'
+          }
+        }
+      ])
+
+      console.log('[getTopPurchasedItems] Results found:', topPurchased.length)
+
+      return topPurchased.map((item, index) => ({
         rank: index + 1,
-        productId: product._id,
-        name: product.name,
-        purchaseCount: product.saleNumber || 0,
-        price: product.price,
-        image: product.img?.path || '',
-        category: product.categories,
-        brand: product.brand
+        productId: item._id,
+        name: item.productInfo.length > 0 ? item.productInfo[0].name : item.productName || 'Unknown',
+        purchaseCount: item.totalQuantity || 0,
+        totalRevenue: item.totalRevenue || 0,
+        price: item.productInfo.length > 0 ? item.productInfo[0].price : item.productPrice || 0,
+        image: item.productInfo.length > 0 ? item.productInfo[0].img?.path : item.productImage || '',
+        category: item.productInfo.length > 0 ? item.productInfo[0].categories : [],
+        brand: item.productInfo.length > 0 ? item.productInfo[0].brand : ''
       }))
     } catch (error) {
       console.error('Error fetching top purchased items:', error)
@@ -147,9 +192,16 @@ class analyticsService {
         { $group: { _id: null, total: { $sum: '$viewCount' } } }
       ])
 
-      const totalSales = await Product.aggregate([
-        { $match: { deletedAt: null } },
-        { $group: { _id: null, total: { $sum: '$saleNumber' } } }
+      // Count actual sales quantity from Order table instead of Product.saleNumber
+      const totalSales = await Order.aggregate([
+        { $match: { deletedAt: null, isPaid: true } },
+        { $unwind: '$products' },
+        {
+          $group: {
+            _id: null,
+            total: { $sum: '$products.quantity' }
+          }
+        }
       ])
 
       const totalRevenue = await Order.aggregate([

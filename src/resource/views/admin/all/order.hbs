@@ -79,6 +79,116 @@
   <span class="pagination"></span>
 </div>
 
+{{!-- <style>
+  .rank-badge {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    margin-right: 8px;
+  }
+
+  .stat-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-weight: 500;
+    font-size: 11px;
+    margin: 2px;
+  }
+
+  .stat-badge.view {
+    background-color: #d1ecf1;
+    color: #0c5460;
+  }
+
+  .stat-badge.purchase {
+    background-color: #d4edda;
+    color: #155724;
+  }
+
+  .stat-badge.interaction {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+
+  #payment-by-method table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  #payment-by-method tr {
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  #payment-by-method tr:hover {
+    background-color: #f9f9f9;
+  }
+
+  #payment-by-method td {
+    padding: 8px 0;
+  }
+
+  #payment-by-method thead th {
+    padding: 8px 0;
+    font-weight: 600;
+    border-bottom: 2px solid #ddd;
+    text-align: center;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', async function() {
+    try {
+      // Load conversion metrics
+      const conversionRes = await fetch('/admin/analytics/conversion-metrics/all')
+      const conversionData = await conversionRes.json()
+      if (conversionData.success) {
+        document.getElementById('payment-success-rate').textContent = conversionData.data.paymentSuccessRate.toFixed(2) + '%'
+        document.getElementById('add-to-cart-rate').textContent = conversionData.data.addToCartRate.toFixed(2) + '%'
+      }
+
+      // Load payment success by method
+      const paymentMethodRes = await fetch('/admin/analytics/payment-success-rate-by-method')
+      const paymentMethodData = await paymentMethodRes.json()
+      if (paymentMethodData.success) {
+        renderPaymentByMethod('payment-by-method', paymentMethodData.data.rateByMethod)
+      }
+    } catch (error) {
+      console.error('Error loading conversion metrics:', error)
+    }
+  })
+
+  function renderPaymentByMethod(elementId, items) {
+    const container = document.getElementById(elementId)
+    if (items.length === 0) {
+      container.innerHTML = '<p style="color: #999;">No data available</p>'
+      return
+    }
+
+    let html = '<table><thead><tr><th>Payment Method</th><th>Total Orders</th><th>Successful</th><th>Success Rate</th></tr></thead><tbody>'
+    items.forEach(item => {
+      const rateColor = item.rate >= 80 ? '#1cc88a' : item.rate >= 50 ? '#f6c23e' : '#e74c3c'
+      html += `
+        <tr>
+          <td><strong>${item.paymentMethod}</strong></td>
+          <td style="text-align: center;">${item.total}</td>
+          <td style="text-align: center;">${item.successful}</td>
+          <td style="text-align: center;"><span style="color: ${rateColor}; font-weight: bold;">${item.rate.toFixed(2)}%</span></td>
+        </tr>
+      `
+    })
+    html += '</tbody></table>'
+    container.innerHTML = html
+  }
+</script> --}}
+
 <div class="admin-create-order-container" id="create-modal">
   <div id="form">
     <div class="form-title">

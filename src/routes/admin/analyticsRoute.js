@@ -29,8 +29,8 @@ router.get('/summary', analyticsController.getSummary)
 // GET top viewed items (JSON) - verified ≥5s
 router.get('/top-viewed', analyticsController.getTopViewed)
 
-// GET top purchased items (JSON)
-router.get('/top-purchased', analyticsController.getTopPurchased)
+// POST top purchased items with date filtering (JSON)
+router.post('/top-purchased', analyticsController.getTopPurchased)
 
 // GET top combined (viewed + purchased) (JSON)
 router.get('/top-combined', analyticsController.getTopCombined)
@@ -41,8 +41,8 @@ router.get('/product/:productId', analyticsController.getProductAnalytics)
 // GET getConversionMetrics (JSON)
 router.get('/conversion-metrics/all', analyticsController.getConversionMetrics)
 
-// GET getConversionMetrics (JSON)
-router.get('/payment-success-rate-by-method', analyticsController.getPaymentSuccessRate)
+// POST getPaymentSuccessRate with date filtering
+router.post('/payment-success-rate-by-method', analyticsController.getPaymentSuccessRate)
 
 router.get('/add-to-cart-rate-by-product', analyticsController.getAddToCartRate)
 module.exports = router

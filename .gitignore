@@ -21,6 +21,8 @@ src/app/redis/query.js
 batch_pipeline/
 ANALYTICS_ARCHITECTURE.md
 venv/
+documents.pkl
+faiss_index.pkl
 query_lakehouse.py
 __pycache__/
 docker-compose.yml

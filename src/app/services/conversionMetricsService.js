@@ -4,15 +4,36 @@ const CartInteraction = require('../models/cartInteractionModel')
 
 class conversionMetricsService {
   // Payment Success Rate: (Orders with isPaid=true & status='completed') / Total Orders
-  async getPaymentSuccessRate() {
+  async getPaymentSuccessRate(startDate = null, endDate = null) {
     try {
-      const totalOrders = await Order.countDocuments({ deletedAt: null })
+      const filter = { deletedAt: null }
+      
+      // Add date range filter if provided
+      if (startDate || endDate) {
+        filter.createdAt = {}
+        if (startDate) {
+          const start = new Date(startDate)
+          start.setHours(0, 0, 0, 0)
+          filter.createdAt.$gte = start
+        }
+        if (endDate) {
+          const end = new Date(endDate)
+          end.setHours(23, 59, 59, 999)
+          filter.createdAt.$lte = end
+        }
+      }
+
+      console.log('[getPaymentSuccessRate] Filter:', JSON.stringify(filter, null, 2))
+      
+      const totalOrders = await Order.countDocuments(filter)
       
       const successfulOrders = await Order.countDocuments({
-        deletedAt: null,
+        ...filter,
         isPaid: true,
         status: 'done'
       })
+
+      console.log('[getPaymentSuccessRate] Total:', totalOrders, 'Successful:', successfulOrders)
 
       return totalOrders > 0 ? Number((successfulOrders / totalOrders * 100).toFixed(2)) : 0
     } catch (error) {
@@ -22,10 +43,30 @@ class conversionMetricsService {
   }
 
   // Payment Success Rate by Method
-  async getPaymentSuccessRateByMethod() {
+  async getPaymentSuccessRateByMethod(startDate = null, endDate = null) {
     try {
+      const matchStage = { $match: { deletedAt: null } }
+      
+      // Add date range filter if provided
+      if (startDate || endDate) {
+        const dateFilter = {}
+        if (startDate) {
+          const start = new Date(startDate)
+          start.setHours(0, 0, 0, 0)
+          dateFilter.$gte = start
+        }
+        if (endDate) {
+          const end = new Date(endDate)
+          end.setHours(23, 59, 59, 999)
+          dateFilter.$lte = end
+        }
+        matchStage.$match.createdAt = dateFilter
+      }
+
+      console.log('[getPaymentSuccessRateByMethod] Filter stage:', JSON.stringify(matchStage, null, 2))
+
       const rateByMethod = await Order.aggregate([
-        { $match: { deletedAt: null } },
+        matchStage,
         {
           $group: {
             _id: '$paymentMethod',
@@ -62,6 +103,8 @@ class conversionMetricsService {
         },
         { $sort: { rate: -1 } }
       ])
+
+      console.log('[getPaymentSuccessRateByMethod] Results:', rateByMethod?.length || 0, 'methods')
 
       return rateByMethod.map(item => ({
         paymentMethod: item._id || 'Unknown',
@@ -104,10 +147,13 @@ class conversionMetricsService {
       const netAdds = totalAddToCart - totalRemoveFromCart
 
       const totalViewCount = totalViews.length > 0 ? totalViews[0].total : 0
-      return totalViewCount > 0 ? Number(((netAdds >= 0 ? netAdds : 0) / totalViewCount * 100).toFixed(2)) : 0
+
+      return totalViewCount > 0 ? Number((totalAddToCart / totalViewCount * 100).toFixed(2)) : 0
+
     } catch (error) {
       console.error('Error calculating add to cart rate:', error)
       throw error
+
     }
   }
 
@@ -153,7 +199,6 @@ class conversionMetricsService {
         const netAdds = addToCartCount - removeFromCartCount
         const viewCount = product.viewCount || 0
         const rate = viewCount > 0 ? ((netAdds >= 0 ? netAdds : 0) / viewCount) * 100 : 0
-
         return {
           productId: product._id,
           productName: product.name || 'Unknown',

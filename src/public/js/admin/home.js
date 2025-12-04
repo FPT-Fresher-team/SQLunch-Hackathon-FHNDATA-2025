@@ -64,7 +64,7 @@ async function loadDashboardData(dashboard) {
         break
       case 'order':
         await getOrders(fetchBody)
-        await getOrderAnalytics()
+        await getOrderAnalytics(fetchBody)
         break
       case 'customer':
         await getCustomers(fetchBody)
@@ -74,7 +74,7 @@ async function loadDashboardData(dashboard) {
         break
       case 'product':
         await getProducts()
-        await getProductAnalytics()
+        await getProductAnalytics(fetchBody)
         break
       case 'supplier':
         await getSuppliers()
@@ -111,7 +111,12 @@ async function loadDashboardData(dashboard) {
 async function getFinance(fetchBody) {
   const response = await fetch('/admin/all/data/finance', fetchBody)
   if (!response.ok) throw new Error(`Response status: ${response.status}`)
-  const {revenue, cost, wage} = await response.json()
+  const {revenue, cost, wage, dailyRevenue, revenueByBrand, revenueByCategory, revenueBySubcategory} = await response.json()
+  
+  console.log('[getFinance] Response data:', {revenueByBrand, revenueByCategory, revenueBySubcategory})
+  console.log('[getFinance] Brand data length:', revenueByBrand?.length || 0)
+  console.log('[getFinance] Category data length:', revenueByCategory?.length || 0)
+  console.log('[getFinance] Subcategory data length:', revenueBySubcategory?.length || 0)
 
   const table = document.createElement('table')
   table.innerHTML = `
@@ -142,7 +147,188 @@ async function getFinance(fetchBody) {
     document.querySelector("table").remove()
   }
 
-  document.querySelector('div.table.finance').querySelector('div.finance').appendChild(table)
+  const financeDiv = document.querySelector('div.table.finance').querySelector('div.finance')
+  financeDiv.appendChild(table)
+
+  // Render daily revenue chart if data exists
+  if (dailyRevenue && Array.isArray(dailyRevenue) && dailyRevenue.length > 0) {
+    const dailyRevenueContainer = document.getElementById('daily-revenue-container')
+    dailyRevenueContainer.innerHTML = '' // Clear old content
+
+    const canvas = document.createElement('canvas')
+    canvas.id = 'revenue-chart'
+    canvas.height = '150'
+    dailyRevenueContainer.appendChild(canvas)
+
+    const labels = dailyRevenue.map(r => r.date)
+    const values = dailyRevenue.map(r => Number(r.revenue || 0))
+
+    const revenueCtx = document.getElementById('revenue-chart')
+    Chart.getChart(revenueCtx)?.destroy()
+    new Chart(revenueCtx, {
+      type: 'line',
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: { display: false },
+          title: { 
+            display: true, 
+            text: '💰 Daily Revenue Trend', 
+            font: { size: 16, weight: 'bold' },
+            color: '#2c3e50',
+            padding: 20
+          },
+          filler: { propagate: true }
+        },
+        scales: { 
+          y: { 
+            beginAtZero: true, 
+            ticks: { 
+              callback: function(value){ return '₫' + value.toLocaleString('en-US', {maximumFractionDigits: 0}); },
+              color: '#666'
+            },
+            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+          },
+          x: {
+            ticks: { color: '#666' },
+            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+          }
+        },
+        interaction: { mode: 'index', intersect: false }
+      },
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Revenue',
+          data: values,
+          borderColor: '#2ca02c',
+          backgroundColor: 'rgba(44,160,44,0.15)',
+          borderWidth: 3,
+          fill: true,
+          tension: 0.4,
+          pointRadius: 5,
+          pointBackgroundColor: '#2ca02c',
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          pointHoverRadius: 7
+        }]
+      }
+    })
+  }
+
+  // Get existing chart containers from HTML
+  const brandChartWrapper = document.getElementById('brand-chart-wrapper')
+  const categoryChartWrapper = document.getElementById('category-chart-wrapper')
+  const subcategoryChartWrapper = document.getElementById('subcategory-chart-wrapper')
+
+  // Render revenue by brand horizontal bar chart
+  if (revenueByBrand && Array.isArray(revenueByBrand) && revenueByBrand.length > 0) {
+    console.log('[renderCharts] Rendering brand chart...')
+    renderSideBySideChart('revenue-brand-chart', revenueByBrand, 'brand', '🏢 Revenue by Brand', brandChartWrapper)
+  }
+
+  // Render revenue by category horizontal bar chart
+  if (revenueByCategory && Array.isArray(revenueByCategory) && revenueByCategory.length > 0) {
+    console.log('[renderCharts] Rendering category chart...')
+    renderSideBySideChart('revenue-category-chart', revenueByCategory, 'category', '📦 Revenue by Category', categoryChartWrapper)
+  }
+
+  // Render revenue by subcategory horizontal bar chart
+  if (revenueBySubcategory && Array.isArray(revenueBySubcategory) && revenueBySubcategory.length > 0) {
+    console.log('[renderCharts] Rendering subcategory chart...')
+    renderSideBySideChart('revenue-subcategory-chart', revenueBySubcategory, 'subcategory', '🏷️ Revenue by Subcategory', subcategoryChartWrapper)
+  }
+}
+
+// Helper function to render horizontal bar charts side by side
+function renderSideBySideChart(chartId, data, key, title, container) {
+  console.log(`[renderSideBySideChart] Creating ${chartId} with ${data.length} items`)
+  
+  container.innerHTML = '' // Clear old content
+  
+  // Create title
+  const titleDiv = document.createElement('div')
+  titleDiv.style.marginBottom = '12px'
+  titleDiv.style.fontSize = '13px'
+  titleDiv.style.fontWeight = 'bold'
+  titleDiv.style.color = '#2c3e50'
+  titleDiv.textContent = title
+  container.appendChild(titleDiv)
+
+  const canvas = document.createElement('canvas')
+  canvas.id = chartId
+  canvas.height = '250'
+  container.appendChild(canvas)
+
+  // Extract labels and revenue values
+  const labels = data.map(item => item[key])
+  const values = data.map(item => Number(item.revenue || 0))
+  
+  console.log(`[renderSideBySideChart] Labels: ${labels.join(', ')}, Values: ${values.join(', ')}`)
+
+  setTimeout(() => {
+    const ctx = document.getElementById(chartId)
+    if (!ctx) {
+      console.error(`[renderSideBySideChart] Canvas not found: ${chartId}`)
+      return
+    }
+    
+    console.log(`[renderSideBySideChart] Creating chart for ${chartId}`)
+    Chart.getChart(ctx)?.destroy()
+    new Chart(ctx, {
+      type: 'bar',
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            padding: 12,
+            titleFont: { size: 12, weight: 'bold' },
+            bodyFont: { size: 12 },
+            callbacks: {
+              label: function(context) {
+                return '₫' + context.parsed.x.toLocaleString('en-US', {maximumFractionDigits: 0})
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            ticks: { 
+              callback: function(value){ return '₫' + (value / 1000000).toFixed(1) + 'M'; },
+              color: '#666',
+              font: { size: 10 }
+            },
+            grid: { color: 'rgba(0, 0, 0, 0.05)' }
+          },
+          y: {
+            ticks: { 
+              color: '#666',
+              font: { size: 11 }
+            },
+            grid: { display: false }
+          }
+        }
+      },
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Revenue',
+          data: values,
+          backgroundColor: ['#4E79A7', '#F28E2B', '#E15759', '#59A14F', '#AF8FD3', '#FF9DA7'],
+          borderColor: '#2c3e50',
+          borderWidth: 1,
+          borderRadius: 4
+        }]
+      }
+    })
+    console.log(`[renderSideBySideChart] Chart ${chartId} created successfully`)
+  }, 100)
 }
 
 async function getOrders(fetchBody) {
@@ -502,8 +688,15 @@ async function getProducts() {
   })
 }
 
-async function getProductAnalytics() {
+async function getProductAnalytics(fetchBody = {}) {
   try {
+    // Extract dates from fetchBody
+    let dateParams = {}
+    if (fetchBody.body) {
+      dateParams = JSON.parse(fetchBody.body)
+    }
+    console.log('[getProductAnalytics] Date params:', dateParams)
+
     // Load summary metrics
     const summaryRes = await fetch('/admin/analytics/summary')
     const summaryData = await summaryRes.json()
@@ -519,9 +712,17 @@ async function getProductAnalytics() {
       renderHomeTopProducts('home-top-viewed', viewedData.data, 'viewed')
     }
 
-    // Load top purchased
-    const purchasedRes = await fetch('/admin/analytics/top-purchased?limit=5')
+    // Load top purchased with date filtering
+    const purchasedRes = await fetch('/admin/analytics/top-purchased?limit=5', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(dateParams)
+    })
+    console.log('[getProductAnalytics] Top purchased response status:', purchasedRes.status)
+    
     const purchasedData = await purchasedRes.json()
+    console.log('[getProductAnalytics] Top purchased data:', purchasedData)
+    
     if (purchasedData.success) {
       renderHomeTopProducts('home-top-purchased', purchasedData.data, 'purchased')
     }
@@ -530,16 +731,38 @@ async function getProductAnalytics() {
   }
 }
 
-async function getOrderAnalytics() {
+async function getOrderAnalytics(fetchBody = {}) {
   try {
-    // Payment success rate + by method
-    const paymentRes = await fetch('/admin/analytics/payment-success-rate-by-method')
+    // Extract dates from fetchBody - fetchBody.body is already a JSON string
+    let dateParams = {}
+    if (fetchBody.body) {
+      dateParams = JSON.parse(fetchBody.body)
+    }
+    console.log('[getOrderAnalytics] Date params:', dateParams)
+    
+    // Payment success rate + by method with date filtering
+    const paymentRes = await fetch('/admin/analytics/payment-success-rate-by-method', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(dateParams)
+    })
+    console.log('[getOrderAnalytics] Payment response status:', paymentRes.status)
+    
+    if (!paymentRes.ok) {
+      console.error('[getOrderAnalytics] Payment response not ok:', paymentRes.statusText)
+      throw new Error(`Payment API returned ${paymentRes.status}: ${paymentRes.statusText}`)
+    }
+    
     const paymentData = await paymentRes.json()
+    console.log('[getOrderAnalytics] Payment data:', paymentData)
+    
     if (paymentData.success && paymentData.data) {
       const overall = paymentData.data.overallRate || 0
       document.getElementById('home-payment-success-rate').textContent = `${Number(overall).toFixed(2)}%`
       const methods = paymentData.data.rateByMethod || []
       renderPaymentMethods('home-add-to-cart-by-method', methods)
+    } else {
+      console.warn('[getOrderAnalytics] Payment data missing success or data field:', paymentData)
     }
 
     // Add-to-cart overall rate (uses add-to-cart by product endpoint for overall rate)
